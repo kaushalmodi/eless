@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# Time-stamp: <2016-11-28 11:44:43 kmodi>
+#
+#* About
+# Script to use emacs in the way 'less' is used.
+# It basically opens the file (or stdin) in stock emacs in `view-mode'. Then
+# you can do the following:
+#
+# Caveat: This will have to work with emacs GUI. Cannot get this to work with
+#         the emacs -nw option.
+#
+#* Common bindings in `view-mode':
+#|------------+------------------------------------------------------------------------------|
+#| SPC        | Scroll forward "page size" lines. With prefix scroll forward prefix lines.   |
+#| DEL, S-SPC | Scroll backward "page size" lines. With prefix scroll backward prefix lines. |
+#|            | (If your terminal does not support this, use xterm instead or using C-h.)    |
+#| RET, LFD   | Scroll forward one line. With prefix scroll forward prefix line(s).          |
+#| y          | Scroll backward one line. With prefix scroll backward prefix line(s).        |
+#|------------+------------------------------------------------------------------------------|
+#| s          | Do forward incremental search.                                               |
+#| r          | Do reverse incremental search.                                               |
+#|------------+------------------------------------------------------------------------------|
+#| q          | Quit emacs. (This is a custom binding set in this script.)                   |
+#| e          | Quit the `view-mode' and use that emacs session as usual to modify           |
+#|            | the opened file if needed.                                                   |
+#|------------+------------------------------------------------------------------------------|
+#
+#* Usage
+#
+#    eless foo.txt
+#    cat foo.txt | eless -
+#    cat foo.txt | eless # That hyphen is implicit
+
+function eless_basic { # Basic emacs function to provide 'less'-like capability
+
+    # Using '-nw' gives the error:
+    # emacs: standard input is not a tty
+    # \emacs -Q -nw "$@"
+    \emacs -Q "$@" \
+           -f view-mode \
+           --eval '(define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))' \
+           > /dev/null 2>&1
+}
+
+# If the argument is '-' then write stdin to a $tempfile and open the $tempfile.
+# http://stackoverflow.com/a/911213/1219634
+# For "-t FD", when FD is 1 (stdout), "-t 1" returns true if the output is
+# pointing to the terminal instead of to another process.
+if [[ ( $# -ge 1 && "$1"=="-" ) || ( -t 1 ) ]]
+then
+    if [[ -e /dev/stdin ]] # If stdin exists, use it. Else use tmpfile approach.
+    then
+        eless_basic --insert /dev/stdin \
+                    --eval '(progn (set-visited-file-name nil) (rename-buffer "*stdin*" :unique))'
+    else
+        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
+        cat - > "$tempfile"
+        # echo "$tempfile"
+        eless_basic "$tempfile" \
+                    --eval '(progn (set-visited-file-name nil) (rename-buffer "*stdin*" :unique))'
+    fi
+else
+    eless_basic "$@"
+fi
+
+#* References:
+#  http://superuser.com/a/843744/209371 - Basis for the above script
+#  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin
+#  https://github.com/dj08/utils-generic/blob/master/eless
+#
+#* Other bindings in `view-mode':
+#|--------+-------------------------------------------------------------------------|
+#| h or ? | Search for 'View minor mode' in that buffer to get this help.           |
+#| Digits | Provide prefix arguments                                                |
+#| <      | Move to the beginning of buffer.                                        |
+#| >      | Move to the end of buffer.                                              |
+#| o      | Scroll so that buffer end is at last line of window.                    |
+#| z      | Like  SPC  but with prefix sets "page size" to prefix.                  |
+#| w      | Like  DEL  but with prefix sets "page size" to prefix.                  |
+#| d      | Scroll forward "half page size" lines.  With prefix, sets               |
+#|        | "half page size" to prefix lines and scrolls forward that much.         |
+#| u      | Scroll backward "half page size" lines.  With prefix, sets              |
+#|        | "half page size" to prefix lines and scrolls backward that much.        |
+#| F      | Revert-buffer if necessary and scroll forward.                          |
+#|        | Use this to view a changing file.                                       |
+#| =      | Prints the current line number.                                         |
+#| %      | Goes prefix argument (default 100) percent into buffer.                 |
+#| g      | Goes to line given by prefix argument (default first line).             |
+#| .      | Set the mark.                                                           |
+#| x      | Exchanges point and mark.                                               |
+#| @      | Return to mark and pops mark ring.                                      |
+#|        | Mark ring is pushed at start of every successful search and when        |
+#|        | Jump to line occurs.  The mark is set on jump to buffer start or end.   |
+#| m      | Save current position in character register.                            |
+#| '      | Go to position saved in character register.                             |
+#| /      | Searches forward for regular expression, starting after current page.   |
+#|        | ! and @ have a special meaning at the beginning of the regexp.          |
+#|        | ! means search for a line with no match for regexp.  @ means start      |
+#|        | Search at beginning (end for backward search) of buffer.                |
+#| \      | Searches backward for regular expression, starting before current page. |
+#| n      | Searches forward for last regular expression.                           |
+#| p      | Searches backward for last regular expression.                          |
+#| E      | Exit View mode, and make the current buffer editable                    |
+#|        | Even if it was not editable before entry to View mode.                  |
+#| Q      | Quit View mode, restoring all windows to previous state.                |
+#| c      | Quit View mode and maybe switch buffers, but don't kill this buffer.    |
+#| C      | Quit View mode, kill current buffer and go back to other buffer.        |
+#|--------+-------------------------------------------------------------------------|
