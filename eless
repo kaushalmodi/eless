@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-20 15:50:12 kmodi>
+# Time-stamp: <2017-04-20 16:11:52 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -47,7 +47,7 @@
 # Initialize variables
 no_window_arg='-nw'             # Run emacs with -nw by default
 debug=0
-user_args=''
+emacs_args=''
 piped_data=''
 
 input_from_pipe_flag=0
@@ -70,7 +70,7 @@ then
     # eless foo | cat -
     if [[ ${debug} -eq 1 ]]
     then
-        echo "-- Input from terminal --"
+        echo "--> Input from terminal"
     fi
     input_from_pipe_flag=0
 else # Script is getting input from pipe or file - non-interactive
@@ -79,15 +79,9 @@ else # Script is getting input from pipe or file - non-interactive
     piped_data="$(cat)"
     if [[ ${debug} -eq 1 ]]
     then
-        echo "-- Input from pipe/file --"
+        echo "--> Input from pipe/file"
     fi
     input_from_pipe_flag=1
-fi
-
-if [[ ${debug} -eq 1 ]]
-then
-    echo "User Args     : ${user_args[@]}"
-    echo "Pipe Contents : ${piped_data}"
 fi
 
 # http://stackoverflow.com/a/911213/1219634
@@ -97,7 +91,7 @@ then
     # echo bar | eless foo
     if [[ ${debug} -eq 1 ]]
     then
-        echo "-- Output to terminal --"
+        echo "    Output to terminal -->"
     fi
     output_to_pipe_flag=0
 else # Output is going to a pipe, file?
@@ -105,12 +99,12 @@ else # Output is going to a pipe, file?
     # echo bar | eless foo | cat -
     if [[ ${debug} -eq 1 ]]
     then
-        echo "-- Output to a pipe --"
+        echo "    Output to a pipe -->"
     fi
     output_to_pipe_flag=1
 fi
 
-user_args=()
+emacs_args=()
 for var in "$@"
 do
     # echo "var : $var"
@@ -124,7 +118,7 @@ do
     then
         do_nothing=1            # Ignore the -nw switch if passed by user
     else
-        user_args=("${user_args[@]}" "${var}")
+        emacs_args=("${emacs_args[@]}" "${var}")
     fi
 done
 
@@ -135,10 +129,17 @@ then
     no_window_arg=''
 fi
 
+if [[ ! (${no_window_arg} == '') ]]
+then
+    emacs_args=("${no_window_arg}" "${emacs_args[@]}")
+fi
+
 if [[ ${debug} -eq 1 ]]
 then
     echo "Raw Args      : $@"
     echo "No Window Arg : ${no_window_arg}"
+    echo "Emacs Args    : ${emacs_args[@]}"
+    echo "Pipe Contents : ${piped_data}"
 fi
 
 # Basic emacs function to provide 'less'-like capability
@@ -151,7 +152,6 @@ function emacs_Q_view_mode {
         echo "Args in emacs_Q_view_mode : $@"
     fi
     \emacs -Q "$@" \
-           ${no_window_arg} \
            -f view-mode \
            --eval '(progn
                      ;; No clutter
@@ -244,7 +244,7 @@ else
             echo "temp file: $tempfile"
         fi
         cmd="emacs_Q_view_mode $tempfile \
-                         ${user_args[@]} \
+                         ${emacs_args[@]} \
                          --eval '(progn
                                    (set-visited-file-name nil)
                                    (rename-buffer \"*stdin*\" :unique)
@@ -253,11 +253,11 @@ else
         # Below else condition is reached when you do this:
         #   eless foo.txt
     else
-        cmd="emacs_Q_view_mode ${user_args[@]}"
+        cmd="emacs_Q_view_mode ${emacs_args[@]}"
     fi
     if [[ ${debug} -eq 1 ]]
     then
-        echo "Eless Command: $cmd"
+        echo "Eless Command : $cmd"
     fi
     eval "$cmd"
 fi
