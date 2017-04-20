@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-20 15:00:55 kmodi>
+# Time-stamp: <2017-04-20 15:24:05 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
 # It basically opens the file (or stdin) in stock emacs in `view-mode'. Then
 # you can do the following:
+#
+#* Switches to this script
+#|------+-------------------------|
+#| -gui | Run emacs in GUI mode   |
+#| -D   | Run with debug messages |
+#|------+-------------------------|
 #
 #* Common bindings in `view-mode':
 #|------------+------------------------------------------------------------------------------|
@@ -20,6 +26,7 @@
 #| e          | Quit the `view-mode' and use that emacs session as usual to modify           |
 #|            | the opened file if needed.                                                   |
 #|------------+------------------------------------------------------------------------------|
+#
 #** Custom bindings
 #|--------+------------------------------|
 #| q      | Quit emacs                   |
@@ -36,9 +43,9 @@
 #    cat foo.txt | eless -          # This will not work with -nw; will force GUI mode
 #    cat foo.txt | eless            # That hyphen is implicit. This will not work with -nw; will force GUI mode
 #    cat foo.txt | grep bar | eless # Same as above
-#    eless foo.txt -D               # Debug this script
 #
 # Initialize variables
+no_window_arg='-nw'             # Run emacs with -nw by default
 debug=0
 user_args=''
 piped_data=''
@@ -101,19 +108,28 @@ do
     if [[ "${var}" == '-D' ]]
     then
         debug=1
-    elif [[ "${var}" == '-nw' ]] && [[ "${input_from_pipe_flag}" -eq 1 ]]
+    elif [[ "${var}" == '-gui' ]]
     then
-        # This is required because -nw does not work when emacs is receiving
-        # input from a pipe.
-        do_nothing=1            # This line cannot be just a plain comment
+        no_window_arg=''
+    elif [[ "${var}" == '-nw' ]]
+    then
+        do_nothing=1            # Ignore the -nw switch if passed by user
     else
         user_args=("${user_args[@]}" "${var}")
     fi
 done
 
+if [[ "${input_from_pipe_flag}" -eq 1 ]]
+then
+    # This is required because -nw does not work when emacs is receiving
+    # input from a pipe.
+    no_window_arg=''
+fi
+
 if [[ ${debug} -eq 1 ]]
 then
-    echo "Raw Args : $@"
+    echo "Raw Args      : $@"
+    echo "No Window Arg : ${no_window_arg}"
 fi
 
 # Basic emacs function to provide 'less'-like capability
@@ -126,6 +142,7 @@ function emacs_Q_view_mode {
         echo "Args in emacs_Q_view_mode : $@"
     fi
     \emacs -Q "$@" \
+           ${no_window_arg} \
            -f view-mode \
            --eval '(progn
                      ;; My custom functions
