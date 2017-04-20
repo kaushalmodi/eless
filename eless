@@ -53,6 +53,15 @@ piped_data=''
 input_from_pipe_flag=0
 output_to_pipe_flag=0
 
+for var in "$@"
+do
+    # echo "var : $var"
+    if [[ "${var}" == '-D' ]]
+    then
+        debug=1
+    fi
+done
+
 # Figure out if eless if getting input from a pipe or sending output to a pipe
 # https://gist.github.com/davejamesmiller/1966557
 if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interactive
