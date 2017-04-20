@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-# Time-stamp: <2016-11-28 11:44:43 kmodi>
+# Time-stamp: <2017-04-20 14:02:16 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
 # It basically opens the file (or stdin) in stock emacs in `view-mode'. Then
 # you can do the following:
-#
-# Caveat: This will have to work with emacs GUI. Cannot get this to work with
-#         the emacs -nw option.
 #
 #* Common bindings in `view-mode':
 #|------------+------------------------------------------------------------------------------|
@@ -20,55 +17,186 @@
 #| s          | Do forward incremental search.                                               |
 #| r          | Do reverse incremental search.                                               |
 #|------------+------------------------------------------------------------------------------|
-#| q          | Quit emacs. (This is a custom binding set in this script.)                   |
 #| e          | Quit the `view-mode' and use that emacs session as usual to modify           |
 #|            | the opened file if needed.                                                   |
 #|------------+------------------------------------------------------------------------------|
+#** Custom bindings
+#|--------+------------------------------|
+#| q      | Quit emacs                   |
+#| n      | Next line                    |
+#| p      | Previous line                |
+#| & or k | Keep lines matching regexp   |
+#| ! or K | Delete lines matching regexp |
+#| t      | Toggle line truncation       |
+#|--------+------------------------------|
 #
-#* Usage
+#* Usage Examples
 #
-#    eless foo.txt
-#    cat foo.txt | eless -
-#    cat foo.txt | eless # That hyphen is implicit
+#    eless foo.txt                  # This will work with -nw too
+#    cat foo.txt | eless -          # This will not work with -nw; will force GUI mode
+#    cat foo.txt | eless            # That hyphen is implicit. This will not work with -nw; will force GUI mode
+#    cat foo.txt | grep bar | eless # Same as above
+#    eless foo.txt -D               # Debug this script
+#
+# Initialize variables
+debug=0
+user_args=''
+piped_data=''
 
-function eless_basic { # Basic emacs function to provide 'less'-like capability
+input_from_pipe_flag=0
+output_to_pipe_flag=0
 
-    # Using '-nw' gives the error:
-    # emacs: standard input is not a tty
-    # \emacs -Q -nw "$@"
-    \emacs -Q "$@" \
-           -f view-mode \
-           --eval '(define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))' \
-           > /dev/null 2>&1
-}
-
-# If the argument is '-' then write stdin to a $tempfile and open the $tempfile.
-# http://stackoverflow.com/a/911213/1219634
-# For "-t FD", when FD is 1 (stdout), "-t 1" returns true if the output is
-# pointing to the terminal instead of to another process.
-if [[ ( $# -ge 1 && "$1"=="-" ) || ( -t 1 ) ]]
+# Figure out if eless if getting input from a pipe or sending output to a pipe
+# https://gist.github.com/davejamesmiller/1966557
+if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interactive
 then
-    if [[ -e /dev/stdin ]] # If stdin exists, use it. Else use tmpfile approach.
+    # eless foo
+    # eless foo | cat -
+    if [[ ${debug} -eq 1 ]]
     then
-        eless_basic --insert /dev/stdin \
-                    --eval '(progn (set-visited-file-name nil) (rename-buffer "*stdin*" :unique))'
-    else
-        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
-        cat - > "$tempfile"
-        # echo "$tempfile"
-        eless_basic "$tempfile" \
-                    --eval '(progn (set-visited-file-name nil) (rename-buffer "*stdin*" :unique))'
+        echo "-- Input from terminal --"
     fi
-else
-    eless_basic "$@"
+    input_from_pipe_flag=0
+else # Script is getting input from pipe or file - non-interactive
+    # echo bar | eless foo
+    # echo bar | eless foo | cat -
+    piped_data="$(cat)"
+    if [[ ${debug} -eq 1 ]]
+    then
+        echo "-- Input from pipe/file --"
+    fi
+    input_from_pipe_flag=1
 fi
 
-#* References:
-#  http://superuser.com/a/843744/209371 - Basis for the above script
-#  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin
-#  https://github.com/dj08/utils-generic/blob/master/eless
-#
-#* Other bindings in `view-mode':
+if [[ ${debug} -eq 1 ]]
+then
+    echo "User Args     : ${user_args[@]}"
+    echo "Pipe Contents : ${piped_data}"
+fi
+
+# http://stackoverflow.com/a/911213/1219634
+if [[ -t 1 ]] # Output is going to the terminal
+then
+    # eless foo
+    # echo bar | eless foo
+    if [[ ${debug} -eq 1 ]]
+    then
+        echo "-- Output to terminal --"
+    fi
+    output_to_pipe_flag=0
+else # Output is going to a pipe, file?
+    # eless foo | cat -
+    # echo bar | eless foo | cat -
+    if [[ ${debug} -eq 1 ]]
+    then
+        echo "-- Output to a pipe --"
+    fi
+    output_to_pipe_flag=1
+fi
+
+user_args=()
+for var in "$@"
+do
+    # echo "var : $var"
+    if [[ "${var}" == '-D' ]]
+    then
+        debug=1
+    elif [[ "${var}" == '-nw' ]] && [[ "${input_from_pipe_flag}" -eq 1 ]]
+    then
+        # This is required because -nw does not work when emacs is receiving
+        # input from a pipe.
+        do_nothing=1            # This line cannot be just a plain comment
+    else
+        user_args=("${user_args[@]}" "${var}")
+    fi
+done
+
+if [[ ${debug} -eq 1 ]]
+then
+    echo "Raw Args : $@"
+fi
+
+# Basic emacs function to provide 'less'-like capability
+function eless_basic {
+
+    if [[ ${debug} -eq 1 ]]
+    then
+        # Here $@ is the list of arguments passed specifically to eless_basic,
+        # not to eless.
+        echo "Args in eless_basic : $@"
+    fi
+    \emacs -Q "$@" \
+           -f view-mode \
+           --eval '(progn
+                     ;; My custom functions
+                     (defun m/keep-lines ()
+                       (interactive)
+                       (let ((inhibit-read-only t))          ; ignore read-only status of buffer
+                         (save-excursion
+                           (goto-char (point-min))
+                           (call-interactively (quote keep-lines)))))
+
+                     (defun m/delete-matching-lines ()
+                       (interactive)
+                       (let ((inhibit-read-only t))          ; ignore read-only status of buffer
+                         (save-excursion
+                           (goto-char (point-min))
+                           (call-interactively (quote delete-matching-lines)))))
+
+                     (fset (quote yes-or-no-p) (quote y-or-n-p)) ; Use y or n instead of yes or no
+
+                     ;; My custom bindings
+                     (define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))
+                     (define-key view-mode-map (kbd "n") (quote next-line))
+                     (define-key view-mode-map (kbd "p") (quote previous-line))
+                     (define-key view-mode-map (kbd "&") (quote m/keep-lines))
+                     (define-key view-mode-map (kbd "k") (quote m/keep-lines))
+                     (define-key view-mode-map (kbd "!") (quote m/delete-matching-lines))
+                     (define-key view-mode-map (kbd "K") (quote m/delete-matching-lines))
+                     (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
+                   )' \
+                       > /dev/null 2>&1
+}
+
+# Below if condition is reached if you try to do this:
+#   eless foo.txt | grep bar .. Not allowed.
+if [[ ${output_to_pipe_flag} -eq 1 ]]
+then
+    echo "This script is not supposed to send output to a pipe"
+    exit 1
+else
+    # Below if condition is reached when you do this:
+    #   cat foo.txt | eless, or
+    #   cat foo.txt | eless -
+    # i.e. Input to eless is coming through a pipe (from cat, in above example)
+    if [[ ${input_from_pipe_flag} -eq 1 ]]
+    then
+        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
+        echo "${piped_data}" > "$tempfile"
+        if [[ ${debug} -eq 1 ]]
+        then
+            echo "temp file: $tempfile"
+        fi
+        cmd="eless_basic $tempfile \
+                         ${user_args[@]} \
+                         --eval '(progn
+                                   (set-visited-file-name nil)
+                                   (rename-buffer \"*stdin*\" :unique)
+                                 )'"
+
+        # Below else condition is reached when you do this:
+        #   eless foo.txt
+    else
+        cmd="eless_basic ${user_args[@]}"
+    fi
+    if [[ ${debug} -eq 1 ]]
+    then
+        echo "Eless Command: $cmd"
+    fi
+    eval "$cmd"
+fi
+
+#* Other default bindings in `view-mode':
 #|--------+-------------------------------------------------------------------------|
 #| h or ? | Search for 'View minor mode' in that buffer to get this help.           |
 #| Digits | Provide prefix arguments                                                |
@@ -98,11 +226,15 @@ fi
 #|        | ! means search for a line with no match for regexp.  @ means start      |
 #|        | Search at beginning (end for backward search) of buffer.                |
 #| \      | Searches backward for regular expression, starting before current page. |
-#| n      | Searches forward for last regular expression.                           |
-#| p      | Searches backward for last regular expression.                          |
 #| E      | Exit View mode, and make the current buffer editable                    |
 #|        | Even if it was not editable before entry to View mode.                  |
 #| Q      | Quit View mode, restoring all windows to previous state.                |
 #| c      | Quit View mode and maybe switch buffers, but don't kill this buffer.    |
 #| C      | Quit View mode, kill current buffer and go back to other buffer.        |
 #|--------+-------------------------------------------------------------------------|
+#
+#* References:
+#  http://superuser.com/a/843744/209371
+#  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin (Kept just for
+#    reference, not using this in this script any more.)
+#  https://github.com/dj08/utils-generic/blob/master/eless
