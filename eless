@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-20 16:11:52 kmodi>
+# Time-stamp: <2017-04-20 18:52:01 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -47,12 +47,14 @@
 #    cat foo.txt | eless -          # This will not work with -nw; will force GUI mode
 #    cat foo.txt | eless            # That hyphen is implicit. This will not work with -nw; will force GUI mode
 #    cat foo.txt | grep bar | eless # Same as above
-#
+#    PAGER=eless man grep           # If the environemnt variable PAGER is set to eless, launches man pages in eless (GUI mode)
+
 # Initialize variables
 no_window_arg='-nw'             # Run emacs with -nw by default
 debug=0
 emacs_args=''
 piped_data=''
+cmd=''
 
 input_from_pipe_flag=0
 output_to_pipe_flag=0
@@ -246,17 +248,50 @@ else
     if [[ ${input_from_pipe_flag} -eq 1 ]]
     then
         tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
-        echo "${piped_data}" > "$tempfile"
         if [[ ${debug} -eq 1 ]]
         then
             echo "temp file: $tempfile"
         fi
-        cmd="emacs_Q_view_mode $tempfile \
+        echo "${piped_data}" > ${tempfile}
+
+        # Parse the first line of the piped data to check if it's a man page
+        first_line_piped_data=$(head -n 1 ${tempfile})
+        if [[ ${debug} -eq 1 ]]
+        then
+            echo "first_line_piped_data = ${first_line_piped_data}"
+        fi
+        # The first line of man pages is assumed to be
+        #   FOO(1)  something something something FOO(1)
+        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Z]+\([0-9]+\))(?=\s+.*?\1$)')
+
+        if [[ -z ${man_page} ]] # No man page detected
+        then
+            if [[ ${debug} -eq 1 ]]
+            then
+                echo "No man page detected"
+            fi
+            cmd="emacs_Q_view_mode ${tempfile} \
                          ${emacs_args[@]} \
                          --eval '(progn
                                    (set-visited-file-name nil)
                                    (rename-buffer \"*stdin*\" :unique)
                                  )'"
+        else
+            # This now allows setting the PAGER environment variable to eless.
+            # After setting PAGER variable to eless, try something like
+            # `man grep'.. That will launch the man page in eless in GUI mode.
+            if [[ ${debug} -eq 1 ]]
+            then
+                echo "Man Page = ${man_page}"
+            fi
+            cmd="emacs_Q_view_mode \
+                         ${emacs_args[@]} \
+                         --eval '(progn
+                                   (man (downcase \"${man_page}\"))
+                                   (delete-window)
+                                 )'"
+
+        fi
 
         # Below else condition is reached when you do this:
         #   eless foo.txt
