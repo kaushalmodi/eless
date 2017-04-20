@@ -154,6 +154,24 @@ function emacs_Q_view_mode {
            ${no_window_arg} \
            -f view-mode \
            --eval '(progn
+                     ;; No clutter
+                     (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
+                     (if (fboundp (quote menu-bar-mode)) (menu-bar-mode -1))
+
+                     ;; Pleasant dark theme
+                     (load-theme (quote tango-dark) :no-confirm)
+
+                     ;; Show line and column numbers in the mode-line
+                     (line-number-mode 1)
+                     (column-number-mode 1)
+
+                     ;; Truncate long lines by default
+                     (setq truncate-partial-width-windows nil) ; respect the value of truncate-lines
+                     (toggle-truncate-lines +1)
+
+                     ;; Highlight the current line
+                     (hl-line-mode 1)
+
                      ;; My custom functions
                      (defun m/keep-lines ()
                        (interactive)
