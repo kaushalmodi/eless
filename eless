@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-20 15:24:05 kmodi>
+# Time-stamp: <2017-04-20 15:50:12 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -187,6 +187,24 @@ function emacs_Q_view_mode {
                            (goto-char (point-min))
                            (call-interactively (quote delete-matching-lines)))))
 
+                     (defun m/frame-width-half (double)
+                       (interactive "P")
+                       (let ((frame-resize-pixelwise t)   ;Do not round frame sizes to character h/w
+                             (factor (if double 2 0.5)))
+                         (set-frame-size nil (round (* factor (frame-text-width))) (frame-text-height) :pixelwise)))
+                     (defun m/frame-width-double ()
+                       (interactive)
+                       (m/frame-width-half :double))
+
+                     (defun m/frame-height-half (double)
+                       (interactive "P")
+                       (let ((frame-resize-pixelwise t)   ;Do not round frame sizes to character h/w
+                             (factor (if double 2 0.5)))
+                         (set-frame-size nil  (frame-text-width) (round (* factor (frame-text-height))) :pixelwise)))
+                     (defun m/frame-height-double ()
+                       (interactive)
+                       (m/frame-height-half :double))
+
                      (fset (quote yes-or-no-p) (quote y-or-n-p)) ; Use y or n instead of yes or no
 
                      ;; My custom bindings
@@ -198,6 +216,10 @@ function emacs_Q_view_mode {
                      (define-key view-mode-map (kbd "!") (quote m/delete-matching-lines))
                      (define-key view-mode-map (kbd "K") (quote m/delete-matching-lines))
                      (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
+                     (global-set-key (kbd "C-<right>") (quote m/frame-width-double))
+                     (global-set-key (kbd "C-<left>") (quote m/frame-width-half))
+                     (global-set-key (kbd "C-<down>") (quote m/frame-height-double))
+                     (global-set-key (kbd "C-<up>") (quote m/frame-height-half))
                    )' \
                        > /dev/null 2>&1
 }
