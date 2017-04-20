@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-20 14:02:16 kmodi>
+# Time-stamp: <2017-04-20 15:00:55 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -117,13 +117,13 @@ then
 fi
 
 # Basic emacs function to provide 'less'-like capability
-function eless_basic {
+function emacs_Q_view_mode {
 
     if [[ ${debug} -eq 1 ]]
     then
-        # Here $@ is the list of arguments passed specifically to eless_basic,
+        # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
         # not to eless.
-        echo "Args in eless_basic : $@"
+        echo "Args in emacs_Q_view_mode : $@"
     fi
     \emacs -Q "$@" \
            -f view-mode \
@@ -177,7 +177,7 @@ else
         then
             echo "temp file: $tempfile"
         fi
-        cmd="eless_basic $tempfile \
+        cmd="emacs_Q_view_mode $tempfile \
                          ${user_args[@]} \
                          --eval '(progn
                                    (set-visited-file-name nil)
@@ -187,7 +187,7 @@ else
         # Below else condition is reached when you do this:
         #   eless foo.txt
     else
-        cmd="eless_basic ${user_args[@]}"
+        cmd="emacs_Q_view_mode ${user_args[@]}"
     fi
     if [[ ${debug} -eq 1 ]]
     then
