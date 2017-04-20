@@ -28,14 +28,18 @@
 #|------------+------------------------------------------------------------------------------|
 #
 #** Custom bindings
-#|--------+------------------------------|
-#| q      | Quit emacs                   |
-#| n      | Next line                    |
-#| p      | Previous line                |
-#| & or k | Keep lines matching regexp   |
-#| ! or K | Delete lines matching regexp |
-#| t      | Toggle line truncation       |
-#|--------+------------------------------|
+#|--------------+------------------------------|
+#| q            | Quit emacs                   |
+#| o            | Occur                        |
+#| n            | Next line                    |
+#| p            | Previous line                |
+#| & or k       | Keep lines matching regexp   |
+#| ! or K       | Delete lines matching regexp |
+#| t            | Toggle line truncation       |
+#| C-right/left | Inc/Dec frame width          |
+#| C-down/up    | Inc/Dec frame height         |
+#| = or + or -  | Adjust font size             |
+#|--------------+------------------------------|
 #
 #* Usage Examples
 #
@@ -211,11 +215,15 @@ function emacs_Q_view_mode {
                      (define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))
                      (define-key view-mode-map (kbd "n") (quote next-line))
                      (define-key view-mode-map (kbd "p") (quote previous-line))
+                     (define-key view-mode-map (kbd "o") (quote occur))
                      (define-key view-mode-map (kbd "&") (quote m/keep-lines))
                      (define-key view-mode-map (kbd "k") (quote m/keep-lines))
                      (define-key view-mode-map (kbd "!") (quote m/delete-matching-lines))
                      (define-key view-mode-map (kbd "K") (quote m/delete-matching-lines))
                      (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
+                     (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
+                     (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
+                     (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
                      (global-set-key (kbd "C-<right>") (quote m/frame-width-double))
                      (global-set-key (kbd "C-<left>") (quote m/frame-width-half))
                      (global-set-key (kbd "C-<down>") (quote m/frame-height-double))
@@ -268,7 +276,6 @@ fi
 #| Digits | Provide prefix arguments                                                |
 #| <      | Move to the beginning of buffer.                                        |
 #| >      | Move to the end of buffer.                                              |
-#| o      | Scroll so that buffer end is at last line of window.                    |
 #| z      | Like  SPC  but with prefix sets "page size" to prefix.                  |
 #| w      | Like  DEL  but with prefix sets "page size" to prefix.                  |
 #| d      | Scroll forward "half page size" lines.  With prefix, sets               |
