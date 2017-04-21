@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-20 18:52:01 kmodi>
+# Time-stamp: <2017-04-20 23:36:47 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -28,18 +28,19 @@
 #|------------+------------------------------------------------------------------------------|
 #
 #** Custom bindings
-#|--------------+------------------------------|
-#| q            | Quit emacs                   |
-#| o            | Occur                        |
-#| n            | Next line                    |
-#| p            | Previous line                |
-#| & or k       | Keep lines matching regexp   |
-#| ! or K       | Delete lines matching regexp |
-#| t            | Toggle line truncation       |
-#| C-right/left | Inc/Dec frame width          |
-#| C-down/up    | Inc/Dec frame height         |
-#| = or + or -  | Adjust font size             |
-#|--------------+------------------------------|
+#|--------------+--------------------------------------------------|
+#| q            | Quit emacs                                       |
+#| o            | Occur                                            |
+#| n            | Next line                                        |
+#| p            | Previous line                                    |
+#| & or k       | Keep lines matching regexp                       |
+#| ! or K       | Delete lines matching regexp                     |
+#| g or F5      | Revert buffer (probably after above keep/delete) |
+#| t            | Toggle line truncation                           |
+#| C-right/left | Inc/Dec frame width                              |
+#| C-down/up    | Inc/Dec frame height                             |
+#| = or + or -  | Adjust font size                                 |
+#|--------------+--------------------------------------------------|
 #
 #* Usage Examples
 #
@@ -211,6 +212,13 @@ function emacs_Q_view_mode {
                        (interactive)
                        (m/frame-height-half :double))
 
+                     (defun m/revert-buffer-retain-view-mode ()
+                       (interactive)
+                       (let ((view-mode-state view-mode)) ;save the current state of view-mode
+                         (revert-buffer)
+                         (when view-mode-state
+                           (view-mode 1))))
+
                      (fset (quote yes-or-no-p) (quote y-or-n-p)) ; Use y or n instead of yes or no
 
                      ;; My custom bindings
@@ -222,6 +230,8 @@ function emacs_Q_view_mode {
                      (define-key view-mode-map (kbd "k") (quote m/keep-lines))
                      (define-key view-mode-map (kbd "!") (quote m/delete-matching-lines))
                      (define-key view-mode-map (kbd "K") (quote m/delete-matching-lines))
+                     (define-key view-mode-map (kbd "g") (quote m/revert-buffer-retain-view-mode))
+                     (global-set-key (kbd "<f5>") (quote m/revert-buffer-retain-view-mode))
                      (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
                      (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
                      (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
