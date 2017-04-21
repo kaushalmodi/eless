@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-21 11:16:23 kmodi>
+# Time-stamp: <2017-04-21 11:58:58 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -52,12 +52,20 @@
 #    PAGER=eless man grep           # If the environment variable PAGER is set to eless, launches man pages in eless (GUI mode)
 #    diff foo bar | eless           # Colored diff
 #    eless .                        # Open dired in the current directory (enhanced ls)
-#
+
+set -o pipefail # http://redsymbol.net/articles/unofficial-bash-strict-mode
+# set -e # Not setting this, else "grep --help | eless" does not work.
+# set -u # Not setting this, else I get "emacs_args[@]: unbound variable" error
+
+# IFS=$'\n\t' # Separate fields in a sequence only at newlines and tab characters
+IFS=$' ' # Separate each field in a sequence at space characters
+
 # Initialize variables
 no_window_arg='-nw'             # Run emacs with -nw by default
 debug=0
 emacs_args=''
 piped_data=''
+tempfile=''
 cmd=''
 
 input_from_pipe_flag=0
@@ -126,7 +134,7 @@ do
         no_window_arg=''
     elif [[ "${var}" == '-nw' ]]
     then
-        do_nothing=1            # Ignore the -nw switch if passed by user
+        : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
     else
         emacs_args=("${emacs_args[@]}" "${var}")
     fi
@@ -146,9 +154,9 @@ fi
 
 if [[ ${debug} -eq 1 ]]
 then
-    echo "Raw Args      : $@"
+    echo "Raw Args      : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
     echo "No Window Arg : ${no_window_arg}"
-    echo "Emacs Args    : ${emacs_args[@]}"
+    echo "Emacs Args    : ${emacs_args[*]}"
     echo "Pipe Contents : ${piped_data}"
 fi
 
@@ -159,11 +167,11 @@ function emacs_Q_view_mode {
     then
         # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
         # not to eless.
-        echo "Args in emacs_Q_view_mode : $@"
+        echo "Args in emacs_Q_view_mode : $*"
     fi
-    \emacs -Q "$@" \
-           -f view-mode \
-           --eval '(progn
+    emacs -Q "$@" \
+          -f view-mode \
+          --eval '(progn
                      ;; Keep the default-directory to be the same from where
                      ;; this script was launched from; useful during C-x C-f
                      (setq default-directory "'"$(pwd)"'/")
@@ -302,15 +310,15 @@ else
     # i.e. Input to eless is coming through a pipe (from cat, in above example)
     if [[ ${input_from_pipe_flag} -eq 1 ]]
     then
-        tempfile="$(mktemp emacs-stdin-$USER.XXXXXXX --tmpdir)"
+        tempfile="$(mktemp emacs-stdin-"$USER".XXXXXXX --tmpdir)" # https://github.com/koalaman/shellcheck/wiki/SC2086
         if [[ ${debug} -eq 1 ]]
         then
-            echo "temp file: $tempfile"
+            echo "Temp File : $tempfile"
         fi
-        echo "${piped_data}" > ${tempfile}
+        echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
 
         # Parse the first line of the piped data to check if it's a man page
-        first_line_piped_data=$(head -n 1 ${tempfile})
+        first_line_piped_data=$(head -n 1 "${tempfile}")
         if [[ ${debug} -eq 1 ]]
         then
             echo "first_line_piped_data = ${first_line_piped_data}"
@@ -326,7 +334,7 @@ else
                 echo "No man page detected"
             fi
             cmd="emacs_Q_view_mode ${tempfile} \
-                         ${emacs_args[@]} \
+                         ${emacs_args[*]} \
                          --eval '(progn
                                    (set-visited-file-name nil)
                                    (rename-buffer \"*Stdin*\" :unique)
@@ -340,24 +348,27 @@ else
                 echo "Man Page = ${man_page}"
             fi
             cmd="emacs_Q_view_mode \
-                         ${emacs_args[@]} \
+                         ${emacs_args[*]} \
                          --eval '(progn
                                    (man (downcase \"${man_page}\"))
                                    (delete-window)
                                  )'"
 
         fi
-
         # Below else condition is reached when you do this:
         #   eless foo.txt
     else
-        cmd="emacs_Q_view_mode ${emacs_args[@]}"
+        cmd="emacs_Q_view_mode ${emacs_args[*]}"
     fi
     if [[ ${debug} -eq 1 ]]
     then
         echo "Eless Command : $cmd"
     fi
     eval "$cmd"
+    if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
+    then
+        rm -f "${tempfile}"
+    fi
 fi
 
 #* Other default bindings in `view-mode':
