@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-21 12:58:26 kmodi>
+# Time-stamp: <2017-04-21 15:18:01 kmodi>
 #
 #* About
-# Script to use emacs in the way 'less' is used.
-# It basically opens the file (or stdin) in stock emacs in `view-mode'. Then
-# you can do the following:
+# Script to use emacs to replace less, diff, man, probably ls too.
+# It basically opens the file (or stdin) in stock emacs in `view-mode'.
 #
-#* Switches to this script
+# This script uses the unofficial strict mode as explained in
+# http://redsymbol.net/articles/unofficial-bash-strict-mode
+#
+# Also checks have been done with www.shellcheck.net to have a level of
+# confidence that this script will be free of loopholes.. or is it? :)
+#
+#* Switches to this script:
 #|------+-------------------------|
 #| -gui | Run emacs in GUI mode   |
 #| -D   | Run with debug messages |
@@ -53,9 +58,9 @@
 #    diff foo bar | eless           # Colored diff
 #    eless .                        # Open dired in the current directory (enhanced ls)
 
-set -o pipefail # http://redsymbol.net/articles/unofficial-bash-strict-mode
+set -o pipefail
+set -e # Error out and exit the script when any line in this script returns an error
 set -u # Error out when unbound variables are found
-# set -e # Not setting this, else "grep --help | eless" does not work.
 
 # IFS=$'\n\t' # Separate fields in a sequence only at newlines and tab characters
 IFS=$' ' # Separate each field in a sequence at space characters
@@ -321,7 +326,9 @@ else
         fi
         # The first line of man pages is assumed to be
         #   FOO(1)  something something something FOO(1)
-        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Z]+\([0-9]+\))(?=\s+.*?\1$)')
+        # It is not mandatory for the below grep to always pass, so OR it with
+        # true so that "set -e" does not kill the script at this point.
+        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
 
         if [[ -z ${man_page} ]] # No man page detected
         then
