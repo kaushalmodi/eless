@@ -161,6 +161,10 @@ function emacs_Q_view_mode {
     \emacs -Q "$@" \
            -f view-mode \
            --eval '(progn
+                     ;; Keep the default-directory to be the same from where
+                     ;; this script was launched from; useful during C-x C-f
+                     (setq default-directory "'"$(pwd)"'/")
+
                      ;; No clutter
                      (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
                      (if (fboundp (quote menu-bar-mode)) (menu-bar-mode -1))
