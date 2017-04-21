@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-20 23:36:47 kmodi>
+# Time-stamp: <2017-04-21 00:42:17 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -49,6 +49,7 @@
 #    cat foo.txt | eless            # That hyphen is implicit. This will not work with -nw; will force GUI mode
 #    cat foo.txt | grep bar | eless # Same as above
 #    PAGER=eless man grep           # If the environemnt variable PAGER is set to eless, launches man pages in eless (GUI mode)
+#    diff foo bar | eless           # Colored diff
 
 # Initialize variables
 no_window_arg='-nw'             # Run emacs with -nw by default
@@ -223,6 +224,31 @@ function emacs_Q_view_mode {
                          (when view-mode-state
                            (view-mode 1))))
 
+                     (defun m/enable-diff-mode-maybe ()
+                       (interactive)
+                       (save-excursion
+                         (goto-char (point-min))
+                         (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" nil :noerror)
+                           (forward-line 1)
+                           (let ((diff-type (match-string-no-properties 1))
+                                 (diff-mode-enable nil))
+                             (cond
+                              ;; Line(s) added
+                              ((string= diff-type "a")
+                               (when (re-search-forward "^> " nil :noerror)
+                                 (setq diff-mode-enable t)))
+                              ;; Line(s) deleted or changed
+                              (t
+                               (when (re-search-forward "^< " nil :noerror)
+                                 (setq diff-mode-enable t))))
+                             (when diff-mode-enable
+                               (diff-mode)
+                               (rename-buffer "*Diff*" :unique)
+                               (view-mode 1)))))) ; Re-enable view-mode
+
+                     ;; Auto-enable diff-mode; diff foo bar | eless
+                     (m/enable-diff-mode-maybe)
+
                      (fset (quote yes-or-no-p) (quote y-or-n-p)) ; Use y or n instead of yes or no
 
                      ;; My custom bindings
@@ -288,7 +314,7 @@ else
                          ${emacs_args[@]} \
                          --eval '(progn
                                    (set-visited-file-name nil)
-                                   (rename-buffer \"*stdin*\" :unique)
+                                   (rename-buffer \"*Stdin*\" :unique)
                                  )'"
         else
             # This now allows setting the PAGER environment variable to eless.
