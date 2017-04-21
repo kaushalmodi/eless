@@ -178,7 +178,7 @@ function emacs_Q_view_mode {
                      (column-number-mode 1)
 
                      ;; Truncate long lines by default
-                     (setq truncate-partial-width-windows nil) ; respect the value of truncate-lines
+                     (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
                      (toggle-truncate-lines +1)
 
                      ;; Highlight the current line
@@ -187,21 +187,21 @@ function emacs_Q_view_mode {
                      ;; My custom functions
                      (defun m/keep-lines ()
                        (interactive)
-                       (let ((inhibit-read-only t))          ; ignore read-only status of buffer
+                       (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
                          (save-excursion
                            (goto-char (point-min))
                            (call-interactively (quote keep-lines)))))
 
                      (defun m/delete-matching-lines ()
                        (interactive)
-                       (let ((inhibit-read-only t))          ; ignore read-only status of buffer
+                       (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
                          (save-excursion
                            (goto-char (point-min))
                            (call-interactively (quote delete-matching-lines)))))
 
                      (defun m/frame-width-half (double)
                        (interactive "P")
-                       (let ((frame-resize-pixelwise t)   ;Do not round frame sizes to character h/w
+                       (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
                              (factor (if double 2 0.5)))
                          (set-frame-size nil (round (* factor (frame-text-width))) (frame-text-height) :pixelwise)))
                      (defun m/frame-width-double ()
@@ -210,7 +210,7 @@ function emacs_Q_view_mode {
 
                      (defun m/frame-height-half (double)
                        (interactive "P")
-                       (let ((frame-resize-pixelwise t)   ;Do not round frame sizes to character h/w
+                       (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
                              (factor (if double 2 0.5)))
                          (set-frame-size nil  (frame-text-width) (round (* factor (frame-text-height))) :pixelwise)))
                      (defun m/frame-height-double ()
@@ -244,12 +244,12 @@ function emacs_Q_view_mode {
                              (when diff-mode-enable
                                (diff-mode)
                                (rename-buffer "*Diff*" :unique)
-                               (view-mode 1)))))) ; Re-enable view-mode
+                               (view-mode 1)))))) ;Re-enable view-mode
 
                      ;; Auto-enable diff-mode; diff foo bar | eless
                      (m/enable-diff-mode-maybe)
 
-                     (fset (quote yes-or-no-p) (quote y-or-n-p)) ; Use y or n instead of yes or no
+                     (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 
                      ;; My custom bindings
                      (define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))
