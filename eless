@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-21 11:58:58 kmodi>
+# Time-stamp: <2017-04-21 12:58:26 kmodi>
 #
 #* About
 # Script to use emacs in the way 'less' is used.
@@ -54,16 +54,16 @@
 #    eless .                        # Open dired in the current directory (enhanced ls)
 
 set -o pipefail # http://redsymbol.net/articles/unofficial-bash-strict-mode
+set -u # Error out when unbound variables are found
 # set -e # Not setting this, else "grep --help | eless" does not work.
-# set -u # Not setting this, else I get "emacs_args[@]: unbound variable" error
 
 # IFS=$'\n\t' # Separate fields in a sequence only at newlines and tab characters
 IFS=$' ' # Separate each field in a sequence at space characters
 
 # Initialize variables
-no_window_arg='-nw'             # Run emacs with -nw by default
 debug=0
-emacs_args=''
+no_window_arg="-nw"
+emacs_args=("${no_window_arg}") # Run emacs with -nw by default
 piped_data=''
 tempfile=''
 cmd=''
@@ -122,7 +122,6 @@ else # Output is going to a pipe, file?
     output_to_pipe_flag=1
 fi
 
-emacs_args=()
 for var in "$@"
 do
     # echo "var : $var"
@@ -131,7 +130,9 @@ do
         debug=1
     elif [[ "${var}" == '-gui' ]]
     then
-        no_window_arg=''
+        # Delete the ${no_window_arg} from ${emacs_args[@]} array
+        # http://stackoverflow.com/a/16861932/1219634
+        emacs_args=("${emacs_args[@]/${no_window_arg}}")
     elif [[ "${var}" == '-nw' ]]
     then
         : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
@@ -142,20 +143,15 @@ done
 
 if [[ "${input_from_pipe_flag}" -eq 1 ]]
 then
+    # Delete the ${no_window_arg} from ${emacs_args[@]} array
     # This is required because -nw does not work when emacs is receiving
     # input from a pipe.
-    no_window_arg=''
-fi
-
-if [[ ! (${no_window_arg} == '') ]]
-then
-    emacs_args=("${no_window_arg}" "${emacs_args[@]}")
+    emacs_args=("${emacs_args[@]/${no_window_arg}}")
 fi
 
 if [[ ${debug} -eq 1 ]]
 then
     echo "Raw Args      : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
-    echo "No Window Arg : ${no_window_arg}"
     echo "Emacs Args    : ${emacs_args[*]}"
     echo "Pipe Contents : ${piped_data}"
 fi
