@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-24 12:43:04 kmodi>
+# Time-stamp: <2017-04-24 13:05:36 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -295,11 +295,13 @@ function emacs_Q_view_mode {
                      ;; Auto-enable diff-mode; diff foo bar | eless
                      (eless/enable-diff-mode-maybe)
 
-                     ;; Disable view-mode if dired-mode is enabled
-                     (add-hook (quote dired-mode-hook) (lambda () (view-mode -1)))
-                     ;; Also if the current major-mode is already dired-mode, disable view-mode
+                     (defun eless/dired-mode-customization ()
+                       (view-mode -1) ;Disable view-mode if dired-mode is enabled
+                       (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode)))
+                     (add-hook (quote dired-mode-hook) (quote eless/dired-mode-customization))
+                     ;; Apply above customization if the current major-mode is already dired-mode
                      (when (derived-mode-p (quote dired-mode))
-                       (view-mode -1))
+                       (eless/dired-mode-customization))
 
                      (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 
@@ -318,10 +320,6 @@ function emacs_Q_view_mode {
                      (define-key view-mode-map (kbd "p") (quote previous-line))
                      (define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))
                      (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
-
-                     ;; dired-mode custom bindings
-                     (with-eval-after-load (quote dired-mode)
-                       (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode)))
 
                      ;; global custom bindings
                      (global-set-key (kbd "M-/") (quote hippie-expand))
