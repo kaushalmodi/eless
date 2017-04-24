@@ -178,8 +178,8 @@ function emacs_Q_view_mode {
                      (setq default-directory "'"$(pwd)"'/")
 
                      ;; No clutter
+                     (menu-bar-mode -1)
                      (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
-                     (if (fboundp (quote menu-bar-mode)) (menu-bar-mode -1))
 
                      ;; Pleasant dark theme
                      (load-theme (quote tango-dark) :no-confirm)
