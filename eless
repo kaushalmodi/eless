@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-21 15:18:01 kmodi>
+# Time-stamp: <2017-04-24 11:52:26 kmodi>
 #
 #* About
 # Script to use emacs to replace less, diff, man, probably ls too.
@@ -196,46 +196,46 @@ function emacs_Q_view_mode {
                      (hl-line-mode 1)
 
                      ;; My custom functions
-                     (defun m/keep-lines ()
+                     (defun eless/keep-lines ()
                        (interactive)
                        (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
                          (save-excursion
                            (goto-char (point-min))
                            (call-interactively (quote keep-lines)))))
 
-                     (defun m/delete-matching-lines ()
+                     (defun eless/delete-matching-lines ()
                        (interactive)
                        (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
                          (save-excursion
                            (goto-char (point-min))
                            (call-interactively (quote delete-matching-lines)))))
 
-                     (defun m/frame-width-half (double)
+                     (defun eless/frame-width-half (double)
                        (interactive "P")
                        (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
                              (factor (if double 2 0.5)))
                          (set-frame-size nil (round (* factor (frame-text-width))) (frame-text-height) :pixelwise)))
-                     (defun m/frame-width-double ()
+                     (defun eless/frame-width-double ()
                        (interactive)
-                       (m/frame-width-half :double))
+                       (eless/frame-width-half :double))
 
-                     (defun m/frame-height-half (double)
+                     (defun eless/frame-height-half (double)
                        (interactive "P")
                        (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
                              (factor (if double 2 0.5)))
                          (set-frame-size nil  (frame-text-width) (round (* factor (frame-text-height))) :pixelwise)))
-                     (defun m/frame-height-double ()
+                     (defun eless/frame-height-double ()
                        (interactive)
-                       (m/frame-height-half :double))
+                       (eless/frame-height-half :double))
 
-                     (defun m/revert-buffer-retain-view-mode ()
+                     (defun eless/revert-buffer-retain-view-mode ()
                        (interactive)
                        (let ((view-mode-state view-mode)) ;save the current state of view-mode
                          (revert-buffer)
                          (when view-mode-state
                            (view-mode 1))))
 
-                     (defun m/enable-diff-mode-maybe ()
+                     (defun eless/enable-diff-mode-maybe ()
                        (interactive)
                        (save-excursion
                          (goto-char (point-min))
@@ -258,7 +258,7 @@ function emacs_Q_view_mode {
                                (view-mode 1)))))) ;Re-enable view-mode
 
                      ;; Auto-enable diff-mode; diff foo bar | eless
-                     (m/enable-diff-mode-maybe)
+                     (eless/enable-diff-mode-maybe)
 
                      ;; Disable view-mode if dired-mode is enabled
                      (add-hook (quote dired-mode-hook) (lambda () (view-mode -1)))
@@ -269,15 +269,15 @@ function emacs_Q_view_mode {
                      (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 
                      ;; view-mode custom bindings
-                     (define-key view-mode-map (kbd "!") (quote m/delete-matching-lines))
-                     (define-key view-mode-map (kbd "&") (quote m/keep-lines))
+                     (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
+                     (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
                      (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
                      (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
                      (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
                      (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
-                     (define-key view-mode-map (kbd "K") (quote m/delete-matching-lines))
-                     (define-key view-mode-map (kbd "g") (quote m/revert-buffer-retain-view-mode))
-                     (define-key view-mode-map (kbd "k") (quote m/keep-lines))
+                     (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
+                     (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
+                     (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
                      (define-key view-mode-map (kbd "n") (quote next-line))
                      (define-key view-mode-map (kbd "o") (quote occur))
                      (define-key view-mode-map (kbd "p") (quote previous-line))
@@ -289,11 +289,11 @@ function emacs_Q_view_mode {
                        (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode)))
 
                      ;; global custom bindings
-                     (global-set-key (kbd "<f5>") (quote m/revert-buffer-retain-view-mode))
-                     (global-set-key (kbd "C-<right>") (quote m/frame-width-double))
-                     (global-set-key (kbd "C-<left>") (quote m/frame-width-half))
-                     (global-set-key (kbd "C-<down>") (quote m/frame-height-double))
-                     (global-set-key (kbd "C-<up>") (quote m/frame-height-half))
+                     (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
+                     (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
+                     (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
+                     (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
+                     (global-set-key (kbd "C-<up>") (quote eless/frame-height-half))
                    )' \
                        > /dev/null 2>&1
 }
