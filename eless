@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-24 12:26:41 kmodi>
+# Time-stamp: <2017-04-24 12:33:27 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -332,7 +332,7 @@ function emacs_Q_view_mode {
                      (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
                      (global-set-key (kbd "C-<up>") (quote eless/frame-height-half))
                    )' \
-                       > /dev/null 2>&1
+                       2>/dev/null
 }
 
 # Below if condition is reached if you try to do this:
