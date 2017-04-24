@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-24 11:52:26 kmodi>
+# Time-stamp: <2017-04-24 12:13:01 kmodi>
 #
 #* About
 # Script to use emacs to replace less, diff, man, probably ls too.
@@ -188,6 +188,26 @@ function emacs_Q_view_mode {
                      (line-number-mode 1)
                      (column-number-mode 1)
 
+                     (ido-mode 1)
+                     (setq ido-enable-flex-matching t)       ;Enable fuzzy search
+                     (setq ido-everywhere t)
+                     (setq ido-create-new-buffer (quote always)) ;Create a new buffer if no buffer matches substringv
+                     (setq ido-use-filename-at-point (quote guess)) ;Find file at point using ido
+                     (add-to-list (quote ido-ignore-buffers) "*Messages*")
+
+                     (setq-default indent-tabs-mode nil) ;Use spaces instead of tabs for indentation
+                     (setq x-select-enable-clipboard t)
+                     (setq x-select-enable-primary t)
+                     (setq save-interprogram-paste-before-kill t)
+                     (setq require-final-newline t)
+                     (setq visible-bell t)
+                     (setq load-prefer-newer t)
+                     (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
+
+                     (setq isearch-allow-scroll t) ;Allow scrolling using isearch
+                     ;; DEL during isearch should edit the search string, not jump back to the previous result.
+                     (define-key isearch-mode-map [remap isearch-delete-char] (quote isearch-del-char))
+
                      ;; Truncate long lines by default
                      (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
                      (toggle-truncate-lines +1)
@@ -289,6 +309,9 @@ function emacs_Q_view_mode {
                        (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode)))
 
                      ;; global custom bindings
+                     (global-set-key (kbd "M-/") (quote hippie-expand))
+                     (global-set-key (kbd "C-x C-b") (quote ibuffer))
+                     (global-set-key (kbd "C-c q") (quote query-replace-regexp))
                      (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
                      (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
                      (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
