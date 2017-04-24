@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-24 12:33:27 kmodi>
+# Time-stamp: <2017-04-24 12:43:04 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -60,6 +60,7 @@ less, diff, man, (probably ls too).
     PAGER=eless man grep           # If the environment variable PAGER is set to eless, launches man pages in eless (GUI mode)
     diff foo bar | eless           # Colored diff
     eless .                        # Open dired in the current directory (enhanced 'ls')
+    eless -h | eless               # See eless help ;-)
 "
 
 set -o pipefail
