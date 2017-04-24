@@ -1,62 +1,66 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-24 12:13:01 kmodi>
-#
-#* About
-# Script to use emacs to replace less, diff, man, probably ls too.
-# It basically opens the file (or stdin) in stock emacs in `view-mode'.
+# Time-stamp: <2017-04-24 12:26:41 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
 #
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
-#
-#* Switches to this script:
-#|------+-------------------------|
-#| -gui | Run emacs in GUI mode   |
-#| -D   | Run with debug messages |
-#|------+-------------------------|
-#
-#* Common bindings in `view-mode':
-#|--------------+------------------------------------------------------------------------------|
-#| SPC          | Scroll forward "page size" lines. With prefix scroll forward prefix lines.   |
-#| DEL or S-SPC | Scroll backward "page size" lines. With prefix scroll backward prefix lines. |
-#|              | (If your terminal does not support this, use xterm instead or using C-h.)    |
-#| RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
-#| y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
-#|--------------+------------------------------------------------------------------------------|
-#| s            | Do forward incremental search.                                               |
-#| r            | Do reverse incremental search.                                               |
-#|--------------+------------------------------------------------------------------------------|
-#| e            | Quit the `view-mode' and use that emacs session as usual to modify           |
-#|              | the opened file if needed.                                                   |
-#|--------------+------------------------------------------------------------------------------|
-#
-#** Custom bindings
-#|--------------+--------------------------------------------------------|
-#| ! or K       | Delete lines matching regexp                           |
-#| & or k       | Keep lines matching regexp                             |
-#| = or + or -  | Adjust font size                                       |
-#| A            | Auto-revert Tail Mode (like tail -f on current buffer) |
-#| C-down/up    | Inc/Dec frame height                                   |
-#| C-right/left | Inc/Dec frame width                                    |
-#| g or F5      | Revert buffer (probably after keep/delete lines)       |
-#| n            | Next line                                              |
-#| o            | Occur                                                  |
-#| p            | Previous line                                          |
-#| q            | Quit emacs                                             |
-#| t            | Toggle line truncation                                 |
-#|--------------+--------------------------------------------------------|
-#
-#* Usage Examples
-#
-#    eless foo.txt                  # This will work with -nw too
-#    cat foo.txt | eless -          # This will not work with -nw; will force GUI mode
-#    cat foo.txt | eless            # That hyphen is implicit. This will not work with -nw; will force GUI mode
-#    cat foo.txt | grep bar | eless # Same as above
-#    PAGER=eless man grep           # If the environment variable PAGER is set to eless, launches man pages in eless (GUI mode)
-#    diff foo bar | eless           # Colored diff
-#    eless .                        # Open dired in the current directory (enhanced ls)
+
+h="
+Script to run emacs in view-mode with some sane defaults in attempt to replace
+less, diff, man, (probably ls too).
+
+* Switches to this script
+|------+-------------------------|
+| -h   | Show this help          |
+| -gui | Run emacs in GUI mode   |
+| -D   | Run with debug messages |
+|------+-------------------------|
+
+* Common bindings in 'view-mode'
+|--------------+------------------------------------------------------------------------------|
+| SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
+| DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
+|              | (If your terminal does not support this, use xterm instead or using C-h.)    |
+| RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
+| y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
+|--------------+------------------------------------------------------------------------------|
+| s            | Do forward incremental search.                                               |
+| r            | Do reverse incremental search.                                               |
+|--------------+------------------------------------------------------------------------------|
+| e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
+|              | the opened file if needed.                                                   |
+|--------------+------------------------------------------------------------------------------|
+
+** Custom bindings
+|--------------+--------------------------------------------------------|
+| ! or K       | Delete lines matching regexp                           |
+| & or k       | Keep lines matching regexp                             |
+| = or + or -  | Adjust font size                                       |
+| A            | Auto-revert Tail Mode (like tail -f on current buffer) |
+| C-down/up    | Inc/Dec frame height                                   |
+| C-right/left | Inc/Dec frame width                                    |
+| g or F5      | Revert buffer (probably after keep/delete lines)       |
+| n            | Next line                                              |
+| o            | Occur                                                  |
+| p            | Previous line                                          |
+| q            | Quit emacs                                             |
+| t            | Toggle line truncation                                 |
+|--------------+--------------------------------------------------------|
+
+** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
+
+* Usage Examples
+
+    eless foo.txt                  # This will work with -nw too
+    cat foo.txt | eless -          # This will not work with -nw; will force GUI mode
+    cat foo.txt | eless            # That hyphen is implicit. This will not work with -nw; will force GUI mode
+    cat foo.txt | grep bar | eless # Same as above
+    PAGER=eless man grep           # If the environment variable PAGER is set to eless, launches man pages in eless (GUI mode)
+    diff foo bar | eless           # Colored diff
+    eless .                        # Open dired in the current directory (enhanced 'ls')
+"
 
 set -o pipefail
 set -e # Error out and exit the script when any line in this script returns an error
@@ -66,6 +70,7 @@ set -u # Error out when unbound variables are found
 IFS=$' ' # Separate each field in a sequence at space characters
 
 # Initialize variables
+help=0
 debug=0
 no_window_arg="-nw"
 emacs_args=("${no_window_arg}") # Run emacs with -nw by default
@@ -133,6 +138,9 @@ do
     if [[ "${var}" == '-D' ]]
     then
         debug=1
+    elif [[ "${var}" == '-h' ]]
+    then
+        help=1
     elif [[ "${var}" == '-gui' ]]
     then
         # Delete the ${no_window_arg} from ${emacs_args[@]} array
@@ -145,6 +153,12 @@ do
         emacs_args=("${emacs_args[@]}" "${var}")
     fi
 done
+
+if [[ ${help} -eq 1 ]]
+then
+    echo "${h}"
+    exit 0
+fi
 
 if [[ "${input_from_pipe_flag}" -eq 1 ]]
 then
@@ -397,41 +411,7 @@ else
     fi
 fi
 
-#* Other default bindings in `view-mode':
-#|--------+-------------------------------------------------------------------------|
-#| h or ? | Search for 'View minor mode' in that buffer to get this help.           |
-#| Digits | Provide prefix arguments                                                |
-#| <      | Move to the beginning of buffer.                                        |
-#| >      | Move to the end of buffer.                                              |
-#| z      | Like  SPC  but with prefix sets "page size" to prefix.                  |
-#| w      | Like  DEL  but with prefix sets "page size" to prefix.                  |
-#| d      | Scroll forward "half page size" lines.  With prefix, sets               |
-#|        | "half page size" to prefix lines and scrolls forward that much.         |
-#| u      | Scroll backward "half page size" lines.  With prefix, sets              |
-#|        | "half page size" to prefix lines and scrolls backward that much.        |
-#| F      | Revert-buffer if necessary and scroll forward.                          |
-#|        | Use this to view a changing file.                                       |
-#| %      | Goes prefix argument (default 100) percent into buffer.                 |
-#| .      | Set the mark.                                                           |
-#| x      | Exchanges point and mark.                                               |
-#| @      | Return to mark and pops mark ring.                                      |
-#|        | Mark ring is pushed at start of every successful search and when        |
-#|        | Jump to line occurs.  The mark is set on jump to buffer start or end.   |
-#| m      | Save current position in character register.                            |
-#| '      | Go to position saved in character register.                             |
-#| /      | Searches forward for regular expression, starting after current page.   |
-#|        | ! and @ have a special meaning at the beginning of the regexp.          |
-#|        | ! means search for a line with no match for regexp.  @ means start      |
-#|        | Search at beginning (end for backward search) of buffer.                |
-#| \      | Searches backward for regular expression, starting before current page. |
-#| E      | Exit View mode, and make the current buffer editable                    |
-#|        | Even if it was not editable before entry to View mode.                  |
-#| Q      | Quit View mode, restoring all windows to previous state.                |
-#| c      | Quit View mode and maybe switch buffers, but don't kill this buffer.    |
-#| C      | Quit View mode, kill current buffer and go back to other buffer.        |
-#|--------+-------------------------------------------------------------------------|
-#
-#* References:
+# References:
 #  http://superuser.com/a/843744/209371
 #  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin (Kept just for
 #    reference, not using this in this script any more.)
