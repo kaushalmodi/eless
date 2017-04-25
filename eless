@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-25 15:14:48 kmodi>
+# Time-stamp: <2017-04-25 15:31:14 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -90,7 +90,6 @@ output_to_pipe_flag=0
 
 for var in "$@"
 do
-    # echo "var : $var"
     if [[ "${var}" == '-D' ]]
     then
         debug=1
@@ -147,22 +146,24 @@ do
     fi
     if [[ "${var}" == '-D' ]]
     then
-        : # Do not pass -D option to emacs.
+        : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
+          # Do not pass -D option to emacs.
     elif [[ "${var}" == '-' ]]
     then
         : # Discard the '-'; it does nothing. (for the cases where a user might do "echo foo | eless -")
+    elif [[ "${var}" == '-nw' ]]
+    then
+        : # Ignore the user-passed "-nw" option; we are adding it by default.
     elif [[ "${var}" == '-h' ]]
     then
         help=1
     elif [[ "${var}" == '-gui' ]]
     then
-        # Delete the ${no_window_arg} from ${emacs_args[@]} array
+        # Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "-gui" option
         # http://stackoverflow.com/a/16861932/1219634
         emacs_args=("${emacs_args[@]/${no_window_arg}}")
-    elif [[ "${var}" == '-nw' ]]
-    then
-        : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
     else
+        # Collect all other arguments passed to eless and forward them to emacs.
         emacs_args=("${emacs_args[@]}" "${var}")
     fi
 done
@@ -180,14 +181,14 @@ then
     echo "Pipe Contents : ${piped_data}"
 fi
 
-# Basic emacs function to provide 'less'-like capability
+# Basic function to launch emacs with customization mainly around the `view-mode'
 function emacs_Q_view_mode {
 
     if [[ ${debug} -eq 1 ]]
     then
         # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
         # not to eless.
-        echo "Args in emacs_Q_view_mode : $*"
+        echo "Args passed to emacs_Q_view_mode : $*"
     fi
     exec emacs -Q "$@" \
                -f view-mode \
@@ -344,16 +345,16 @@ function emacs_Q_view_mode {
 }
 
 # Below if condition is reached if you try to do this:
-#   eless foo.txt | grep bar .. Not allowed.
+#   eless foo.txt | grep bar .. Not allowed!
 if [[ ${output_to_pipe_flag} -eq 1 ]]
 then
     echo "This script is not supposed to send output to a pipe"
     exit 1
 else
     # Below if condition is reached when you do this:
-    #   cat foo.txt | eless, or
-    #   cat foo.txt | eless -
-    # i.e. Input to eless is coming through a pipe (from cat, in above example)
+    #   grep 'foo' bar.txt | eless, or
+    #   grep 'foo' bar.txt | eless -
+    # i.e. Input to eless is coming through a pipe (from grep, in above example)
     if [[ ${input_from_pipe_flag} -eq 1 ]]
     then
         tempfile="$(mktemp emacs-stdin-"$USER".XXXXXXX --tmpdir)" # https://github.com/koalaman/shellcheck/wiki/SC2086
@@ -372,7 +373,7 @@ else
         # The first line of man pages is assumed to be
         #   FOO(1)  something something something FOO(1)
         # It is not mandatory for the below grep to always pass, so OR it with
-        # true so that "set -e" does not kill the script at this point.
+        # "true" so that "set -e" does not kill the script at this point.
         man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
 
         if [[ -z ${man_page} ]] # No man page detected
@@ -388,9 +389,8 @@ else
                                    (rename-buffer \"*Stdin*\" :unique)
                                  )'"
         else
-            # This now allows setting the PAGER environment variable to eless.
-            # After setting PAGER variable to eless, try something like
-            # `man grep'.. That will launch the man page in eless in GUI mode.
+            # After setting PAGER variable to eless, try something like `man grep'.
+            # That will launch the man page in eless.
             if [[ ${debug} -eq 1 ]]
             then
                 echo "Man Page = ${man_page}"
