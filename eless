@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-25 13:54:41 kmodi>
+# Time-stamp: <2017-04-25 15:14:48 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -57,12 +57,14 @@ less, diff, man, (probably ls too).
 
 * Usage Examples
 
-    eless foo.txt                  # This will work with -nw too
-    cat foo.txt | eless -          # This will not work with -nw; will force GUI mode
-    cat foo.txt | eless            # That hyphen is implicit. This will not work with -nw; will force GUI mode
-    cat foo.txt | grep bar | eless # Same as above
-    PAGER=eless man grep           # If the environment variable PAGER is set to eless, launches man pages in eless (GUI mode)
-    diff foo bar | eless           # Colored diff
+    eless foo.txt                  # Open foo.txt in eless in terminal (-nw) mode by default.
+    eless foo.txt -gui             # Open foo.txt in eless in GUI mode.
+    echo 'foo' | eless             #
+    echo 'foo' | eless -           # Same as above. The hyphen after eless does not matter; is anyways discarded.
+    grep 'bar' foo.txt | eless     #
+    PAGER=eless man grep           # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+    PAGER=eless man grep -gui      # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+    diff foo bar | eless           # Colored diff!
     eless .                        # Open dired in the current directory (enhanced 'ls')
     eless -h | eless               # See eless help ;-)
 "
@@ -145,7 +147,10 @@ do
     fi
     if [[ "${var}" == '-D' ]]
     then
-        : # Do not pass -D option to emacs
+        : # Do not pass -D option to emacs.
+    elif [[ "${var}" == '-' ]]
+    then
+        : # Discard the '-'; it does nothing. (for the cases where a user might do "echo foo | eless -")
     elif [[ "${var}" == '-h' ]]
     then
         help=1
