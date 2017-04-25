@@ -1,4 +1,5 @@
 # https://github.com/koalaman/shellcheck/wiki/TravisCI
+# Reference: https://github.com/ccztux/glsysbackup/blob/c59fedeafa9398e4f0aa65de1f63fdbabe2d54f8/.travis.yml
 sudo: required
 language: bash
 services:
@@ -6,6 +7,6 @@ services:
 before_install:
   - docker pull koalaman/shellcheck
 script:
-  - docker run -v $(pwd):/scripts koalaman/shellcheck eless
+  - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/eless
 matrix:
   fast_finish: true

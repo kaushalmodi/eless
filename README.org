@@ -1,6 +1,6 @@
 #+TITLE: A Better Less
 
-[[https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
+*ShellCheck status:* [[https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
 
 =eless= is a combination of Bash script and a minimal emacs =view-mode= config.
 
