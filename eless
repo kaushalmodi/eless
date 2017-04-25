@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-25 10:38:16 kmodi>
+# Time-stamp: <2017-04-25 13:54:41 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -38,7 +38,11 @@ less, diff, man, (probably ls too).
 | ! or K       | Delete lines matching regexp                           |
 | & or k       | Keep lines matching regexp                             |
 | = or + or -  | Adjust font size                                       |
+| 0            | Delete this window                                     |
+| 1            | Keep only this window                                  |
 | A            | Auto-revert Tail Mode (like tail -f on current buffer) |
+| N            | Next error (next line in *occur*)                      |
+| P            | Previous error (previous line in *occur*)              |
 | C-down/up    | Inc/Dec frame height                                   |
 | C-right/left | Inc/Dec frame width                                    |
 | g or F5      | Revert buffer (probably after keep/delete lines)       |
@@ -316,7 +320,11 @@ function emacs_Q_view_mode {
                      (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
                      (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
                      (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
+                     (define-key view-mode-map (kbd "0") (quote delete-window))
+                     (define-key view-mode-map (kbd "1") (quote delete-other-windows))
                      (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
+                     (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
+                     (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
                      (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
                      (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
                      (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
