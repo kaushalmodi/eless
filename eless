@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-25 15:31:14 kmodi>
+# Time-stamp: <2017-04-25 16:15:54 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -399,6 +399,12 @@ else
                          ${emacs_args[*]} \
                          --eval '(progn
                                    (man (downcase \"${man_page}\"))
+                                   ;; Below workaround is only for emacs 24.5.x and older releases
+                                   ;; where the man page takes some time to load.
+                                   ;; 1-second delay before killing the *scratch* window
+                                   ;; seems to be sufficient
+                                   (when (version<= emacs-version \"24.5.99\")
+                                      (sit-for 1))
                                    (delete-window)
                                  )'"
 
