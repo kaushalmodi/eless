@@ -168,14 +168,6 @@ then
     exit 0
 fi
 
-if [[ "${input_from_pipe_flag}" -eq 1 ]]
-then
-    # Delete the ${no_window_arg} from ${emacs_args[@]} array
-    # This is required because -nw does not work when emacs is receiving
-    # input from a pipe.
-    emacs_args=("${emacs_args[@]/${no_window_arg}}")
-fi
-
 if [[ ${debug} -eq 1 ]]
 then
     echo "Raw Args      : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
@@ -192,159 +184,158 @@ function emacs_Q_view_mode {
         # not to eless.
         echo "Args in emacs_Q_view_mode : $*"
     fi
-    emacs -Q "$@" \
-          -f view-mode \
-          --eval '(progn
-                     ;; Keep the default-directory to be the same from where
-                     ;; this script was launched from; useful during C-x C-f
-                     (setq default-directory "'"$(pwd)"'/")
+    exec emacs -Q "$@" \
+               -f view-mode \
+               --eval '(progn
+                          ;; Keep the default-directory to be the same from where
+                          ;; this script was launched from; useful during C-x C-f
+                          (setq default-directory "'"$(pwd)"'/")
 
-                     ;; No clutter
-                     (menu-bar-mode -1)
-                     (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
+                          ;; No clutter
+                          (menu-bar-mode -1)
+                          (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
 
-                     ;; Pleasant dark theme
-                     (load-theme (quote tango-dark) :no-confirm)
+                          ;; Pleasant dark theme
+                          (load-theme (quote tango-dark) :no-confirm)
 
-                     ;; Show line and column numbers in the mode-line
-                     (line-number-mode 1)
-                     (column-number-mode 1)
+                          ;; Show line and column numbers in the mode-line
+                          (line-number-mode 1)
+                          (column-number-mode 1)
 
-                     (ido-mode 1)
-                     (setq ido-enable-flex-matching t)       ;Enable fuzzy search
-                     (setq ido-everywhere t)
-                     (setq ido-create-new-buffer (quote always)) ;Create a new buffer if no buffer matches substringv
-                     (setq ido-use-filename-at-point (quote guess)) ;Find file at point using ido
-                     (add-to-list (quote ido-ignore-buffers) "*Messages*")
+                          (ido-mode 1)
+                          (setq ido-enable-flex-matching t)       ;Enable fuzzy search
+                          (setq ido-everywhere t)
+                          (setq ido-create-new-buffer (quote always)) ;Create a new buffer if no buffer matches substringv
+                          (setq ido-use-filename-at-point (quote guess)) ;Find file at point using ido
+                          (add-to-list (quote ido-ignore-buffers) "*Messages*")
 
-                     (setq-default indent-tabs-mode nil) ;Use spaces instead of tabs for indentation
-                     (setq x-select-enable-clipboard t)
-                     (setq x-select-enable-primary t)
-                     (setq save-interprogram-paste-before-kill t)
-                     (setq require-final-newline t)
-                     (setq visible-bell t)
-                     (setq load-prefer-newer t)
-                     (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
+                          (setq-default indent-tabs-mode nil) ;Use spaces instead of tabs for indentation
+                          (setq x-select-enable-clipboard t)
+                          (setq x-select-enable-primary t)
+                          (setq save-interprogram-paste-before-kill t)
+                          (setq require-final-newline t)
+                          (setq visible-bell t)
+                          (setq load-prefer-newer t)
+                          (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
 
-                     (setq isearch-allow-scroll t) ;Allow scrolling using isearch
-                     ;; DEL during isearch should edit the search string, not jump back to the previous result.
-                     (define-key isearch-mode-map [remap isearch-delete-char] (quote isearch-del-char))
+                          (setq isearch-allow-scroll t) ;Allow scrolling using isearch
+                          ;; DEL during isearch should edit the search string, not jump back to the previous result.
+                          (define-key isearch-mode-map [remap isearch-delete-char] (quote isearch-del-char))
 
-                     ;; Truncate long lines by default
-                     (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
-                     (toggle-truncate-lines +1)
+                          ;; Truncate long lines by default
+                          (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
+                          (toggle-truncate-lines +1)
 
-                     ;; Highlight the current line
-                     (hl-line-mode 1)
+                          ;; Highlight the current line
+                          (hl-line-mode 1)
 
-                     ;; My custom functions
-                     (defun eless/keep-lines ()
-                       (interactive)
-                       (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
-                         (save-excursion
-                           (goto-char (point-min))
-                           (call-interactively (quote keep-lines)))))
+                          ;; My custom functions
+                          (defun eless/keep-lines ()
+                            (interactive)
+                            (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
+                              (save-excursion
+                                (goto-char (point-min))
+                                (call-interactively (quote keep-lines)))))
 
-                     (defun eless/delete-matching-lines ()
-                       (interactive)
-                       (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
-                         (save-excursion
-                           (goto-char (point-min))
-                           (call-interactively (quote delete-matching-lines)))))
+                          (defun eless/delete-matching-lines ()
+                            (interactive)
+                            (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
+                              (save-excursion
+                                (goto-char (point-min))
+                                (call-interactively (quote delete-matching-lines)))))
 
-                     (defun eless/frame-width-half (double)
-                       (interactive "P")
-                       (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
-                             (factor (if double 2 0.5)))
-                         (set-frame-size nil (round (* factor (frame-text-width))) (frame-text-height) :pixelwise)))
-                     (defun eless/frame-width-double ()
-                       (interactive)
-                       (eless/frame-width-half :double))
+                          (defun eless/frame-width-half (double)
+                            (interactive "P")
+                            (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
+                                  (factor (if double 2 0.5)))
+                              (set-frame-size nil (round (* factor (frame-text-width))) (frame-text-height) :pixelwise)))
+                          (defun eless/frame-width-double ()
+                            (interactive)
+                            (eless/frame-width-half :double))
 
-                     (defun eless/frame-height-half (double)
-                       (interactive "P")
-                       (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
-                             (factor (if double 2 0.5)))
-                         (set-frame-size nil  (frame-text-width) (round (* factor (frame-text-height))) :pixelwise)))
-                     (defun eless/frame-height-double ()
-                       (interactive)
-                       (eless/frame-height-half :double))
+                          (defun eless/frame-height-half (double)
+                            (interactive "P")
+                            (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
+                                  (factor (if double 2 0.5)))
+                              (set-frame-size nil  (frame-text-width) (round (* factor (frame-text-height))) :pixelwise)))
+                          (defun eless/frame-height-double ()
+                            (interactive)
+                            (eless/frame-height-half :double))
 
-                     (defun eless/revert-buffer-retain-view-mode ()
-                       (interactive)
-                       (let ((view-mode-state view-mode)) ;save the current state of view-mode
-                         (revert-buffer)
-                         (when view-mode-state
-                           (view-mode 1))))
+                          (defun eless/revert-buffer-retain-view-mode ()
+                            (interactive)
+                            (let ((view-mode-state view-mode)) ;save the current state of view-mode
+                              (revert-buffer)
+                              (when view-mode-state
+                                (view-mode 1))))
 
-                     (defun eless/enable-diff-mode-maybe ()
-                       (interactive)
-                       (save-excursion
-                         (goto-char (point-min))
-                         (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" nil :noerror)
-                           (forward-line 1)
-                           (let ((diff-type (match-string-no-properties 1))
-                                 (diff-mode-enable nil))
-                             (cond
-                              ;; Line(s) added
-                              ((string= diff-type "a")
-                               (when (re-search-forward "^> " nil :noerror)
-                                 (setq diff-mode-enable t)))
-                              ;; Line(s) deleted or changed
-                              (t
-                               (when (re-search-forward "^< " nil :noerror)
-                                 (setq diff-mode-enable t))))
-                             (when diff-mode-enable
-                               (diff-mode)
-                               (rename-buffer "*Diff*" :unique)
-                               (view-mode 1)))))) ;Re-enable view-mode
+                          (defun eless/enable-diff-mode-maybe ()
+                            (interactive)
+                            (save-excursion
+                              (goto-char (point-min))
+                              (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" nil :noerror)
+                                (forward-line 1)
+                                (let ((diff-type (match-string-no-properties 1))
+                                      (diff-mode-enable nil))
+                                  (cond
+                                   ;; Line(s) added
+                                   ((string= diff-type "a")
+                                    (when (re-search-forward "^> " nil :noerror)
+                                      (setq diff-mode-enable t)))
+                                   ;; Line(s) deleted or changed
+                                   (t
+                                    (when (re-search-forward "^< " nil :noerror)
+                                      (setq diff-mode-enable t))))
+                                  (when diff-mode-enable
+                                    (diff-mode)
+                                    (rename-buffer "*Diff*" :unique)
+                                    (view-mode 1)))))) ;Re-enable view-mode
 
-                     ;; Auto-enable diff-mode; diff foo bar | eless
-                     (eless/enable-diff-mode-maybe)
+                          ;; Auto-enable diff-mode; diff foo bar | eless
+                          (eless/enable-diff-mode-maybe)
 
-                     (defun eless/dired-mode-customization ()
-                       (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
-                       (define-key dired-mode-map (kbd "q") (quote save-buffers-kill-emacs))
-                       (define-key dired-mode-map (kbd "Q") (quote quit-window))
-                       (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode)))
-                     (add-hook (quote dired-mode-hook) (quote eless/dired-mode-customization))
-                     ;; Apply above customization if the current major-mode is already dired-mode
-                     (when (derived-mode-p (quote dired-mode))
-                       (eless/dired-mode-customization))
+                          (defun eless/dired-mode-customization ()
+                            (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
+                            (define-key dired-mode-map (kbd "q") (quote save-buffers-kill-emacs))
+                            (define-key dired-mode-map (kbd "Q") (quote quit-window))
+                            (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode)))
+                          (add-hook (quote dired-mode-hook) (quote eless/dired-mode-customization))
+                          ;; Apply above customization if the current major-mode is already dired-mode
+                          (when (derived-mode-p (quote dired-mode))
+                            (eless/dired-mode-customization))
 
-                     (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
+                          (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 
-                     ;; view-mode custom bindings
-                     (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
-                     (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
-                     (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
-                     (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
-                     (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
-                     (define-key view-mode-map (kbd "0") (quote delete-window))
-                     (define-key view-mode-map (kbd "1") (quote delete-other-windows))
-                     (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
-                     (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
-                     (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
-                     (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
-                     (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
-                     (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
-                     (define-key view-mode-map (kbd "n") (quote next-line))
-                     (define-key view-mode-map (kbd "o") (quote occur))
-                     (define-key view-mode-map (kbd "p") (quote previous-line))
-                     (define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))
-                     (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
+                          ;; view-mode custom bindings
+                          (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
+                          (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
+                          (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
+                          (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
+                          (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
+                          (define-key view-mode-map (kbd "0") (quote delete-window))
+                          (define-key view-mode-map (kbd "1") (quote delete-other-windows))
+                          (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
+                          (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
+                          (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
+                          (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
+                          (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
+                          (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
+                          (define-key view-mode-map (kbd "n") (quote next-line))
+                          (define-key view-mode-map (kbd "o") (quote occur))
+                          (define-key view-mode-map (kbd "p") (quote previous-line))
+                          (define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))
+                          (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
 
-                     ;; global custom bindings
-                     (global-set-key (kbd "M-/") (quote hippie-expand))
-                     (global-set-key (kbd "C-x C-b") (quote ibuffer))
-                     (global-set-key (kbd "C-c q") (quote query-replace-regexp))
-                     (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
-                     (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
-                     (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
-                     (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
-                     (global-set-key (kbd "C-<up>") (quote eless/frame-height-half))
-                   )' \
-                       2>/dev/null
+                          ;; global custom bindings
+                          (global-set-key (kbd "M-/") (quote hippie-expand))
+                          (global-set-key (kbd "C-x C-b") (quote ibuffer))
+                          (global-set-key (kbd "C-c q") (quote query-replace-regexp))
+                          (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
+                          (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
+                          (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
+                          (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
+                          (global-set-key (kbd "C-<up>") (quote eless/frame-height-half))
+                        )' 2>/dev/null </dev/tty
 }
 
 # Below if condition is reached if you try to do this:
