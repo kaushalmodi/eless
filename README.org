@@ -1,0 +1,43 @@
+#+TITLE: A Better Less
+
+=eless= is a combination of Bash script and a minimal emacs =view-mode= config.
+
+This script is designed to:
+
+- Be portable -- Just one bash script to download to run
+- Be independent of a user's emacs config
+- Not require an emacs server to be already running
+
+It was created out of a need to have something /like/ =less= (in the sense of
+/launch quickly, do, and quit/, but better in these ways:
+
+-  Do syntax highlighting
+-  Render Org-mode files
+-  A better navigable man page viewer
+-  Dired, especially =wdired= (batch edit symbolic links, for
+   example?)
+-  Show colored diffs
+-  Filter log files to only show or not show lines matching a regexp
+-  Start auto-reverting log files when I want (like =tail -f=)
+-  Quickly change frame and font sizes
+-  .. and more; basically everything that emacs has to offer!
+
+I call it =eless= and here's a little taste of what it looks like:
+
+/Click the below image to see a GIF animation in larger size./
+[[https://raw.githubusercontent.com/kaushalmodi/eless/master/images/eless.gif][file:./images/eless.png]]
+
+As a bonus:
+
+- [x] This script passes [[http://www.shellcheck.net][ShellCheck]], and
+- [x] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
+
+Try it out!
+
+#+BEGIN_EXAMPLE
+eless -h | eless
+#+END_EXAMPLE
+
+/Caveat: While =foo | eless= works, the emacs GUI mode has to be
+enforced for that, as emacs does not accept input from STDIN in terminal
+mode./
