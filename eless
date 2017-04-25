@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-25 08:50:28 kmodi>
+# Time-stamp: <2017-04-25 10:38:16 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -135,10 +135,13 @@ fi
 
 for var in "$@"
 do
-    # echo "var : $var"
+    if [[ ${debug} -eq 1 ]]
+    then
+        echo "var : $var"
+    fi
     if [[ "${var}" == '-D' ]]
     then
-        debug=1
+        : # Do not pass -D option to emacs
     elif [[ "${var}" == '-h' ]]
     then
         help=1
