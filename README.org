@@ -40,6 +40,5 @@ Try it out!
 eless -h | eless
 #+END_EXAMPLE
 
-/Caveat: While =foo | eless= works, the emacs GUI mode has to be
-enforced for that, as emacs does not accept input from STDIN in terminal
-mode./
+* Contributors
+- Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in =emacs -Q -nw=.
