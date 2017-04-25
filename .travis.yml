@@ -7,6 +7,13 @@ services:
 before_install:
   - docker pull koalaman/shellcheck
 script:
-  - docker run -v $(pwd):/scripts koalaman/shellcheck /scripts/eless
+  - docker run koalaman/shellcheck --version
+  # https://docs.docker.com/engine/reference/commandline/run/#mount-volume--v---read-only
+  # The -v flag mounts the current working directory to "/repo_root".
+  # The -w lets the command being executed inside the current working directory,
+  # by changing into the directory to the value returned by "/repo_root".
+  #   So this combination executes the command using the container, but inside
+  # the current working directory.
+  - docker run -v $(pwd):/repo_root -w /repo_root koalaman/shellcheck eless
 matrix:
   fast_finish: true
