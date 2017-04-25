@@ -25,7 +25,7 @@ It was created out of a need to have something /like/ =less= (in the sense of
 I call it =eless= and here's a little taste of what it looks like:
 
 /Click the below image to see a GIF animation in larger size./
-[[https://raw.githubusercontent.com/kaushalmodi/eless/master/images/eless.gif][file:./images/eless.png]]
+[[https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif][https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png]]
 
 As a bonus:
 
