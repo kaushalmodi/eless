@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-26 11:31:19 kmodi>
+# Time-stamp: <2017-04-26 12:39:13 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -37,23 +37,26 @@ less, diff, man, (probably ls too).
 |--------------+------------------------------------------------------------|
 | ! or K       | Delete lines matching regexp                               |
 | & or k       | Keep lines matching regexp                                 |
-| = or + or -  | Adjust font size                                           |
 | 0            | Delete this window                                         |
 | 1            | Keep only this window                                      |
 | A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
 | N            | Next error (next line in *occur*)                          |
 | P            | Previous error (previous line in *occur*)                  |
-| C-down/up    | Inc/Dec frame height                                       |
-| C-right/left | Inc/Dec frame width                                        |
 | g or F5      | Revert buffer (probably after keep/delete lines)           |
 | n            | Next line                                                  |
 | o            | Occur                                                      |
 | p            | Previous line                                              |
 | q            | Quit emacs if at most one buffer is open, else kill buffer |
 | t            | Toggle line truncation                                     |
+| = or + or -  | Adjust font size (in GUI mode)                             |
+| C-down/up    | Inc/Dec frame height (in GUI mode)                         |
+| C-right/left | Inc/Dec frame width (in GUI mode)                          |
 |--------------+------------------------------------------------------------|
 
 ** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
+
+* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
+  'man grep' will then show the grep man page in eless.
 
 * Usage Examples
 
@@ -235,7 +238,7 @@ function emacs_Q_view_mode {
                           ;; Highlight the current line
                           (hl-line-mode 1)
 
-                          ;; My custom functions
+                          ;; Custom functions
                           (defun eless/keep-lines ()
                             (interactive)
                             (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
@@ -329,9 +332,6 @@ function emacs_Q_view_mode {
                           ;; view-mode custom bindings
                           (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
                           (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
-                          (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
-                          (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
-                          (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
                           (define-key view-mode-map (kbd "0") (quote delete-window))
                           (define-key view-mode-map (kbd "1") (quote delete-other-windows))
                           (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
@@ -352,10 +352,15 @@ function emacs_Q_view_mode {
                           (global-set-key (kbd "C-x C-f") (quote view-file))
                           (global-set-key (kbd "C-c q") (quote query-replace-regexp))
                           (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
-                          (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
-                          (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
-                          (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
-                          (global-set-key (kbd "C-<up>") (quote eless/frame-height-half))
+
+                          (when (display-graphic-p)
+                            (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
+                            (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
+                            (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
+                            (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
+                            (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
+                            (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
+                            (global-set-key (kbd "C-<up>") (quote eless/frame-height-half)))
                         )' 2>/dev/null </dev/tty
 }
 
