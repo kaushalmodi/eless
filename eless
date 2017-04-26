@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-25 16:15:54 kmodi>
+# Time-stamp: <2017-04-26 11:24:18 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -34,24 +34,24 @@ less, diff, man, (probably ls too).
 |--------------+------------------------------------------------------------------------------|
 
 ** Custom bindings
-|--------------+--------------------------------------------------------|
-| ! or K       | Delete lines matching regexp                           |
-| & or k       | Keep lines matching regexp                             |
-| = or + or -  | Adjust font size                                       |
-| 0            | Delete this window                                     |
-| 1            | Keep only this window                                  |
-| A            | Auto-revert Tail Mode (like tail -f on current buffer) |
-| N            | Next error (next line in *occur*)                      |
-| P            | Previous error (previous line in *occur*)              |
-| C-down/up    | Inc/Dec frame height                                   |
-| C-right/left | Inc/Dec frame width                                    |
-| g or F5      | Revert buffer (probably after keep/delete lines)       |
-| n            | Next line                                              |
-| o            | Occur                                                  |
-| p            | Previous line                                          |
-| q            | Quit emacs                                             |
-| t            | Toggle line truncation                                 |
-|--------------+--------------------------------------------------------|
+|--------------+------------------------------------------------------------|
+| ! or K       | Delete lines matching regexp                               |
+| & or k       | Keep lines matching regexp                                 |
+| = or + or -  | Adjust font size                                           |
+| 0            | Delete this window                                         |
+| 1            | Keep only this window                                      |
+| A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
+| N            | Next error (next line in *occur*)                          |
+| P            | Previous error (previous line in *occur*)                  |
+| C-down/up    | Inc/Dec frame height                                       |
+| C-right/left | Inc/Dec frame width                                        |
+| g or F5      | Revert buffer (probably after keep/delete lines)           |
+| n            | Next line                                                  |
+| o            | Occur                                                      |
+| p            | Previous line                                              |
+| q            | Quit emacs if at most one buffer is open, else kill buffer |
+| t            | Toggle line truncation                                     |
+|--------------+------------------------------------------------------------|
 
 ** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
 
@@ -297,14 +297,24 @@ function emacs_Q_view_mode {
                                     (rename-buffer "*Diff*" :unique)
                                     (view-mode 1)))))) ;Re-enable view-mode
 
+                          (defun eless/kill-emacs-or-buffer ()
+                            (interactive)
+                            (let ((num-non-special-buffers 0))
+                              (dolist (buf (buffer-list))
+                                (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
+                                  (setq num-non-special-buffers (+ 1 num-non-special-buffers))))
+                              (if (<= num-non-special-buffers 1)
+                                  (save-buffers-kill-emacs) ;Kill emacs if one or less non-special buffers are open
+                                (kill-buffer (current-buffer))))) ;Else only kill the buffer
+
                           ;; Auto-enable diff-mode; diff foo bar | eless
                           (eless/enable-diff-mode-maybe)
 
                           (defun eless/dired-mode-customization ()
                             (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
-                            (define-key dired-mode-map (kbd "q") (quote save-buffers-kill-emacs))
+                            (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode))
                             (define-key dired-mode-map (kbd "Q") (quote quit-window))
-                            (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode)))
+                            (define-key dired-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
                           (add-hook (quote dired-mode-hook) (quote eless/dired-mode-customization))
                           ;; Apply above customization if the current major-mode is already dired-mode
                           (when (derived-mode-p (quote dired-mode))
@@ -329,7 +339,7 @@ function emacs_Q_view_mode {
                           (define-key view-mode-map (kbd "n") (quote next-line))
                           (define-key view-mode-map (kbd "o") (quote occur))
                           (define-key view-mode-map (kbd "p") (quote previous-line))
-                          (define-key view-mode-map (kbd "q") (quote save-buffers-kill-emacs))
+                          (define-key view-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer))
                           (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
 
                           ;; global custom bindings
