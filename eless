@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-26 11:24:18 kmodi>
+# Time-stamp: <2017-04-26 11:31:19 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -312,6 +312,10 @@ function emacs_Q_view_mode {
 
                           (defun eless/dired-mode-customization ()
                             (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
+                            ;; dired-find-file is bound to "f" and "RET" by default
+                            ;; So changing the "RET" binding to dired-view-file so that the file opens
+                            ;; in view-mode in the spirit of eless.
+                            (define-key dired-mode-map (kbd "RET") (quote dired-view-file))
                             (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode))
                             (define-key dired-mode-map (kbd "Q") (quote quit-window))
                             (define-key dired-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
@@ -345,6 +349,7 @@ function emacs_Q_view_mode {
                           ;; global custom bindings
                           (global-set-key (kbd "M-/") (quote hippie-expand))
                           (global-set-key (kbd "C-x C-b") (quote ibuffer))
+                          (global-set-key (kbd "C-x C-f") (quote view-file))
                           (global-set-key (kbd "C-c q") (quote query-replace-regexp))
                           (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
                           (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
