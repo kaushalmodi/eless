@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-04-26 18:29:59 kmodi>
+# Time-stamp: <2017-04-28 15:54:17 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -402,10 +402,10 @@ else
             echo "first_line_piped_data = ${first_line_piped_data}"
         fi
         # The first line of man pages is assumed to be
-        #   FOO(1)  something something something FOO(1)
+        #   FOO(1)  optional something something FOO(1)
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
+        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
 
         if [[ -z ${man_page} ]] # No man page detected
         then
