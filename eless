@@ -180,9 +180,9 @@ fi
 
 if [[ ${debug} -eq 1 ]]
 then
-    echo "Raw Args      : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
-    echo "Emacs Args    : ${emacs_args[*]}"
-    echo "Pipe Contents : ${piped_data}"
+    echo "Raw Args                       : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
+    echo "Emacs Args                     : ${emacs_args[*]}"
+    echo "Pipe Contents (up to 10 lines) : "$(echo "${piped_data}" | head -n 10)
 fi
 
 # Basic function to launch emacs with customization mainly around the `view-mode'
