@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-05-02 13:17:58 kmodi>
+# Time-stamp: <2017-05-02 13:25:14 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -12,12 +12,12 @@ Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
 * Switches to this script
-|-------+------------------------------------|
-| -h    | Show this help                     |
-| -ansi | Convert ANSI color codes to colors |
-| -gui  | Run emacs in GUI mode              |
-| -D    | Run with debug messages            |
-|-------+------------------------------------|
+|--------+----------------------------------------------|
+| -h     | Show this help (--help will show emacs help) |
+| --ansi | Convert ANSI color codes to colors           |
+| --gui  | Run emacs in GUI mode                        |
+| -D     | Run with debug messages                      |
+|--------+----------------------------------------------|
 
 * Common bindings in 'view-mode'
 |--------------+------------------------------------------------------------------------------|
@@ -61,17 +61,17 @@ less, diff, man, (probably ls too).
 
 * Usage Examples
 
-    eless foo.txt                   # Open foo.txt in eless in terminal (-nw) mode by default.
-    eless foo.txt -gui              # Open foo.txt in eless in GUI mode.
-    echo 'foo' | eless              #
-    echo 'foo' | eless -            # Same as above. The hyphen after eless does not matter; is anyways discarded.
-    grep 'bar' foo.txt | eless      #
-    PAGER=eless man grep            # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-    PAGER=eless man grep -gui       # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-    diff foo bar | eless            # Colored diff!
-    eless .                         # Open dired in the current directory (enhanced 'ls')
-    ls --color=always | eless -ansi # Convert ANSI color codes to colors
-    eless -h | eless                # See eless help ;-)
+    eless foo.txt                    # Open foo.txt in eless in terminal (-nw) mode by default.
+    eless foo.txt --gui              # Open foo.txt in eless in GUI mode.
+    echo 'foo' | eless               #
+    echo 'foo' | eless -             # Same as above. The hyphen after eless does not matter; is anyways discarded.
+    grep 'bar' foo.txt | eless       #
+    PAGER=eless man grep             # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+    PAGER=eless man grep --gui       # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+    diff foo bar | eless             # Colored diff!
+    eless .                          # Open dired in the current directory (enhanced 'ls')
+    ls --color=always | eless --ansi # Convert ANSI color codes to colors
+    eless -h | eless                 # See eless help ;-)
 "
 
 set -o pipefail
@@ -160,15 +160,15 @@ do
     elif [[ "${var}" == '-nw' ]]
     then
         : # Ignore the user-passed "-nw" option; we are adding it by default.
-    elif [[ "${var}" == '-h' ]]
+    elif [[ "${var}" == '-h' ]]  # Do not hijack --help; use that to show emacs help
     then
         help=1
-    elif [[ "${var}" == '-ansi' ]]
+    elif [[ "${var}" == '--ansi' ]]
     then
         ansi="t"
-    elif [[ "${var}" == '-gui' ]]
+    elif [[ "${var}" == '--gui' ]]
     then
-        # Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "-gui" option
+        # Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "--gui" option
         # http://stackoverflow.com/a/16861932/1219634
         emacs_args=("${emacs_args[@]/${no_window_arg}}")
     else
