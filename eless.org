@@ -1,3 +1,11 @@
+# Time-stamp: <2017-05-02 18:29:14 kmodi>
+#+TITLE: eless -- Better than less
+
+* How to generate eless script
+- Run =org-babel-tangle=, bound to =C-c C-v t= by default.
+- That will generate the =eless= script in this directory.
+* Code
+#+BEGIN_SRC shell :tangle eless :exports none
 #!/usr/bin/env bash
 #
 # This script uses the unofficial strict mode as explained in
@@ -10,14 +18,14 @@ h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
-* Switches to this script
+,* Switches to this script
 |--------+----------------------------------------------|
 | -h     | Show this help (--help will show emacs help) |
 | --gui  | Run emacs in GUI mode                        |
 | -D     | Run with debug messages                      |
 |--------+----------------------------------------------|
 
-* Common bindings in 'view-mode'
+,* Common bindings in 'view-mode'
 |--------------+------------------------------------------------------------------------------|
 | SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
 | DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
@@ -32,7 +40,7 @@ less, diff, man, (probably ls too).
 |              | the opened file if needed.                                                   |
 |--------------+------------------------------------------------------------------------------|
 
-** Custom bindings
+,** Custom bindings
 |--------------+------------------------------------------------------------|
 | ! or K       | Delete lines matching regexp                               |
 | & or k       | Keep lines matching regexp                                 |
@@ -52,12 +60,12 @@ less, diff, man, (probably ls too).
 | C-right/left | Inc/Dec frame width (in GUI mode)                          |
 |--------------+------------------------------------------------------------|
 
-** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
+,** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
 
-* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
+,* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
   'man grep' will then show the grep man page in eless.
 
-* Usage Examples
+,* Usage Examples
 
     eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
     eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
@@ -524,3 +532,4 @@ fi
 #  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin (Kept just for
 #    reference, not using this in this script any more.)
 #  https://github.com/dj08/utils-generic/blob/master/eless
+#+END_SRC
