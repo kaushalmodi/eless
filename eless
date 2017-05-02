@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-05-02 14:11:24 kmodi>
+# Time-stamp: <2017-05-02 14:37:18 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -328,7 +328,11 @@ function emacs_Q_view_mode {
                             (let ((num-non-special-buffers 0))
                               (dolist (buf (buffer-list))
                                 (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
-                                  (setq num-non-special-buffers (+ 1 num-non-special-buffers))))
+                                  (setq num-non-special-buffers (+ 1 num-non-special-buffers))
+                                  (with-current-buffer buf
+                                      (when view-mode ;Force-revert all view-mode buffers to prevent save prompt on quitting
+                                        (revert-buffer :ignore-auto :noconfirm)
+                                        (view-mode 1)))))
                               (if (<= num-non-special-buffers 1)
                                   (save-buffers-kill-emacs) ;Kill emacs if one or less non-special buffers are open
                                 (kill-buffer (current-buffer))))) ;Else only kill the buffer
