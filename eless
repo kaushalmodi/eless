@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-05-02 14:37:18 kmodi>
+# Time-stamp: <2017-05-02 15:32:27 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -71,6 +71,7 @@ less, diff, man, (probably ls too).
     eless .                     # Open dired in the current directory (enhanced 'ls')
     ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
     eless -h | eless            # See eless help ;-)
+    info emacs | eless          # Read emacs Info manual in eless
 "
 
 set -o pipefail
@@ -337,12 +338,6 @@ function emacs_Q_view_mode {
                                   (save-buffers-kill-emacs) ;Kill emacs if one or less non-special buffers are open
                                 (kill-buffer (current-buffer))))) ;Else only kill the buffer
 
-                          ;; Auto-enable diff-mode. For example, when doing "diff foo bar | eless"
-                          (eless/enable-diff-mode-maybe)
-
-                          ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
-                          (eless/enable-ansi-color-maybe)
-
                           (defun eless/dired-mode-customization ()
                             (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
                             ;; dired-find-file is bound to "f" and "RET" by default
@@ -353,9 +348,28 @@ function emacs_Q_view_mode {
                             (define-key dired-mode-map (kbd "Q") (quote quit-window))
                             (define-key dired-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
                           (add-hook (quote dired-mode-hook) (quote eless/dired-mode-customization))
-                          ;; Apply above customization if the current major-mode is already dired-mode
-                          (when (derived-mode-p (quote dired-mode))
-                            (eless/dired-mode-customization))
+
+                          (defun eless/Man-mode-customization ()
+                            (view-mode -1) ;Prevent view-mode bindings from shadowing Man-mode bindings
+                            (define-key Man-mode-map (kbd "Q") (quote quit-window))
+                            (define-key Man-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
+                          (add-hook (quote Man-mode-hook) (quote eless/Man-mode-customization))
+
+                          (defun eless/Info-mode-customization ()
+                            (view-mode -1) ;Prevent view-mode bindings from shadowing Info-mode bindings
+                            (define-key Info-mode-map (kbd "Q") (quote quit-window))
+                            (define-key Info-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
+                          (add-hook (quote Info-mode-hook) (quote eless/Info-mode-customization))
+
+                          (cond
+                           ((derived-mode-p (quote dired-mode)) (eless/dired-mode-customization))
+                           ((derived-mode-p (quote Man-mode)) (eless/Man-mode-customization))
+                           ((derived-mode-p (quote Info-mode)) (eless/Info-mode-customization))
+                           (t
+                            ;; Auto-enable diff-mode. For example, when doing "diff foo bar | eless"
+                            (eless/enable-diff-mode-maybe)
+                            ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
+                            (eless/enable-ansi-color-maybe)))
 
                           (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 
@@ -420,25 +434,21 @@ else
         then
             echo "first_line_piped_data = ${first_line_piped_data}"
         fi
+
         # The first line of man pages is assumed to be
         #   FOO(1)  optional something something FOO(1)
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
         man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
 
-        if [[ -z ${man_page} ]] # No man page detected
+        # The first line of info manuals is assumed to be
+        #   /path/to/some.info or /path/to/some.info.gz
+        # It is not mandatory for the below grep to always pass, so OR it with
+        # "true" so that "set -e" does not kill the script at this point.
+        info_man=$(echo "${first_line_piped_data}" | grep -Po '^.*/\K[^/]+(?=\.info(\.gz)*$)' || true)
+
+        if [[ ! -z ${man_page} ]]
         then
-            if [[ ${debug} -eq 1 ]]
-            then
-                echo "No man page detected"
-            fi
-            cmd="emacs_Q_view_mode ${tempfile} \
-                         ${emacs_args[*]} \
-                         --eval '(progn
-                                   (set-visited-file-name nil)
-                                   (rename-buffer \"*Stdin*\" :unique)
-                                 )'"
-        else
             # After setting PAGER variable to eless, try something like `man grep'.
             # That will launch the man page in eless.
             if [[ ${debug} -eq 1 ]]
@@ -456,6 +466,30 @@ else
                                    (when (version<= emacs-version \"24.5.99\")
                                       (sit-for 1))
                                    (delete-window)
+                                 )'"
+        elif [[ ! -z ${info_man} ]]
+        then
+            # Try something like `info emacs | eless'.
+            # That will launch the Info manual in eless.
+            if [[ ${debug} -eq 1 ]]
+            then
+                echo "Info Manual = ${info_man}"
+            fi
+            cmd="emacs_Q_view_mode \
+                         ${emacs_args[*]} \
+                         --eval '(progn
+                                   (info (downcase \"${info_man}\"))
+                                 )'"
+        else # No man page or info manual detected
+            if [[ ${debug} -eq 1 ]]
+            then
+                echo "No man page or info manual detected"
+            fi
+            cmd="emacs_Q_view_mode ${tempfile} \
+                         ${emacs_args[*]} \
+                         --eval '(progn
+                                   (set-visited-file-name nil)
+                                   (rename-buffer \"*Stdin*\" :unique)
                                  )'"
 
         fi
