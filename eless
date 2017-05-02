@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-05-02 13:25:14 kmodi>
+# Time-stamp: <2017-05-02 14:11:24 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -14,7 +14,6 @@ less, diff, man, (probably ls too).
 * Switches to this script
 |--------+----------------------------------------------|
 | -h     | Show this help (--help will show emacs help) |
-| --ansi | Convert ANSI color codes to colors           |
 | --gui  | Run emacs in GUI mode                        |
 | -D     | Run with debug messages                      |
 |--------+----------------------------------------------|
@@ -61,17 +60,17 @@ less, diff, man, (probably ls too).
 
 * Usage Examples
 
-    eless foo.txt                    # Open foo.txt in eless in terminal (-nw) mode by default.
-    eless foo.txt --gui              # Open foo.txt in eless in GUI mode.
-    echo 'foo' | eless               #
-    echo 'foo' | eless -             # Same as above. The hyphen after eless does not matter; is anyways discarded.
-    grep 'bar' foo.txt | eless       #
-    PAGER=eless man grep             # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-    PAGER=eless man grep --gui       # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-    diff foo bar | eless             # Colored diff!
-    eless .                          # Open dired in the current directory (enhanced 'ls')
-    ls --color=always | eless --ansi # Convert ANSI color codes to colors
-    eless -h | eless                 # See eless help ;-)
+    eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
+    eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
+    echo 'foo' | eless          #
+    echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
+    grep 'bar' foo.txt | eless  #
+    PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+    PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+    diff foo bar | eless        # Colored diff!
+    eless .                     # Open dired in the current directory (enhanced 'ls')
+    ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
+    eless -h | eless            # See eless help ;-)
 "
 
 set -o pipefail
@@ -89,7 +88,6 @@ emacs_args=("${no_window_arg}") # Run emacs with -nw by default
 piped_data=''
 tempfile=''
 cmd=''
-ansi="nil" # Do not try to convert ansi codes to colors by default
 
 input_from_pipe_flag=0
 output_to_pipe_flag=0
@@ -163,9 +161,6 @@ do
     elif [[ "${var}" == '-h' ]]  # Do not hijack --help; use that to show emacs help
     then
         help=1
-    elif [[ "${var}" == '--ansi' ]]
-    then
-        ansi="t"
     elif [[ "${var}" == '--gui' ]]
     then
         # Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "--gui" option
@@ -244,11 +239,6 @@ function emacs_Q_view_mode {
                           ;; Highlight the current line
                           (hl-line-mode 1)
 
-                          (when '"${ansi}"'
-                            (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
-                              (require (quote ansi-color))
-                              (ansi-color-apply-on-region (point-min) (point-max))))
-
                           ;; Custom functions
                           (defun eless/keep-lines ()
                             (interactive)
@@ -290,7 +280,6 @@ function emacs_Q_view_mode {
                                 (view-mode 1))))
 
                           (defun eless/enable-diff-mode-maybe ()
-                            (interactive)
                             (save-excursion
                               (let* ((max-line 10) ;Search first MAX-LINE lines of the buffer
                                      (bound (progn
@@ -312,9 +301,27 @@ function emacs_Q_view_mode {
                                       (when (re-search-forward "^< " nil :noerror)
                                         (setq diff-mode-enable t))))
                                     (when diff-mode-enable
+                                      (message "Auto-enabling diff-mode")
                                       (diff-mode)
                                       (rename-buffer "*Diff*" :unique)
                                       (view-mode 1))))))) ;Re-enable view-mode
+
+                          (defun eless/enable-ansi-color-maybe ()
+                            (save-excursion
+                              (let* ((max-line 100) ;Search first MAX-LINE lines of the buffer
+                                     (bound (progn
+                                              (goto-char (point-min))
+                                              (forward-line max-line)
+                                              (point)))
+                                     (ESC "\u001b")
+                                     ;; Example ANSI codes: ^[[0;36m, or ^[[0m where ^[ is the ESC char
+                                     (ansi-regexp (concat ESC "\\[" "[0-9]+\\(;[0-9]+\\)*m")))
+                                (goto-char (point-min))
+                                (when (re-search-forward ansi-regexp bound :noerror)
+                                  (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
+                                    (message "Auto-converting ANSI codes to colors")
+                                    (require (quote ansi-color))
+                                    (ansi-color-apply-on-region (point-min) (point-max)))))))
 
                           (defun eless/kill-emacs-or-buffer ()
                             (interactive)
@@ -326,8 +333,11 @@ function emacs_Q_view_mode {
                                   (save-buffers-kill-emacs) ;Kill emacs if one or less non-special buffers are open
                                 (kill-buffer (current-buffer))))) ;Else only kill the buffer
 
-                          ;; Auto-enable diff-mode; diff foo bar | eless
+                          ;; Auto-enable diff-mode. For example, when doing "diff foo bar | eless"
                           (eless/enable-diff-mode-maybe)
+
+                          ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
+                          (eless/enable-ansi-color-maybe)
 
                           (defun eless/dired-mode-customization ()
                             (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
