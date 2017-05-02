@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2017-05-02 16:59:45 kmodi>
+# Time-stamp: <2017-05-02 17:33:14 kmodi>
 #
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -324,11 +324,12 @@ function emacs_Q_view_mode {
                                     (require (quote ansi-color))
                                     (ansi-color-apply-on-region (point-min) (point-max)))))))
 
-                          (defun eless/save-buffer-maybe-and-kill-emacs ()
+                          (defun eless/save-buffers-maybe-and-kill-emacs ()
                             (interactive)
                             (dolist (buf (buffer-list))
                               (with-current-buffer buf
-                                (when view-mode ;Force-revert all view-mode buffers to prevent save prompt on quitting
+                                (when (and (buffer-file-name)
+                                           view-mode) ;Force-revert all view-mode file buffers to prevent save prompt on quitting
                                   (revert-buffer :ignore-auto :noconfirm)
                                   (view-mode 1))))
                             (save-buffers-kill-emacs))
@@ -340,8 +341,9 @@ function emacs_Q_view_mode {
                                 (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
                                   (setq num-non-special-buffers (+ 1 num-non-special-buffers))))
                               (if (<= num-non-special-buffers 1)
-                                  (eless/save-buffer-maybe-and-kill-emacs) ;Kill emacs if one or less non-special buffers are open
-                                (when view-mode ;If in view-mode, force-revert current buffer before attempting kill
+                                  (eless/save-buffers-maybe-and-kill-emacs) ;Kill emacs if one or less non-special buffers are open
+                                (when (and (buffer-file-name)
+                                           view-mode) ;If in view-mode, force-revert current file buffer before attempting kill
                                   (revert-buffer :ignore-auto :noconfirm)
                                   (view-mode 1))
                                 (kill-buffer (current-buffer))))) ;Else only kill the current buffer
@@ -401,7 +403,7 @@ function emacs_Q_view_mode {
                           ;; global custom bindings
                           (global-set-key (kbd "M-/") (quote hippie-expand))
                           (global-set-key (kbd "C-x C-b") (quote ibuffer))
-                          (global-set-key (kbd "C-x C-c") (quote eless/save-buffer-maybe-and-kill-emacs))
+                          (global-set-key (kbd "C-x C-c") (quote eless/save-buffers-maybe-and-kill-emacs))
                           (global-set-key (kbd "C-x C-f") (quote view-file))
                           (global-set-key (kbd "C-c q") (quote query-replace-regexp))
                           (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
