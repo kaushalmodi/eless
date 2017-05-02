@@ -80,7 +80,6 @@ set -u # Error out when unbound variables are found
 # IFS=$'\n\t' # Separate fields in a sequence only at newlines and tab characters
 IFS=$' ' # Separate each field in a sequence at space characters
 
-# Initialize variables
 help=0
 debug=0
 no_window_arg="-nw"
@@ -100,7 +99,6 @@ do
     fi
 done
 
-# Figure out if eless if getting input from a pipe or sending output to a pipe
 # https://gist.github.com/davejamesmiller/1966557
 if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interactive
 then
