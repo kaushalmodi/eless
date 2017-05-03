@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-03 12:58:57 kmodi>
+# Time-stamp: <2017-05-03 13:04:07 kmodi>
 #+TITLE: eless -- Better than less
 
 #+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -80,7 +80,6 @@ info emacs | eless          # Read emacs Info manual in eless
 #+END_SRC
 * Code
 #+BEGIN_SRC shell :exports none
-#!/usr/bin/env bash
 
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
