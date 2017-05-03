@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# https://github.com/kaushalmodi/eless
+# Version: v0.2
+
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
 #
@@ -10,11 +13,12 @@ Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
 * Options to this script
-|-------+----------------------------------------------|
-| -h    | Show this help (--help will show emacs help) |
-| --gui | Run emacs in GUI mode                        |
-| -D    | Run with debug messages                      |
-|-------+----------------------------------------------|
+|-------+-------------------------------------------------------|
+| -h    | Show this help (--help will show emacs help) and quit |
+| --gui | Run emacs in GUI mode                                 |
+| -V    | Print version and quit                                |
+| -D    | Run with debug messages                               |
+|-------+-------------------------------------------------------|
 
 * Common bindings in 'view-mode'
 |--------------+------------------------------------------------------------------------------|
@@ -149,6 +153,10 @@ do
     then
         : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
           # Do not pass -D option to emacs.
+    elif [[ "${var}" == '-V' ]]
+    then
+        echo "Eless Version v0.2 (https://github.com/kaushalmodi/eless/tree/v0.2)"
+        exit 0
     elif [[ "${var}" == '-' ]]
     then
         : # Discard the '-'; it does nothing. (for the cases where a user might do "echo foo | eless -")

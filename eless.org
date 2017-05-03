@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-03 13:04:07 kmodi>
+# Time-stamp: <2017-05-03 13:29:57 kmodi>
 #+TITLE: eless -- Better than less
 
 #+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -20,11 +20,12 @@
 * Eless Options
 # Do "C-c '" in the below block to edit the org table
 #+BEGIN_SRC org :tangle no :noweb-ref eless-options
-|-------+----------------------------------------------|
-| -h    | Show this help (--help will show emacs help) |
-| --gui | Run emacs in GUI mode                        |
-| -D    | Run with debug messages                      |
-|-------+----------------------------------------------|
+|-------+-------------------------------------------------------|
+| -h    | Show this help (--help will show emacs help) and quit |
+| --gui | Run emacs in GUI mode                                 |
+| -V    | Print version and quit                                |
+| -D    | Run with debug messages                               |
+|-------+-------------------------------------------------------|
 #+END_SRC
 * =view-mode= Common Bindings
 #+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings
@@ -79,7 +80,20 @@ eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 #+END_SRC
 * Code
-#+BEGIN_SRC shell :exports none
+** Current =eless= Version
+# Below is a nifty way to do sort of search/replace in all code blocks.
+#+BEGIN_SRC text :tangle no :noweb-ref version
+v0.2
+#+END_SRC
+
+#+BEGIN_SRC text :tangle no :noweb-ref source-link
+https://github.com/kaushalmodi/eless
+#+END_SRC
+
+#+BEGIN_SRC shell :exports none :noweb yes
+
+# <<source-link>>
+# Version: <<version>>
 
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -231,7 +245,7 @@ to this script get passed to =emacs=.
 
 =getopt= does not support ignoring undefined options. So the below
 basic approach of looping through all the arguments ="$@"= is used.
-#+BEGIN_SRC shell
+#+BEGIN_SRC shell :noweb yes
 for var in "$@"
 do
     if [[ ${debug} -eq 1 ]]
@@ -242,6 +256,10 @@ do
     then
         : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
           # Do not pass -D option to emacs.
+    elif [[ "${var}" == '-V' ]]
+    then
+        echo "Eless Version <<version>> (<<source-link>>/tree/<<version>>)"
+        exit 0
     elif [[ "${var}" == '-' ]]
     then
         : # Discard the '-'; it does nothing. (for the cases where a user might do "echo foo | eless -")
