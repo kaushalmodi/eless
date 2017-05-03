@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-03 11:37:03 kmodi>
+# Time-stamp: <2017-05-03 11:59:09 kmodi>
 #+TITLE: eless -- Better than less
 # Tangle all the code blocks in this file to the eless script
 #+PROPERTY: header-args :tangle eless :padline yes
@@ -9,7 +9,7 @@
 - Run =org-babel-tangle=, bound to =C-c C-v t= by default.
 - That will generate the =eless= script in this directory.
 * Code
-** Comment header
+** Comment header                                                  :noexport:
 #+BEGIN_SRC shell
 #!/usr/bin/env bash
 
@@ -20,19 +20,41 @@
 # confidence that this script will be free of loopholes.. or is it? :)
 #+END_SRC
 ** Help string
-#+BEGIN_SRC shell
+#+BEGIN_SRC shell :noweb yes
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
-,* Switches to this script
-|--------+----------------------------------------------|
-| -h     | Show this help (--help will show emacs help) |
-| --gui  | Run emacs in GUI mode                        |
-| -D     | Run with debug messages                      |
-|--------+----------------------------------------------|
+,* Options to this script
+<<eless-options>>
 
 ,* Common bindings in 'view-mode'
+<<view-mode-common-bindings>>
+
+,** Custom bindings
+<<custom-bindings>>
+
+,** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
+
+,* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
+  'man grep' will then show the grep man page in eless.
+
+,* Usage Examples
+
+    <<usage-examples>>
+"
+#+END_SRC
+*** Eless Options
+# Do "C-c '" in the below block to edit the org table
+#+BEGIN_SRC org :tangle no :noweb-ref eless-options
+|-------+----------------------------------------------|
+| -h    | Show this help (--help will show emacs help) |
+| --gui | Run emacs in GUI mode                        |
+| -D    | Run with debug messages                      |
+|-------+----------------------------------------------|
+#+END_SRC
+*** =view-mode= Common Bindings
+#+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings
 |--------------+------------------------------------------------------------------------------|
 | SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
 | DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
@@ -46,8 +68,9 @@ less, diff, man, (probably ls too).
 | e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
 |              | the opened file if needed.                                                   |
 |--------------+------------------------------------------------------------------------------|
-
-,** Custom bindings
+#+END_SRC
+*** Custom Bindings
+#+BEGIN_SRC org :tangle no :noweb-ref custom-bindings
 |--------------+------------------------------------------------------------|
 | ! or K       | Delete lines matching regexp                               |
 | & or k       | Keep lines matching regexp                                 |
@@ -66,27 +89,21 @@ less, diff, man, (probably ls too).
 | C-down/up    | Inc/Dec frame height (in GUI mode)                         |
 | C-right/left | Inc/Dec frame width (in GUI mode)                          |
 |--------------+------------------------------------------------------------|
-
-,** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
-
-,* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
-  'man grep' will then show the grep man page in eless.
-
-,* Usage Examples
-
-    eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
-    eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
-    echo 'foo' | eless          #
-    echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
-    grep 'bar' foo.txt | eless  #
-    PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-    PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-    diff foo bar | eless        # Colored diff!
-    eless .                     # Open dired in the current directory (enhanced 'ls')
-    ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
-    eless -h | eless            # See eless help ;-)
-    info emacs | eless          # Read emacs Info manual in eless
-"
+#+END_SRC
+*** Usage Examples
+#+BEGIN_SRC shell :tangle no :noweb-ref usage-examples
+eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
+eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
+echo 'foo' | eless          #
+echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
+grep 'bar' foo.txt | eless  #
+PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+diff foo bar | eless        # Colored diff!
+eless .                     # Open dired in the current directory (enhanced 'ls')
+ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
+eless -h | eless            # See eless help ;-)
+info emacs | eless          # Read emacs Info manual in eless
 #+END_SRC
 ** Unofficial strict mode
 #+BEGIN_SRC shell

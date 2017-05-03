@@ -11,12 +11,12 @@ h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
-* Switches to this script
-|--------+----------------------------------------------|
-| -h     | Show this help (--help will show emacs help) |
-| --gui  | Run emacs in GUI mode                        |
-| -D     | Run with debug messages                      |
-|--------+----------------------------------------------|
+* Options to this script
+|-------+----------------------------------------------|
+| -h    | Show this help (--help will show emacs help) |
+| --gui | Run emacs in GUI mode                        |
+| -D    | Run with debug messages                      |
+|-------+----------------------------------------------|
 
 * Common bindings in 'view-mode'
 |--------------+------------------------------------------------------------------------------|
