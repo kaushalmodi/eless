@@ -1,4 +1,5 @@
 ((nil . ((indent-tabs-mode . nil)))
  (org-mode . ((mode . auto-fill)
-              (fill-column . 70)))
+              (fill-column . 70)
+              (org-src-preserve-indentation . t)))
  (emacs-lisp-mode . ((lisp-indent-function . lisp-indent-function))))
