@@ -2,6 +2,12 @@
 
 *ShellCheck status:* [[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
 
+-----
+
+[[https://cdn.rawgit.com/kaushalmodi/eless/doc/eless.html][*Full Documentation*]]
+
+-----
+
 =eless= is a combination of Bash script and a minimal emacs =view-mode= config.
 
 This script is designed to:
