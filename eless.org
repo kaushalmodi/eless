@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-03 13:41:44 kmodi>
+# Time-stamp: <2017-05-03 18:12:14 kmodi>
 #+TITLE: eless -- Better than less
 
 #+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -20,12 +20,12 @@
 * Eless Options
 # Do "C-c '" in the below block to edit the org table
 #+BEGIN_SRC org :tangle no :noweb-ref eless-options
-|-------+-------------------------------------------------------|
-| -h    | Show this help (--help will show emacs help) and quit |
-| --gui | Run emacs in GUI mode                                 |
-| -V    | Print version and quit                                |
-| -D    | Run with debug messages                               |
-|-------+-------------------------------------------------------|
+|-------+--------------------------|
+| -h    | Show this help  and quit |
+| --gui | Run emacs in GUI mode    |
+| -V    | Print version and quit   |
+| -D    | Run with debug messages  |
+|-------+--------------------------|
 #+END_SRC
 * =view-mode= Common Bindings
 #+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings
@@ -79,15 +79,35 @@ ls --color=always | eless   # Auto-detect ANSI color codes and convert those to 
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 #+END_SRC
+* How to help debug
+- If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
+- Include the following debug information:
+  1. =emacs --version=
+  2. =eless= debug info:
+     - Append the =-D= option to your =eless= use case. Examples:
+       - =eless foo -D=
+       - =info org | eless -D=
+     - If you are providing debug info for something like =man foo=, do
+       - =PAGER=​"eless -D" man foo=
 * Code
 ** Current =eless= Version
 # Below is a nifty way to do sort of search/replace in all code blocks.
 #+BEGIN_SRC text :tangle no :noweb-ref version
 master
 #+END_SRC
-
-#+BEGIN_SRC text :tangle no :noweb-ref source-link
+#+BEGIN_SRC text :exports none :tangle no :noweb-ref source-link
 https://github.com/kaushalmodi/eless
+#+END_SRC
+
+# Get the current commit hash
+# Put the point in the below source block and hit "C-c C-c" to update
+# the git-hash source block - https://emacs.stackexchange.com/a/13352/115
+#+BEGIN_SRC shell :exports none :tangle no :eval confirm :results output code :results_switches ":tangle no :noweb-ref git-hash"
+git rev-parse HEAD | head -c 7
+#+END_SRC
+#+RESULTS:
+#+BEGIN_SRC shell :tangle no :noweb-ref git-hash
+46523ab
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none :noweb yes
@@ -100,6 +120,11 @@ https://github.com/kaushalmodi/eless
 #
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
+#+END_SRC
+
+#+BEGIN_SRC shell :noweb yes :exports none
+eless_version='<<version>>'
+eless_git_hash='<<git-hash>>'
 #+END_SRC
 
 #+BEGIN_SRC shell :noweb yes :exports none
@@ -162,6 +187,19 @@ input_from_pipe_flag=0
 output_to_pipe_flag=0
 #+END_SRC
 
+#+BEGIN_SRC shell :exports none :noweb yes
+function eless_print_version {
+    if [[ "${eless_version}" == "master" ]]
+    then
+        echo "Eless Version ${eless_git_hash} (commit hash of current master~1)"
+        echo "<<source-link>>/tree/${eless_version}"
+    else
+        echo "Eless Version ${eless_version}"
+        echo "<<source-link>>/tree/${eless_version}"
+    fi
+}
+#+END_SRC
+
 If user has passed the =-D= option, run the script in debug mode.
 
 #+BEGIN_SRC shell
@@ -169,6 +207,7 @@ for var in "$@"
 do
     if [[ "${var}" == '-D' ]]
     then
+        eless_print_version
         debug=1
     fi
 done
@@ -258,7 +297,7 @@ do
           # Do not pass -D option to emacs.
     elif [[ "${var}" == '-V' ]]
     then
-        echo "Eless Version <<version>> (<<source-link>>/tree/<<version>>)"
+        eless_print_version
         exit 0
     elif [[ "${var}" == '-' ]]
     then
@@ -286,6 +325,7 @@ success code.
 #+BEGIN_SRC shell
 if [[ ${help} -eq 1 ]]
 then
+    eless_print_version
     echo "${h}"
     exit 0
 fi
@@ -719,5 +759,6 @@ fi
 #+END_SRC
 * Local Variables                                     :noexport:
 # Local Variables:
-# eval: (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace nil :local)
+# eval: (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
+# org-confirm-babel-evaluate: (lambda (lang body) (let ((unsafe t)) (when (string= body "git rev-parse HEAD | head -c 7") (setq unsafe nil)) unsafe))
 # End:

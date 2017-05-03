@@ -8,17 +8,20 @@
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
 
+eless_version='master'
+eless_git_hash='46523ab'
+
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
 * Options to this script
-|-------+-------------------------------------------------------|
-| -h    | Show this help (--help will show emacs help) and quit |
-| --gui | Run emacs in GUI mode                                 |
-| -V    | Print version and quit                                |
-| -D    | Run with debug messages                               |
-|-------+-------------------------------------------------------|
+|-------+--------------------------|
+| -h    | Show this help  and quit |
+| --gui | Run emacs in GUI mode    |
+| -V    | Print version and quit   |
+| -D    | Run with debug messages  |
+|-------+--------------------------|
 
 * Common bindings in 'view-mode'
 |--------------+------------------------------------------------------------------------------|
@@ -94,10 +97,22 @@ cmd=''
 input_from_pipe_flag=0
 output_to_pipe_flag=0
 
+function eless_print_version {
+    if [[ "${eless_version}" == "master" ]]
+    then
+        echo "Eless Version ${eless_git_hash} (commit hash of current master~1)"
+        echo "https://github.com/kaushalmodi/eless/tree/${eless_version}"
+    else
+        echo "Eless Version ${eless_version}"
+        echo "https://github.com/kaushalmodi/eless/tree/${eless_version}"
+    fi
+}
+
 for var in "$@"
 do
     if [[ "${var}" == '-D' ]]
     then
+        eless_print_version
         debug=1
     fi
 done
@@ -155,7 +170,7 @@ do
           # Do not pass -D option to emacs.
     elif [[ "${var}" == '-V' ]]
     then
-        echo "Eless Version master (https://github.com/kaushalmodi/eless/tree/master)"
+        eless_print_version
         exit 0
     elif [[ "${var}" == '-' ]]
     then
@@ -179,6 +194,7 @@ done
 
 if [[ ${help} -eq 1 ]]
 then
+    eless_print_version
     echo "${h}"
     exit 0
 fi
