@@ -1,5 +1,12 @@
-# Time-stamp: <2017-05-03 18:12:14 kmodi>
+# Time-stamp: <2017-05-03 18:47:28 kmodi>
 #+TITLE: eless -- Better than less
+#+TEXINFO_DIR_CATEGORY: Emacs
+#+TEXINFO_DIR_TITLE: Eless: (eless).
+#+TEXINFO_DIR_DESC: Use emacs view-mode as less
+
+# https://raw.githubusercontent.com/magit/magit/master/Documentation/magit.org
+# #+TEXINFO_DEFFN: t
+# #+TEXINFO_CLASS: info+
 
 #+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 #+HTML_HEAD: <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
@@ -107,7 +114,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-46523ab
+2c6f8ff
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none :noweb yes
@@ -666,7 +673,7 @@ else
         #   /path/to/some.info or /path/to/some.info.gz
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        info_man=$(echo "${first_line_piped_data}" | grep -Po '^.*/\K[^/]+(?=\.info(\.gz)*$)' || true)
+        info_man=$(echo "${first_line_piped_data}" | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' || true)
 #+END_SRC
 **** Input is piped from =man= command
 #+BEGIN_SRC shell
@@ -759,6 +766,7 @@ fi
 #+END_SRC
 * Local Variables                                     :noexport:
 # Local Variables:
+# eval: (require 'ox-texinfo nil :noerror)
 # eval: (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
 # org-confirm-babel-evaluate: (lambda (lang body) (let ((unsafe t)) (when (string= body "git rev-parse HEAD | head -c 7") (setq unsafe nil)) unsafe))
 # End:

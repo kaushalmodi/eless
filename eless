@@ -9,7 +9,7 @@
 # confidence that this script will be free of loopholes.. or is it? :)
 
 eless_version='master'
-eless_git_hash='46523ab'
+eless_git_hash='2c6f8ff'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -472,7 +472,7 @@ else
         #   /path/to/some.info or /path/to/some.info.gz
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        info_man=$(echo "${first_line_piped_data}" | grep -Po '^.*/\K[^/]+(?=\.info(\.gz)*$)' || true)
+        info_man=$(echo "${first_line_piped_data}" | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' || true)
 
         if [[ ! -z ${man_page} ]]
         then
