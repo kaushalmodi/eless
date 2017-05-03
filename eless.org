@@ -1,16 +1,85 @@
-# Time-stamp: <2017-05-03 11:59:09 kmodi>
+# Time-stamp: <2017-05-03 12:58:57 kmodi>
 #+TITLE: eless -- Better than less
+
+#+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+#+HTML_HEAD: <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+#+HTML_HEAD: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/leuven_theme.css" rel="stylesheet">
+#+HTML_HEAD: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/bootstrap.extra.css" rel="stylesheet">
+
 # Tangle all the code blocks in this file to the eless script
 #+PROPERTY: header-args :tangle eless :padline yes
 # Make the tangled shell scripts executables
 #+PROPERTY: header-args:shell :shebang "#!/usr/bin/env bash"
 
-* How to generate eless script
+* How to generate the eless script
 - Run =org-babel-tangle=, bound to =C-c C-v t= by default.
 - That will generate the =eless= script in this directory.
+- =delete-trailing-whitespace= is run in the
+  =org-babel-post-tangle-hook=. So you would need to manually save the
+  =eless= buffer.
+* Eless Options
+# Do "C-c '" in the below block to edit the org table
+#+BEGIN_SRC org :tangle no :noweb-ref eless-options
+|-------+----------------------------------------------|
+| -h    | Show this help (--help will show emacs help) |
+| --gui | Run emacs in GUI mode                        |
+| -D    | Run with debug messages                      |
+|-------+----------------------------------------------|
+#+END_SRC
+* =view-mode= Common Bindings
+#+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings
+|--------------+------------------------------------------------------------------------------|
+| SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
+| DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
+|              | (If your terminal does not support this, use xterm instead or using C-h.)    |
+| RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
+| y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
+|--------------+------------------------------------------------------------------------------|
+| s            | Do forward incremental search.                                               |
+| r            | Do reverse incremental search.                                               |
+|--------------+------------------------------------------------------------------------------|
+| e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
+|              | the opened file if needed.                                                   |
+|--------------+------------------------------------------------------------------------------|
+#+END_SRC
+* Custom Bindings
+#+BEGIN_SRC org :tangle no :noweb-ref custom-bindings
+|--------------+------------------------------------------------------------|
+| ! or K       | Delete lines matching regexp                               |
+| & or k       | Keep lines matching regexp                                 |
+| 0            | Delete this window                                         |
+| 1            | Keep only this window                                      |
+| A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
+| N            | Next error (next line in *occur*)                          |
+| P            | Previous error (previous line in *occur*)                  |
+| g or F5      | Revert buffer (probably after keep/delete lines)           |
+| n            | Next line                                                  |
+| o            | Occur                                                      |
+| p            | Previous line                                              |
+| q            | Quit emacs if at most one buffer is open, else kill buffer |
+| t            | Toggle line truncation                                     |
+| = or + or -  | Adjust font size (in GUI mode)                             |
+| C-down/up    | Inc/Dec frame height (in GUI mode)                         |
+| C-right/left | Inc/Dec frame width (in GUI mode)                          |
+|--------------+------------------------------------------------------------|
+#+END_SRC
+* Usage Examples
+#+BEGIN_SRC shell :tangle no :noweb-ref usage-examples
+eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
+eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
+echo 'foo' | eless          #
+echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
+grep 'bar' foo.txt | eless  #
+PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+diff foo bar | eless        # Colored diff!
+eless .                     # Open dired in the current directory (enhanced 'ls')
+ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
+eless -h | eless            # See eless help ;-)
+info emacs | eless          # Read emacs Info manual in eless
+#+END_SRC
 * Code
-** Comment header                                                  :noexport:
-#+BEGIN_SRC shell
+#+BEGIN_SRC shell :exports none
 #!/usr/bin/env bash
 
 # This script uses the unofficial strict mode as explained in
@@ -19,8 +88,8 @@
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
 #+END_SRC
-** Help string
-#+BEGIN_SRC shell :noweb yes
+
+#+BEGIN_SRC shell :noweb yes :exports none
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
@@ -44,73 +113,25 @@ less, diff, man, (probably ls too).
     <<usage-examples>>
 "
 #+END_SRC
-*** Eless Options
-# Do "C-c '" in the below block to edit the org table
-#+BEGIN_SRC org :tangle no :noweb-ref eless-options
-|-------+----------------------------------------------|
-| -h    | Show this help (--help will show emacs help) |
-| --gui | Run emacs in GUI mode                        |
-| -D    | Run with debug messages                      |
-|-------+----------------------------------------------|
-#+END_SRC
-*** =view-mode= Common Bindings
-#+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings
-|--------------+------------------------------------------------------------------------------|
-| SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
-| DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
-|              | (If your terminal does not support this, use xterm instead or using C-h.)    |
-| RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
-| y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
-|--------------+------------------------------------------------------------------------------|
-| s            | Do forward incremental search.                                               |
-| r            | Do reverse incremental search.                                               |
-|--------------+------------------------------------------------------------------------------|
-| e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
-|              | the opened file if needed.                                                   |
-|--------------+------------------------------------------------------------------------------|
-#+END_SRC
-*** Custom Bindings
-#+BEGIN_SRC org :tangle no :noweb-ref custom-bindings
-|--------------+------------------------------------------------------------|
-| ! or K       | Delete lines matching regexp                               |
-| & or k       | Keep lines matching regexp                                 |
-| 0            | Delete this window                                         |
-| 1            | Keep only this window                                      |
-| A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
-| N            | Next error (next line in *occur*)                          |
-| P            | Previous error (previous line in *occur*)                  |
-| g or F5      | Revert buffer (probably after keep/delete lines)           |
-| n            | Next line                                                  |
-| o            | Occur                                                      |
-| p            | Previous line                                              |
-| q            | Quit emacs if at most one buffer is open, else kill buffer |
-| t            | Toggle line truncation                                     |
-| = or + or -  | Adjust font size (in GUI mode)                             |
-| C-down/up    | Inc/Dec frame height (in GUI mode)                         |
-| C-right/left | Inc/Dec frame width (in GUI mode)                          |
-|--------------+------------------------------------------------------------|
-#+END_SRC
-*** Usage Examples
-#+BEGIN_SRC shell :tangle no :noweb-ref usage-examples
-eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
-eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
-echo 'foo' | eless          #
-echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
-grep 'bar' foo.txt | eless  #
-PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-diff foo bar | eless        # Colored diff!
-eless .                     # Open dired in the current directory (enhanced 'ls')
-ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
-eless -h | eless            # See eless help ;-)
-info emacs | eless          # Read emacs Info manual in eless
-#+END_SRC
-** Unofficial strict mode
-#+BEGIN_SRC shell
-set -o pipefail
-set -e # Error out and exit the script when any line in this script returns an error
-set -u # Error out when unbound variables are found
+** Unofficial Bash Strict Mode
+The [[http://redsymbol.net/articles/unofficial-bash-strict-mode/][/Unofficial Bash Strict Mode/]] is enabled to make this script more
+robust and reliable.
 
+The script will error out immediately when,
+1. Any command in a pipeline in this code fails.
+ #+BEGIN_SRC shell
+set -o pipefail
+#+END_SRC
+2. Any line in this script returns an error
+ #+BEGIN_SRC shell :padline no
+set -e # Error out and exit the script when any line in this script returns an error
+#+END_SRC
+3. Any undefined variable is referenced.
+ #+BEGIN_SRC shell :padline no
+set -u # Error out when unbound variables are found
+#+END_SRC
+
+#+BEGIN_SRC shell :exports none
 # IFS=$'\n\t' # Separate fields in a sequence only at newlines and tab characters
 IFS=$' ' # Separate each field in a sequence at space characters
 #+END_SRC
@@ -161,6 +182,7 @@ We need this script to know:
     #+END_SRC
     In this case, we do not do anything at the moment. See [[https://github.com/kaushalmodi/eless/issues/4][here]].
 
+Below code determines that using =[[ -t 0 ]]= and =[[ -t 1]]=.
 #+BEGIN_SRC shell
 # https://gist.github.com/davejamesmiller/1966557
 if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interactive
@@ -205,10 +227,11 @@ fi
 #+END_SRC
 ** Parse options
 We need to parse the arguments such that arguments specific to this
-script like =-D= and =--gui== get consumed here, and the one not known
-to this script get passed to =emacs=. =getopt= does not support
-ignoring undefined options. So the below basic approach of looping
-through all the arguments ="$@"= is used.
+script like =-D= and =--gui= get consumed here, and the ones not known
+to this script get passed to =emacs=.
+
+=getopt= does not support ignoring undefined options. So the below
+basic approach of looping through all the arguments ="$@"= is used.
 #+BEGIN_SRC shell
 for var in "$@"
 do
@@ -262,7 +285,12 @@ fi
 ** Emacs with =-Q= in =view-mode=
 The =emacs_Q_view_mode= function is defined to launch emacs with a
 customized =view-mode=.
-#+BEGIN_SRC shell :noweb yes
+
+/Refer to further sections below to see the elisp code referenced by
+the =<<emacs-config>>= *noweb* placeholder in the below snippet./
+# :noweb no-export will prevent expansion of the <<noweb ref>> when
+# exporting
+#+BEGIN_SRC shell :noweb no-export
 function emacs_Q_view_mode {
 
     if [[ ${debug} -eq 1 ]]
@@ -278,13 +306,13 @@ function emacs_Q_view_mode {
                        )' 2>/dev/null </dev/tty
 }
 #+END_SRC
-*** Emacs Configuration
+** Emacs Configuration
 :PROPERTIES:
 :header-args: :noweb-ref emacs-config :noweb-sep "\\n\\n"
 :END:
 # :noweb-sep "\\n\\n" <- Inserts one empty line between noweb ref
 # source blocks
-**** General setup
+*** General setup
 #+BEGIN_SRC emacs-lisp
 ;; Keep the default-directory to be the same from where
 ;; this script was launched from; useful during C-x C-f
@@ -312,7 +340,7 @@ function emacs_Q_view_mode {
 
 (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 #+END_SRC
-**** Ido setup
+*** Ido setup
 #+BEGIN_SRC emacs-lisp
 (ido-mode 1)
 (setq ido-enable-flex-matching t)       ;Enable fuzzy search
@@ -321,24 +349,24 @@ function emacs_Q_view_mode {
 (setq ido-use-filename-at-point (quote guess)) ;Find file at point using ido
 (add-to-list (quote ido-ignore-buffers) "*Messages*")
 #+END_SRC
-**** Isearch setup
+*** Isearch setup
 #+BEGIN_SRC emacs-lisp
 (setq isearch-allow-scroll t) ;Allow scrolling using isearch
 ;; DEL during isearch should edit the search string, not jump back to the previous result.
 (define-key isearch-mode-map [remap isearch-delete-char] (quote isearch-del-char))
 #+END_SRC
-**** Enable line truncation
+*** Enable line truncation
 #+BEGIN_SRC emacs-lisp
 ;; Truncate long lines by default
 (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
 (toggle-truncate-lines +1)
 #+END_SRC
-**** Highlight the current line
+*** Highlight the current line
 #+BEGIN_SRC emacs-lisp
 (hl-line-mode 1)
 #+END_SRC
-**** Custom functions
-***** Keep/delete matching lines
+*** Custom functions
+**** Keep/delete matching lines
 #+BEGIN_SRC emacs-lisp
 (defun eless/keep-lines ()
   (interactive)
@@ -431,7 +459,7 @@ function emacs_Q_view_mode {
           (require (quote ansi-color))
           (ansi-color-apply-on-region (point-min) (point-max)))))))
 #+END_SRC
-**** "Do the right thing" Kill
+**** "Do The Right Thing" Kill
 #+BEGIN_SRC emacs-lisp
 (defun eless/save-buffers-maybe-and-kill-emacs ()
   (interactive)
@@ -486,7 +514,7 @@ function emacs_Q_view_mode {
   (define-key Info-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
 (add-hook (quote Info-mode-hook) (quote eless/Info-mode-customization))
 #+END_SRC
-**** Auto-detection
+*** Auto-setting of major modes
 #+BEGIN_SRC emacs-lisp
 (cond
  ((derived-mode-p (quote dired-mode)) (eless/dired-mode-customization))
@@ -498,7 +526,7 @@ function emacs_Q_view_mode {
   ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
   (eless/enable-ansi-color-maybe)))
 #+END_SRC
-**** Key bindings
+*** Key bindings
 #+BEGIN_SRC emacs-lisp
 (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
 (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
@@ -533,9 +561,13 @@ function emacs_Q_view_mode {
   (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
   (global-set-key (kbd "C-<up>") (quote eless/frame-height-half)))
 #+END_SRC
-** Scenarios
+** Input/Output Scenarios
 *** Output is going to a pipe
-This scenario is not supported at the moment.
+This scenario is not supported at the moment. There
+[[https://github.com/kaushalmodi/eless/issues/4][is a plan to support it in future]] though.
+
+For now, the =eless= script will exit with an error code if the output
+is being piped to something else.
 #+BEGIN_SRC shell
 # Below if condition is reached if you try to do this:
 #   eless foo.txt | grep bar .. Not allowed!
@@ -599,9 +631,10 @@ else
                                    ;; seems to be sufficient
                                    (when (version<= emacs-version \"24.5.99\")
                                       (sit-for 1))
-                                   (delete-window)
-                                 )'"
+                                   (delete-window))'"
 #+END_SRC
+The =sit-for= hack is needed for emacs versions older than 25.x. It
+was reported in [[https://github.com/kaushalmodi/eless/issues/3][this issue]].
 **** Input is piped from =info= command
 #+BEGIN_SRC shell :padline no
         elif [[ ! -z ${info_man} ]]
@@ -615,8 +648,7 @@ else
             cmd="emacs_Q_view_mode \
                          ${emacs_args[*]} \
                          --eval '(progn
-                                   (info (downcase \"${info_man}\"))
-                                 )'"
+                                   (info (downcase \"${info_man}\")))'"
 #+END_SRC
 **** Input is piped from something else
 This scenario could be anything, like:
@@ -626,6 +658,8 @@ grep 'foo' bar | eless
 ls --color=always | eless
 #+END_SRC
 
+In that case, just open the =${tempfile}= saved from the =STDIN=
+stream using =emacs_Q_view_mode=.
 #+BEGIN_SRC shell :padline no
         else # No man page or info manual detected
             if [[ ${debug} -eq 1 ]]
@@ -636,8 +670,7 @@ ls --color=always | eless
                          ${emacs_args[*]} \
                          --eval '(progn
                                    (set-visited-file-name nil)
-                                   (rename-buffer \"*Stdin*\" :unique)
-                                 )'"
+                                   (rename-buffer \"*Stdin*\" :unique))'"
 
         fi
 #+END_SRC

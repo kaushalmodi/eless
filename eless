@@ -470,8 +470,7 @@ else
                                    ;; seems to be sufficient
                                    (when (version<= emacs-version \"24.5.99\")
                                       (sit-for 1))
-                                   (delete-window)
-                                 )'"
+                                   (delete-window))'"
         elif [[ ! -z ${info_man} ]]
         then
             # Try something like `info emacs | eless'.
@@ -483,8 +482,7 @@ else
             cmd="emacs_Q_view_mode \
                          ${emacs_args[*]} \
                          --eval '(progn
-                                   (info (downcase \"${info_man}\"))
-                                 )'"
+                                   (info (downcase \"${info_man}\")))'"
         else # No man page or info manual detected
             if [[ ${debug} -eq 1 ]]
             then
@@ -494,8 +492,7 @@ else
                          ${emacs_args[*]} \
                          --eval '(progn
                                    (set-visited-file-name nil)
-                                   (rename-buffer \"*Stdin*\" :unique)
-                                 )'"
+                                   (rename-buffer \"*Stdin*\" :unique))'"
 
         fi
         # Below else condition is reached when you do this:
