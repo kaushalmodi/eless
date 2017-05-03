@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-#
+#!/usr/bin/env bash
+
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
 #
@@ -183,7 +184,6 @@ then
     echo "Pipe Contents (up to 10 lines) : $(echo "${piped_data}" | head -n 10)"
 fi
 
-# Basic function to launch emacs with customization mainly around the `view-mode'
 function emacs_Q_view_mode {
 
     if [[ ${debug} -eq 1 ]]
@@ -210,13 +210,6 @@ function emacs_Q_view_mode {
                           (line-number-mode 1)
                           (column-number-mode 1)
 
-                          (ido-mode 1)
-                          (setq ido-enable-flex-matching t)       ;Enable fuzzy search
-                          (setq ido-everywhere t)
-                          (setq ido-create-new-buffer (quote always)) ;Create a new buffer if no buffer matches substringv
-                          (setq ido-use-filename-at-point (quote guess)) ;Find file at point using ido
-                          (add-to-list (quote ido-ignore-buffers) "*Messages*")
-
                           (setq-default indent-tabs-mode nil) ;Use spaces instead of tabs for indentation
                           (setq x-select-enable-clipboard t)
                           (setq x-select-enable-primary t)
@@ -226,6 +219,15 @@ function emacs_Q_view_mode {
                           (setq load-prefer-newer t)
                           (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
 
+                          (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
+
+                          (ido-mode 1)
+                          (setq ido-enable-flex-matching t)       ;Enable fuzzy search
+                          (setq ido-everywhere t)
+                          (setq ido-create-new-buffer (quote always)) ;Create a new buffer if no buffer matches substringv
+                          (setq ido-use-filename-at-point (quote guess)) ;Find file at point using ido
+                          (add-to-list (quote ido-ignore-buffers) "*Messages*")
+
                           (setq isearch-allow-scroll t) ;Allow scrolling using isearch
                           ;; DEL during isearch should edit the search string, not jump back to the previous result.
                           (define-key isearch-mode-map [remap isearch-delete-char] (quote isearch-del-char))
@@ -234,10 +236,8 @@ function emacs_Q_view_mode {
                           (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
                           (toggle-truncate-lines +1)
 
-                          ;; Highlight the current line
                           (hl-line-mode 1)
 
-                          ;; Custom functions
                           (defun eless/keep-lines ()
                             (interactive)
                             (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
@@ -378,9 +378,6 @@ function emacs_Q_view_mode {
                             ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
                             (eless/enable-ansi-color-maybe)))
 
-                          (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
-
-                          ;; view-mode custom bindings
                           (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
                           (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
                           (define-key view-mode-map (kbd "0") (quote delete-window))
@@ -413,7 +410,7 @@ function emacs_Q_view_mode {
                             (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
                             (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
                             (global-set-key (kbd "C-<up>") (quote eless/frame-height-half)))
-                        )' 2>/dev/null </dev/tty
+                       )' 2>/dev/null </dev/tty
 }
 
 # Below if condition is reached if you try to do this:
@@ -506,6 +503,7 @@ else
     else
         cmd="emacs_Q_view_mode ${emacs_args[*]}"
     fi
+
     if [[ ${debug} -eq 1 ]]
     then
         echo "Eless Command : $cmd"
