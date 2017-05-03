@@ -9,7 +9,7 @@
 # confidence that this script will be free of loopholes.. or is it? :)
 
 eless_version='master'
-eless_git_hash='2c6f8ff'
+eless_git_hash='85bbb4e'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -348,6 +348,7 @@ function emacs_Q_view_mode {
                             (dolist (buf (buffer-list))
                               (with-current-buffer buf
                                 (when (and (buffer-file-name)
+                                           (file-exists-p (buffer-file-name))
                                            view-mode) ;Force-revert all view-mode file buffers to prevent save prompt on quitting
                                   (revert-buffer :ignore-auto :noconfirm)
                                   (view-mode 1))))
@@ -362,6 +363,7 @@ function emacs_Q_view_mode {
                               (if (<= num-non-special-buffers 1)
                                   (eless/save-buffers-maybe-and-kill-emacs) ;Kill emacs if one or less non-special buffers are open
                                 (when (and (buffer-file-name)
+                                           (file-exists-p (buffer-file-name))
                                            view-mode) ;If in view-mode, force-revert current file buffer before attempting kill
                                   (revert-buffer :ignore-auto :noconfirm)
                                   (view-mode 1))

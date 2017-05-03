@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-03 18:47:28 kmodi>
+# Time-stamp: <2017-05-03 19:04:39 kmodi>
 #+TITLE: eless -- Better than less
 #+TEXINFO_DIR_CATEGORY: Emacs
 #+TEXINFO_DIR_TITLE: Eless: (eless).
@@ -114,7 +114,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-2c6f8ff
+85bbb4e
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none :noweb yes
@@ -530,6 +530,7 @@ function emacs_Q_view_mode {
   (dolist (buf (buffer-list))
     (with-current-buffer buf
       (when (and (buffer-file-name)
+                 (file-exists-p (buffer-file-name))
                  view-mode) ;Force-revert all view-mode file buffers to prevent save prompt on quitting
         (revert-buffer :ignore-auto :noconfirm)
         (view-mode 1))))
@@ -544,6 +545,7 @@ function emacs_Q_view_mode {
     (if (<= num-non-special-buffers 1)
         (eless/save-buffers-maybe-and-kill-emacs) ;Kill emacs if one or less non-special buffers are open
       (when (and (buffer-file-name)
+                 (file-exists-p (buffer-file-name))
                  view-mode) ;If in view-mode, force-revert current file buffer before attempting kill
         (revert-buffer :ignore-auto :noconfirm)
         (view-mode 1))
