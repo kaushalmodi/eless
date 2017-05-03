@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-03 13:36:04 kmodi>
+# Time-stamp: <2017-05-03 13:41:44 kmodi>
 #+TITLE: eless -- Better than less
 
 #+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -83,7 +83,7 @@ info emacs | eless          # Read emacs Info manual in eless
 ** Current =eless= Version
 # Below is a nifty way to do sort of search/replace in all code blocks.
 #+BEGIN_SRC text :tangle no :noweb-ref version
-v0.2
+master
 #+END_SRC
 
 #+BEGIN_SRC text :tangle no :noweb-ref source-link
