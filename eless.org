@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-03 13:29:57 kmodi>
+# Time-stamp: <2017-05-03 13:36:04 kmodi>
 #+TITLE: eless -- Better than less
 
 #+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -12,7 +12,7 @@
 #+PROPERTY: header-args:shell :shebang "#!/usr/bin/env bash"
 
 * How to generate the eless script
-- Run =org-babel-tangle=, bound to =C-c C-v t= by default.
+- In =eless.org=, run =org-babel-tangle= (bound to =C-c C-v t= by default).
 - That will generate the =eless= script in this directory.
 - =delete-trailing-whitespace= is run in the
   =org-babel-post-tangle-hook=. So you would need to manually save the
