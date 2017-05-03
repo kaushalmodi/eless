@@ -17,3 +17,7 @@ script:
   - docker run -v $(pwd):/repo_root -w /repo_root koalaman/shellcheck eless
 matrix:
   fast_finish: true
+branches:
+  except:
+  - doc
+  - images
