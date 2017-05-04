@@ -33,7 +33,9 @@ It was created out of a need to have something *like* `less` (in the sense of *l
 
 I call it `eless` and here&rsquo;s a little taste of what it looks like:
 
-*Click the below image to see a GIF animation in larger size.* [![img](//raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png)](https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif)
+*Click the below image to see a GIF animation in larger size.*
+
+[![eless GIF](https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png)](https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif)
 
 As a bonus:
 
