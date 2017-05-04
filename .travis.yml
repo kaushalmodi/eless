@@ -19,5 +19,4 @@ matrix:
   fast_finish: true
 branches:
   except:
-  - doc
   - images
