@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-04 Thu 02:06 -->
+<!-- 2017-05-04 Thu 02:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -290,10 +290,11 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#org7544b28">6. Contributing Guide&#xa0;&#xa0;&#xa0;<span class="tag"><span class="contribute">contribute</span></span></a>
+<li><a href="#org7544b28">6. Contributing Guide&#xa0;&#xa0;&#xa0;<span class="tag"><span class="contributing">contributing</span></span></a>
 <ul>
-<li><a href="#org6c6b427">6.1. How to generate the <code>eless</code> script</a></li>
-<li><a href="#orgb15e67a">6.2. How to generate the documentation too</a></li>
+<li><a href="#org1241c89">6.1. How to help debug</a></li>
+<li><a href="#org6c6b427">6.2. How to generate the <code>eless</code> script</a></li>
+<li><a href="#orgb15e67a">6.3. How to generate the documentation too</a></li>
 </ul>
 </li>
 </ul>
@@ -1169,12 +1170,36 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 <div id="outline-container-org7544b28" class="outline-2">
-<h2 id="org7544b28"><span class="section-number-2">6</span> Contributing Guide&#xa0;&#xa0;&#xa0;<span class="tag"><span class="contribute">contribute</span></span></h2>
+<h2 id="org7544b28"><span class="section-number-2">6</span> Contributing Guide&#xa0;&#xa0;&#xa0;<span class="tag"><span class="contributing">contributing</span></span></h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org6c6b427" class="outline-3">
-<h3 id="org6c6b427"><span class="section-number-3">6.1</span> How to generate the <code>eless</code> script</h3>
+<div id="outline-container-org1241c89" class="outline-3">
+<h3 id="org1241c89"><span class="section-number-3">6.1</span> How to help debug</h3>
 <div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>If you find <code>eless</code> not working as expected, file an <a href="https://github.com/kaushalmodi/eless/issues">issue</a>.</li>
+<li>Include the following debug information:
+<ol class="org-ol">
+<li><code>emacs --version</code></li>
+<li><code>eless</code> debug info:
+<ul class="org-ul">
+<li>Append the <code>-D</code> option to your <code>eless</code> use case. Examples:
+<ul class="org-ul">
+<li><code>eless foo -D</code></li>
+<li><code>info org | eless -D</code></li>
+</ul></li>
+<li>If you are providing debug info for something like <code>man foo</code>, do
+<ul class="org-ul">
+<li><code>PAGER=​"eless -D" man foo</code></li>
+</ul></li>
+</ul></li>
+</ol></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6c6b427" class="outline-3">
+<h3 id="org6c6b427"><span class="section-number-3">6.2</span> How to generate the <code>eless</code> script</h3>
+<div class="outline-text-3" id="text-6-2">
 <ul class="org-ul">
 <li>Evaluate <code>build/build.el</code>.</li>
 <li>Open <code>eless.org</code>.</li>
@@ -1190,8 +1215,8 @@ whitespaces from it.</li>
 </div>
 </div>
 <div id="outline-container-orgb15e67a" class="outline-3">
-<h3 id="orgb15e67a"><span class="section-number-3">6.2</span> How to generate the documentation too</h3>
-<div class="outline-text-3" id="text-6-2">
+<h3 id="orgb15e67a"><span class="section-number-3">6.3</span> How to generate the documentation too</h3>
+<div class="outline-text-3" id="text-6-3">
 <ul class="org-ul">
 <li>Evaluate <code>build/build.el</code>.</li>
 <li>Open <code>eless.org</code>.</li>

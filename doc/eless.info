@@ -88,6 +88,7 @@ Input is coming from a pipe
 
 Contributing Guide
 
+* How to help debug::
 * How to generate the eless script::
 * How to generate the documentation too::
 
@@ -904,18 +905,37 @@ File: eless.info,  Node: Input is an argument to the script,  Prev: Input is com
 
 File: eless.info,  Node: Contributing Guide,  Prev: Code,  Up: Top
 
-6 Contributing Guide :contribute:
-*********************************
+6 Contributing Guide :contributing:
+***********************************
 
 * Menu:
 
+* How to help debug::
 * How to generate the eless script::
 * How to generate the documentation too::
 
 
-File: eless.info,  Node: How to generate the eless script,  Next: How to generate the documentation too,  Up: Contributing Guide
+File: eless.info,  Node: How to help debug,  Next: How to generate the eless script,  Up: Contributing Guide
 
-6.1 How to generate the eless script
+6.1 How to help debug
+=====================
+
+   • If you find eless not working as expected, file an issue
+     (https://github.com/kaushalmodi/eless/issues).
+   • Include the following debug information:
+       1. emacs --version
+       2. eless debug info:
+             • Append the -D option to your eless use case.  Examples:
+                  • eless foo -D
+                  • info org | eless -D
+             • If you are providing debug info for something like
+               man foo, do
+                  • PAGER=​"eless -D" man foo
+
+
+File: eless.info,  Node: How to generate the eless script,  Next: How to generate the documentation too,  Prev: How to help debug,  Up: Contributing Guide
+
+6.2 How to generate the eless script
 ====================================
 
    • Evaluate build/build.el.
@@ -931,7 +951,7 @@ File: eless.info,  Node: How to generate the eless script,  Next: How to generat
 
 File: eless.info,  Node: How to generate the documentation too,  Prev: How to generate the eless script,  Up: Contributing Guide
 
-6.2 How to generate the documentation too
+6.3 How to generate the documentation too
 =========================================
 
    • Evaluate build/build.el.
@@ -949,46 +969,47 @@ File: eless.info,  Node: How to generate the documentation too,  Prev: How to ge
 
 Tag Table:
 Node: Top188
-Node: Eless Options1572
-Node: view-mode Common Bindings1956
-Node: Custom Bindings3437
-Node: Usage Examples5080
-Node: Code6156
-Node: Current eless Version6489
-Node: Unofficial Bash Strict Mode6652
-Node: Initialize variables7367
-Node: Input/Output7982
-Node: Parse options9877
-Node: Print Help11617
-Node: Emacs with -Q in view-mode11950
-Node: Emacs Configuration12831
-Node: General setup13193
-Node: Ido setup14245
-Node: Isearch setup14743
-Node: Enable line truncation15152
-Node: Highlight the current line15501
-Node: Custom functions15728
-Node: Keep/delete matching lines16208
-Node: Frame and font re-sizing16890
-Node: Revert buffer in view-mode17901
-Node: Detect if diff-mode should be enabled18366
-Node: Detect if ANSI codes need to be converted to colors19840
-Node: ``Do The Right Thing'' Kill20997
-Node: dired-mode setup22570
-Node: Man-mode setup23450
-Node: Info-mode setup23957
-Node: Auto-setting of major modes24447
-Node: Key bindings25146
-Node: Input/Output Scenarios27341
-Node: Output is going to a pipe27597
-Node: Input is coming from a pipe28290
-Node: Input is piped from man command30379
-Node: Input is piped from info command31840
-Node: Input is piped from something else32633
-Node: Input is an argument to the script33591
-Node: Contributing Guide33979
-Node: How to generate the eless script34207
-Node: How to generate the documentation too34761
+Node: Eless Options1594
+Node: view-mode Common Bindings1978
+Node: Custom Bindings3459
+Node: Usage Examples5102
+Node: Code6178
+Node: Current eless Version6511
+Node: Unofficial Bash Strict Mode6674
+Node: Initialize variables7389
+Node: Input/Output8004
+Node: Parse options9899
+Node: Print Help11639
+Node: Emacs with -Q in view-mode11972
+Node: Emacs Configuration12853
+Node: General setup13215
+Node: Ido setup14267
+Node: Isearch setup14765
+Node: Enable line truncation15174
+Node: Highlight the current line15523
+Node: Custom functions15750
+Node: Keep/delete matching lines16230
+Node: Frame and font re-sizing16912
+Node: Revert buffer in view-mode17923
+Node: Detect if diff-mode should be enabled18388
+Node: Detect if ANSI codes need to be converted to colors19862
+Node: ``Do The Right Thing'' Kill21019
+Node: dired-mode setup22592
+Node: Man-mode setup23472
+Node: Info-mode setup23979
+Node: Auto-setting of major modes24469
+Node: Key bindings25168
+Node: Input/Output Scenarios27363
+Node: Output is going to a pipe27619
+Node: Input is coming from a pipe28312
+Node: Input is piped from man command30401
+Node: Input is piped from info command31862
+Node: Input is piped from something else32655
+Node: Input is an argument to the script33613
+Node: Contributing Guide34001
+Node: How to help debug34255
+Node: How to generate the eless script34926
+Node: How to generate the documentation too35506
 
 End Tag Table
 

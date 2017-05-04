@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-04 02:48:00 kmodi>
+# Time-stamp: <2017-05-04 02:51:26 kmodi>
 #+TITLE: eless -- A Better less
 
 #+TEXINFO_DIR_CATEGORY: Emacs
@@ -810,6 +810,16 @@ fi
 :PROPERTIES:
 :header-args: :tangle no
 :END:
+** How to help debug
+- If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
+- Include the following debug information:
+  1. =emacs --version=
+  2. =eless= debug info:
+     - Append the =-D= option to your =eless= use case. Examples:
+       - =eless foo -D=
+       - =info org | eless -D=
+     - If you are providing debug info for something like =man foo=, do
+       - =PAGER=​"eless -D" man foo=
 ** How to generate the =eless= script
 - Evaluate =build/build.el=.
 - Open =eless.org=.
@@ -830,16 +840,6 @@ fi
   - Update the README, Wiki, etc. pages.
 - Understand the changes made in all the files.
 - Provide a PR.
-* How to help debug                                          :wikidebug:wiki:
-- If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
-- Include the following debug information:
-  1. =emacs --version=
-  2. =eless= debug info:
-     - Append the =-D= option to your =eless= use case. Examples:
-       - =eless foo -D=
-       - =info org | eless -D=
-     - If you are providing debug info for something like =man foo=, do
-       - =PAGER=​"eless -D" man foo=
 * Example =eless= config in tcsh                              :wikitcsh:wiki:
 #+BEGIN_SRC shell :tangle no
 setenv PAGER eless # Show man pages using eless

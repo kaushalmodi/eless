@@ -1,6 +1,19 @@
 # Contributing Guide
 
 
+## How to help debug
+
+-   If you find `eless` not working as expected, file an [issue](https://github.com/kaushalmodi/eless/issues).
+-   Include the following debug information:
+    1.  `emacs --version`
+    2.  `eless` debug info:
+        -   Append the `-D` option to your `eless` use case. Examples:
+            -   `eless foo -D`
+            -   `info org | eless -D`
+        -   If you are providing debug info for something like `man foo`, do
+            -   `PAGER=​"eless -D" man foo`
+
+
 ## How to generate the `eless` script
 
 -   Evaluate `build/build.el`.

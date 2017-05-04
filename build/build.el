@@ -30,12 +30,6 @@
          (after-name (concat pub-dir "CONTRIBUTING.md")))
     (rename-file before-name after-name :ok-if-already-exists)))
 
-(defun eless/wiki-debug-completion-fn (proj-plist)
-  (let* ((pub-dir (plist-get proj-plist :publishing-directory))
-         (before-name (concat pub-dir "eless.md"))
-         (after-name (concat pub-dir "How To Help Debug.md")))
-    (rename-file before-name after-name :ok-if-already-exists)))
-
 (defun eless/wiki-tcsh-completion-fn (proj-plist)
   (let* ((pub-dir (plist-get proj-plist :publishing-directory))
          (before-name (concat pub-dir "eless.md"))
@@ -85,14 +79,6 @@
          :completion-function eless/contributing-completion-fn)
 
         ;; Wiki Pages
-        ("eless-wiki-debug"
-         :base-directory ,eless-root-dir
-         :with-toc nil
-         :with-tags nil
-         :select-tags ("wikidebug")     ;Cannot have hyphens in tags!
-         :publishing-function org-gfm-publish-to-gfm
-         :publishing-directory ,eless-wiki-dir
-         :completion-function eless/wiki-debug-completion-fn)
         ("eless-wiki-tcsh"
          :base-directory ,eless-root-dir
          :with-toc nil
@@ -102,7 +88,7 @@
          :publishing-directory ,eless-wiki-dir
          :completion-function eless/wiki-tcsh-completion-fn)
         ("eless-wiki"
-         :components ("eless-wiki-debug" "eless-wiki-tcsh"))
+         :components ("eless-wiki-tcsh"))
 
         ("eless-all-docs"
          :components ("eless-html" "eless-info"
