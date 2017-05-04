@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-04 Thu 11:04 -->
+<!-- 2017-05-04 Thu 12:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -294,7 +294,7 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#org7544b28">6. Contributing Guide&#xa0;&#xa0;&#xa0;<span class="tag"><span class="contributing">contributing</span></span></a>
+<li><a href="#org7544b28">6. Contributing Guide</a>
 <ul>
 <li><a href="#org1241c89">6.1. How to help debug</a></li>
 <li><a href="#orge0b3a87">6.2. Development</a>
@@ -313,64 +313,208 @@ for the JavaScript code in this tag.
 <div id="outline-container-orgc68f903" class="outline-2">
 <h2 id="orgc68f903"><span class="section-number-2">1</span> Eless Options</h2>
 <div class="outline-text-2" id="text-1">
-<div class="org-src-container">
-<pre><code class="src src-org"><span class="org-org-table">|-------+--------------------------|</span>
-<span class="org-org-table">| -h    | Show this help  and quit |</span>
-<span class="org-org-table">| --gui | Run emacs in GUI mode    |</span>
-<span class="org-org-table">| -V    | Print version and quit   |</span>
-<span class="org-org-table">| -D    | Run with debug messages  |</span>
-<span class="org-org-table">|-------+--------------------------|</span>
-</code></pre>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center" class="table-striped">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">-h</td>
+<td class="org-left">Show this help  and quit</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2013;gui</td>
+<td class="org-left">Run emacs in GUI mode</td>
+</tr>
+
+<tr>
+<td class="org-left">-V</td>
+<td class="org-left">Print version and quit</td>
+</tr>
+
+<tr>
+<td class="org-left">-D</td>
+<td class="org-left">Run with debug messages</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
+
 <div id="outline-container-org29703c2" class="outline-2">
 <h2 id="org29703c2"><span class="section-number-2">2</span> <code>view-mode</code> Common Bindings</h2>
 <div class="outline-text-2" id="text-2">
-<div class="org-src-container">
-<pre><code class="src src-org"><span class="org-org-table">|--------------+------------------------------------------------------------------------------|</span>
-<span class="org-org-table">| SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |</span>
-<span class="org-org-table">| DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |</span>
-<span class="org-org-table">|              | (If your terminal does not support this, use xterm instead or using C-h.)    |</span>
-<span class="org-org-table">| RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |</span>
-<span class="org-org-table">| y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |</span>
-<span class="org-org-table">|--------------+------------------------------------------------------------------------------|</span>
-<span class="org-org-table">| s            | Do forward incremental search.                                               |</span>
-<span class="org-org-table">| r            | Do reverse incremental search.                                               |</span>
-<span class="org-org-table">|--------------+------------------------------------------------------------------------------|</span>
-<span class="org-org-table">| e            | Quit the 'view-mode' and use that emacs session as usual to modify           |</span>
-<span class="org-org-table">|              | the opened file if needed.                                                   |</span>
-<span class="org-org-table">|--------------+------------------------------------------------------------------------------|</span>
-</code></pre>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center" class="table-striped">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Binding</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">SPC</td>
+<td class="org-left">Scroll forward &rsquo;page size&rsquo; lines. With prefix scroll forward prefix lines.</td>
+</tr>
+
+<tr>
+<td class="org-left">DEL or S-SPC</td>
+<td class="org-left">Scroll backward &rsquo;page size&rsquo; lines. With prefix scroll backward prefix lines.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">(If your terminal does not support this, use xterm instead or using C-h.)</td>
+</tr>
+
+<tr>
+<td class="org-left">RET</td>
+<td class="org-left">Scroll forward one line. With prefix scroll forward prefix line(s).</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">Scroll backward one line. With prefix scroll backward prefix line(s).</td>
+</tr>
+
+<tr>
+<td class="org-left">s</td>
+<td class="org-left">Do forward incremental search.</td>
+</tr>
+
+<tr>
+<td class="org-left">r</td>
+<td class="org-left">Do reverse incremental search.</td>
+</tr>
+
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">Quit the &rsquo;view-mode&rsquo; and use that emacs session as usual to modify</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">the opened file if needed.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
+
 <div id="outline-container-org0a0307e" class="outline-2">
 <h2 id="org0a0307e"><span class="section-number-2">3</span> Custom Bindings</h2>
 <div class="outline-text-2" id="text-3">
-<div class="org-src-container">
-<pre><code class="src src-org"><span class="org-org-table">|--------------+------------------------------------------------------------|</span>
-<span class="org-org-table">| ! or K       | Delete lines matching regexp                               |</span>
-<span class="org-org-table">| &amp; or k       | Keep lines matching regexp                                 |</span>
-<span class="org-org-table">| 0            | Delete this window                                         |</span>
-<span class="org-org-table">| 1            | Keep only this window                                      |</span>
-<span class="org-org-table">| A            | Auto-revert Tail Mode (like tail -f on current buffer)     |</span>
-<span class="org-org-table">| N            | Next error (next line in </span><span class="org-org-table"><span class="org-bold">*occur*</span></span><span class="org-org-table">)                          |</span>
-<span class="org-org-table">| P            | Previous error (previous line in </span><span class="org-org-table"><span class="org-bold">*occur*</span></span><span class="org-org-table">)                  |</span>
-<span class="org-org-table">| g or F5      | Revert buffer (probably after keep/delete lines)           |</span>
-<span class="org-org-table">| n            | Next line                                                  |</span>
-<span class="org-org-table">| o            | Occur                                                      |</span>
-<span class="org-org-table">| p            | Previous line                                              |</span>
-<span class="org-org-table">| q            | Quit emacs if at most one buffer is open, else kill buffer |</span>
-<span class="org-org-table">| t            | Toggle line truncation                                     |</span>
-<span class="org-org-table">| </span><span class="org-org-formula">= or + or -  </span><span class="org-org-table">| Adjust font size (in GUI mode)                             |</span>
-<span class="org-org-table">| C-down/up    | Inc/Dec frame height (in GUI mode)                         |</span>
-<span class="org-org-table">| C-right/left | Inc/Dec frame width (in GUI mode)                          |</span>
-<span class="org-org-table">|--------------+------------------------------------------------------------|</span>
-</code></pre>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center" class="table-striped">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Binding</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">! or K</td>
+<td class="org-left">Delete lines matching regexp</td>
+</tr>
+
+<tr>
+<td class="org-left">&amp; or k</td>
+<td class="org-left">Keep lines matching regexp</td>
+</tr>
+
+<tr>
+<td class="org-left">0</td>
+<td class="org-left">Delete this window</td>
+</tr>
+
+<tr>
+<td class="org-left">1</td>
+<td class="org-left">Keep only this window</td>
+</tr>
+
+<tr>
+<td class="org-left">A</td>
+<td class="org-left">Auto-revert Tail Mode (like tail -f on current buffer)</td>
+</tr>
+
+<tr>
+<td class="org-left">N</td>
+<td class="org-left">Next error (next line in <b>occur</b>)</td>
+</tr>
+
+<tr>
+<td class="org-left">P</td>
+<td class="org-left">Previous error (previous line in <b>occur</b>)</td>
+</tr>
+
+<tr>
+<td class="org-left">g or F5</td>
+<td class="org-left">Revert buffer (probably after keep/delete lines)</td>
+</tr>
+
+<tr>
+<td class="org-left">n</td>
+<td class="org-left">Next line</td>
+</tr>
+
+<tr>
+<td class="org-left">o</td>
+<td class="org-left">Occur</td>
+</tr>
+
+<tr>
+<td class="org-left">p</td>
+<td class="org-left">Previous line</td>
+</tr>
+
+<tr>
+<td class="org-left">q</td>
+<td class="org-left">Quit emacs if at most one buffer is open, else kill buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">Toggle line truncation</td>
+</tr>
+
+<tr>
+<td class="org-left">= or + or -</td>
+<td class="org-left">Adjust font size (in GUI mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-down/up</td>
+<td class="org-left">Inc/Dec frame height (in GUI mode)</td>
+</tr>
+
+<tr>
+<td class="org-left">C-right/left</td>
+<td class="org-left">Inc/Dec frame width (in GUI mode)</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
+
 <div id="outline-container-org6a716f8" class="outline-2">
 <h2 id="org6a716f8"><span class="section-number-2">4</span> Usage Examples</h2>
 <div class="outline-text-2" id="text-4">
@@ -407,7 +551,7 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 <h4 id="org1bf8b17"><span class="section-number-4">5.1.1</span> Git Commit Hash</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <div class="org-src-container">
-<pre><code class="src src-shell">12f6cff
+<pre><code class="src src-shell">8f29a8e
 </code></pre>
 </div>
 </div>
@@ -1189,7 +1333,7 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 <div id="outline-container-org7544b28" class="outline-2">
-<h2 id="org7544b28"><span class="section-number-2">6</span> Contributing Guide&#xa0;&#xa0;&#xa0;<span class="tag"><span class="contributing">contributing</span></span></h2>
+<h2 id="org7544b28"><span class="section-number-2">6</span> Contributing Guide</h2>
 <div class="outline-text-2" id="text-6">
 </div>
 <div id="outline-container-org1241c89" class="outline-3">

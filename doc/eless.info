@@ -108,12 +108,10 @@ File: eless.info,  Node: Eless Options,  Next: view-mode Common Bindings,  Prev:
 1 Eless Options
 ***************
 
-     |-------+--------------------------|
-     | -h    | Show this help  and quit |
-     | --gui | Run emacs in GUI mode    |
-     | -V    | Print version and quit   |
-     | -D    | Run with debug messages  |
-     |-------+--------------------------|
+-h      Show this help and quit
+–gui    Run emacs in GUI mode
+-V      Print version and quit
+-D      Run with debug messages
 
 
 File: eless.info,  Node: view-mode Common Bindings,  Next: Custom Bindings,  Prev: Eless Options,  Up: Top
@@ -121,19 +119,18 @@ File: eless.info,  Node: view-mode Common Bindings,  Next: Custom Bindings,  Pre
 2 view-mode Common Bindings
 ***************************
 
-     |--------------+------------------------------------------------------------------------------|
-     | SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
-     | DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
-     |              | (If your terminal does not support this, use xterm instead or using C-h.)    |
-     | RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
-     | y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
-     |--------------+------------------------------------------------------------------------------|
-     | s            | Do forward incremental search.                                               |
-     | r            | Do reverse incremental search.                                               |
-     |--------------+------------------------------------------------------------------------------|
-     | e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
-     |              | the opened file if needed.                                                   |
-     |--------------+------------------------------------------------------------------------------|
+Binding        Description
+----------------------------------------------------------------------------------------------
+SPC            Scroll forward ’page size’ lines.  With prefix scroll forward prefix lines.
+DEL or S-SPC   Scroll backward ’page size’ lines.  With prefix scroll backward prefix
+               lines.
+               (If your terminal does not support this, use xterm instead or using C-h.)
+RET            Scroll forward one line.  With prefix scroll forward prefix line(s).
+y              Scroll backward one line.  With prefix scroll backward prefix line(s).
+s              Do forward incremental search.
+r              Do reverse incremental search.
+e              Quit the ’view-mode’ and use that emacs session as usual to modify
+               the opened file if needed.
 
 
 File: eless.info,  Node: Custom Bindings,  Next: Usage Examples,  Prev: view-mode Common Bindings,  Up: Top
@@ -141,24 +138,24 @@ File: eless.info,  Node: Custom Bindings,  Next: Usage Examples,  Prev: view-mod
 3 Custom Bindings
 *****************
 
-     |--------------+------------------------------------------------------------|
-     | ! or K       | Delete lines matching regexp                               |
-     | & or k       | Keep lines matching regexp                                 |
-     | 0            | Delete this window                                         |
-     | 1            | Keep only this window                                      |
-     | A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
-     | N            | Next error (next line in *occur*)                          |
-     | P            | Previous error (previous line in *occur*)                  |
-     | g or F5      | Revert buffer (probably after keep/delete lines)           |
-     | n            | Next line                                                  |
-     | o            | Occur                                                      |
-     | p            | Previous line                                              |
-     | q            | Quit emacs if at most one buffer is open, else kill buffer |
-     | t            | Toggle line truncation                                     |
-     | = or + or -  | Adjust font size (in GUI mode)                             |
-     | C-down/up    | Inc/Dec frame height (in GUI mode)                         |
-     | C-right/left | Inc/Dec frame width (in GUI mode)                          |
-     |--------------+------------------------------------------------------------|
+Binding        Description
+----------------------------------------------------------------------------
+!  or K        Delete lines matching regexp
+& or k         Keep lines matching regexp
+0              Delete this window
+1              Keep only this window
+A              Auto-revert Tail Mode (like tail -f on current buffer)
+N              Next error (next line in *occur*)
+P              Previous error (previous line in *occur*)
+g or F5        Revert buffer (probably after keep/delete lines)
+n              Next line
+o              Occur
+p              Previous line
+q              Quit emacs if at most one buffer is open, else kill buffer
+t              Toggle line truncation
+= or + or -    Adjust font size (in GUI mode)
+C-down/up      Inc/Dec frame height (in GUI mode)
+C-right/left   Inc/Dec frame width (in GUI mode)
 
 
 File: eless.info,  Node: Usage Examples,  Next: Code,  Prev: Custom Bindings,  Up: Top
@@ -215,7 +212,7 @@ File: eless.info,  Node: Git Commit Hash,  Up: Current eless Version
 5.1.1 Git Commit Hash
 ---------------------
 
-     12f6cff
+     8f29a8e
 
 
 File: eless.info,  Node: Unofficial Bash Strict Mode,  Next: Initialize variables,  Prev: Current eless Version,  Up: Code
@@ -927,8 +924,8 @@ File: eless.info,  Node: Input is an argument to the script,  Prev: Input is com
 
 File: eless.info,  Node: Contributing Guide,  Prev: Code,  Up: Top
 
-6 Contributing Guide :contributing:
-***********************************
+6 Contributing Guide
+********************
 
 * Menu:
 
@@ -1027,49 +1024,49 @@ File: eless.info,  Node: How to generate eless _plus_ documentation,  Prev: How 
 Tag Table:
 Node: Top188
 Node: Eless Options1691
-Node: view-mode Common Bindings2075
-Node: Custom Bindings3556
-Node: Usage Examples5199
-Node: Code6275
-Node: Current eless Version6608
-Node: Git Commit Hash6801
-Node: Unofficial Bash Strict Mode6932
-Node: Initialize variables7647
-Node: Input/Output8262
-Node: Parse options10157
-Node: Print Help11897
-Node: Emacs with -Q in view-mode12230
-Node: Emacs Configuration13111
-Node: General setup13473
-Node: Ido setup14525
-Node: Isearch setup15023
-Node: Enable line truncation15432
-Node: Highlight the current line15781
-Node: Custom functions16008
-Node: Keep/delete matching lines16488
-Node: Frame and font re-sizing17170
-Node: Revert buffer in view-mode18181
-Node: Detect if diff-mode should be enabled18646
-Node: Detect if ANSI codes need to be converted to colors20120
-Node: ``Do The Right Thing'' Kill21277
-Node: dired-mode setup22850
-Node: Man-mode setup23730
-Node: Info-mode setup24237
-Node: Auto-setting of major modes24727
-Node: Key bindings25426
-Node: Input/Output Scenarios27621
-Node: Output is going to a pipe27877
-Node: Input is coming from a pipe28570
-Node: Input is piped from man command30659
-Node: Input is piped from info command32120
-Node: Input is piped from something else32913
-Node: Input is an argument to the script33871
-Node: Contributing Guide34259
-Node: How to help debug34450
-Node: Development35100
-Node: Dependencies35335
-Node: How to generate the eless script36230
-Node: How to generate eless _plus_ documentation36897
+Node: view-mode Common Bindings1950
+Node: Custom Bindings2926
+Node: Usage Examples3908
+Node: Code4984
+Node: Current eless Version5317
+Node: Git Commit Hash5510
+Node: Unofficial Bash Strict Mode5641
+Node: Initialize variables6356
+Node: Input/Output6971
+Node: Parse options8866
+Node: Print Help10606
+Node: Emacs with -Q in view-mode10939
+Node: Emacs Configuration11820
+Node: General setup12182
+Node: Ido setup13234
+Node: Isearch setup13732
+Node: Enable line truncation14141
+Node: Highlight the current line14490
+Node: Custom functions14717
+Node: Keep/delete matching lines15197
+Node: Frame and font re-sizing15879
+Node: Revert buffer in view-mode16890
+Node: Detect if diff-mode should be enabled17355
+Node: Detect if ANSI codes need to be converted to colors18829
+Node: ``Do The Right Thing'' Kill19986
+Node: dired-mode setup21559
+Node: Man-mode setup22439
+Node: Info-mode setup22946
+Node: Auto-setting of major modes23436
+Node: Key bindings24135
+Node: Input/Output Scenarios26330
+Node: Output is going to a pipe26586
+Node: Input is coming from a pipe27279
+Node: Input is piped from man command29368
+Node: Input is piped from info command30829
+Node: Input is piped from something else31622
+Node: Input is an argument to the script32580
+Node: Contributing Guide32968
+Node: How to help debug33129
+Node: Development33779
+Node: Dependencies34014
+Node: How to generate the eless script34909
+Node: How to generate eless _plus_ documentation35576
 
 End Tag Table
 

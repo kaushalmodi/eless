@@ -9,7 +9,7 @@
 # confidence that this script will be free of loopholes.. or is it? :)
 
 eless_version='master'
-eless_git_hash='12f6cff'
+eless_git_hash='8f29a8e'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -25,20 +25,22 @@ less, diff, man, (probably ls too).
 
 * Common bindings in 'view-mode'
 |--------------+------------------------------------------------------------------------------|
+| Binding      | Description                                                                  |
+|--------------+------------------------------------------------------------------------------|
 | SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
 | DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
 |              | (If your terminal does not support this, use xterm instead or using C-h.)    |
 | RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
 | y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
-|--------------+------------------------------------------------------------------------------|
 | s            | Do forward incremental search.                                               |
 | r            | Do reverse incremental search.                                               |
-|--------------+------------------------------------------------------------------------------|
 | e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
 |              | the opened file if needed.                                                   |
 |--------------+------------------------------------------------------------------------------|
 
 ** Custom bindings
+|--------------+------------------------------------------------------------|
+| Binding      | Description                                                |
 |--------------+------------------------------------------------------------|
 | ! or K       | Delete lines matching regexp                               |
 | & or k       | Keep lines matching regexp                                 |

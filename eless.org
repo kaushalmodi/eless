@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-04 11:04:26 kmodi>
+# Time-stamp: <2017-05-04 12:43:59 kmodi>
 #+TITLE: eless -- A Better less
 
 #+TEXINFO_DIR_CATEGORY: Emacs
@@ -76,7 +76,7 @@ Here are some usage examples:
   =emacs -Q -nw=.
 * Eless Options
 # Do "C-c '" in the below block to edit the org table
-#+BEGIN_SRC org :tangle no :noweb-ref eless-options
+#+BEGIN_SRC org :tangle no :noweb-ref eless-options :exports results :results output replace
 |-------+--------------------------|
 | -h    | Show this help  and quit |
 | --gui | Run emacs in GUI mode    |
@@ -85,23 +85,25 @@ Here are some usage examples:
 |-------+--------------------------|
 #+END_SRC
 * =view-mode= Common Bindings
-#+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings
+#+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings :exports results :results output replace
+|--------------+------------------------------------------------------------------------------|
+| Binding      | Description                                                                  |
 |--------------+------------------------------------------------------------------------------|
 | SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
 | DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
 |              | (If your terminal does not support this, use xterm instead or using C-h.)    |
 | RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
 | y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
-|--------------+------------------------------------------------------------------------------|
 | s            | Do forward incremental search.                                               |
 | r            | Do reverse incremental search.                                               |
-|--------------+------------------------------------------------------------------------------|
 | e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
 |              | the opened file if needed.                                                   |
 |--------------+------------------------------------------------------------------------------|
 #+END_SRC
 * Custom Bindings
-#+BEGIN_SRC org :tangle no :noweb-ref custom-bindings
+#+BEGIN_SRC org :tangle no :noweb-ref custom-bindings :exports results :results output replace
+|--------------+------------------------------------------------------------|
+| Binding      | Description                                                |
 |--------------+------------------------------------------------------------|
 | ! or K       | Delete lines matching regexp                               |
 | & or k       | Keep lines matching regexp                                 |
@@ -154,7 +156,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-12f6cff
+8f29a8e
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none :noweb yes
@@ -883,5 +885,5 @@ alias ev eless
 # org-publish-use-timestamps-flag: nil
 # eval: (auto-fill-mode 1)
 # eval: (require 'ox-texinfo nil :noerror)
-# org-confirm-babel-evaluate: (lambda (lang body) (let ((unsafe t)) (when (string= body "git rev-parse HEAD | head -c 7") (setq unsafe nil)) unsafe))
+# org-confirm-babel-evaluate: (lambda (lang body) (let ((unsafe t)) (when (or (string= lang "org") (string= body "git rev-parse HEAD | head -c 7")) (setq unsafe nil)) unsafe))
 # End:

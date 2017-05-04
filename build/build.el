@@ -20,31 +20,30 @@
       (setq info-file (org-texinfo-compile texi-file))
       ;; Create/update dir file
       (shell-command (concat "install-info " info-file " "
-                             (concat pub-dir "dir"))))))
+                             (expand-file-name "dir" pub-dir))))))
 
 (defun eless/readme-completion-fn (proj-plist)
   (let* ((pub-dir (plist-get proj-plist :publishing-directory))
-         (before-name (concat pub-dir "eless.md"))
-         (after-name (concat pub-dir "README.md")))
+         (before-name (expand-file-name "eless.md" pub-dir))
+         (after-name (expand-file-name "README.md" pub-dir)))
     (rename-file before-name after-name :ok-if-already-exists)))
 
 (defun eless/contributing-completion-fn (proj-plist)
   (let* ((pub-dir (plist-get proj-plist :publishing-directory))
-         (before-name (concat pub-dir "eless.md"))
-         (after-name (concat pub-dir "CONTRIBUTING.md")))
+         (before-name (expand-file-name "eless.md" pub-dir))
+         (after-name (expand-file-name "CONTRIBUTING.md" pub-dir)))
     (rename-file before-name after-name :ok-if-already-exists)))
 
 (defun eless/wiki-tcsh-completion-fn (proj-plist)
   (let* ((pub-dir (plist-get proj-plist :publishing-directory))
-         (before-name (concat pub-dir "eless.md"))
-         (after-name (concat pub-dir "Example eless Config in tcsh.md")))
+         (before-name (expand-file-name "eless.md" pub-dir))
+         (after-name (expand-file-name "Example eless Config in tcsh.md" pub-dir)))
     (rename-file before-name after-name :ok-if-already-exists)))
 
 (defun eless/eval-commit-hash ()
   "Navigate to the source block for getting the git hash and eval it."
   (let ((file (buffer-file-name)))
     (when (and file
-               (file-exists-p file)
                (string= "eless.org" (file-name-nondirectory file)))
       (save-restriction
         (widen)
@@ -59,28 +58,37 @@
   "After tangling, delete trailing spaces from the target buffer and save it."
   (let* ((ret (apply orig-fun args))
          (source-file (buffer-file-name))
+         (eless-buf (get-buffer "eless"))
          target-file)
     (when (and source-file
-               (file-exists-p source-file)
                (string= "eless.org" (file-name-nondirectory source-file)))
-      (setq target-file (concat (file-name-directory source-file) "eless"))
-      (with-current-buffer (get-file-buffer target-file)
+      ;; For some reason, the eless buffer if already opened needs to be closed
+      ;; first.
+      (when eless-buf
+        (kill-buffer eless-buf))
+      (setq target-file (expand-file-name "eless" (file-name-directory source-file)))
+      (setq eless-buf (find-file-noselect target-file))
+      (with-current-buffer eless-buf
         (delete-trailing-whitespace (point-min) nil)
-        (save-buffer)))
+        (save-buffer)
+        (kill-buffer eless-buf))) ;No need to keep the eless buffer open
     ret))
 (advice-add 'org-babel-tangle :around #'eless/post-tangle-delete-trailing-ws-and-save)
+;; (advice-remove 'org-babel-tangle  #'eless/post-tangle-delete-trailing-ws-and-save)
 
 ;; (org) Complex example
 (setq org-publish-project-alist
       `(;; HTML
         ("eless-html"
          :base-directory ,eless-root-dir
+         :with-tags nil
          :exclude-tags ("noexport" "readme" "wiki")
          :publishing-function org-html-publish-to-html
          :publishing-directory ,eless-doc-dir)
         ;; Info
         ("eless-info"
          :base-directory ,eless-root-dir
+         :with-tags nil
          :exclude-tags ("noexport" "readme" "wiki")
          :publishing-function org-texinfo-publish-to-texinfo
          :publishing-directory ,eless-doc-dir
