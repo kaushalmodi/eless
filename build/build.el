@@ -1,16 +1,6 @@
-(require 'ox-texinfo)
-(require 'ox-gfm)
-
-;; http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el
-(require 'ox-extra)
-(ox-extras-activate '(ignore-headlines))
-
-(defconst eless-root-dir (cdr (project-current)) ;Requires emacs 25.1
-  "Root directory of the eless project.")
-(defconst eless-doc-dir (concat eless-root-dir "doc/")
-  "Documentation directory of the eless project.")
-(defconst eless-wiki-dir (concat eless-root-dir "wiki/")
-  "Directory for Wiki repo for the eless project.")
+;; Elisp to build eless and documentation
+;; 1. Evaluate this buffer
+;; 2. M-x eless/publish
 
 (defun my/org-texinfo-publish-to-info (proj-plist)
   (let ((pub-dir (plist-get proj-plist :publishing-directory))
@@ -21,24 +11,6 @@
       ;; Create/update dir file
       (shell-command (concat "install-info " info-file " "
                              (expand-file-name "dir" pub-dir))))))
-
-(defun eless/readme-completion-fn (proj-plist)
-  (let* ((pub-dir (plist-get proj-plist :publishing-directory))
-         (before-name (expand-file-name "eless.md" pub-dir))
-         (after-name (expand-file-name "README.md" pub-dir)))
-    (rename-file before-name after-name :ok-if-already-exists)))
-
-(defun eless/contributing-completion-fn (proj-plist)
-  (let* ((pub-dir (plist-get proj-plist :publishing-directory))
-         (before-name (expand-file-name "eless.md" pub-dir))
-         (after-name (expand-file-name "CONTRIBUTING.md" pub-dir)))
-    (rename-file before-name after-name :ok-if-already-exists)))
-
-(defun eless/wiki-tcsh-completion-fn (proj-plist)
-  (let* ((pub-dir (plist-get proj-plist :publishing-directory))
-         (before-name (expand-file-name "eless.md" pub-dir))
-         (after-name (expand-file-name "Example eless Config in tcsh.md" pub-dir)))
-    (rename-file before-name after-name :ok-if-already-exists)))
 
 (defun eless/eval-commit-hash ()
   "Navigate to the source block for getting the git hash and eval it."
@@ -76,65 +48,60 @@
 (advice-add 'org-babel-tangle :around #'eless/post-tangle-delete-trailing-ws-and-save)
 ;; (advice-remove 'org-babel-tangle  #'eless/post-tangle-delete-trailing-ws-and-save)
 
-;; (org) Complex example
-(setq org-publish-project-alist
-      `(;; HTML
-        ("eless-html"
-         :base-directory ,eless-root-dir
-         :with-tags nil
-         :exclude-tags ("noexport" "readme" "wiki")
-         :publishing-function org-html-publish-to-html
-         :publishing-directory ,eless-doc-dir)
-        ;; Info
-        ("eless-info"
-         :base-directory ,eless-root-dir
-         :with-tags nil
-         :exclude-tags ("noexport" "readme" "wiki")
-         :publishing-function org-texinfo-publish-to-texinfo
-         :publishing-directory ,eless-doc-dir
-         :completion-function my/org-texinfo-publish-to-info)
+(defun eless/publish ()
+  "Use eless.org to tangle out the eless script and documentation."
+  (interactive)
+  ;; (org) Complex example
+  (let* ((eless-root-dir (cdr (project-current))) ;Requires emacs 25.1
+         (eless-org-file (expand-file-name "eless.org" eless-root-dir))
+         (eless-doc-dir (concat eless-root-dir "doc/"))
+         (eless-wiki-dir (concat eless-root-dir "wiki/"))
+         (org-publish-project-alist `(;; HTML
+                                      ("eless-html"
+                                       :base-directory ,eless-root-dir
+                                       :with-tags nil
+                                       :exclude-tags ("noexport" "readme" "wiki")
+                                       :publishing-function org-html-publish-to-html
+                                       :publishing-directory ,eless-doc-dir)
+                                      ;; Info
+                                      ("eless-info"
+                                       :base-directory ,eless-root-dir
+                                       :with-tags nil
+                                       :exclude-tags ("noexport" "readme" "wiki")
+                                       :publishing-function org-texinfo-publish-to-texinfo
+                                       :publishing-directory ,eless-doc-dir
+                                       :completion-function my/org-texinfo-publish-to-info)
 
-        ;; eless script
-        ("eless-tangle"
-         :base-directory ,eless-root-dir
-         :publishing-function org-babel-tangle-publish
-         :publishing-directory ,eless-root-dir)
+                                      ("eless-all"
+                                       :components ("eless-html" "eless-info")))))
 
-        ;; README.md
-        ("eless-readme"
-         :base-directory ,eless-root-dir
-         :with-toc nil
-         :with-tags nil
-         :select-tags ("readme")     ;Cannot have hyphens in tags!
-         :publishing-function org-gfm-publish-to-gfm
-         :publishing-directory ,eless-root-dir
-         :completion-function eless/readme-completion-fn)
+    (require 'ox-texinfo)               ;For eless.info export
+    (require 'ox-gfm)                   ;For various .md exports
 
-        ;; CONTRIBUTING.md
-        ("eless-contributing"
-         :base-directory ,eless-root-dir
-         :with-toc nil
-         :with-tags nil
-         :select-tags ("contributing")     ;Cannot have hyphens in tags!
-         :publishing-function org-gfm-publish-to-gfm
-         :publishing-directory ,eless-root-dir
-         :completion-function eless/contributing-completion-fn)
+    (let ((eless-org-buf (get-buffer "eless.org")))
+      (unless eless-org-buf             ;Open eless.org if it's not already
+        (setq eless-org-buf (find-file-noselect eless-org-file)))
+      (with-current-buffer eless-org-buf
+        ;; Tangle the eless script from eless.org
+        (org-babel-tangle-file eless-org-file)
 
-        ;; Wiki Pages
-        ("eless-wiki-tcsh"
-         :base-directory ,eless-root-dir
-         :with-toc nil
-         :with-tags nil
-         :select-tags ("wikitcsh")     ;Cannot have hyphens in tags!
-         :publishing-function org-gfm-publish-to-gfm
-         :publishing-directory ,eless-wiki-dir
-         :completion-function eless/wiki-tcsh-completion-fn)
-        ("eless-wiki"
-         :components ("eless-wiki-tcsh"))
+        ;; Export to various .md files
+        (let ((subtree-tags-to-export '("readme" "contributing"
+                                        "wikitcsh"))
+              ;; If a subtree matches a tag, do not try to export further
+              ;; subtrees separately that could be under that.
+              (org-use-tag-inheritance nil)
+              (org-export-with-toc nil)  ;Do not export TOC
+              (org-export-with-tags nil)) ;Do not print tag names in exported files
+          (dolist (tag subtree-tags-to-export)
+            (let* ((exported-file-list (org-map-entries '(org-gfm-export-to-markdown nil :subtreep) tag))
+                   ;; The assumption is that for each tag, *only* one file is exported
+                   (exported-file (when exported-file-list
+                                    (car exported-file-list))))
+              (when (string-match-p "\\`wiki.+" tag) ;Move the wiki files to the correct directory
+                (rename-file (expand-file-name exported-file eless-root-dir)
+                             (expand-file-name exported-file eless-wiki-dir)
+                             :ok-if-already-exists)))))))
 
-        ("eless-all-docs"
-         :components ("eless-html" "eless-info"
-                      "eless-readme" "eless-contributing" "eless-wiki"))
-
-        ("eless-all"
-         :components ("eless-all-docs" "eless-tangle"))))
+    ;; Export to HTML and Info
+    (org-publish-project "eless-all" :force)))

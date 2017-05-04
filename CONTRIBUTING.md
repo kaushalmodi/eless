@@ -19,11 +19,7 @@
 
 ### Dependencies
 
-1.  [`ox-extra`](http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el) package to make `:ignore:` tag in `eless.org` work as intended.
-    -   Installed as part of [`org-plus-contrib`](http://orgmode.org/elpa.html) package from Org ELPA.
-    -   Or, if you build `org` from git, add `ox-extra` to the `ORG_ADD_CONTRIB` variable in `local.mk`. See [org build system](http://orgmode.org/worg/dev/org-build-system.html).
-2.  [`ox-gfm`](https://github.com/larstvei/ox-gfm) package to generate the `.md` files.
-    -   Can be installed via Melpa.
+[`ox-gfm`](https://github.com/larstvei/ox-gfm) package is used to generate the `.md` files. It can be installed via Melpa.
 
 I use the latest emacs and org-mode versions built from their master branches. So if somehow the *Org Publish* step does not work for you, open an issue.
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-04 Thu 12:43 -->
+<!-- 2017-05-04 Thu 15:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -294,14 +294,18 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#org7544b28">6. Contributing Guide</a>
+<li><a href="#org0065508">6. Contributing</a>
 <ul>
-<li><a href="#org1241c89">6.1. How to help debug</a></li>
-<li><a href="#orge0b3a87">6.2. Development</a>
+<li><a href="#org7544b28">6.1. Contributing Guide</a>
 <ul>
-<li><a href="#org1335d0d">6.2.1. Dependencies</a></li>
-<li><a href="#org6c6b427">6.2.2. How to generate the <code>eless</code> script</a></li>
-<li><a href="#org6d1bbc2">6.2.3. How to generate <code>eless</code> <i>plus</i> documentation</a></li>
+<li><a href="#org1241c89">6.1.1. How to help debug</a></li>
+<li><a href="#orge0b3a87">6.1.2. Development</a>
+<ul>
+<li><a href="#org1335d0d">6.1.2.1. Dependencies</a></li>
+<li><a href="#org6c6b427">6.1.2.2. How to generate the <code>eless</code> script</a></li>
+<li><a href="#org6d1bbc2">6.1.2.3. How to generate <code>eless</code> <i>plus</i> documentation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -551,7 +555,7 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 <h4 id="org1bf8b17"><span class="section-number-4">5.1.1</span> Git Commit Hash</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <div class="org-src-container">
-<pre><code class="src src-shell">8f29a8e
+<pre><code class="src src-shell">488a445
 </code></pre>
 </div>
 </div>
@@ -1332,13 +1336,17 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org7544b28" class="outline-2">
-<h2 id="org7544b28"><span class="section-number-2">6</span> Contributing Guide</h2>
+<div id="outline-container-org0065508" class="outline-2">
+<h2 id="org0065508"><span class="section-number-2">6</span> Contributing</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org1241c89" class="outline-3">
-<h3 id="org1241c89"><span class="section-number-3">6.1</span> How to help debug</h3>
+<div id="outline-container-org7544b28" class="outline-3">
+<h3 id="org7544b28"><span class="section-number-3">6.1</span> Contributing Guide</h3>
 <div class="outline-text-3" id="text-6-1">
+</div>
+<div id="outline-container-org1241c89" class="outline-4">
+<h4 id="org1241c89"><span class="section-number-4">6.1.1</span> How to help debug</h4>
+<div class="outline-text-4" id="text-6-1-1">
 <ul class="org-ul">
 <li>If you find <code>eless</code> not working as expected, file an <a href="https://github.com/kaushalmodi/eless/issues">issue</a>.</li>
 <li>Include the following debug information:
@@ -1360,26 +1368,17 @@ stream using <code>emacs_Q_view_mode</code>.
 </ul>
 </div>
 </div>
-<div id="outline-container-orge0b3a87" class="outline-3">
-<h3 id="orge0b3a87"><span class="section-number-3">6.2</span> Development</h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-orge0b3a87" class="outline-4">
+<h4 id="orge0b3a87"><span class="section-number-4">6.1.2</span> Development</h4>
+<div class="outline-text-4" id="text-6-1-2">
 </div>
-<div id="outline-container-org1335d0d" class="outline-4">
-<h4 id="org1335d0d"><span class="section-number-4">6.2.1</span> Dependencies</h4>
-<div class="outline-text-4" id="text-6-2-1">
-<ol class="org-ol">
-<li><a href="http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el"><code>ox-extra</code></a> package to make <code>:ignore:</code> tag in <code>eless.org</code> work as intended.
-<ul class="org-ul">
-<li>Installed as part of <a href="http://orgmode.org/elpa.html"><code>org-plus-contrib</code></a> package from Org ELPA.</li>
-<li>Or, if you build <code>org</code> from git, add <code>ox-extra</code> to the
-<code>ORG_ADD_CONTRIB</code> variable in <code>local.mk</code>. See
-<a href="http://orgmode.org/worg/dev/org-build-system.html">org build system</a>.</li>
-</ul></li>
-<li><a href="https://github.com/larstvei/ox-gfm"><code>ox-gfm</code></a> package to generate the <code>.md</code> files.
-<ul class="org-ul">
-<li>Can be installed via Melpa.</li>
-</ul></li>
-</ol>
+<div id="outline-container-org1335d0d" class="outline-5">
+<h5 id="org1335d0d"><span class="section-number-5">6.1.2.1</span> Dependencies</h5>
+<div class="outline-text-5" id="text-6-1-2-1">
+<p>
+<a href="https://github.com/larstvei/ox-gfm"><code>ox-gfm</code></a> package is used to generate the <code>.md</code> files. It can be
+installed via Melpa.
+</p>
 
 <p>
 I use the latest emacs and org-mode versions built from their master
@@ -1388,9 +1387,9 @@ open an issue.
 </p>
 </div>
 </div>
-<div id="outline-container-org6c6b427" class="outline-4">
-<h4 id="org6c6b427"><span class="section-number-4">6.2.2</span> How to generate the <code>eless</code> script</h4>
-<div class="outline-text-4" id="text-6-2-2">
+<div id="outline-container-org6c6b427" class="outline-5">
+<h5 id="org6c6b427"><span class="section-number-5">6.1.2.2</span> How to generate the <code>eless</code> script</h5>
+<div class="outline-text-5" id="text-6-1-2-2">
 <ul class="org-ul">
 <li>Evaluate <code>build/build.el</code>.</li>
 <li>Open <code>eless.org</code>.</li>
@@ -1406,9 +1405,9 @@ no errors.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org6d1bbc2" class="outline-4">
-<h4 id="org6d1bbc2"><span class="section-number-4">6.2.3</span> How to generate <code>eless</code> <i>plus</i> documentation</h4>
-<div class="outline-text-4" id="text-6-2-3">
+<div id="outline-container-org6d1bbc2" class="outline-5">
+<h5 id="org6d1bbc2"><span class="section-number-5">6.1.2.3</span> How to generate <code>eless</code> <i>plus</i> documentation</h5>
+<div class="outline-text-5" id="text-6-1-2-3">
 <ul class="org-ul">
 <li>Evaluate <code>build/build.el</code>.</li>
 <li>Open <code>eless.org</code>.</li>
@@ -1424,6 +1423,7 @@ are no errors.</li>
 <li>Understand the changes made in all the files.</li>
 <li>Provide a PR.</li>
 </ul>
+</div>
 </div>
 </div>
 </div>

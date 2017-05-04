@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-04 12:43:59 kmodi>
+# Time-stamp: <2017-05-04 15:46:19 kmodi>
 #+TITLE: eless -- A Better less
 
 #+TEXINFO_DIR_CATEGORY: Emacs
@@ -19,7 +19,11 @@
 # Make the tangled shell scripts executables
 #+PROPERTY: header-args:shell :shebang "#!/usr/bin/env bash"
 
-* Eless -- A Better Less :readme:
+* Readme                                                             :readme:
+:PROPERTIES:
+:EXPORT_FILE_NAME: README
+:END:
+** Eless -- A Better Less
 *ShellCheck status:*
 #+BEGIN_EXPORT md
 [![ShellCheck Status](https://travis-ci.org/kaushalmodi/eless.svg?branch=master)](https://travis-ci.org/kaushalmodi/eless)
@@ -66,12 +70,12 @@ As a bonus:
 - [x] This script passes [[http://www.shellcheck.net][ShellCheck]], and
 - [x] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
 
-** Try it out
+*** Try it out
 Here are some usage examples:
 #+BEGIN_SRC shell :tangle no :noweb yes
 <<usage-examples>>
 #+END_SRC
-** Contributors
+*** Contributors
 - Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
   =emacs -Q -nw=.
 * Eless Options
@@ -156,7 +160,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-8f29a8e
+488a445
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none :noweb yes
@@ -808,11 +812,12 @@ fi
 #    reference, not using this in this script any more.)
 #  https://github.com/dj08/utils-generic/blob/master/eless
 #+END_SRC
-* Contributing Guide                                             :contributing:
+* Contributing                                                 :contributing:
 :PROPERTIES:
-:header-args: :tangle no
+:EXPORT_FILE_NAME: CONTRIBUTING
 :END:
-** How to help debug
+** Contributing Guide
+*** How to help debug
 - If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
 - Include the following debug information:
   1. =emacs --version=
@@ -822,20 +827,15 @@ fi
        - =info org | eless -D=
      - If you are providing debug info for something like =man foo=, do
        - =PAGER=​"eless -D" man foo=
-** Development
-*** Dependencies
-1. [[http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el][=ox-extra=]] package to make =:ignore:= tag in =eless.org= work as intended.
-   - Installed as part of [[http://orgmode.org/elpa.html][=org-plus-contrib=]] package from Org ELPA.
-   - Or, if you build =org= from git, add =ox-extra= to the
-     =ORG_ADD_CONTRIB= variable in =local.mk=. See
-     [[http://orgmode.org/worg/dev/org-build-system.html][org build system]].
-2. [[https://github.com/larstvei/ox-gfm][=ox-gfm=]] package to generate the =.md= files.
-   - Can be installed via Melpa.
+*** Development
+**** Dependencies
+ [[https://github.com/larstvei/ox-gfm][=ox-gfm=]] package is used to generate the =.md= files. It can be
+ installed via Melpa.
 
 I use the latest emacs and org-mode versions built from their master
 branches. So if somehow the /Org Publish/ step does not work for you,
 open an issue.
-*** How to generate the =eless= script
+**** How to generate the =eless= script
 - Evaluate =build/build.el=.
 - Open =eless.org=.
 - =C-c C-e P x=, select =eless-tangle= project.
@@ -845,7 +845,7 @@ open an issue.
   no errors.
 - Do =C-x v =​= in the =eless= buffer and understand what changes you made.
 - Provide a PR.
-*** How to generate =eless= /plus/ documentation
+**** How to generate =eless= /plus/ documentation
 - Evaluate =build/build.el=.
 - Open =eless.org=.
 - =C-c C-e P x=, select =eless-all= project.
@@ -857,14 +857,11 @@ open an issue.
   are no errors.
 - Understand the changes made in all the files.
 - Provide a PR.
-* Wikis                                                         :wiki:ignore:
-# For the above :ignore: tag to work, you need to install the
-# `ox-extra' package
-#   http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el
-# And do
-#   (require 'ox-extra)
-#   (ox-extras-activate '(ignore-headlines))
+* Wikis                                                                :wiki:
 ** Example =eless= config in tcsh                                  :wikitcsh:
+:PROPERTIES:
+:EXPORT_FILE_NAME: Example eless Config in tcsh
+:END:
 #+BEGIN_SRC shell :tangle no
 setenv PAGER eless # Show man pages using eless
 
