@@ -1,6 +1,10 @@
 (require 'ox-texinfo)
 (require 'ox-gfm)
 
+;; http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+
 (defconst eless-root-dir (cdr (project-current)) ;Requires emacs 25.1
   "Root directory of the eless project.")
 (defconst eless-doc-dir (concat eless-root-dir "doc/")
@@ -35,6 +39,36 @@
          (before-name (concat pub-dir "eless.md"))
          (after-name (concat pub-dir "Example eless Config in tcsh.md")))
     (rename-file before-name after-name :ok-if-already-exists)))
+
+(defun eless/eval-commit-hash ()
+  "Navigate to the source block for getting the git hash and eval it."
+  (let ((file (buffer-file-name)))
+    (when (and file
+               (file-exists-p file)
+               (string= "eless.org" (file-name-nondirectory file)))
+      (save-restriction
+        (widen)
+        (save-excursion
+          (goto-char (point-min))
+          (re-search-forward "^\\*+ Git Commit Hash")
+          (re-search-forward "^git rev-parse HEAD")
+          (org-babel-execute-src-block))))))
+(add-hook 'org-babel-pre-tangle-hook #'eless/eval-commit-hash)
+
+(defun eless/post-tangle-delete-trailing-ws-and-save (orig-fun &rest args)
+  "After tangling, delete trailing spaces from the target buffer and save it."
+  (let* ((ret (apply orig-fun args))
+         (source-file (buffer-file-name))
+         target-file)
+    (when (and source-file
+               (file-exists-p source-file)
+               (string= "eless.org" (file-name-nondirectory source-file)))
+      (setq target-file (concat (file-name-directory source-file) "eless"))
+      (with-current-buffer (get-file-buffer target-file)
+        (delete-trailing-whitespace (point-min) nil)
+        (save-buffer)))
+    ret))
+(advice-add 'org-babel-tangle :around #'eless/post-tangle-delete-trailing-ws-and-save)
 
 ;; (org) Complex example
 (setq org-publish-project-alist

@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-04 02:51:26 kmodi>
+# Time-stamp: <2017-05-04 11:04:26 kmodi>
 #+TITLE: eless -- A Better less
 
 #+TEXINFO_DIR_CATEGORY: Emacs
@@ -145,16 +145,16 @@ master
 #+BEGIN_SRC text :exports none :tangle no :noweb-ref source-link
 https://github.com/kaushalmodi/eless
 #+END_SRC
-
+*** Git Commit Hash
 # Get the current commit hash
 # Put the point in the below source block and hit "C-c C-c" to update
 # the git-hash source block - https://emacs.stackexchange.com/a/13352/115
-#+BEGIN_SRC shell :exports none :tangle no :eval confirm :results output code :results_switches ":tangle no :noweb-ref git-hash"
+#+BEGIN_SRC shell :tangle no :exports results :results output code :results_switches ":tangle no :noweb-ref git-hash"
 git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-9141477
+12f6cff
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none :noweb yes
@@ -173,7 +173,7 @@ git rev-parse HEAD | head -c 7
 eless_version='<<version>>'
 eless_git_hash='<<git-hash>>'
 #+END_SRC
-
+** Help String                                                     :noexport:
 #+BEGIN_SRC shell :noweb yes :exports none
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -820,27 +820,49 @@ fi
        - =info org | eless -D=
      - If you are providing debug info for something like =man foo=, do
        - =PAGER=​"eless -D" man foo=
-** How to generate the =eless= script
+** Development
+*** Dependencies
+1. [[http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el][=ox-extra=]] package to make =:ignore:= tag in =eless.org= work as intended.
+   - Installed as part of [[http://orgmode.org/elpa.html][=org-plus-contrib=]] package from Org ELPA.
+   - Or, if you build =org= from git, add =ox-extra= to the
+     =ORG_ADD_CONTRIB= variable in =local.mk=. See
+     [[http://orgmode.org/worg/dev/org-build-system.html][org build system]].
+2. [[https://github.com/larstvei/ox-gfm][=ox-gfm=]] package to generate the =.md= files.
+   - Can be installed via Melpa.
+
+I use the latest emacs and org-mode versions built from their master
+branches. So if somehow the /Org Publish/ step does not work for you,
+open an issue.
+*** How to generate the =eless= script
 - Evaluate =build/build.el=.
 - Open =eless.org=.
 - =C-c C-e P x=, select =eless-tangle= project.
-  - That will generate the =eless= script and delete trailing
-    whitespaces from it.
-- *Then you need to save =eless=*.
+  - That will generate the =eless= script, delete trailing
+    whitespaces from it, and save it.
+- Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are
+  no errors.
 - Do =C-x v =​= in the =eless= buffer and understand what changes you made.
 - Provide a PR.
-** How to generate the documentation too
+*** How to generate =eless= /plus/ documentation
 - Evaluate =build/build.el=.
 - Open =eless.org=.
 - =C-c C-e P x=, select =eless-all= project.
-  - That will generate the =eless= script and delete trailing
-    whitespaces from it.
-    - *Then you need to save =eless=*.
+  - That will generate the =eless= script, delete trailing
+    whitespaces from it, and save it.
   - Update HTML and Info documentation.
   - Update the README, Wiki, etc. pages.
+- Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there
+  are no errors.
 - Understand the changes made in all the files.
 - Provide a PR.
-* Example =eless= config in tcsh                              :wikitcsh:wiki:
+* Wikis                                                         :wiki:ignore:
+# For the above :ignore: tag to work, you need to install the
+# `ox-extra' package
+#   http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el
+# And do
+#   (require 'ox-extra)
+#   (ox-extras-activate '(ignore-headlines))
+** Example =eless= config in tcsh                                  :wikitcsh:
 #+BEGIN_SRC shell :tangle no
 setenv PAGER eless # Show man pages using eless
 
@@ -861,6 +883,5 @@ alias ev eless
 # org-publish-use-timestamps-flag: nil
 # eval: (auto-fill-mode 1)
 # eval: (require 'ox-texinfo nil :noerror)
-# eval: (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
 # org-confirm-babel-evaluate: (lambda (lang body) (let ((unsafe t)) (when (string= body "git rev-parse HEAD | head -c 7") (setq unsafe nil)) unsafe))
 # End:

@@ -38,6 +38,10 @@ Code
 * Emacs Configuration::
 * Input/Output Scenarios::
 
+Current eless Version
+
+* Git Commit Hash::
+
 
 
 
@@ -89,8 +93,14 @@ Input is coming from a pipe
 Contributing Guide
 
 * How to help debug::
+* Development::
+
+
+Development
+
+* Dependencies::
 * How to generate the eless script::
-* How to generate the documentation too::
+* How to generate eless _plus_ documentation::
 
 
 File: eless.info,  Node: Eless Options,  Next: view-mode Common Bindings,  Prev: Top,  Up: Top
@@ -194,6 +204,18 @@ File: eless.info,  Node: Current eless Version,  Next: Unofficial Bash Strict Mo
 =========================
 
      master
+
+* Menu:
+
+* Git Commit Hash::
+
+
+File: eless.info,  Node: Git Commit Hash,  Up: Current eless Version
+
+5.1.1 Git Commit Hash
+---------------------
+
+     12f6cff
 
 
 File: eless.info,  Node: Unofficial Bash Strict Mode,  Next: Initialize variables,  Prev: Current eless Version,  Up: Code
@@ -911,11 +933,10 @@ File: eless.info,  Node: Contributing Guide,  Prev: Code,  Up: Top
 * Menu:
 
 * How to help debug::
-* How to generate the eless script::
-* How to generate the documentation too::
+* Development::
 
 
-File: eless.info,  Node: How to help debug,  Next: How to generate the eless script,  Up: Contributing Guide
+File: eless.info,  Node: How to help debug,  Next: Development,  Up: Contributing Guide
 
 6.1 How to help debug
 =====================
@@ -933,35 +954,71 @@ File: eless.info,  Node: How to help debug,  Next: How to generate the eless scr
                   • PAGER=​"eless -D" man foo
 
 
-File: eless.info,  Node: How to generate the eless script,  Next: How to generate the documentation too,  Prev: How to help debug,  Up: Contributing Guide
+File: eless.info,  Node: Development,  Prev: How to help debug,  Up: Contributing Guide
 
-6.2 How to generate the eless script
-====================================
+6.2 Development
+===============
+
+* Menu:
+
+* Dependencies::
+* How to generate the eless script::
+* How to generate eless _plus_ documentation::
+
+
+File: eless.info,  Node: Dependencies,  Next: How to generate the eless script,  Up: Development
+
+6.2.1 Dependencies
+------------------
+
+  1. ox-extra
+     (http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el)
+     package to make :ignore: tag in eless.org work as intended.
+        • Installed as part of org-plus-contrib
+          (http://orgmode.org/elpa.html) package from Org ELPA.
+        • Or, if you build org from git, add ox-extra to the
+          ORG_ADD_CONTRIB variable in local.mk.  See org build system
+          (http://orgmode.org/worg/dev/org-build-system.html).
+  2. ox-gfm (https://github.com/larstvei/ox-gfm) package to generate the
+     .md files.
+        • Can be installed via Melpa.
+
+   I use the latest emacs and org-mode versions built from their master
+branches.  So if somehow the _Org Publish_ step does not work for you,
+open an issue.
+
+
+File: eless.info,  Node: How to generate the eless script,  Next: How to generate eless _plus_ documentation,  Prev: Dependencies,  Up: Development
+
+6.2.2 How to generate the eless script
+--------------------------------------
 
    • Evaluate build/build.el.
    • Open eless.org.
    • C-c C-e P x, select eless-tangle project.
-        • That will generate the eless script and delete trailing
-          whitespaces from it.
-   • *Then you need to save eless*.
+        • That will generate the eless script, delete trailing
+          whitespaces from it, and save it.
+   • Run the tangled eless through shellcheck
+     (http://www.shellcheck.net/) to ensure that there are no errors.
    • Do C-x v =​ in the eless buffer and understand what changes you
      made.
    • Provide a PR.
 
 
-File: eless.info,  Node: How to generate the documentation too,  Prev: How to generate the eless script,  Up: Contributing Guide
+File: eless.info,  Node: How to generate eless _plus_ documentation,  Prev: How to generate the eless script,  Up: Development
 
-6.3 How to generate the documentation too
-=========================================
+6.2.3 How to generate eless _plus_ documentation
+------------------------------------------------
 
    • Evaluate build/build.el.
    • Open eless.org.
    • C-c C-e P x, select eless-all project.
-        • That will generate the eless script and delete trailing
-          whitespaces from it.
-             • *Then you need to save eless*.
+        • That will generate the eless script, delete trailing
+          whitespaces from it, and save it.
         • Update HTML and Info documentation.
         • Update the README, Wiki, etc.  pages.
+   • Run the tangled eless through shellcheck
+     (http://www.shellcheck.net/) to ensure that there are no errors.
    • Understand the changes made in all the files.
    • Provide a PR.
 
@@ -969,47 +1026,50 @@ File: eless.info,  Node: How to generate the documentation too,  Prev: How to ge
 
 Tag Table:
 Node: Top188
-Node: Eless Options1594
-Node: view-mode Common Bindings1978
-Node: Custom Bindings3459
-Node: Usage Examples5102
-Node: Code6178
-Node: Current eless Version6511
-Node: Unofficial Bash Strict Mode6674
-Node: Initialize variables7389
-Node: Input/Output8004
-Node: Parse options9899
-Node: Print Help11639
-Node: Emacs with -Q in view-mode11972
-Node: Emacs Configuration12853
-Node: General setup13215
-Node: Ido setup14267
-Node: Isearch setup14765
-Node: Enable line truncation15174
-Node: Highlight the current line15523
-Node: Custom functions15750
-Node: Keep/delete matching lines16230
-Node: Frame and font re-sizing16912
-Node: Revert buffer in view-mode17923
-Node: Detect if diff-mode should be enabled18388
-Node: Detect if ANSI codes need to be converted to colors19862
-Node: ``Do The Right Thing'' Kill21019
-Node: dired-mode setup22592
-Node: Man-mode setup23472
-Node: Info-mode setup23979
-Node: Auto-setting of major modes24469
-Node: Key bindings25168
-Node: Input/Output Scenarios27363
-Node: Output is going to a pipe27619
-Node: Input is coming from a pipe28312
-Node: Input is piped from man command30401
-Node: Input is piped from info command31862
-Node: Input is piped from something else32655
-Node: Input is an argument to the script33613
-Node: Contributing Guide34001
-Node: How to help debug34255
-Node: How to generate the eless script34926
-Node: How to generate the documentation too35506
+Node: Eless Options1691
+Node: view-mode Common Bindings2075
+Node: Custom Bindings3556
+Node: Usage Examples5199
+Node: Code6275
+Node: Current eless Version6608
+Node: Git Commit Hash6801
+Node: Unofficial Bash Strict Mode6932
+Node: Initialize variables7647
+Node: Input/Output8262
+Node: Parse options10157
+Node: Print Help11897
+Node: Emacs with -Q in view-mode12230
+Node: Emacs Configuration13111
+Node: General setup13473
+Node: Ido setup14525
+Node: Isearch setup15023
+Node: Enable line truncation15432
+Node: Highlight the current line15781
+Node: Custom functions16008
+Node: Keep/delete matching lines16488
+Node: Frame and font re-sizing17170
+Node: Revert buffer in view-mode18181
+Node: Detect if diff-mode should be enabled18646
+Node: Detect if ANSI codes need to be converted to colors20120
+Node: ``Do The Right Thing'' Kill21277
+Node: dired-mode setup22850
+Node: Man-mode setup23730
+Node: Info-mode setup24237
+Node: Auto-setting of major modes24727
+Node: Key bindings25426
+Node: Input/Output Scenarios27621
+Node: Output is going to a pipe27877
+Node: Input is coming from a pipe28570
+Node: Input is piped from man command30659
+Node: Input is piped from info command32120
+Node: Input is piped from something else32913
+Node: Input is an argument to the script33871
+Node: Contributing Guide34259
+Node: How to help debug34450
+Node: Development35100
+Node: Dependencies35335
+Node: How to generate the eless script36230
+Node: How to generate eless _plus_ documentation36897
 
 End Tag Table
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-04 Thu 02:53 -->
+<!-- 2017-05-04 Thu 11:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -244,7 +244,11 @@ for the JavaScript code in this tag.
 <li><a href="#org6a716f8">4. Usage Examples</a></li>
 <li><a href="#org4ee33ee">5. Code</a>
 <ul>
-<li><a href="#orgd3ed485">5.1. Current <code>eless</code> Version</a></li>
+<li><a href="#orgd3ed485">5.1. Current <code>eless</code> Version</a>
+<ul>
+<li><a href="#org1bf8b17">5.1.1. Git Commit Hash</a></li>
+</ul>
+</li>
 <li><a href="#org798e659">5.2. Unofficial Bash Strict Mode</a></li>
 <li><a href="#org1e146b9">5.3. Initialize variables</a></li>
 <li><a href="#orge291a07">5.4. Input/Output</a></li>
@@ -293,8 +297,13 @@ for the JavaScript code in this tag.
 <li><a href="#org7544b28">6. Contributing Guide&#xa0;&#xa0;&#xa0;<span class="tag"><span class="contributing">contributing</span></span></a>
 <ul>
 <li><a href="#org1241c89">6.1. How to help debug</a></li>
-<li><a href="#org6c6b427">6.2. How to generate the <code>eless</code> script</a></li>
-<li><a href="#orgb15e67a">6.3. How to generate the documentation too</a></li>
+<li><a href="#orge0b3a87">6.2. Development</a>
+<ul>
+<li><a href="#org1335d0d">6.2.1. Dependencies</a></li>
+<li><a href="#org6c6b427">6.2.2. How to generate the <code>eless</code> script</a></li>
+<li><a href="#org6d1bbc2">6.2.3. How to generate <code>eless</code> <i>plus</i> documentation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -394,7 +403,17 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </code></pre>
 </div>
 </div>
+<div id="outline-container-org1bf8b17" class="outline-4">
+<h4 id="org1bf8b17"><span class="section-number-4">5.1.1</span> Git Commit Hash</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+<pre><code class="src src-shell">12f6cff
+</code></pre>
 </div>
+</div>
+</div>
+</div>
+
 <div id="outline-container-org798e659" class="outline-3">
 <h3 id="org798e659"><span class="section-number-3">5.2</span> Unofficial Bash Strict Mode</h3>
 <div class="outline-text-3" id="text-5-2">
@@ -1197,42 +1216,71 @@ stream using <code>emacs_Q_view_mode</code>.
 </ul>
 </div>
 </div>
-<div id="outline-container-org6c6b427" class="outline-3">
-<h3 id="org6c6b427"><span class="section-number-3">6.2</span> How to generate the <code>eless</code> script</h3>
+<div id="outline-container-orge0b3a87" class="outline-3">
+<h3 id="orge0b3a87"><span class="section-number-3">6.2</span> Development</h3>
 <div class="outline-text-3" id="text-6-2">
+</div>
+<div id="outline-container-org1335d0d" class="outline-4">
+<h4 id="org1335d0d"><span class="section-number-4">6.2.1</span> Dependencies</h4>
+<div class="outline-text-4" id="text-6-2-1">
+<ol class="org-ol">
+<li><a href="http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/ox-extra.el"><code>ox-extra</code></a> package to make <code>:ignore:</code> tag in <code>eless.org</code> work as intended.
+<ul class="org-ul">
+<li>Installed as part of <a href="http://orgmode.org/elpa.html"><code>org-plus-contrib</code></a> package from Org ELPA.</li>
+<li>Or, if you build <code>org</code> from git, add <code>ox-extra</code> to the
+<code>ORG_ADD_CONTRIB</code> variable in <code>local.mk</code>. See
+<a href="http://orgmode.org/worg/dev/org-build-system.html">org build system</a>.</li>
+</ul></li>
+<li><a href="https://github.com/larstvei/ox-gfm"><code>ox-gfm</code></a> package to generate the <code>.md</code> files.
+<ul class="org-ul">
+<li>Can be installed via Melpa.</li>
+</ul></li>
+</ol>
+
+<p>
+I use the latest emacs and org-mode versions built from their master
+branches. So if somehow the <i>Org Publish</i> step does not work for you,
+open an issue.
+</p>
+</div>
+</div>
+<div id="outline-container-org6c6b427" class="outline-4">
+<h4 id="org6c6b427"><span class="section-number-4">6.2.2</span> How to generate the <code>eless</code> script</h4>
+<div class="outline-text-4" id="text-6-2-2">
 <ul class="org-ul">
 <li>Evaluate <code>build/build.el</code>.</li>
 <li>Open <code>eless.org</code>.</li>
 <li><code>C-c C-e P x</code>, select <code>eless-tangle</code> project.
 <ul class="org-ul">
-<li>That will generate the <code>eless</code> script and delete trailing
-whitespaces from it.</li>
+<li>That will generate the <code>eless</code> script, delete trailing
+whitespaces from it, and save it.</li>
 </ul></li>
-<li><b>Then you need to save <code>eless</code></b>.</li>
+<li>Run the tangled <code>eless</code> through <a href="http://www.shellcheck.net/">shellcheck</a> to ensure that there are
+no errors.</li>
 <li>Do <code>C-x v =​</code> in the <code>eless</code> buffer and understand what changes you made.</li>
 <li>Provide a PR.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb15e67a" class="outline-3">
-<h3 id="orgb15e67a"><span class="section-number-3">6.3</span> How to generate the documentation too</h3>
-<div class="outline-text-3" id="text-6-3">
+<div id="outline-container-org6d1bbc2" class="outline-4">
+<h4 id="org6d1bbc2"><span class="section-number-4">6.2.3</span> How to generate <code>eless</code> <i>plus</i> documentation</h4>
+<div class="outline-text-4" id="text-6-2-3">
 <ul class="org-ul">
 <li>Evaluate <code>build/build.el</code>.</li>
 <li>Open <code>eless.org</code>.</li>
 <li><code>C-c C-e P x</code>, select <code>eless-all</code> project.
 <ul class="org-ul">
-<li>That will generate the <code>eless</code> script and delete trailing
-whitespaces from it.
-<ul class="org-ul">
-<li><b>Then you need to save <code>eless</code></b>.</li>
-</ul></li>
+<li>That will generate the <code>eless</code> script, delete trailing
+whitespaces from it, and save it.</li>
 <li>Update HTML and Info documentation.</li>
 <li>Update the README, Wiki, etc. pages.</li>
 </ul></li>
+<li>Run the tangled <code>eless</code> through <a href="http://www.shellcheck.net/">shellcheck</a> to ensure that there
+are no errors.</li>
 <li>Understand the changes made in all the files.</li>
 <li>Provide a PR.</li>
 </ul>
+</div>
 </div>
 </div>
 </div>

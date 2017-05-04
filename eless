@@ -9,7 +9,7 @@
 # confidence that this script will be free of loopholes.. or is it? :)
 
 eless_version='master'
-eless_git_hash='9141477'
+eless_git_hash='12f6cff'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
