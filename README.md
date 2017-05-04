@@ -1,6 +1,8 @@
 # Eless &#x2013; A Better Less
 
-**ShellCheck status:** [https://travis-ci.org/kaushalmodi/eless.svg?branch=master](https://travis-ci.org/kaushalmodi/eless)
+**ShellCheck status:**
+
+[![ShellCheck Status](https://travis-ci.org/kaushalmodi/eless.svg?branch=master)](https://travis-ci.org/kaushalmodi/eless)
 
 ---
 

@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-04 02:20:32 kmodi>
+# Time-stamp: <2017-05-04 02:40:20 kmodi>
 #+TITLE: eless -- A Better less
 
 #+TEXINFO_DIR_CATEGORY: Emacs
@@ -20,7 +20,10 @@
 #+PROPERTY: header-args:shell :shebang "#!/usr/bin/env bash"
 
 * Eless -- A Better Less :readme:
-*ShellCheck status:* [[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
+*ShellCheck status:*
+#+BEGIN_EXPORT md
+[![ShellCheck Status](https://travis-ci.org/kaushalmodi/eless.svg?branch=master)](https://travis-ci.org/kaushalmodi/eless)
+#+END_EXPORT
 
 -----
 
