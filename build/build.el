@@ -33,13 +33,13 @@
 (defun eless/wiki-debug-completion-fn (proj-plist)
   (let* ((pub-dir (plist-get proj-plist :publishing-directory))
          (before-name (concat pub-dir "eless.md"))
-         (after-name (concat pub-dir "debug.md")))
+         (after-name (concat pub-dir "How To Help Debug.md")))
     (rename-file before-name after-name :ok-if-already-exists)))
 
 (defun eless/wiki-tcsh-completion-fn (proj-plist)
   (let* ((pub-dir (plist-get proj-plist :publishing-directory))
          (before-name (concat pub-dir "eless.md"))
-         (after-name (concat pub-dir "tcsh.md")))
+         (after-name (concat pub-dir "Example eless Config in tcsh.md")))
     (rename-file before-name after-name :ok-if-already-exists)))
 
 ;; (org) Complex example

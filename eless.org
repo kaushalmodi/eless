@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-04 02:07:12 kmodi>
+# Time-stamp: <2017-05-04 02:20:32 kmodi>
 #+TITLE: eless -- A Better less
 
 #+TEXINFO_DIR_CATEGORY: Emacs
@@ -825,11 +825,7 @@ fi
   - Update the README, Wiki, etc. pages.
 - Understand the changes made in all the files.
 - Provide a PR.
-* Wiki                                                                 :wiki:
-:PROPERTIES:
-:header-args: :tangle no
-:END:
-** How to help debug                                              :wikidebug:
+* How to help debug                                          :wikidebug:wiki:
 - If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
 - Include the following debug information:
   1. =emacs --version=
@@ -839,8 +835,8 @@ fi
        - =info org | eless -D=
      - If you are providing debug info for something like =man foo=, do
        - =PAGER=​"eless -D" man foo=
-** Example =eless= config in tcsh                                  :wikitcsh:
-#+BEGIN_SRC shell
+* Example =eless= config in tcsh                              :wikitcsh:wiki:
+#+BEGIN_SRC shell :tangle no
 setenv PAGER eless # Show man pages using eless
 
 alias info  '\info \!* | eless'
