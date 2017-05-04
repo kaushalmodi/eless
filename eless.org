@@ -1,5 +1,6 @@
-# Time-stamp: <2017-05-03 19:04:39 kmodi>
-#+TITLE: eless -- Better than less
+# Time-stamp: <2017-05-04 02:07:12 kmodi>
+#+TITLE: eless -- A Better less
+
 #+TEXINFO_DIR_CATEGORY: Emacs
 #+TEXINFO_DIR_TITLE: Eless: (eless).
 #+TEXINFO_DIR_DESC: Use emacs view-mode as less
@@ -18,12 +19,56 @@
 # Make the tangled shell scripts executables
 #+PROPERTY: header-args:shell :shebang "#!/usr/bin/env bash"
 
-* How to generate the eless script
-- In =eless.org=, run =org-babel-tangle= (bound to =C-c C-v t= by default).
-- That will generate the =eless= script in this directory.
-- =delete-trailing-whitespace= is run in the
-  =org-babel-post-tangle-hook=. So you would need to manually save the
-  =eless= buffer.
+* Eless -- A Better Less :readme:
+*ShellCheck status:* [[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
+
+-----
+
+[[https://cdn.rawgit.com/kaushalmodi/eless/master/doc/eless.html][*Full Documentation*]]
+
+-----
+
+=eless= is a combination of Bash script and a minimal emacs =view-mode= config.
+
+This script is designed to:
+
+- Be portable -- Just one bash script to download to run
+- Be independent of a user's emacs config
+- Not require an emacs server to be already running
+
+It was created out of a need to have something /like/ =less= (in the sense of
+/launch quickly, do, and quit/, but better in these ways:
+
+- Do syntax highlighting
+- Render Org-mode files
+- A better navigable man page viewer
+- A better Info viewer
+- Dired, especially =wdired= (batch edit symbolic links, for
+  example?)
+- Show colored diffs
+- Filter log files to only show or not show lines matching a regexp
+- Start auto-reverting log files when I want (like =tail -f=)
+- Quickly change frame and font sizes
+- .. and more; basically everything that emacs has to offer!
+
+I call it =eless= and here's a little taste of what it looks like:
+
+/Click the below image to see a GIF animation in larger size./
+[[https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif][https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png]]
+
+As a bonus:
+
+- [x] This script passes [[http://www.shellcheck.net][ShellCheck]], and
+- [x] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
+
+** Try it out
+Here are some usage examples:
+#+BEGIN_SRC shell :tangle no :noweb yes
+<<usage-examples>>
+#+END_SRC
+** Contributors
+- Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
+  =emacs -Q -nw=.
 * Eless Options
 # Do "C-c '" in the below block to edit the org table
 #+BEGIN_SRC org :tangle no :noweb-ref eless-options
@@ -86,16 +131,6 @@ ls --color=always | eless   # Auto-detect ANSI color codes and convert those to 
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 #+END_SRC
-* How to help debug
-- If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
-- Include the following debug information:
-  1. =emacs --version=
-  2. =eless= debug info:
-     - Append the =-D= option to your =eless= use case. Examples:
-       - =eless foo -D=
-       - =info org | eless -D=
-     - If you are providing debug info for something like =man foo=, do
-       - =PAGER=​"eless -D" man foo=
 * Code
 ** Current =eless= Version
 # Below is a nifty way to do sort of search/replace in all code blocks.
@@ -114,7 +149,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-85bbb4e
+9141477
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none :noweb yes
@@ -766,8 +801,64 @@ fi
 #    reference, not using this in this script any more.)
 #  https://github.com/dj08/utils-generic/blob/master/eless
 #+END_SRC
+* Contributing Guide                                             :contribute:
+:PROPERTIES:
+:header-args: :tangle no
+:END:
+** How to generate the =eless= script
+- Evaluate =build/build.el=.
+- Open =eless.org=.
+- =C-c C-e P x=, select =eless-tangle= project.
+  - That will generate the =eless= script and delete trailing
+    whitespaces from it.
+- *Then you need to save =eless=*.
+- Do =C-x v =​= in the =eless= buffer and understand what changes you made.
+- Provide a PR.
+** How to generate the documentation too
+- Evaluate =build/build.el=.
+- Open =eless.org=.
+- =C-c C-e P x=, select =eless-all= project.
+  - That will generate the =eless= script and delete trailing
+    whitespaces from it.
+    - *Then you need to save =eless=*.
+  - Update HTML and Info documentation.
+  - Update the README, Wiki, etc. pages.
+- Understand the changes made in all the files.
+- Provide a PR.
+* Wiki                                                                 :wiki:
+:PROPERTIES:
+:header-args: :tangle no
+:END:
+** How to help debug                                              :wikidebug:
+- If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
+- Include the following debug information:
+  1. =emacs --version=
+  2. =eless= debug info:
+     - Append the =-D= option to your =eless= use case. Examples:
+       - =eless foo -D=
+       - =info org | eless -D=
+     - If you are providing debug info for something like =man foo=, do
+       - =PAGER=​"eless -D" man foo=
+** Example =eless= config in tcsh                                  :wikitcsh:
+#+BEGIN_SRC shell
+setenv PAGER eless # Show man pages using eless
+
+alias info  '\info \!* | eless'
+
+alias diff  '\diff \!* | eless'
+alias diffg '\diff \!* | eless --gui'
+
+alias ev eless
+#+END_SRC
 * Local Variables                                     :noexport:
 # Local Variables:
+# indent-tabs-mode: nil
+# fill-column: 70
+# org-src-preserve-indentation: t
+# org-html-htmlize-output-type: css
+# org-html-htmlize-font-prefix: "org-"
+# org-publish-use-timestamps-flag: nil
+# eval: (auto-fill-mode 1)
 # eval: (require 'ox-texinfo nil :noerror)
 # eval: (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
 # org-confirm-babel-evaluate: (lambda (lang body) (let ((unsafe t)) (when (string= body "git rev-parse HEAD | head -c 7") (setq unsafe nil)) unsafe))
