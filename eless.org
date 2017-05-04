@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-04 02:44:01 kmodi>
+# Time-stamp: <2017-05-04 02:48:00 kmodi>
 #+TITLE: eless -- A Better less
 
 #+TEXINFO_DIR_CATEGORY: Emacs
@@ -806,7 +806,7 @@ fi
 #    reference, not using this in this script any more.)
 #  https://github.com/dj08/utils-generic/blob/master/eless
 #+END_SRC
-* Contributing Guide                                             :contribute:
+* Contributing Guide                                             :contributing:
 :PROPERTIES:
 :header-args: :tangle no
 :END:

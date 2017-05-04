@@ -24,10 +24,10 @@
          (after-name (concat pub-dir "README.md")))
     (rename-file before-name after-name :ok-if-already-exists)))
 
-(defun eless/contribute-completion-fn (proj-plist)
+(defun eless/contributing-completion-fn (proj-plist)
   (let* ((pub-dir (plist-get proj-plist :publishing-directory))
          (before-name (concat pub-dir "eless.md"))
-         (after-name (concat pub-dir "CONTRIBUTE.md")))
+         (after-name (concat pub-dir "CONTRIBUTING.md")))
     (rename-file before-name after-name :ok-if-already-exists)))
 
 (defun eless/wiki-debug-completion-fn (proj-plist)
@@ -74,15 +74,15 @@
          :publishing-directory ,eless-root-dir
          :completion-function eless/readme-completion-fn)
 
-        ;; CONTRIBUTE.md
-        ("eless-contribute"
+        ;; CONTRIBUTING.md
+        ("eless-contributing"
          :base-directory ,eless-root-dir
          :with-toc nil
          :with-tags nil
-         :select-tags ("contribute")     ;Cannot have hyphens in tags!
+         :select-tags ("contributing")     ;Cannot have hyphens in tags!
          :publishing-function org-gfm-publish-to-gfm
          :publishing-directory ,eless-root-dir
-         :completion-function eless/contribute-completion-fn)
+         :completion-function eless/contributing-completion-fn)
 
         ;; Wiki Pages
         ("eless-wiki-debug"
@@ -106,7 +106,7 @@
 
         ("eless-all-docs"
          :components ("eless-html" "eless-info"
-                      "eless-readme" "eless-contribute" "eless-wiki"))
+                      "eless-readme" "eless-contributing" "eless-wiki"))
 
         ("eless-all"
          :components ("eless-all-docs" "eless-tangle"))))
