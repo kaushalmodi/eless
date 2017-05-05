@@ -18,6 +18,7 @@ eless – A Better less
 * view-mode Common Bindings::
 * Custom Bindings::
 * Usage Examples::
+* Current eless Version::
 * Code::
 * Contributing::
 * Other Wikis::
@@ -35,9 +36,9 @@ Readme
 
 
 
+
 Code
 
-* Current eless Version::
 * Unofficial Bash Strict Mode::
 * Initialize variables::
 * Input/Output::
@@ -46,7 +47,6 @@ Code
 * Emacs with -Q in view-mode::
 * Emacs Configuration::
 * Input/Output Scenarios::
-
 
 
 
@@ -255,7 +255,7 @@ C-down/up      Inc/Dec frame height (in GUI mode)
 C-right/left   Inc/Dec frame width (in GUI mode)
 
 
-File: eless.info,  Node: Usage Examples,  Next: Code,  Prev: Custom Bindings,  Up: Top
+File: eless.info,  Node: Usage Examples,  Next: Current eless Version,  Prev: Custom Bindings,  Up: Top
 
 5 Usage Examples
 ****************
@@ -274,14 +274,26 @@ File: eless.info,  Node: Usage Examples,  Next: Code,  Prev: Custom Bindings,  U
      info emacs | eless          # Read emacs Info manual in eless
 
 
-File: eless.info,  Node: Code,  Next: Contributing,  Prev: Usage Examples,  Up: Top
+File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Examples,  Up: Top
 
-6 Code
+6 Current eless Version
+***********************
+
+     master
+
+     2085108
+   This commit hash was retrieved before (obviously) the commit was made
+where you see this.  So if you see a commit hash when checking eless
+version, it would always refer to the one-earlier commit.
+
+
+File: eless.info,  Node: Code,  Next: Contributing,  Prev: Current eless Version,  Up: Top
+
+7 Code
 ******
 
 * Menu:
 
-* Current eless Version::
 * Unofficial Bash Strict Mode::
 * Initialize variables::
 * Input/Output::
@@ -292,22 +304,9 @@ File: eless.info,  Node: Code,  Next: Contributing,  Prev: Usage Examples,  Up: 
 * Input/Output Scenarios::
 
 
-File: eless.info,  Node: Current eless Version,  Next: Unofficial Bash Strict Mode,  Up: Code
+File: eless.info,  Node: Unofficial Bash Strict Mode,  Next: Initialize variables,  Up: Code
 
-6.1 Current eless Version
-=========================
-
-     master
-
-     aa060ea
-   This commit hash was retrieved before (obviously) the commit was made
-where you see this.  So if you see a commit hash when checking eless
-version, it would always refer to the one-earlier commit.
-
-
-File: eless.info,  Node: Unofficial Bash Strict Mode,  Next: Initialize variables,  Prev: Current eless Version,  Up: Code
-
-6.2 Unofficial Bash Strict Mode
+7.1 Unofficial Bash Strict Mode
 ===============================
 
 The _Unofficial Bash Strict Mode_
@@ -325,7 +324,7 @@ to make this script more robust and reliable.
 
 File: eless.info,  Node: Initialize variables,  Next: Input/Output,  Prev: Unofficial Bash Strict Mode,  Up: Code
 
-6.3 Initialize variables
+7.2 Initialize variables
 ========================
 
      help=0
@@ -353,7 +352,7 @@ File: eless.info,  Node: Initialize variables,  Next: Input/Output,  Prev: Unoff
 
 File: eless.info,  Node: Input/Output,  Next: Parse options,  Prev: Initialize variables,  Up: Code
 
-6.4 Input/Output
+7.3 Input/Output
 ================
 
 We need this script to know:
@@ -415,7 +414,7 @@ We need this script to know:
 
 File: eless.info,  Node: Parse options,  Next: Print Help,  Prev: Input/Output,  Up: Code
 
-6.5 Parse options
+7.4 Parse options
 =================
 
 We need to parse the arguments such that arguments specific to this
@@ -461,7 +460,7 @@ basic approach of looping through all the arguments "$@" is used.
 
 File: eless.info,  Node: Print Help,  Next: Emacs with -Q in view-mode,  Prev: Parse options,  Up: Code
 
-6.6 Print Help
+7.5 Print Help
 ==============
 
 If user asked for this script’s help, just print it and exit with
@@ -476,7 +475,7 @@ success code.
 
 File: eless.info,  Node: Emacs with -Q in view-mode,  Next: Emacs Configuration,  Prev: Print Help,  Up: Code
 
-6.7 Emacs with -Q in view-mode
+7.6 Emacs with -Q in view-mode
 ==============================
 
 The emacs_Q_view_mode function is defined to launch emacs with a
@@ -503,7 +502,7 @@ the <<emacs-config>> *noweb* placeholder in the below snippet._
 
 File: eless.info,  Node: Emacs Configuration,  Next: Input/Output Scenarios,  Prev: Emacs with -Q in view-mode,  Up: Code
 
-6.8 Emacs Configuration
+7.7 Emacs Configuration
 =======================
 
 * Menu:
@@ -521,7 +520,7 @@ File: eless.info,  Node: Emacs Configuration,  Next: Input/Output Scenarios,  Pr
 
 File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configuration
 
-6.8.1 General setup
+7.7.1 General setup
 -------------------
 
      ;; Keep the default-directory to be the same from where
@@ -550,7 +549,7 @@ File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configurati
 
 File: eless.info,  Node: Ido setup,  Next: Isearch setup,  Prev: General setup,  Up: Emacs Configuration
 
-6.8.2 Ido setup
+7.7.2 Ido setup
 ---------------
 
      (ido-mode 1)
@@ -563,7 +562,7 @@ File: eless.info,  Node: Ido setup,  Next: Isearch setup,  Prev: General setup, 
 
 File: eless.info,  Node: Isearch setup,  Next: Enable line truncation,  Prev: Ido setup,  Up: Emacs Configuration
 
-6.8.3 Isearch setup
+7.7.3 Isearch setup
 -------------------
 
      (setq isearch-allow-scroll t) ;Allow scrolling using isearch
@@ -573,7 +572,7 @@ File: eless.info,  Node: Isearch setup,  Next: Enable line truncation,  Prev: Id
 
 File: eless.info,  Node: Enable line truncation,  Next: Highlight the current line,  Prev: Isearch setup,  Up: Emacs Configuration
 
-6.8.4 Enable line truncation
+7.7.4 Enable line truncation
 ----------------------------
 
      ;; Truncate long lines by default
@@ -583,7 +582,7 @@ File: eless.info,  Node: Enable line truncation,  Next: Highlight the current li
 
 File: eless.info,  Node: Highlight the current line,  Next: Custom functions,  Prev: Enable line truncation,  Up: Emacs Configuration
 
-6.8.5 Highlight the current line
+7.7.5 Highlight the current line
 --------------------------------
 
      (hl-line-mode 1)
@@ -591,7 +590,7 @@ File: eless.info,  Node: Highlight the current line,  Next: Custom functions,  P
 
 File: eless.info,  Node: Custom functions,  Next: Auto-setting of major modes,  Prev: Highlight the current line,  Up: Emacs Configuration
 
-6.8.6 Custom functions
+7.7.6 Custom functions
 ----------------------
 
 * Menu:
@@ -609,7 +608,7 @@ File: eless.info,  Node: Custom functions,  Next: Auto-setting of major modes,  
 
 File: eless.info,  Node: Keep/delete matching lines,  Next: Frame and font re-sizing,  Up: Custom functions
 
-6.8.6.1 Keep/delete matching lines
+7.7.6.1 Keep/delete matching lines
 ..................................
 
      (defun eless/keep-lines ()
@@ -629,7 +628,7 @@ File: eless.info,  Node: Keep/delete matching lines,  Next: Frame and font re-si
 
 File: eless.info,  Node: Frame and font re-sizing,  Next: Revert buffer in view-mode,  Prev: Keep/delete matching lines,  Up: Custom functions
 
-6.8.6.2 Frame and font re-sizing
+7.7.6.2 Frame and font re-sizing
 ................................
 
      (defun eless/frame-width-half (double)
@@ -653,7 +652,7 @@ File: eless.info,  Node: Frame and font re-sizing,  Next: Revert buffer in view-
 
 File: eless.info,  Node: Revert buffer in view-mode,  Next: Detect if diff-mode should be enabled,  Prev: Frame and font re-sizing,  Up: Custom functions
 
-6.8.6.3 Revert buffer in view-mode
+7.7.6.3 Revert buffer in view-mode
 ..................................
 
      (defun eless/revert-buffer-retain-view-mode ()
@@ -666,7 +665,7 @@ File: eless.info,  Node: Revert buffer in view-mode,  Next: Detect if diff-mode 
 
 File: eless.info,  Node: Detect if diff-mode should be enabled,  Next: Detect if ANSI codes need to be converted to colors,  Prev: Revert buffer in view-mode,  Up: Custom functions
 
-6.8.6.4 Detect if diff-mode should be enabled
+7.7.6.4 Detect if diff-mode should be enabled
 .............................................
 
      (defun eless/enable-diff-mode-maybe ()
@@ -699,7 +698,7 @@ File: eless.info,  Node: Detect if diff-mode should be enabled,  Next: Detect if
 
 File: eless.info,  Node: Detect if ANSI codes need to be converted to colors,  Next: ``Do The Right Thing'' Kill,  Prev: Detect if diff-mode should be enabled,  Up: Custom functions
 
-6.8.6.5 Detect if ANSI codes need to be converted to colors
+7.7.6.5 Detect if ANSI codes need to be converted to colors
 ...........................................................
 
      (defun eless/enable-ansi-color-maybe ()
@@ -722,7 +721,7 @@ File: eless.info,  Node: Detect if ANSI codes need to be converted to colors,  N
 
 File: eless.info,  Node: ``Do The Right Thing'' Kill,  Next: dired-mode setup,  Prev: Detect if ANSI codes need to be converted to colors,  Up: Custom functions
 
-6.8.6.6 “Do The Right Thing” Kill
+7.7.6.6 “Do The Right Thing” Kill
 .................................
 
      (defun eless/save-buffers-maybe-and-kill-emacs ()
@@ -754,7 +753,7 @@ File: eless.info,  Node: ``Do The Right Thing'' Kill,  Next: dired-mode setup,  
 
 File: eless.info,  Node: dired-mode setup,  Next: Man-mode setup,  Prev: ``Do The Right Thing'' Kill,  Up: Custom functions
 
-6.8.6.7 dired-mode setup
+7.7.6.7 dired-mode setup
 ........................
 
      (defun eless/dired-mode-customization ()
@@ -771,7 +770,7 @@ File: eless.info,  Node: dired-mode setup,  Next: Man-mode setup,  Prev: ``Do Th
 
 File: eless.info,  Node: Man-mode setup,  Next: Info-mode setup,  Prev: dired-mode setup,  Up: Custom functions
 
-6.8.6.8 Man-mode setup
+7.7.6.8 Man-mode setup
 ......................
 
      (defun eless/Man-mode-customization ()
@@ -783,7 +782,7 @@ File: eless.info,  Node: Man-mode setup,  Next: Info-mode setup,  Prev: dired-mo
 
 File: eless.info,  Node: Info-mode setup,  Prev: Man-mode setup,  Up: Custom functions
 
-6.8.6.9 Info-mode setup
+7.7.6.9 Info-mode setup
 .......................
 
      (defun eless/Info-mode-customization ()
@@ -795,7 +794,7 @@ File: eless.info,  Node: Info-mode setup,  Prev: Man-mode setup,  Up: Custom fun
 
 File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev: Custom functions,  Up: Emacs Configuration
 
-6.8.7 Auto-setting of major modes
+7.7.7 Auto-setting of major modes
 ---------------------------------
 
      (cond
@@ -811,7 +810,7 @@ File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev
 
 File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-setting of major modes,  Up: Emacs Configuration
 
-6.8.8 Key bindings
+7.7.8 Key bindings
 ------------------
 
      (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
@@ -850,7 +849,7 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
 
 File: eless.info,  Node: User config override,  Prev: Key bindings,  Up: Emacs Configuration
 
-6.8.9 User config override
+7.7.9 User config override
 --------------------------
 
 If an elesscfg file is present in the user-emacs-directory (default
@@ -866,7 +865,7 @@ key-bindings in this file.
 
 File: eless.info,  Node: Input/Output Scenarios,  Prev: Emacs Configuration,  Up: Code
 
-6.9 Input/Output Scenarios
+7.8 Input/Output Scenarios
 ==========================
 
 * Menu:
@@ -878,7 +877,7 @@ File: eless.info,  Node: Input/Output Scenarios,  Prev: Emacs Configuration,  Up
 
 File: eless.info,  Node: Output is going to a pipe,  Next: Input is coming from a pipe,  Up: Input/Output Scenarios
 
-6.9.1 Output is going to a pipe
+7.8.1 Output is going to a pipe
 -------------------------------
 
 This scenario is not supported at the moment.  There is a plan to
@@ -898,7 +897,7 @@ is being piped to something else.
 
 File: eless.info,  Node: Input is coming from a pipe,  Next: Input is an argument to the script,  Prev: Output is going to a pipe,  Up: Input/Output Scenarios
 
-6.9.2 Input is coming from a pipe
+7.8.2 Input is coming from a pipe
 ---------------------------------
 
          # Below if condition is reached when you do this:
@@ -942,7 +941,7 @@ File: eless.info,  Node: Input is coming from a pipe,  Next: Input is an argumen
 
 File: eless.info,  Node: Input is piped from man command,  Next: Input is piped from info command,  Up: Input is coming from a pipe
 
-6.9.2.1 Input is piped from man command
+7.8.2.1 Input is piped from man command
 .......................................
 
              if [[ ! -z ${man_page} ]]
@@ -971,7 +970,7 @@ was reported in this issue
 
 File: eless.info,  Node: Input is piped from info command,  Next: Input is piped from something else,  Prev: Input is piped from man command,  Up: Input is coming from a pipe
 
-6.9.2.2 Input is piped from info command
+7.8.2.2 Input is piped from info command
 ........................................
 
              elif [[ ! -z ${info_man} ]]
@@ -990,7 +989,7 @@ File: eless.info,  Node: Input is piped from info command,  Next: Input is piped
 
 File: eless.info,  Node: Input is piped from something else,  Prev: Input is piped from info command,  Up: Input is coming from a pipe
 
-6.9.2.3 Input is piped from something else
+7.8.2.3 Input is piped from something else
 ..........................................
 
 This scenario could be anything, like:
@@ -1016,7 +1015,7 @@ using emacs_Q_view_mode.
 
 File: eless.info,  Node: Input is an argument to the script,  Prev: Input is coming from a pipe,  Up: Input/Output Scenarios
 
-6.9.3 Input is an argument to the script
+7.8.3 Input is an argument to the script
 ----------------------------------------
 
              # Below else condition is reached when you do this:
@@ -1028,7 +1027,7 @@ File: eless.info,  Node: Input is an argument to the script,  Prev: Input is com
 
 File: eless.info,  Node: Contributing,  Next: Other Wikis,  Prev: Code,  Up: Top
 
-7 Contributing
+8 Contributing
 **************
 
 This guide is for you if you’d like to do any of the below:
@@ -1044,7 +1043,7 @@ This guide is for you if you’d like to do any of the below:
 
 File: eless.info,  Node: How to help debug,  Next: Development,  Up: Contributing
 
-7.1 How to help debug
+8.1 How to help debug
 =====================
 
    • If you find eless not working as expected, file an issue
@@ -1062,7 +1061,7 @@ File: eless.info,  Node: How to help debug,  Next: Development,  Up: Contributin
 
 File: eless.info,  Node: Development,  Prev: How to help debug,  Up: Contributing
 
-7.2 Development
+8.2 Development
 ===============
 
 * Menu:
@@ -1073,7 +1072,7 @@ File: eless.info,  Node: Development,  Prev: How to help debug,  Up: Contributin
 
 File: eless.info,  Node: Dependencies,  Next: Steps to build eless and documentation,  Up: Development
 
-7.2.1 Dependencies
+8.2.1 Dependencies
 ------------------
 
 There are virtually no dependencies, except of course that you need org.
@@ -1093,7 +1092,7 @@ need to:
 
 File: eless.info,  Node: Steps to build eless and documentation,  Prev: Dependencies,  Up: Development
 
-7.2.2 Steps to build eless and documentation
+8.2.2 Steps to build eless and documentation
 --------------------------------------------
 
    • Open eless.org.
@@ -1133,7 +1132,7 @@ File: eless.info,  Node: Steps to build eless and documentation,  Prev: Dependen
 
 File: eless.info,  Node: Other Wikis,  Prev: Contributing,  Up: Top
 
-8 Other Wikis
+9 Other Wikis
 *************
 
 * Menu:
@@ -1144,7 +1143,7 @@ File: eless.info,  Node: Other Wikis,  Prev: Contributing,  Up: Top
 
 File: eless.info,  Node: Home,  Next: Example eless config in tcsh,  Up: Other Wikis
 
-8.1 Home
+9.1 Home
 ========
 
 This project in unique in the sense that *everything* is built from
@@ -1166,7 +1165,7 @@ eless.org._
 
 File: eless.info,  Node: Example eless config in tcsh,  Prev: Home,  Up: Other Wikis
 
-8.2 Example eless config in tcsh
+9.2 Example eless config in tcsh
 ================================
 
      setenv PAGER eless # Show man pages using eless
@@ -1189,48 +1188,48 @@ Node: Eless Options4807
 Node: view-mode Common Bindings5131
 Node: Custom Bindings6107
 Node: Usage Examples7089
-Node: Code8165
-Node: Current eless Version8492
-Node: Unofficial Bash Strict Mode8869
-Node: Initialize variables9584
-Node: Input/Output10199
-Node: Parse options12094
-Node: Print Help13834
-Node: Emacs with -Q in view-mode14167
-Node: Emacs Configuration15048
-Node: General setup15435
-Node: Ido setup16409
-Node: Isearch setup16907
-Node: Enable line truncation17316
-Node: Highlight the current line17665
-Node: Custom functions17892
-Node: Keep/delete matching lines18372
-Node: Frame and font re-sizing19054
-Node: Revert buffer in view-mode20065
-Node: Detect if diff-mode should be enabled20530
-Node: Detect if ANSI codes need to be converted to colors22004
-Node: ``Do The Right Thing'' Kill23161
-Node: dired-mode setup24734
-Node: Man-mode setup25614
-Node: Info-mode setup26121
-Node: Auto-setting of major modes26611
-Node: Key bindings27310
-Node: User config override29534
-Node: Input/Output Scenarios30159
-Node: Output is going to a pipe30415
-Node: Input is coming from a pipe31108
-Node: Input is piped from man command33197
-Node: Input is piped from info command34658
-Node: Input is piped from something else35451
-Node: Input is an argument to the script36409
-Node: Contributing36797
-Node: How to help debug37165
-Node: Development37809
-Node: Dependencies37997
-Node: Steps to build eless and documentation38735
-Node: Other Wikis40788
-Node: Home40940
-Node: Example eless config in tcsh41676
+Node: Current eless Version8182
+Node: Code8554
+Node: Unofficial Bash Strict Mode8862
+Node: Initialize variables9547
+Node: Input/Output10162
+Node: Parse options12057
+Node: Print Help13797
+Node: Emacs with -Q in view-mode14130
+Node: Emacs Configuration15011
+Node: General setup15398
+Node: Ido setup16372
+Node: Isearch setup16870
+Node: Enable line truncation17279
+Node: Highlight the current line17628
+Node: Custom functions17855
+Node: Keep/delete matching lines18335
+Node: Frame and font re-sizing19017
+Node: Revert buffer in view-mode20028
+Node: Detect if diff-mode should be enabled20493
+Node: Detect if ANSI codes need to be converted to colors21967
+Node: ``Do The Right Thing'' Kill23124
+Node: dired-mode setup24697
+Node: Man-mode setup25577
+Node: Info-mode setup26084
+Node: Auto-setting of major modes26574
+Node: Key bindings27273
+Node: User config override29497
+Node: Input/Output Scenarios30122
+Node: Output is going to a pipe30378
+Node: Input is coming from a pipe31071
+Node: Input is piped from man command33160
+Node: Input is piped from info command34621
+Node: Input is piped from something else35414
+Node: Input is an argument to the script36372
+Node: Contributing36760
+Node: How to help debug37128
+Node: Development37772
+Node: Dependencies37960
+Node: Steps to build eless and documentation38698
+Node: Other Wikis40751
+Node: Home40903
+Node: Example eless config in tcsh41639
 
 End Tag Table
 

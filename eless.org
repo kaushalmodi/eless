@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-05 13:37:52 kmodi>
+# Time-stamp: <2017-05-05 14:57:16 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -15,8 +15,6 @@
 #+HTML_HEAD: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/leuven_theme.css" rel="stylesheet">
 #+HTML_HEAD: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/bootstrap.extra.css" rel="stylesheet">
 
-# Tangle all the code blocks in this file to the eless script
-#+PROPERTY: header-args :tangle eless :padline yes
 # Make the tangled shell scripts executables
 #+PROPERTY: header-args:shell :shebang "#!/usr/bin/env bash"
 
@@ -78,7 +76,7 @@ As a bonus:
 
 ** Try it out
 Here are some usage examples:
-#+BEGIN_SRC shell :tangle no :noweb yes
+#+BEGIN_SRC shell :noweb yes
 <<usage-examples>>
 #+END_SRC
 ** Contributors
@@ -89,7 +87,7 @@ Here are some usage examples:
 :EXPORT_FILE_NAME: eless Options
 :END:
 # Do "C-c '" in the below block to edit the org table
-#+BEGIN_SRC org :tangle no :noweb-ref eless-options :exports results :results output replace
+#+BEGIN_SRC org :noweb-ref eless-options :exports results :results output replace
 |--------+--------------------------|
 | Option | Description              |
 |--------+--------------------------|
@@ -103,7 +101,7 @@ Here are some usage examples:
 :PROPERTIES:
 :EXPORT_FILE_NAME: view-mode Common Bindings
 :END:
-#+BEGIN_SRC org :tangle no :noweb-ref view-mode-common-bindings :exports results :results output replace
+#+BEGIN_SRC org :noweb-ref view-mode-common-bindings :exports results :results output replace
 |--------------+------------------------------------------------------------------------------|
 | Binding      | Description                                                                  |
 |--------------+------------------------------------------------------------------------------|
@@ -122,7 +120,7 @@ Here are some usage examples:
 :PROPERTIES:
 :EXPORT_FILE_NAME: eless Custom Bindings
 :END:
-#+BEGIN_SRC org :tangle no :noweb-ref custom-bindings :exports results :results output replace
+#+BEGIN_SRC org :noweb-ref custom-bindings :exports results :results output replace
 |--------------+------------------------------------------------------------|
 | Binding      | Description                                                |
 |--------------+------------------------------------------------------------|
@@ -148,7 +146,7 @@ Here are some usage examples:
 :PROPERTIES:
 :EXPORT_FILE_NAME: Usage Examples
 :END:
-#+BEGIN_SRC shell :tangle no :noweb-ref usage-examples
+#+BEGIN_SRC shell :noweb-ref usage-examples
 eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
 eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless          #
@@ -162,16 +160,12 @@ ls --color=always | eless   # Auto-detect ANSI color codes and convert those to 
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 #+END_SRC
-* Code                                                                 :wiki:
-:PROPERTIES:
-:EXPORT_FILE_NAME: Code Explanation
-:END:
-** Current =eless= Version
+* Current =eless= Version
 # Using noweb is a nifty way to do sort of search/replace in all code blocks.
-#+BEGIN_SRC text :tangle no :noweb-ref version
+#+BEGIN_SRC text :noweb-ref version
 master
 #+END_SRC
-#+BEGIN_SRC text :exports none :tangle no :noweb-ref git-repo
+#+BEGIN_SRC text :exports none :noweb-ref git-repo
 https://github.com/kaushalmodi/eless
 #+END_SRC
 
@@ -179,21 +173,23 @@ https://github.com/kaushalmodi/eless
 # To update manually , put the point in the below source block
 # and hit "C-c C-c" to update the git-hash source block -
 # https://emacs.stackexchange.com/a/13352/115
-#+BEGIN_SRC shell :tangle no :exports results :results output code :results_switches ":tangle no :noweb-ref git-hash"
+#+BEGIN_SRC shell :exports results :results output code :results_switches ":noweb-ref git-hash"
 git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
-#+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-aa060ea
+#+BEGIN_SRC shell :noweb-ref git-hash
+2085108
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
 version, it would always refer to the one-earlier commit.
-** Script Header                                                   :noexport:
+* Code                                                                 :wiki:
 :PROPERTIES:
-:HEADER-ARGS: :tangle eless :noweb yes :exports none
+:EXPORT_FILE_NAME: Code Explanation
+:HEADER-ARGS: :tangle eless
 :END:
-#+BEGIN_SRC shell
+** Script Header                                                   :noexport:
+#+BEGIN_SRC shell :noweb yes :exports none
 
 # Version: <<version>>
 
@@ -207,7 +203,7 @@ version, it would always refer to the one-earlier commit.
 #   Do NOT edit this manually.
 #+END_SRC
 
-#+BEGIN_SRC shell
+#+BEGIN_SRC shell :noweb yes :exports none
 eless_version='<<version>>'
 eless_git_hash='<<git-hash>>'
 #+END_SRC
@@ -858,7 +854,6 @@ fi
 :PROPERTIES:
 :EXPORT_FILE_NAME: CONTRIBUTING
 :EXPORT_TITLE: Contributing Guide
-:HEADER-ARGS: :tangle no
 :END:
 This guide is for you if you'd like to do any of the below:
 - Open an issue (plus provide debug information).
@@ -928,9 +923,6 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
   figure out how to keep the non-git Wiki changes and changes in
   =eless.org= in sync./
 * Other Wikis
-:PROPERTIES:
-:HEADER-ARGS: :tangle no
-:END:
 ** Home                                                                :wiki:
 :PROPERTIES:
 :EXPORT_TITLE: eless Wiki
