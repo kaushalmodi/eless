@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-05 Fri 10:47 -->
+<!-- 2017-05-05 Fri 13:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -279,6 +279,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgf35cdbe">6.8.7. Auto-setting of major modes</a></li>
 <li><a href="#org67ab0b8">6.8.8. Key bindings</a></li>
+<li><a href="#orgd0e99d9">6.8.9. User config override</a></li>
 </ul>
 </li>
 <li><a href="#orgf2e95bb">6.9. Input/Output Scenarios</a>
@@ -670,7 +671,7 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">e4b412f
+<pre><code class="src src-shell">aa060ea
 </code></pre>
 </div>
 <p>
@@ -962,9 +963,6 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 <span class="org-comment-delimiter">;; </span><span class="org-comment">No clutter</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>menu-bar-mode -1<span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">(</span>fboundp <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> tool-bar-mode<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span>tool-bar-mode -1<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Pleasant dark theme</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>load-theme <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> tango-dark<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-builtin">:no-confirm</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Show line and column numbers in the mode-line</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>line-number-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
@@ -1282,6 +1280,28 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
   <span class="org-rainbow-delimiters-depth-2">(</span>global-set-key <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"C-&lt;left&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> eless/frame-width-half<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-rainbow-delimiters-depth-2">(</span>global-set-key <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"C-&lt;down&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> eless/frame-height-double<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-rainbow-delimiters-depth-2">(</span>global-set-key <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"C-&lt;up&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> eless/frame-height-half<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd0e99d9" class="outline-4">
+<h4 id="orgd0e99d9"><span class="section-number-4">6.8.9</span> User config override</h4>
+<div class="outline-text-4" id="text-6-8-9">
+<p>
+If an <code>elesscfg</code> file is present in the <code>user-emacs-directory</code>
+(default value is <code>~/.emacs.d/</code>), load that. As the user can be using
+that file to set their favorite theme (or not set one), the
+<code>eless</code> default theme <code>tango-dark</code> is not loaded in that file is
+present.
+</p>
+
+<p>
+User can further choose to re-define any of the above functions or
+key-bindings in this file.
+</p>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-2">(</span>load <span class="org-rainbow-delimiters-depth-3">(</span>locate-user-emacs-file <span class="org-string">"elesscfg"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:noerror</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>load-theme <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> tango-dark<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:no-confirm</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
 </div>
 </div>

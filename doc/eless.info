@@ -64,6 +64,7 @@ Emacs Configuration
 * Custom functions::
 * Auto-setting of major modes::
 * Key bindings::
+* User config override::
 
 
 
@@ -298,7 +299,7 @@ File: eless.info,  Node: Current eless Version,  Next: Unofficial Bash Strict Mo
 
      master
 
-     e4b412f
+     aa060ea
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -515,6 +516,7 @@ File: eless.info,  Node: Emacs Configuration,  Next: Input/Output Scenarios,  Pr
 * Custom functions::
 * Auto-setting of major modes::
 * Key bindings::
+* User config override::
 
 
 File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configuration
@@ -529,9 +531,6 @@ File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configurati
      ;; No clutter
      (menu-bar-mode -1)
      (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
-
-     ;; Pleasant dark theme
-     (load-theme (quote tango-dark) :no-confirm)
 
      ;; Show line and column numbers in the mode-line
      (line-number-mode 1)
@@ -810,7 +809,7 @@ File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev
        (eless/enable-ansi-color-maybe)))
 
 
-File: eless.info,  Node: Key bindings,  Prev: Auto-setting of major modes,  Up: Emacs Configuration
+File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-setting of major modes,  Up: Emacs Configuration
 
 6.8.8 Key bindings
 ------------------
@@ -847,6 +846,22 @@ File: eless.info,  Node: Key bindings,  Prev: Auto-setting of major modes,  Up: 
        (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
        (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
        (global-set-key (kbd "C-<up>") (quote eless/frame-height-half)))
+
+
+File: eless.info,  Node: User config override,  Prev: Key bindings,  Up: Emacs Configuration
+
+6.8.9 User config override
+--------------------------
+
+If an elesscfg file is present in the user-emacs-directory (default
+value is ~/.emacs.d/), load that.  As the user can be using that file to
+set their favorite theme (or not set one), the eless default theme
+tango-dark is not loaded in that file is present.
+
+   User can further choose to re-define any of the above functions or
+key-bindings in this file.
+     (unless (load (locate-user-emacs-file "elesscfg") :noerror)
+       (load-theme (quote tango-dark) :no-confirm))
 
 
 File: eless.info,  Node: Input/Output Scenarios,  Prev: Emacs Configuration,  Up: Code
@@ -1167,54 +1182,55 @@ File: eless.info,  Node: Example eless config in tcsh,  Prev: Home,  Up: Other W
 
 Tag Table:
 Node: Top188
-Node: Readme1713
-Node: Try it out3465
-Node: Contributors4550
-Node: Eless Options4782
-Node: view-mode Common Bindings5106
-Node: Custom Bindings6082
-Node: Usage Examples7064
-Node: Code8140
-Node: Current eless Version8467
-Node: Unofficial Bash Strict Mode8844
-Node: Initialize variables9559
-Node: Input/Output10174
-Node: Parse options12069
-Node: Print Help13809
-Node: Emacs with -Q in view-mode14142
-Node: Emacs Configuration15023
-Node: General setup15385
-Node: Ido setup16437
-Node: Isearch setup16935
-Node: Enable line truncation17344
-Node: Highlight the current line17693
-Node: Custom functions17920
-Node: Keep/delete matching lines18400
-Node: Frame and font re-sizing19082
-Node: Revert buffer in view-mode20093
-Node: Detect if diff-mode should be enabled20558
-Node: Detect if ANSI codes need to be converted to colors22032
-Node: ``Do The Right Thing'' Kill23189
-Node: dired-mode setup24762
-Node: Man-mode setup25642
-Node: Info-mode setup26149
-Node: Auto-setting of major modes26639
-Node: Key bindings27338
-Node: Input/Output Scenarios29533
-Node: Output is going to a pipe29789
-Node: Input is coming from a pipe30482
-Node: Input is piped from man command32571
-Node: Input is piped from info command34032
-Node: Input is piped from something else34825
-Node: Input is an argument to the script35783
-Node: Contributing36171
-Node: How to help debug36539
-Node: Development37183
-Node: Dependencies37371
-Node: Steps to build eless and documentation38109
-Node: Other Wikis40162
-Node: Home40314
-Node: Example eless config in tcsh41050
+Node: Readme1738
+Node: Try it out3490
+Node: Contributors4575
+Node: Eless Options4807
+Node: view-mode Common Bindings5131
+Node: Custom Bindings6107
+Node: Usage Examples7089
+Node: Code8165
+Node: Current eless Version8492
+Node: Unofficial Bash Strict Mode8869
+Node: Initialize variables9584
+Node: Input/Output10199
+Node: Parse options12094
+Node: Print Help13834
+Node: Emacs with -Q in view-mode14167
+Node: Emacs Configuration15048
+Node: General setup15435
+Node: Ido setup16409
+Node: Isearch setup16907
+Node: Enable line truncation17316
+Node: Highlight the current line17665
+Node: Custom functions17892
+Node: Keep/delete matching lines18372
+Node: Frame and font re-sizing19054
+Node: Revert buffer in view-mode20065
+Node: Detect if diff-mode should be enabled20530
+Node: Detect if ANSI codes need to be converted to colors22004
+Node: ``Do The Right Thing'' Kill23161
+Node: dired-mode setup24734
+Node: Man-mode setup25614
+Node: Info-mode setup26121
+Node: Auto-setting of major modes26611
+Node: Key bindings27310
+Node: User config override29534
+Node: Input/Output Scenarios30159
+Node: Output is going to a pipe30415
+Node: Input is coming from a pipe31108
+Node: Input is piped from man command33197
+Node: Input is piped from info command34658
+Node: Input is piped from something else35451
+Node: Input is an argument to the script36409
+Node: Contributing36797
+Node: How to help debug37165
+Node: Development37809
+Node: Dependencies37997
+Node: Steps to build eless and documentation38735
+Node: Other Wikis40788
+Node: Home40940
+Node: Example eless config in tcsh41676
 
 End Tag Table
 
