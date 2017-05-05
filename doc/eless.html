@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-05 Fri 10:09 -->
+<!-- 2017-05-05 Fri 10:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -309,7 +309,8 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgbba5250">8. Other Wikis</a>
 <ul>
-<li><a href="#org0b27967">8.1. Example <code>eless</code> config in <code>tcsh</code></a></li>
+<li><a href="#org0f425e7">8.1. Home</a></li>
+<li><a href="#org0b27967">8.2. Example <code>eless</code> config in <code>tcsh</code></a></li>
 </ul>
 </li>
 </ul>
@@ -436,6 +437,12 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 
 <col  class="org-left" />
 </colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Option</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td class="org-left">-h</td>
@@ -663,7 +670,7 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">4c4aea1
+<pre><code class="src src-shell">57db78a
 </code></pre>
 </div>
 <p>
@@ -1450,6 +1457,14 @@ stream using <code>emacs_Q_view_mode</code>.
 <div id="outline-container-org0065508" class="outline-2">
 <h2 id="org0065508"><span class="section-number-2">7</span> Contributing</h2>
 <div class="outline-text-2" id="text-7">
+<p>
+This guide is for you if you&rsquo;d like to do any of the below:
+</p>
+<ul class="org-ul">
+<li>Open an issue (plus provide debug information).</li>
+<li>Simply clone this repo and build <code>eless</code> locally.</li>
+<li>Do above + Provide a PR.</li>
+</ul>
 </div>
 <div id="outline-container-org1241c89" class="outline-3">
 <h3 id="org1241c89"><span class="section-number-3">7.1</span> How to help debug</h3>
@@ -1484,8 +1499,7 @@ stream using <code>emacs_Q_view_mode</code>.
 <div class="outline-text-4" id="text-7-2-1">
 <p>
 There are virtually no dependencies, except of course that you need
-org. <i>If you need to update the <code>CONTRIBUTE.md</code>, you will need the
-<a href="https://github.com/larstvei/ox-gfm"><code>ox-gfm</code></a> package (available on Melpa).</i>
+org.
 </p>
 
 <p>
@@ -1493,6 +1507,19 @@ I used the latest emacs and org-mode versions built from their master
 branches for this project. So if any of the below steps do not work
 for you, open an issue.
 </p>
+
+<p>
+Talking about dependencies, this project builds <b>everything</b> from
+<code>eless.org</code> file, the <code>eless</code> script <i>plus</i> all the HTML, Info
+documentation, <code>README.org</code>, <code>CONTRIBUTING.org</code>, and even the Wiki
+pages. So before running <code>M-x eless-build</code> mentioned in below build
+steps, you need to:
+</p>
+<div class="org-src-container">
+<pre><code class="src src-shell"><span class="org-builtin">cd</span> doc/
+git clone https://github.com/kaushalmodi/eless.wiki.git
+</code></pre>
+</div>
 </div>
 </div>
 <div id="outline-container-org0ac4d7a" class="outline-4">
@@ -1534,6 +1561,10 @@ addition it also enables auto-evaluating of the <code>git rev-parse
 no errors.</li>
 <li>Understand the changes made in <code>eless</code>, <i>plus</i> all the other files.</li>
 <li>Provide a PR.</li>
+<li>If changes are only to the Wiki, I believe you can push them
+directly using <code>git</code> or manually edit those <a href="https://github.com/kaushalmodi/eless/wiki">here</a>. /I have to yet
+figure out how to keep the non-git Wiki changes and changes in
+<code>eless.org</code> in sync./</li>
 </ul>
 </div>
 </div>
@@ -1543,9 +1574,40 @@ no errors.</li>
 <h2 id="orgbba5250"><span class="section-number-2">8</span> Other Wikis</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org0b27967" class="outline-3">
-<h3 id="org0b27967"><span class="section-number-3">8.1</span> Example <code>eless</code> config in <code>tcsh</code></h3>
+<div id="outline-container-org0f425e7" class="outline-3">
+<h3 id="org0f425e7"><span class="section-number-3">8.1</span> Home</h3>
 <div class="outline-text-3" id="text-8-1">
+<p>
+This project in unique in the sense that <b>everything</b> is built from
+<code>eless.org</code> file, the <code>eless</code> script <i>plus</i> all the HTML, Info
+documentation, <code>README.org</code>, <code>CONTRIBUTING.org</code>, and even these Wiki
+pages.
+</p>
+
+<p>
+So before running <code>M-x eless-build</code> mentioned in the
+<a href="https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org">Contributing Guide</a>, you need to:
+</p>
+<div class="org-src-container">
+<pre><code class="src src-shell"><span class="org-builtin">cd</span> doc/
+git clone https://github.com/kaushalmodi/eless.wiki.git
+</code></pre>
+</div>
+
+<p>
+If changes are only to this Wiki, I believe you can
+push them directly using <code>git</code> or manually edit those here.
+</p>
+
+<p>
+<i>I have to yet figure out how to sync those manual Wiki changes with
+<code>eless.org</code>.</i>
+</p>
+</div>
+</div>
+<div id="outline-container-org0b27967" class="outline-3">
+<h3 id="org0b27967"><span class="section-number-3">8.2</span> Example <code>eless</code> config in <code>tcsh</code></h3>
+<div class="outline-text-3" id="text-8-2">
 <div class="org-src-container">
 <pre><code class="src src-shell"><span class="org-builtin">setenv</span> PAGER eless <span class="org-comment-delimiter"># </span><span class="org-comment">Show man pages using eless</span>
 

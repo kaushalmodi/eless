@@ -108,6 +108,7 @@ Development
 
 Other Wikis
 
+* Home::
 * Example eless config in tcsh::
 
 
@@ -201,10 +202,12 @@ File: eless.info,  Node: Eless Options,  Next: view-mode Common Bindings,  Prev:
 2 Eless Options
 ***************
 
--h      Show this help and quit
-–gui    Run emacs in GUI mode
--V      Print version and quit
--D      Run with debug messages
+Option   Description
+------------------------------------
+-h       Show this help and quit
+–gui     Run emacs in GUI mode
+-V       Print version and quit
+-D       Run with debug messages
 
 
 File: eless.info,  Node: view-mode Common Bindings,  Next: Custom Bindings,  Prev: Eless Options,  Up: Top
@@ -295,7 +298,7 @@ File: eless.info,  Node: Current eless Version,  Next: Unofficial Bash Strict Mo
 
      master
 
-     4c4aea1
+     57db78a
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -1013,6 +1016,11 @@ File: eless.info,  Node: Contributing,  Next: Other Wikis,  Prev: Code,  Up: Top
 7 Contributing
 **************
 
+This guide is for you if you’d like to do any of the below:
+   • Open an issue (plus provide debug information).
+   • Simply clone this repo and build eless locally.
+   • Do above + Provide a PR.
+
 * Menu:
 
 * How to help debug::
@@ -1054,12 +1062,18 @@ File: eless.info,  Node: Dependencies,  Next: Steps to build eless and documenta
 ------------------
 
 There are virtually no dependencies, except of course that you need org.
-_If you need to update the CONTRIBUTE.md, you will need the ox-gfm
-(https://github.com/larstvei/ox-gfm) package (available on Melpa)._
 
    I used the latest emacs and org-mode versions built from their master
 branches for this project.  So if any of the below steps do not work for
 you, open an issue.
+
+   Talking about dependencies, this project builds *everything* from
+eless.org file, the eless script _plus_ all the HTML, Info
+documentation, README.org, CONTRIBUTING.org, and even the Wiki pages.
+So before running M-x eless-build mentioned in below build steps, you
+need to:
+     cd doc/
+     git clone https://github.com/kaushalmodi/eless.wiki.git
 
 
 File: eless.info,  Node: Steps to build eless and documentation,  Prev: Dependencies,  Up: Development
@@ -1095,6 +1109,11 @@ File: eless.info,  Node: Steps to build eless and documentation,  Prev: Dependen
      (http://www.shellcheck.net/) to ensure that there are no errors.
    • Understand the changes made in eless, _plus_ all the other files.
    • Provide a PR.
+   • If changes are only to the Wiki, I believe you can push them
+     directly using git or manually edit those here
+     (https://github.com/kaushalmodi/eless/wiki).  /I have to yet figure
+     out how to keep the non-git Wiki changes and changes in eless.org
+     in sync./
 
 
 File: eless.info,  Node: Other Wikis,  Prev: Contributing,  Up: Top
@@ -1104,12 +1123,35 @@ File: eless.info,  Node: Other Wikis,  Prev: Contributing,  Up: Top
 
 * Menu:
 
+* Home::
 * Example eless config in tcsh::
 
 
-File: eless.info,  Node: Example eless config in tcsh,  Up: Other Wikis
+File: eless.info,  Node: Home,  Next: Example eless config in tcsh,  Up: Other Wikis
 
-8.1 Example eless config in tcsh
+8.1 Home
+========
+
+This project in unique in the sense that *everything* is built from
+eless.org file, the eless script _plus_ all the HTML, Info
+documentation, README.org, CONTRIBUTING.org, and even these Wiki pages.
+
+   So before running M-x eless-build mentioned in the Contributing Guide
+(https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org), you
+need to:
+     cd doc/
+     git clone https://github.com/kaushalmodi/eless.wiki.git
+
+   If changes are only to this Wiki, I believe you can push them
+directly using git or manually edit those here.
+
+   _I have to yet figure out how to sync those manual Wiki changes with
+eless.org._
+
+
+File: eless.info,  Node: Example eless config in tcsh,  Prev: Home,  Up: Other Wikis
+
+8.2 Example eless config in tcsh
 ================================
 
      setenv PAGER eless # Show man pages using eless
@@ -1125,53 +1167,54 @@ File: eless.info,  Node: Example eless config in tcsh,  Up: Other Wikis
 
 Tag Table:
 Node: Top188
-Node: Readme1704
-Node: Try it out3456
-Node: Contributors4541
-Node: Eless Options4773
-Node: view-mode Common Bindings5035
-Node: Custom Bindings6011
-Node: Usage Examples6993
-Node: Code8069
-Node: Current eless Version8396
-Node: Unofficial Bash Strict Mode8773
-Node: Initialize variables9488
-Node: Input/Output10103
-Node: Parse options11998
-Node: Print Help13738
-Node: Emacs with -Q in view-mode14071
-Node: Emacs Configuration14952
-Node: General setup15314
-Node: Ido setup16366
-Node: Isearch setup16864
-Node: Enable line truncation17273
-Node: Highlight the current line17622
-Node: Custom functions17849
-Node: Keep/delete matching lines18329
-Node: Frame and font re-sizing19011
-Node: Revert buffer in view-mode20022
-Node: Detect if diff-mode should be enabled20487
-Node: Detect if ANSI codes need to be converted to colors21961
-Node: ``Do The Right Thing'' Kill23118
-Node: dired-mode setup24691
-Node: Man-mode setup25571
-Node: Info-mode setup26078
-Node: Auto-setting of major modes26568
-Node: Key bindings27267
-Node: Input/Output Scenarios29462
-Node: Output is going to a pipe29718
-Node: Input is coming from a pipe30411
-Node: Input is piped from man command32500
-Node: Input is piped from info command33961
-Node: Input is piped from something else34754
-Node: Input is an argument to the script35712
-Node: Contributing36100
-Node: How to help debug36263
-Node: Development36907
-Node: Dependencies37095
-Node: Steps to build eless and documentation37616
-Node: Other Wikis39390
-Node: Example eless config in tcsh39533
+Node: Readme1713
+Node: Try it out3465
+Node: Contributors4550
+Node: Eless Options4782
+Node: view-mode Common Bindings5106
+Node: Custom Bindings6082
+Node: Usage Examples7064
+Node: Code8140
+Node: Current eless Version8467
+Node: Unofficial Bash Strict Mode8844
+Node: Initialize variables9559
+Node: Input/Output10174
+Node: Parse options12069
+Node: Print Help13809
+Node: Emacs with -Q in view-mode14142
+Node: Emacs Configuration15023
+Node: General setup15385
+Node: Ido setup16437
+Node: Isearch setup16935
+Node: Enable line truncation17344
+Node: Highlight the current line17693
+Node: Custom functions17920
+Node: Keep/delete matching lines18400
+Node: Frame and font re-sizing19082
+Node: Revert buffer in view-mode20093
+Node: Detect if diff-mode should be enabled20558
+Node: Detect if ANSI codes need to be converted to colors22032
+Node: ``Do The Right Thing'' Kill23189
+Node: dired-mode setup24762
+Node: Man-mode setup25642
+Node: Info-mode setup26149
+Node: Auto-setting of major modes26639
+Node: Key bindings27338
+Node: Input/Output Scenarios29533
+Node: Output is going to a pipe29789
+Node: Input is coming from a pipe30482
+Node: Input is piped from man command32571
+Node: Input is piped from info command34032
+Node: Input is piped from something else34825
+Node: Input is an argument to the script35783
+Node: Contributing36171
+Node: How to help debug36539
+Node: Development37183
+Node: Dependencies37371
+Node: Steps to build eless and documentation38109
+Node: Other Wikis40162
+Node: Home40314
+Node: Example eless config in tcsh41050
 
 End Tag Table
 

@@ -11,19 +11,21 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='4c4aea1'
+eless_git_hash='57db78a'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
 * Options to this script
-|-------+--------------------------|
-| -h    | Show this help  and quit |
-| --gui | Run emacs in GUI mode    |
-| -V    | Print version and quit   |
-| -D    | Run with debug messages  |
-|-------+--------------------------|
+|--------+--------------------------|
+| Option | Description              |
+|--------+--------------------------|
+| -h     | Show this help  and quit |
+| --gui  | Run emacs in GUI mode    |
+| -V     | Print version and quit   |
+| -D     | Run with debug messages  |
+|--------+--------------------------|
 
 * Common bindings in 'view-mode'
 |--------------+------------------------------------------------------------------------------|
@@ -545,3 +547,6 @@ fi
 #  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin (Kept just for
 #    reference, not using this in this script any more.)
 #  https://github.com/dj08/utils-generic/blob/master/eless
+
+cd doc/
+git clone https://github.com/kaushalmodi/eless.wiki.git

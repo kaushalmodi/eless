@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-05 10:09:06 kmodi>
+# Time-stamp: <2017-05-05 10:33:10 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -90,12 +90,14 @@ Here are some usage examples:
 :END:
 # Do "C-c '" in the below block to edit the org table
 #+BEGIN_SRC org :tangle no :noweb-ref eless-options :exports results :results output replace
-|-------+--------------------------|
-| -h    | Show this help  and quit |
-| --gui | Run emacs in GUI mode    |
-| -V    | Print version and quit   |
-| -D    | Run with debug messages  |
-|-------+--------------------------|
+|--------+--------------------------|
+| Option | Description              |
+|--------+--------------------------|
+| -h     | Show this help  and quit |
+| --gui  | Run emacs in GUI mode    |
+| -V     | Print version and quit   |
+| -D     | Run with debug messages  |
+|--------+--------------------------|
 #+END_SRC
 * =view-mode= Common Bindings                                          :wiki:
 :PROPERTIES:
@@ -182,7 +184,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-4c4aea1
+57db78a
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -845,8 +847,13 @@ fi
 * Contributing                                                 :contributing:
 :PROPERTIES:
 :EXPORT_FILE_NAME: CONTRIBUTING
+:EXPORT_TITLE: Contributing Guide
 :HEADER-ARGS: :tangle no
 :END:
+This guide is for you if you'd like to do any of the below:
+- Open an issue (plus provide debug information).
+- Simply clone this repo and build =eless= locally.
+- Do above + Provide a PR.
 ** How to help debug
 - If you find =eless= not working as expected, file an [[https://github.com/kaushalmodi/eless/issues][issue]].
 - Include the following debug information:
@@ -860,12 +867,21 @@ fi
 ** Development
 *** Dependencies
 There are virtually no dependencies, except of course that you need
-org. /If you need to update the =CONTRIBUTE.md=, you will need the
-[[https://github.com/larstvei/ox-gfm][=ox-gfm=]] package (available on Melpa)./
+org.
 
 I used the latest emacs and org-mode versions built from their master
 branches for this project. So if any of the below steps do not work
 for you, open an issue.
+
+Talking about dependencies, this project builds *everything* from
+=eless.org= file, the =eless= script /plus/ all the HTML, Info
+documentation, =README.org=, =CONTRIBUTING.org=, and even the Wiki
+pages. So before running =M-x eless-build= mentioned in below build
+steps, you need to:
+#+BEGIN_SRC shell
+cd doc/
+git clone https://github.com/kaushalmodi/eless.wiki.git
+#+END_SRC
 *** Steps to build =eless= and documentation
 - Open =eless.org=.
   - You will be prompted to mark certain /Local Variables/ settings as
@@ -897,7 +913,33 @@ for you, open an issue.
   no errors.
 - Understand the changes made in =eless=, /plus/ all the other files.
 - Provide a PR.
+- If changes are only to the Wiki, I believe you can push them
+  directly using =git= or manually edit those [[https://github.com/kaushalmodi/eless/wiki][here]]. /I have to yet
+  figure out how to keep the non-git Wiki changes and changes in
+  =eless.org= in sync./
 * Other Wikis
+** Home                                                                :wiki:
+:PROPERTIES:
+:EXPORT_TITLE: eless Wiki
+:EXPORT_FILE_NAME: Home
+:END:
+This project in unique in the sense that *everything* is built from
+=eless.org= file, the =eless= script /plus/ all the HTML, Info
+documentation, =README.org=, =CONTRIBUTING.org=, and even these Wiki
+pages.
+
+So before running =M-x eless-build= mentioned in the
+[[https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org][Contributing Guide]], you need to:
+#+BEGIN_SRC shell
+cd doc/
+git clone https://github.com/kaushalmodi/eless.wiki.git
+#+END_SRC
+
+If changes are only to this Wiki, I believe you can
+push them directly using =git= or manually edit those here.
+
+/I have to yet figure out how to sync those manual Wiki changes with
+=eless.org=./
 ** Example =eless= config in =tcsh=                                    :wiki:
 :PROPERTIES:
 :EXPORT_FILE_NAME: Example eless Config in tcsh

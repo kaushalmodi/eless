@@ -61,7 +61,7 @@
                                       ("eless-html"
                                        :base-directory ,eless-root-dir
                                        :with-tags nil
-                                       :exclude "README\\.org" ;regexp
+                                       :exclude "\\(CONTRIBUTING\\|README\\)\\.org"
                                        :exclude-tags ("noexport")
                                        :publishing-function org-html-publish-to-html
                                        :publishing-directory ,eless-doc-dir)
@@ -69,7 +69,7 @@
                                       ("eless-info"
                                        :base-directory ,eless-root-dir
                                        :with-tags nil
-                                       :exclude "README\\.org" ;regexp
+                                       :exclude "\\(CONTRIBUTING\\|README\\)\\.org"
                                        :exclude-tags ("noexport")
                                        :publishing-function org-texinfo-publish-to-texinfo
                                        :publishing-directory ,eless-doc-dir
@@ -86,7 +86,7 @@
         (org-babel-tangle-file eless-org-file)
 
         (if (file-exists-p eless-wiki-dir)
-            (let ((subtree-tags-to-export '("readme" "wiki")) ;Export readme and wiki .org files
+            (let ((subtree-tags-to-export '("readme" "contributing" "wiki"))
                   ;; If a subtree matches a tag, do not try to export further
                   ;; subtrees separately that could be under that.
                   (org-use-tag-inheritance nil)
@@ -100,16 +100,7 @@
                       (rename-file (expand-file-name exported-file eless-root-dir)
                                    (expand-file-name exported-file eless-wiki-dir)
                                    :ok-if-already-exists))))))
-          (user-error "You need to first `cd doc/' and `git clone https://github.com/kaushalmodi/eless.wiki.git'"))
-
-        ;; The .md exports will work only if `ox-gfm' is installed.
-        (when (require 'ox-gfm nil :noerror)
-          (let ((subtree-tags-to-export '("contributing"))
-                (org-use-tag-inheritance nil)
-                (org-export-with-toc nil)
-                (org-export-with-tags nil))
-            (dolist (tag subtree-tags-to-export)
-              (org-map-entries '(org-gfm-export-to-markdown nil :subtreep) tag))))))
+          (user-error "eless.wiki dir does not exist. You need to `cd doc/' and `git clone https://github.com/kaushalmodi/eless.wiki.git'"))))
 
     ;; Export to HTML and Info
     ;; The ":force" arguments ensures that the publishing always happens, even
