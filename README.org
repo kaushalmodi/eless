@@ -1,4 +1,4 @@
-# Created 2017-05-05 Fri 10:33
+# Created 2017-05-05 Fri 10:40
 #+TITLE: Eless - A Better Less
 #+AUTHOR: Kaushal Modi
 *ShellCheck status:*

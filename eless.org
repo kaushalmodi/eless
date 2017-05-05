@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-05 10:33:10 kmodi>
+# Time-stamp: <2017-05-05 10:40:44 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -184,7 +184,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-57db78a
+ed07ae4
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -918,6 +918,9 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
   figure out how to keep the non-git Wiki changes and changes in
   =eless.org= in sync./
 * Other Wikis
+:PROPERTIES:
+:HEADER-ARGS: :tangle no
+:END:
 ** Home                                                                :wiki:
 :PROPERTIES:
 :EXPORT_TITLE: eless Wiki
@@ -944,7 +947,7 @@ push them directly using =git= or manually edit those here.
 :PROPERTIES:
 :EXPORT_FILE_NAME: Example eless Config in tcsh
 :END:
-#+BEGIN_SRC shell :tangle no
+#+BEGIN_SRC shell
 setenv PAGER eless # Show man pages using eless
 
 alias info  '\info \!* | eless'
