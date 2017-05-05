@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-05 10:40:44 kmodi>
+# Time-stamp: <2017-05-05 10:47:36 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -184,7 +184,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :tangle no :noweb-ref git-hash
-ed07ae4
+e4b412f
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=

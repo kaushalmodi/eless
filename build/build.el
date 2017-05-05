@@ -90,6 +90,7 @@
                   ;; If a subtree matches a tag, do not try to export further
                   ;; subtrees separately that could be under that.
                   (org-use-tag-inheritance nil)
+                  (org-export-time-stamp-file nil) ;Do not print "Created <timestamp>" in exported files
                   (org-export-with-toc nil)  ;Do not export TOC
                   (org-export-with-tags nil)) ;Do not print tag names in exported files
               (dolist (tag subtree-tags-to-export)
