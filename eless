@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# https://github.com/kaushalmodi/eless
 # Version: master
 
 # This script uses the unofficial strict mode as explained in
@@ -7,9 +6,12 @@
 #
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
+#
+# This file is tangled from https://github.com/kaushalmodi/eless/blob/master/eless.org
+#   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='488a445'
+eless_git_hash='4c4aea1'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace

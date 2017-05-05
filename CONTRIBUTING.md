@@ -1,7 +1,4 @@
-# Contributing Guide
-
-
-## How to help debug
+# How to help debug
 
 -   If you find `eless` not working as expected, file an [issue](https://github.com/kaushalmodi/eless/issues).
 -   Include the following debug information:
@@ -14,35 +11,40 @@
             -   `PAGER=​"eless -D" man foo`
 
 
-## Development
+# Development
 
 
-### Dependencies
+## Dependencies
 
-[`ox-gfm`](https://github.com/larstvei/ox-gfm) package is used to generate the `.md` files. It can be installed via Melpa.
+There are virtually no dependencies, except of course that you need org. *If you need to update the `CONTRIBUTE.md`, you will need the [`ox-gfm`](https://github.com/larstvei/ox-gfm) package (available on Melpa).*
 
-I use the latest emacs and org-mode versions built from their master branches. So if somehow the *Org Publish* step does not work for you, open an issue.
+I used the latest emacs and org-mode versions built from their master branches for this project. So if any of the below steps do not work for you, open an issue.
 
 
-### How to generate the `eless` script
+## Steps to build `eless` and documentation
 
--   Evaluate `build/build.el`.
 -   Open `eless.org`.
--   `C-c C-e P x`, select `eless-tangle` project.
-    -   That will generate the `eless` script, delete trailing whitespaces from it, and save it.
+    -   You will be prompted to mark certain *Local Variables* settings as safe:
+
+        ```emacs-lisp
+        (org-confirm-babel-evaluate lambda
+                                    (lang body)
+                                    (let
+                                        ((unsafe t))
+                                      (when
+                                          (or
+                                           (string= lang "org")
+                                           (string= body "git rev-parse HEAD | head -c 7"))
+                                        (setq unsafe nil))
+                                      unsafe))
+        (eval load
+              (expand-file-name "build/build.el"))
+        (org-html-htmlize-font-prefix . "org-")
+        (org-html-htmlize-output-type . css)
+        (org-src-preserve-indentation . t)
+        ```
+    -   Approving that permanently will exclamation mark will ensure that the `build.el` gets loaded each time you open `eless.org`. In addition it also enables auto-evaluating of the `git rev-parse HEAD` command and setting of few org variables.
+-   Do `M-x eless-build`. *This command got defined when the `build/build.el` got auto-loaded in the above step.*
 -   Run the tangled `eless` through [shellcheck](http://www.shellcheck.net/) to ensure that there are no errors.
--   Do `C-x v =​` in the `eless` buffer and understand what changes you made.
--   Provide a PR.
-
-
-### How to generate `eless` *plus* documentation
-
--   Evaluate `build/build.el`.
--   Open `eless.org`.
--   `C-c C-e P x`, select `eless-all` project.
-    -   That will generate the `eless` script, delete trailing whitespaces from it, and save it.
-    -   Update HTML and Info documentation.
-    -   Update the README, Wiki, etc. pages.
--   Run the tangled `eless` through [shellcheck](http://www.shellcheck.net/) to ensure that there are no errors.
--   Understand the changes made in all the files.
+-   Understand the changes made in `eless`, *plus* all the other files.
 -   Provide a PR.
