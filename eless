@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='2085108'
+eless_git_hash='1acc699'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace

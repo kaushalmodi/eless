@@ -25,28 +25,6 @@
           (org-babel-execute-src-block))))))
 (add-hook 'org-babel-pre-tangle-hook #'eless/eval-commit-hash)
 
-(defun eless/post-tangle-delete-trailing-ws-and-save (orig-fun &rest args)
-  "After tangling, delete trailing spaces from the target buffer and save it."
-  (let* ((ret (apply orig-fun args))
-         (source-file (buffer-file-name))
-         (eless-buf (get-buffer "eless"))
-         target-file)
-    (when (and source-file
-               (string= "eless.org" (file-name-nondirectory source-file)))
-      ;; For some reason, the eless buffer if already opened needs to be closed
-      ;; first.
-      (when eless-buf
-        (kill-buffer eless-buf))
-      (setq target-file (expand-file-name "eless" (file-name-directory source-file)))
-      (setq eless-buf (find-file-noselect target-file))
-      (with-current-buffer eless-buf
-        (delete-trailing-whitespace (point-min) nil)
-        (save-buffer)
-        (kill-buffer eless-buf))) ;No need to keep the eless buffer open
-    ret))
-(advice-add 'org-babel-tangle :around #'eless/post-tangle-delete-trailing-ws-and-save)
-;; (advice-remove 'org-babel-tangle  #'eless/post-tangle-delete-trailing-ws-and-save)
-
 (defun eless-build ()
   "Use eless.org to tangle out the `eless' script and documentation."
   (interactive)
@@ -57,6 +35,7 @@
          ;; cd doc/
          ;; git clone https://github.com/kaushalmodi/eless.wiki.git
          (eless-wiki-dir (concat eless-doc-dir "eless.wiki/"))
+         (org-babel-post-tangle-hook nil) ;Initialize `org-babel-post-tangle-hook' to nil in this let-bound copy
          (org-publish-project-alist `(;; HTML
                                       ("eless-html"
                                        :base-directory ,eless-root-dir
@@ -77,6 +56,10 @@
 
                                       ("eless-all"
                                        :components ("eless-html" "eless-info")))))
+
+    ;; Delete trailing whitespace in tangled buffer and save it
+    (add-hook 'org-babel-post-tangle-hook #'delete-trailing-whitespace)
+    (add-hook 'org-babel-post-tangle-hook #'save-buffer :append)
 
     (let ((eless-org-buf (get-buffer "eless.org")))
       (unless eless-org-buf             ;Open eless.org if it's not already
