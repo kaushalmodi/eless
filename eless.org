@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-11 11:32:21 kmodi>
+# Time-stamp: <2017-05-11 13:53:25 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -180,7 +180,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-37ad3c4
+c39ffb1
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -475,6 +475,8 @@ function emacs_Q_view_mode {
 (setq load-prefer-newer t)
 (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
 
+(setq org-src-fontify-natively t)       ;Syntax-highlight source blocks in org
+
 (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 #+END_SRC
 *** Ido setup
@@ -711,14 +713,13 @@ at the time of quitting.
 If an =elesscfg= file is present in the =user-emacs-directory=
 (default value is =~/.emacs.d/=), load that. As the user can be using
 that file to set their favorite theme (or not set one), the
-=eless= default theme =tango-dark= is not loaded in that file is
-present.
+=eless= default theme is not loaded if that file is present.
 
 User can further choose to re-define any of the above functions or
 key-bindings in this file.
 #+BEGIN_SRC emacs-lisp
 (unless (load (locate-user-emacs-file "elesscfg") :noerror)
-  (load-theme (quote tango-dark) :no-confirm))
+  (load-theme (quote manoj-dark) :no-confirm))
 #+END_SRC
 ** Input/Output Scenarios
 *** Output is going to a pipe

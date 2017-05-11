@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-11 Thu 11:32 -->
+<!-- 2017-05-11 Thu 13:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -677,7 +677,7 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">37ad3c4
+<pre><code class="src src-shell">c39ffb1
 </code></pre>
 </div>
 <p>
@@ -986,6 +986,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> visible-bell t<span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> load-prefer-newer t<span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ediff-window-setup-function <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> ediff-setup-windows-plain<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-src-fontify-natively t<span class="org-rainbow-delimiters-depth-1">)</span>       <span class="org-comment-delimiter">;</span><span class="org-comment">Syntax-highlight source blocks in org</span>
 
 <span class="org-rainbow-delimiters-depth-1">(</span>fset <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> yes-or-no-p<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> y-or-n-p<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Use y or n instead of yes or no</span>
 </code></pre>
@@ -1312,8 +1314,7 @@ at the time of quitting.
 If an <code>elesscfg</code> file is present in the <code>user-emacs-directory</code>
 (default value is <code>~/.emacs.d/</code>), load that. As the user can be using
 that file to set their favorite theme (or not set one), the
-<code>eless</code> default theme <code>tango-dark</code> is not loaded in that file is
-present.
+<code>eless</code> default theme is not loaded if that file is present.
 </p>
 
 <p>
@@ -1322,7 +1323,7 @@ key-bindings in this file.
 </p>
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-2">(</span>load <span class="org-rainbow-delimiters-depth-3">(</span>locate-user-emacs-file <span class="org-string">"elesscfg"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:noerror</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>load-theme <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> tango-dark<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:no-confirm</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>load-theme <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> manoj-dark<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:no-confirm</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
 </div>
 </div>

@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='37ad3c4'
+eless_git_hash='c39ffb1'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -246,6 +246,8 @@ function emacs_Q_view_mode {
                           (setq load-prefer-newer t)
                           (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
 
+                          (setq org-src-fontify-natively t)       ;Syntax-highlight source blocks in org
+
                           (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 
                           (ido-mode 1)
@@ -439,7 +441,7 @@ function emacs_Q_view_mode {
                             (global-set-key (kbd "C-<up>") (quote eless/frame-height-half)))
 
                           (unless (load (locate-user-emacs-file "elesscfg") :noerror)
-                            (load-theme (quote tango-dark) :no-confirm))
+                            (load-theme (quote manoj-dark) :no-confirm))
                        )' 2>/dev/null </dev/tty
 }
 
