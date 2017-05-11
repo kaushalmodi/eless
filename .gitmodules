@@ -1,0 +1,3 @@
+[submodule "Wiki"]
+	path = doc/eless.wiki
+	url = https://kaushalmodi@github.com/kaushalmodi/eless.wiki
