@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-06 Sat 09:01 -->
+<!-- 2017-05-11 Thu 11:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -238,88 +238,88 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7b5d5d5">1. Readme</a>
+<li><a href="#org419b7a8">1. Readme</a>
 <ul>
-<li><a href="#orgc4fb62f">1.1. Try it out</a></li>
-<li><a href="#org2ad1e27">1.2. Contributors</a></li>
+<li><a href="#org8489cc8">1.1. Try it out</a></li>
+<li><a href="#org3d5ed1b">1.2. Contributors</a></li>
 </ul>
 </li>
-<li><a href="#orge83fa48">2. Eless Options</a></li>
-<li><a href="#orgfbc7401">3. <code>view-mode</code> Common Bindings</a></li>
-<li><a href="#org45b23ea">4. Custom Bindings</a></li>
-<li><a href="#orgfbfb0cc">5. Usage Examples</a></li>
-<li><a href="#orge1ee119">6. Current <code>eless</code> Version</a></li>
-<li><a href="#org6b20fe7">7. Code</a>
+<li><a href="#orgf8810ad">2. Eless Options</a></li>
+<li><a href="#orgc8e0114">3. <code>view-mode</code> Common Bindings</a></li>
+<li><a href="#org225e06b">4. Custom Bindings</a></li>
+<li><a href="#org06e1f9e">5. Usage Examples</a></li>
+<li><a href="#orgdd10e42">6. Current <code>eless</code> Version</a></li>
+<li><a href="#org5010c99">7. Code</a>
 <ul>
-<li><a href="#orge1f6221">7.1. Unofficial Bash Strict Mode</a></li>
-<li><a href="#org83705a6">7.2. Initialize variables</a></li>
-<li><a href="#orgb5c4f38">7.3. Input/Output</a></li>
-<li><a href="#org4e22440">7.4. Parse options</a></li>
-<li><a href="#orgb4e7af9">7.5. Print Help</a></li>
-<li><a href="#org9841cfa">7.6. Emacs with <code>-Q</code> in <code>view-mode</code></a></li>
-<li><a href="#org4aa6aa8">7.7. Emacs Configuration</a>
+<li><a href="#orgb9c4df0">7.1. Unofficial Bash Strict Mode</a></li>
+<li><a href="#org878a3e4">7.2. Initialize variables</a></li>
+<li><a href="#org649359d">7.3. Input/Output</a></li>
+<li><a href="#orgfcaf2ea">7.4. Parse options</a></li>
+<li><a href="#org3b72a5c">7.5. Print Help</a></li>
+<li><a href="#org20832c7">7.6. Emacs with <code>-Q</code> in <code>view-mode</code></a></li>
+<li><a href="#org310a64d">7.7. Emacs Configuration</a>
 <ul>
-<li><a href="#org0141aea">7.7.1. General setup</a></li>
-<li><a href="#orged76802">7.7.2. Ido setup</a></li>
-<li><a href="#orgcf17d7b">7.7.3. Isearch setup</a></li>
-<li><a href="#org5ada10c">7.7.4. Enable line truncation</a></li>
-<li><a href="#org77ff481">7.7.5. Highlight the current line</a></li>
-<li><a href="#org2f94e50">7.7.6. Custom functions</a>
+<li><a href="#orgf74e1fd">7.7.1. General setup</a></li>
+<li><a href="#org360fbe3">7.7.2. Ido setup</a></li>
+<li><a href="#org670a0e6">7.7.3. Isearch setup</a></li>
+<li><a href="#org6e15bf4">7.7.4. Enable line truncation</a></li>
+<li><a href="#orgca46834">7.7.5. Highlight the current line</a></li>
+<li><a href="#org85dc783">7.7.6. Custom functions</a>
 <ul>
-<li><a href="#org69f754e">7.7.6.1. Keep/delete matching lines</a></li>
-<li><a href="#org5d32723">7.7.6.2. Frame and font re-sizing</a></li>
-<li><a href="#orgb925118">7.7.6.3. Revert buffer in <code>view-mode</code></a></li>
-<li><a href="#orgd39fb99">7.7.6.4. Detect if <code>diff-mode</code> should be enabled</a></li>
-<li><a href="#org3f91cd5">7.7.6.5. Detect if ANSI codes need to be converted to colors</a></li>
-<li><a href="#org46418ae">7.7.6.6. &ldquo;Do The Right Thing&rdquo; Kill</a></li>
-<li><a href="#orgcc4168e">7.7.6.7. <code>dired-mode</code> setup</a></li>
-<li><a href="#org448957e">7.7.6.8. <code>Man-mode</code> setup</a></li>
-<li><a href="#org60a9d88">7.7.6.9. <code>Info-mode</code> setup</a></li>
+<li><a href="#org9055898">7.7.6.1. Keep/delete matching lines</a></li>
+<li><a href="#orgbad5745">7.7.6.2. Frame and font re-sizing</a></li>
+<li><a href="#org6e29c30">7.7.6.3. Revert buffer in <code>view-mode</code></a></li>
+<li><a href="#org88202a6">7.7.6.4. Detect if <code>diff-mode</code> should be enabled</a></li>
+<li><a href="#org677b5a7">7.7.6.5. Detect if ANSI codes need to be converted to colors</a></li>
+<li><a href="#orga766de2">7.7.6.6. &ldquo;Do The Right Thing&rdquo; Kill</a></li>
+<li><a href="#org895b28d">7.7.6.7. <code>dired-mode</code> setup</a></li>
+<li><a href="#orga9eb0d9">7.7.6.8. <code>Man-mode</code> setup</a></li>
+<li><a href="#orgf9b0104">7.7.6.9. <code>Info-mode</code> setup</a></li>
 </ul>
 </li>
-<li><a href="#orgf35cdbe">7.7.7. Auto-setting of major modes</a></li>
-<li><a href="#org67ab0b8">7.7.8. Key bindings</a></li>
-<li><a href="#orgd0e99d9">7.7.9. User config override</a></li>
+<li><a href="#orga69f2d9">7.7.7. Auto-setting of major modes</a></li>
+<li><a href="#org114edb0">7.7.8. Key bindings</a></li>
+<li><a href="#orgc9107ee">7.7.9. User config override</a></li>
 </ul>
 </li>
-<li><a href="#orgf2e95bb">7.8. Input/Output Scenarios</a>
+<li><a href="#org1fcedd6">7.8. Input/Output Scenarios</a>
 <ul>
-<li><a href="#org27f4294">7.8.1. Output is going to a pipe</a></li>
-<li><a href="#org2ec4fc1">7.8.2. Input is coming from a pipe</a>
+<li><a href="#org4e41e6e">7.8.1. Output is going to a pipe</a></li>
+<li><a href="#org7b5fad3">7.8.2. Input is coming from a pipe</a>
 <ul>
-<li><a href="#orgf1e54dd">7.8.2.1. Input is piped from <code>man</code> command</a></li>
-<li><a href="#orgd7860d8">7.8.2.2. Input is piped from <code>info</code> command</a></li>
-<li><a href="#org3f78001">7.8.2.3. Input is piped from something else</a></li>
+<li><a href="#org67dd9b5">7.8.2.1. Input is piped from <code>man</code> command</a></li>
+<li><a href="#orgbdffa84">7.8.2.2. Input is piped from <code>info</code> command</a></li>
+<li><a href="#orgef5af72">7.8.2.3. Input is piped from something else</a></li>
 </ul>
 </li>
-<li><a href="#org014597f">7.8.3. Input is an argument to the script</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org0065508">8. Contributing</a>
-<ul>
-<li><a href="#org1241c89">8.1. How to help debug</a></li>
-<li><a href="#orge0b3a87">8.2. Development</a>
-<ul>
-<li><a href="#org1335d0d">8.2.1. Dependencies</a></li>
-<li><a href="#org0ac4d7a">8.2.2. Steps to build <code>eless</code> and documentation</a></li>
+<li><a href="#orgb871e69">7.8.3. Input is an argument to the script</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgbba5250">9. Other Wikis</a>
+<li><a href="#orgb38349f">8. Contributing</a>
 <ul>
-<li><a href="#org0f425e7">9.1. Home</a></li>
-<li><a href="#org0b27967">9.2. Example <code>eless</code> config in <code>tcsh</code></a></li>
+<li><a href="#org9a20be6">8.1. How to help debug</a></li>
+<li><a href="#org48e7102">8.2. Development</a>
+<ul>
+<li><a href="#org0a78374">8.2.1. Dependencies</a></li>
+<li><a href="#org6ed66b9">8.2.2. Steps to build <code>eless</code> and documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf990957">9. Other Wikis</a>
+<ul>
+<li><a href="#orgd31a38f">9.1. Home</a></li>
+<li><a href="#orga5e62e5">9.2. Example <code>eless</code> config in <code>tcsh</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7b5d5d5" class="outline-2">
-<h2 id="org7b5d5d5"><span class="section-number-2">1</span> Readme</h2>
+<div id="outline-container-org419b7a8" class="outline-2">
+<h2 id="org419b7a8"><span class="section-number-2">1</span> Readme</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 <b>ShellCheck status:</b>
@@ -394,8 +394,8 @@ As a bonus:
 </ul>
 </div>
 
-<div id="outline-container-orgc4fb62f" class="outline-3">
-<h3 id="orgc4fb62f"><span class="section-number-3">1.1</span> Try it out</h3>
+<div id="outline-container-org8489cc8" class="outline-3">
+<h3 id="org8489cc8"><span class="section-number-3">1.1</span> Try it out</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Here are some usage examples:
@@ -417,8 +417,8 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 </div>
-<div id="outline-container-org2ad1e27" class="outline-3">
-<h3 id="org2ad1e27"><span class="section-number-3">1.2</span> Contributors</h3>
+<div id="outline-container-org3d5ed1b" class="outline-3">
+<h3 id="org3d5ed1b"><span class="section-number-3">1.2</span> Contributors</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>Thanks to <a href="https://github.com/iqbalansari">Iqbal Ansari</a> for adding support to read piped data in
@@ -427,8 +427,8 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 </div>
-<div id="outline-container-orge83fa48" class="outline-2">
-<h2 id="orge83fa48"><span class="section-number-2">2</span> Eless Options</h2>
+<div id="outline-container-orgf8810ad" class="outline-2">
+<h2 id="orgf8810ad"><span class="section-number-2">2</span> Eless Options</h2>
 <div class="outline-text-2" id="text-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center" class="table-striped">
 
@@ -469,8 +469,8 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 
-<div id="outline-container-orgfbc7401" class="outline-2">
-<h2 id="orgfbc7401"><span class="section-number-2">3</span> <code>view-mode</code> Common Bindings</h2>
+<div id="outline-container-orgc8e0114" class="outline-2">
+<h2 id="orgc8e0114"><span class="section-number-2">3</span> <code>view-mode</code> Common Bindings</h2>
 <div class="outline-text-2" id="text-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center" class="table-striped">
 
@@ -536,8 +536,8 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 
-<div id="outline-container-org45b23ea" class="outline-2">
-<h2 id="org45b23ea"><span class="section-number-2">4</span> Custom Bindings</h2>
+<div id="outline-container-org225e06b" class="outline-2">
+<h2 id="org225e06b"><span class="section-number-2">4</span> Custom Bindings</h2>
 <div class="outline-text-2" id="text-4">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center" class="table-striped">
 
@@ -580,6 +580,11 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </tr>
 
 <tr>
+<td class="org-left">D</td>
+<td class="org-left">Dired</td>
+</tr>
+
+<tr>
 <td class="org-left">N</td>
 <td class="org-left">Next error (next line in <b>occur</b>)</td>
 </tr>
@@ -587,6 +592,11 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 <tr>
 <td class="org-left">P</td>
 <td class="org-left">Previous error (previous line in <b>occur</b>)</td>
+</tr>
+
+<tr>
+<td class="org-left">a</td>
+<td class="org-left">Auto-revert Mode</td>
 </tr>
 
 <tr>
@@ -638,8 +648,8 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 
-<div id="outline-container-orgfbfb0cc" class="outline-2">
-<h2 id="orgfbfb0cc"><span class="section-number-2">5</span> Usage Examples</h2>
+<div id="outline-container-org06e1f9e" class="outline-2">
+<h2 id="org06e1f9e"><span class="section-number-2">5</span> Usage Examples</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <pre><code class="src src-shell">eless foo.txt               <span class="org-comment-delimiter"># </span><span class="org-comment">Open foo.txt in eless in terminal (-nw) mode by default.</span>
@@ -658,8 +668,8 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 </div>
-<div id="outline-container-orge1ee119" class="outline-2">
-<h2 id="orge1ee119"><span class="section-number-2">6</span> Current <code>eless</code> Version</h2>
+<div id="outline-container-orgdd10e42" class="outline-2">
+<h2 id="orgdd10e42"><span class="section-number-2">6</span> Current <code>eless</code> Version</h2>
 <div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 <pre><code class="src src-text">master
@@ -667,7 +677,7 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">1acc699
+<pre><code class="src src-shell">37ad3c4
 </code></pre>
 </div>
 <p>
@@ -677,12 +687,12 @@ version, it would always refer to the one-earlier commit.
 </p>
 </div>
 </div>
-<div id="outline-container-org6b20fe7" class="outline-2">
-<h2 id="org6b20fe7"><span class="section-number-2">7</span> Code</h2>
+<div id="outline-container-org5010c99" class="outline-2">
+<h2 id="org5010c99"><span class="section-number-2">7</span> Code</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-orge1f6221" class="outline-3">
-<h3 id="orge1f6221"><span class="section-number-3">7.1</span> Unofficial Bash Strict Mode</h3>
+<div id="outline-container-orgb9c4df0" class="outline-3">
+<h3 id="orgb9c4df0"><span class="section-number-3">7.1</span> Unofficial Bash Strict Mode</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 The <a href="http://redsymbol.net/articles/unofficial-bash-strict-mode/"><i>Unofficial Bash Strict Mode</i></a> is enabled to make this script more
@@ -718,8 +728,8 @@ Any undefined variable is referenced.
 </div>
 </div>
 
-<div id="outline-container-org83705a6" class="outline-3">
-<h3 id="org83705a6"><span class="section-number-3">7.2</span> Initialize variables</h3>
+<div id="outline-container-org878a3e4" class="outline-3">
+<h3 id="org878a3e4"><span class="section-number-3">7.2</span> Initialize variables</h3>
 <div class="outline-text-3" id="text-7-2">
 <div class="org-src-container">
 <pre><code class="src src-shell"><span class="org-variable-name">help</span>=0
@@ -752,8 +762,8 @@ done
 </div>
 </div>
 </div>
-<div id="outline-container-orgb5c4f38" class="outline-3">
-<h3 id="orgb5c4f38"><span class="section-number-3">7.3</span> Input/Output</h3>
+<div id="outline-container-org649359d" class="outline-3">
+<h3 id="org649359d"><span class="section-number-3">7.3</span> Input/Output</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 We need this script to know:
@@ -846,8 +856,8 @@ fi
 </div>
 </div>
 </div>
-<div id="outline-container-org4e22440" class="outline-3">
-<h3 id="org4e22440"><span class="section-number-3">7.4</span> Parse options</h3>
+<div id="outline-container-orgfcaf2ea" class="outline-3">
+<h3 id="orgfcaf2ea"><span class="section-number-3">7.4</span> Parse options</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 We need to parse the arguments such that arguments specific to this
@@ -897,8 +907,8 @@ done
 </div>
 </div>
 </div>
-<div id="outline-container-orgb4e7af9" class="outline-3">
-<h3 id="orgb4e7af9"><span class="section-number-3">7.5</span> Print Help</h3>
+<div id="outline-container-org3b72a5c" class="outline-3">
+<h3 id="org3b72a5c"><span class="section-number-3">7.5</span> Print Help</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
 If user asked for this script&rsquo;s help, just print it and exit with
@@ -916,8 +926,8 @@ fi
 </div>
 </div>
 
-<div id="outline-container-org9841cfa" class="outline-3">
-<h3 id="org9841cfa"><span class="section-number-3">7.6</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
+<div id="outline-container-org20832c7" class="outline-3">
+<h3 id="org20832c7"><span class="section-number-3">7.6</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
 <div class="outline-text-3" id="text-7-6">
 <p>
 The <code>emacs_Q_view_mode</code> function is defined to launch emacs with a
@@ -948,12 +958,12 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org4aa6aa8" class="outline-3">
-<h3 id="org4aa6aa8"><span class="section-number-3">7.7</span> Emacs Configuration</h3>
+<div id="outline-container-org310a64d" class="outline-3">
+<h3 id="org310a64d"><span class="section-number-3">7.7</span> Emacs Configuration</h3>
 <div class="outline-text-3" id="text-7-7">
 </div>
-<div id="outline-container-org0141aea" class="outline-4">
-<h4 id="org0141aea"><span class="section-number-4">7.7.1</span> General setup</h4>
+<div id="outline-container-orgf74e1fd" class="outline-4">
+<h4 id="orgf74e1fd"><span class="section-number-4">7.7.1</span> General setup</h4>
 <div class="outline-text-4" id="text-7-7-1">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Keep the default-directory to be the same from where</span>
@@ -982,8 +992,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-orged76802" class="outline-4">
-<h4 id="orged76802"><span class="section-number-4">7.7.2</span> Ido setup</h4>
+<div id="outline-container-org360fbe3" class="outline-4">
+<h4 id="org360fbe3"><span class="section-number-4">7.7.2</span> Ido setup</h4>
 <div class="outline-text-4" id="text-7-7-2">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>ido-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
@@ -996,8 +1006,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-orgcf17d7b" class="outline-4">
-<h4 id="orgcf17d7b"><span class="section-number-4">7.7.3</span> Isearch setup</h4>
+<div id="outline-container-org670a0e6" class="outline-4">
+<h4 id="org670a0e6"><span class="section-number-4">7.7.3</span> Isearch setup</h4>
 <div class="outline-text-4" id="text-7-7-3">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> isearch-allow-scroll t<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Allow scrolling using isearch</span>
@@ -1007,8 +1017,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org5ada10c" class="outline-4">
-<h4 id="org5ada10c"><span class="section-number-4">7.7.4</span> Enable line truncation</h4>
+<div id="outline-container-org6e15bf4" class="outline-4">
+<h4 id="org6e15bf4"><span class="section-number-4">7.7.4</span> Enable line truncation</h4>
 <div class="outline-text-4" id="text-7-7-4">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Truncate long lines by default</span>
@@ -1018,8 +1028,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org77ff481" class="outline-4">
-<h4 id="org77ff481"><span class="section-number-4">7.7.5</span> Highlight the current line</h4>
+<div id="outline-container-orgca46834" class="outline-4">
+<h4 id="orgca46834"><span class="section-number-4">7.7.5</span> Highlight the current line</h4>
 <div class="outline-text-4" id="text-7-7-5">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>hl-line-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
@@ -1027,12 +1037,12 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org2f94e50" class="outline-4">
-<h4 id="org2f94e50"><span class="section-number-4">7.7.6</span> Custom functions</h4>
+<div id="outline-container-org85dc783" class="outline-4">
+<h4 id="org85dc783"><span class="section-number-4">7.7.6</span> Custom functions</h4>
 <div class="outline-text-4" id="text-7-7-6">
 </div>
-<div id="outline-container-org69f754e" class="outline-5">
-<h5 id="org69f754e"><span class="section-number-5">7.7.6.1</span> Keep/delete matching lines</h5>
+<div id="outline-container-org9055898" class="outline-5">
+<h5 id="org9055898"><span class="section-number-5">7.7.6.1</span> Keep/delete matching lines</h5>
 <div class="outline-text-5" id="text-7-7-6-1">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/keep-lines</span> <span class="org-rainbow-delimiters-depth-2">()</span>
@@ -1052,8 +1062,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org5d32723" class="outline-5">
-<h5 id="org5d32723"><span class="section-number-5">7.7.6.2</span> Frame and font re-sizing</h5>
+<div id="outline-container-orgbad5745" class="outline-5">
+<h5 id="orgbad5745"><span class="section-number-5">7.7.6.2</span> Frame and font re-sizing</h5>
 <div class="outline-text-5" id="text-7-7-6-2">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-width-half</span> <span class="org-rainbow-delimiters-depth-2">(</span>double<span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1077,8 +1087,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-orgb925118" class="outline-5">
-<h5 id="orgb925118"><span class="section-number-5">7.7.6.3</span> Revert buffer in <code>view-mode</code></h5>
+<div id="outline-container-org6e29c30" class="outline-5">
+<h5 id="org6e29c30"><span class="section-number-5">7.7.6.3</span> Revert buffer in <code>view-mode</code></h5>
 <div class="outline-text-5" id="text-7-7-6-3">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/revert-buffer-retain-view-mode</span> <span class="org-rainbow-delimiters-depth-2">()</span>
@@ -1091,8 +1101,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-orgd39fb99" class="outline-5">
-<h5 id="orgd39fb99"><span class="section-number-5">7.7.6.4</span> Detect if <code>diff-mode</code> should be enabled</h5>
+<div id="outline-container-org88202a6" class="outline-5">
+<h5 id="org88202a6"><span class="section-number-5">7.7.6.4</span> Detect if <code>diff-mode</code> should be enabled</h5>
 <div class="outline-text-5" id="text-7-7-6-4">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-diff-mode-maybe</span> <span class="org-rainbow-delimiters-depth-2">()</span>
@@ -1125,8 +1135,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org3f91cd5" class="outline-5">
-<h5 id="org3f91cd5"><span class="section-number-5">7.7.6.5</span> Detect if ANSI codes need to be converted to colors</h5>
+<div id="outline-container-org677b5a7" class="outline-5">
+<h5 id="org677b5a7"><span class="section-number-5">7.7.6.5</span> Detect if ANSI codes need to be converted to colors</h5>
 <div class="outline-text-5" id="text-7-7-6-5">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-ansi-color-maybe</span> <span class="org-rainbow-delimiters-depth-2">()</span>
@@ -1149,41 +1159,50 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org46418ae" class="outline-5">
-<h5 id="org46418ae"><span class="section-number-5">7.7.6.6</span> &ldquo;Do The Right Thing&rdquo; Kill</h5>
+<div id="outline-container-orga766de2" class="outline-5">
+<h5 id="orga766de2"><span class="section-number-5">7.7.6.6</span> &ldquo;Do The Right Thing&rdquo; Kill</h5>
 <div class="outline-text-5" id="text-7-7-6-6">
-<div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/save-buffers-maybe-and-kill-emacs</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">dolist</span> <span class="org-rainbow-delimiters-depth-3">(</span>buf <span class="org-rainbow-delimiters-depth-4">(</span>buffer-list<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">with-current-buffer</span> buf
-      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">and</span> <span class="org-rainbow-delimiters-depth-6">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-6">)</span>
-                 <span class="org-rainbow-delimiters-depth-6">(</span>file-exists-p <span class="org-rainbow-delimiters-depth-7">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
-                 view-mode<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Force-revert all view-mode file buffers to prevent save prompt on quitting</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span>revert-buffer <span class="org-builtin">:ignore-auto</span> <span class="org-builtin">:noconfirm</span><span class="org-rainbow-delimiters-depth-5">)</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span>view-mode 1<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>save-buffers-kill-emacs<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<p>
+Before killing emacs, loop through all the buffers and mark all
+the <code>view-mode</code> buffers as being unmodified (regardless of if they
+actually were). The <code>view-mode</code> buffers would have been auto-marked
+as modified if filtering commands like <code>eless/delete-matching-lines</code>,
+<code>eless/keep-lines</code>, etc. were used.
+</p>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/kill-emacs-or-buffer</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
+<p>
+By overriding the state of these buffers as being unmodified, we are
+saved from emacs prompting to save those modified <code>view-mode</code> buffers
+at the time of quitting.
+</p>
+<div class="org-src-container">
+<pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/kill-emacs-or-buffer</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;optional</span> kill-emacs<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>num-non-special-buffers 0<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">dolist</span> <span class="org-rainbow-delimiters-depth-4">(</span>buf <span class="org-rainbow-delimiters-depth-5">(</span>buffer-list<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
       <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-5">(</span>string-match-p <span class="org-string">"</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">`</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">s-*</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">*"</span> <span class="org-rainbow-delimiters-depth-6">(</span>buffer-name buf<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not count buffers with names starting with space or *</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">setq</span> num-non-special-buffers <span class="org-rainbow-delimiters-depth-6">(</span>+ 1 num-non-special-buffers<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-4">(</span>&lt;= num-non-special-buffers 1<span class="org-rainbow-delimiters-depth-4">)</span>
-        <span class="org-rainbow-delimiters-depth-4">(</span>eless/save-buffers-maybe-and-kill-emacs<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Kill emacs if one or less non-special buffers are open</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">and</span> <span class="org-rainbow-delimiters-depth-6">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-6">)</span>
-                 <span class="org-rainbow-delimiters-depth-6">(</span>file-exists-p <span class="org-rainbow-delimiters-depth-7">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
-                 view-mode<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">If in view-mode, force-revert current file buffer before attempting kill</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span>revert-buffer <span class="org-builtin">:ignore-auto</span> <span class="org-builtin">:noconfirm</span><span class="org-rainbow-delimiters-depth-5">)</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span>view-mode 1<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">setq</span> num-non-special-buffers <span class="org-rainbow-delimiters-depth-6">(</span>+ 1 num-non-special-buffers<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">with-current-buffer</span> buf
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Mark all view-mode buffers as "not modified" to prevent save prompt on</span>
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">quitting.</span>
+        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when</span> view-mode
+          <span class="org-rainbow-delimiters-depth-6">(</span>set-buffer-modified-p nil<span class="org-rainbow-delimiters-depth-6">)</span>
+          <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-7">(</span>local-variable-p <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">quote</span> kill-buffer-hook<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span>
+            <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">setq</span> kill-buffer-hook nil<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">or</span> kill-emacs
+            <span class="org-rainbow-delimiters-depth-5">(</span>&lt;= num-non-special-buffers 1<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span>save-buffers-kill-emacs<span class="org-rainbow-delimiters-depth-4">)</span>
       <span class="org-rainbow-delimiters-depth-4">(</span>kill-buffer <span class="org-rainbow-delimiters-depth-5">(</span>current-buffer<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Else only kill the current buffer</span>
+
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/save-buffers-maybe-and-kill-emacs</span> <span class="org-rainbow-delimiters-depth-2">()</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span>eless/kill-emacs-or-buffer <span class="org-builtin">:kill-emacs</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcc4168e" class="outline-5">
-<h5 id="orgcc4168e"><span class="section-number-5">7.7.6.7</span> <code>dired-mode</code> setup</h5>
+<div id="outline-container-org895b28d" class="outline-5">
+<h5 id="org895b28d"><span class="section-number-5">7.7.6.7</span> <code>dired-mode</code> setup</h5>
 <div class="outline-text-5" id="text-7-7-6-7">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/dired-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
@@ -1200,8 +1219,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org448957e" class="outline-5">
-<h5 id="org448957e"><span class="section-number-5">7.7.6.8</span> <code>Man-mode</code> setup</h5>
+<div id="outline-container-orga9eb0d9" class="outline-5">
+<h5 id="orga9eb0d9"><span class="section-number-5">7.7.6.8</span> <code>Man-mode</code> setup</h5>
 <div class="outline-text-5" id="text-7-7-6-8">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/Man-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
@@ -1213,8 +1232,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org60a9d88" class="outline-5">
-<h5 id="org60a9d88"><span class="section-number-5">7.7.6.9</span> <code>Info-mode</code> setup</h5>
+<div id="outline-container-orgf9b0104" class="outline-5">
+<h5 id="orgf9b0104"><span class="section-number-5">7.7.6.9</span> <code>Info-mode</code> setup</h5>
 <div class="outline-text-5" id="text-7-7-6-9">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/Info-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
@@ -1227,8 +1246,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-orgf35cdbe" class="outline-4">
-<h4 id="orgf35cdbe"><span class="section-number-4">7.7.7</span> Auto-setting of major modes</h4>
+<div id="outline-container-orga69f2d9" class="outline-4">
+<h4 id="orga69f2d9"><span class="section-number-4">7.7.7</span> Auto-setting of major modes</h4>
 <div class="outline-text-4" id="text-7-7-7">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">cond</span>
@@ -1244,8 +1263,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-org67ab0b8" class="outline-4">
-<h4 id="org67ab0b8"><span class="section-number-4">7.7.8</span> Key bindings</h4>
+<div id="outline-container-org114edb0" class="outline-4">
+<h4 id="org114edb0"><span class="section-number-4">7.7.8</span> Key bindings</h4>
 <div class="outline-text-4" id="text-7-7-8">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"!"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> eless/delete-matching-lines<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -1253,9 +1272,11 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"0"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> delete-window<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"1"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> delete-other-windows<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"A"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> auto-revert-tail-mode<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"D"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> dired<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"N"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> next-error<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Next line in *occur*</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> previous-error<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Previous line in *occur*</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"K"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> eless/delete-matching-lines<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"a"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> auto-revert-mode<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"g"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> eless/revert-buffer-retain-view-mode<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"k"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> eless/keep-lines<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"n"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> next-line<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -1264,7 +1285,7 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"q"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> eless/kill-emacs-or-buffer<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"t"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> toggle-truncate-lines<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">global custom bindings</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Global custom bindings</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"M-/"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> hippie-expand<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-x C-b"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> ibuffer<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-x C-c"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> eless/save-buffers-maybe-and-kill-emacs<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
@@ -1284,8 +1305,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 </div>
-<div id="outline-container-orgd0e99d9" class="outline-4">
-<h4 id="orgd0e99d9"><span class="section-number-4">7.7.9</span> User config override</h4>
+<div id="outline-container-orgc9107ee" class="outline-4">
+<h4 id="orgc9107ee"><span class="section-number-4">7.7.9</span> User config override</h4>
 <div class="outline-text-4" id="text-7-7-9">
 <p>
 If an <code>elesscfg</code> file is present in the <code>user-emacs-directory</code>
@@ -1307,12 +1328,12 @@ key-bindings in this file.
 </div>
 </div>
 </div>
-<div id="outline-container-orgf2e95bb" class="outline-3">
-<h3 id="orgf2e95bb"><span class="section-number-3">7.8</span> Input/Output Scenarios</h3>
+<div id="outline-container-org1fcedd6" class="outline-3">
+<h3 id="org1fcedd6"><span class="section-number-3">7.8</span> Input/Output Scenarios</h3>
 <div class="outline-text-3" id="text-7-8">
 </div>
-<div id="outline-container-org27f4294" class="outline-4">
-<h4 id="org27f4294"><span class="section-number-4">7.8.1</span> Output is going to a pipe</h4>
+<div id="outline-container-org4e41e6e" class="outline-4">
+<h4 id="org4e41e6e"><span class="section-number-4">7.8.1</span> Output is going to a pipe</h4>
 <div class="outline-text-4" id="text-7-8-1">
 <p>
 This scenario is not supported at the moment. There
@@ -1335,8 +1356,8 @@ is being piped to something else.
 </div>
 </div>
 </div>
-<div id="outline-container-org2ec4fc1" class="outline-4">
-<h4 id="org2ec4fc1"><span class="section-number-4">7.8.2</span> Input is coming from a pipe</h4>
+<div id="outline-container-org7b5fad3" class="outline-4">
+<h4 id="org7b5fad3"><span class="section-number-4">7.8.2</span> Input is coming from a pipe</h4>
 <div class="outline-text-4" id="text-7-8-2">
 <div class="org-src-container">
 <pre><code class="src src-shell">    <span class="org-comment-delimiter"># </span><span class="org-comment">Below if condition is reached when you do this:</span>
@@ -1373,8 +1394,8 @@ is being piped to something else.
 </code></pre>
 </div>
 </div>
-<div id="outline-container-orgf1e54dd" class="outline-5">
-<h5 id="orgf1e54dd"><span class="section-number-5">7.8.2.1</span> Input is piped from <code>man</code> command</h5>
+<div id="outline-container-org67dd9b5" class="outline-5">
+<h5 id="org67dd9b5"><span class="section-number-5">7.8.2.1</span> Input is piped from <code>man</code> command</h5>
 <div class="outline-text-5" id="text-7-8-2-1">
 <div class="org-src-container">
 <pre><code class="src src-shell">        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> ! -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">man_page</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
@@ -1404,8 +1425,8 @@ was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this iss
 </p>
 </div>
 </div>
-<div id="outline-container-orgd7860d8" class="outline-5">
-<h5 id="orgd7860d8"><span class="section-number-5">7.8.2.2</span> Input is piped from <code>info</code> command</h5>
+<div id="outline-container-orgbdffa84" class="outline-5">
+<h5 id="orgbdffa84"><span class="section-number-5">7.8.2.2</span> Input is piped from <code>info</code> command</h5>
 <div class="outline-text-5" id="text-7-8-2-2">
 <div class="org-src-container">
 <pre><code class="src src-shell">        elif <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> ! -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">info_man</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
@@ -1424,8 +1445,8 @@ was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this iss
 </div>
 </div>
 </div>
-<div id="outline-container-org3f78001" class="outline-5">
-<h5 id="org3f78001"><span class="section-number-5">7.8.2.3</span> Input is piped from something else</h5>
+<div id="outline-container-orgef5af72" class="outline-5">
+<h5 id="orgef5af72"><span class="section-number-5">7.8.2.3</span> Input is piped from something else</h5>
 <div class="outline-text-5" id="text-7-8-2-3">
 <p>
 This scenario could be anything, like:
@@ -1459,8 +1480,8 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org014597f" class="outline-4">
-<h4 id="org014597f"><span class="section-number-4">7.8.3</span> Input is an argument to the script</h4>
+<div id="outline-container-orgb871e69" class="outline-4">
+<h4 id="orgb871e69"><span class="section-number-4">7.8.3</span> Input is an argument to the script</h4>
 <div class="outline-text-4" id="text-7-8-3">
 <div class="org-src-container">
 <pre><code class="src src-shell">        <span class="org-comment-delimiter"># </span><span class="org-comment">Below else condition is reached when you do this:</span>
@@ -1474,8 +1495,8 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-org0065508" class="outline-2">
-<h2 id="org0065508"><span class="section-number-2">8</span> Contributing</h2>
+<div id="outline-container-orgb38349f" class="outline-2">
+<h2 id="orgb38349f"><span class="section-number-2">8</span> Contributing</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 This guide is for you if you&rsquo;d like to do any of the below:
@@ -1486,8 +1507,8 @@ This guide is for you if you&rsquo;d like to do any of the below:
 <li>Do above + Provide a PR.</li>
 </ul>
 </div>
-<div id="outline-container-org1241c89" class="outline-3">
-<h3 id="org1241c89"><span class="section-number-3">8.1</span> How to help debug</h3>
+<div id="outline-container-org9a20be6" class="outline-3">
+<h3 id="org9a20be6"><span class="section-number-3">8.1</span> How to help debug</h3>
 <div class="outline-text-3" id="text-8-1">
 <ul class="org-ul">
 <li>If you find <code>eless</code> not working as expected, file an <a href="https://github.com/kaushalmodi/eless/issues">issue</a>.</li>
@@ -1510,12 +1531,12 @@ This guide is for you if you&rsquo;d like to do any of the below:
 </ul>
 </div>
 </div>
-<div id="outline-container-orge0b3a87" class="outline-3">
-<h3 id="orge0b3a87"><span class="section-number-3">8.2</span> Development</h3>
+<div id="outline-container-org48e7102" class="outline-3">
+<h3 id="org48e7102"><span class="section-number-3">8.2</span> Development</h3>
 <div class="outline-text-3" id="text-8-2">
 </div>
-<div id="outline-container-org1335d0d" class="outline-4">
-<h4 id="org1335d0d"><span class="section-number-4">8.2.1</span> Dependencies</h4>
+<div id="outline-container-org0a78374" class="outline-4">
+<h4 id="org0a78374"><span class="section-number-4">8.2.1</span> Dependencies</h4>
 <div class="outline-text-4" id="text-8-2-1">
 <p>
 There are virtually no dependencies, except of course that you need
@@ -1542,8 +1563,8 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
 </div>
 </div>
 </div>
-<div id="outline-container-org0ac4d7a" class="outline-4">
-<h4 id="org0ac4d7a"><span class="section-number-4">8.2.2</span> Steps to build <code>eless</code> and documentation</h4>
+<div id="outline-container-org6ed66b9" class="outline-4">
+<h4 id="org6ed66b9"><span class="section-number-4">8.2.2</span> Steps to build <code>eless</code> and documentation</h4>
 <div class="outline-text-4" id="text-8-2-2">
 <ul class="org-ul">
 <li>Open <code>eless.org</code>.
@@ -1590,12 +1611,12 @@ figure out how to keep the non-git Wiki changes and changes in
 </div>
 </div>
 </div>
-<div id="outline-container-orgbba5250" class="outline-2">
-<h2 id="orgbba5250"><span class="section-number-2">9</span> Other Wikis</h2>
+<div id="outline-container-orgf990957" class="outline-2">
+<h2 id="orgf990957"><span class="section-number-2">9</span> Other Wikis</h2>
 <div class="outline-text-2" id="text-9">
 </div>
-<div id="outline-container-org0f425e7" class="outline-3">
-<h3 id="org0f425e7"><span class="section-number-3">9.1</span> Home</h3>
+<div id="outline-container-orgd31a38f" class="outline-3">
+<h3 id="orgd31a38f"><span class="section-number-3">9.1</span> Home</h3>
 <div class="outline-text-3" id="text-9-1">
 <p>
 This project in unique in the sense that <b>everything</b> is built from
@@ -1625,8 +1646,8 @@ push them directly using <code>git</code> or manually edit those here.
 </p>
 </div>
 </div>
-<div id="outline-container-org0b27967" class="outline-3">
-<h3 id="org0b27967"><span class="section-number-3">9.2</span> Example <code>eless</code> config in <code>tcsh</code></h3>
+<div id="outline-container-orga5e62e5" class="outline-3">
+<h3 id="orga5e62e5"><span class="section-number-3">9.2</span> Example <code>eless</code> config in <code>tcsh</code></h3>
 <div class="outline-text-3" id="text-9-2">
 <div class="org-src-container">
 <pre><code class="src src-shell"><span class="org-builtin">setenv</span> PAGER eless <span class="org-comment-delimiter"># </span><span class="org-comment">Show man pages using eless</span>

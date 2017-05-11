@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-06 09:01:30 kmodi>
+# Time-stamp: <2017-05-11 11:32:21 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -129,8 +129,10 @@ Here are some usage examples:
 | 0            | Delete this window                                         |
 | 1            | Keep only this window                                      |
 | A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
+| D            | Dired                                                      |
 | N            | Next error (next line in *occur*)                          |
 | P            | Previous error (previous line in *occur*)                  |
+| a            | Auto-revert Mode                                           |
 | g or F5      | Revert buffer (probably after keep/delete lines)           |
 | n            | Next line                                                  |
 | o            | Occur                                                      |
@@ -178,7 +180,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-1acc699
+37ad3c4
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -446,9 +448,9 @@ function emacs_Q_view_mode {
 #+END_SRC
 ** Emacs Configuration
 :PROPERTIES:
-:HEADER-ARGS: :noweb-ref emacs-config :noweb-sep "\\n\\n"
+:HEADER-ARGS: :noweb-ref emacs-config :noweb-sep "\n\n"
 :END:
-# :noweb-sep "\\n\\n" <- Inserts one empty line between noweb ref
+# :noweb-sep "\n\n" <- Inserts one empty line between noweb ref
 # source blocks
 *** General setup
 #+BEGIN_SRC emacs-lisp
@@ -595,32 +597,37 @@ function emacs_Q_view_mode {
           (ansi-color-apply-on-region (point-min) (point-max)))))))
 #+END_SRC
 **** "Do The Right Thing" Kill
-#+BEGIN_SRC emacs-lisp
-(defun eless/save-buffers-maybe-and-kill-emacs ()
-  (interactive)
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf
-      (when (and (buffer-file-name)
-                 (file-exists-p (buffer-file-name))
-                 view-mode) ;Force-revert all view-mode file buffers to prevent save prompt on quitting
-        (revert-buffer :ignore-auto :noconfirm)
-        (view-mode 1))))
-  (save-buffers-kill-emacs))
+Before killing emacs, loop through all the buffers and mark all
+the =view-mode= buffers as being unmodified (regardless of if they
+actually were). The =view-mode= buffers would have been auto-marked
+as modified if filtering commands like =eless/delete-matching-lines=,
+=eless/keep-lines=, etc. were used.
 
-(defun eless/kill-emacs-or-buffer ()
-  (interactive)
+By overriding the state of these buffers as being unmodified, we are
+saved from emacs prompting to save those modified =view-mode= buffers
+at the time of quitting.
+#+BEGIN_SRC emacs-lisp
+(defun eless/kill-emacs-or-buffer (&optional kill-emacs)
+  (interactive "P")
   (let ((num-non-special-buffers 0))
     (dolist (buf (buffer-list))
       (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
-        (setq num-non-special-buffers (+ 1 num-non-special-buffers))))
-    (if (<= num-non-special-buffers 1)
-        (eless/save-buffers-maybe-and-kill-emacs) ;Kill emacs if one or less non-special buffers are open
-      (when (and (buffer-file-name)
-                 (file-exists-p (buffer-file-name))
-                 view-mode) ;If in view-mode, force-revert current file buffer before attempting kill
-        (revert-buffer :ignore-auto :noconfirm)
-        (view-mode 1))
+        (setq num-non-special-buffers (+ 1 num-non-special-buffers)))
+      (with-current-buffer buf
+        ;; Mark all view-mode buffers as "not modified" to prevent save prompt on
+        ;; quitting.
+        (when view-mode
+          (set-buffer-modified-p nil)
+          (when (local-variable-p (quote kill-buffer-hook))
+            (setq kill-buffer-hook nil)))))
+    (if (or kill-emacs
+            (<= num-non-special-buffers 1))
+        (save-buffers-kill-emacs)
       (kill-buffer (current-buffer))))) ;Else only kill the current buffer
+
+(defun eless/save-buffers-maybe-and-kill-emacs ()
+  (interactive)
+  (eless/kill-emacs-or-buffer :kill-emacs))
 #+END_SRC
 **** =dired-mode= setup
 #+BEGIN_SRC emacs-lisp
@@ -670,9 +677,11 @@ function emacs_Q_view_mode {
 (define-key view-mode-map (kbd "0") (quote delete-window))
 (define-key view-mode-map (kbd "1") (quote delete-other-windows))
 (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
+(define-key view-mode-map (kbd "D") (quote dired))
 (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
 (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
 (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
+(define-key view-mode-map (kbd "a") (quote auto-revert-mode))
 (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
 (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
 (define-key view-mode-map (kbd "n") (quote next-line))
@@ -681,7 +690,7 @@ function emacs_Q_view_mode {
 (define-key view-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer))
 (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
 
-;; global custom bindings
+;; Global custom bindings
 (global-set-key (kbd "M-/") (quote hippie-expand))
 (global-set-key (kbd "C-x C-b") (quote ibuffer))
 (global-set-key (kbd "C-x C-c") (quote eless/save-buffers-maybe-and-kill-emacs))

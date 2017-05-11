@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='1acc699'
+eless_git_hash='37ad3c4'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -51,8 +51,10 @@ less, diff, man, (probably ls too).
 | 0            | Delete this window                                         |
 | 1            | Keep only this window                                      |
 | A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
+| D            | Dired                                                      |
 | N            | Next error (next line in *occur*)                          |
 | P            | Previous error (previous line in *occur*)                  |
+| a            | Auto-revert Mode                                           |
 | g or F5      | Revert buffer (probably after keep/delete lines)           |
 | n            | Next line                                                  |
 | o            | Occur                                                      |
@@ -346,31 +348,27 @@ function emacs_Q_view_mode {
                                     (require (quote ansi-color))
                                     (ansi-color-apply-on-region (point-min) (point-max)))))))
 
-                          (defun eless/save-buffers-maybe-and-kill-emacs ()
-                            (interactive)
-                            (dolist (buf (buffer-list))
-                              (with-current-buffer buf
-                                (when (and (buffer-file-name)
-                                           (file-exists-p (buffer-file-name))
-                                           view-mode) ;Force-revert all view-mode file buffers to prevent save prompt on quitting
-                                  (revert-buffer :ignore-auto :noconfirm)
-                                  (view-mode 1))))
-                            (save-buffers-kill-emacs))
-
-                          (defun eless/kill-emacs-or-buffer ()
-                            (interactive)
+                          (defun eless/kill-emacs-or-buffer (&optional kill-emacs)
+                            (interactive "P")
                             (let ((num-non-special-buffers 0))
                               (dolist (buf (buffer-list))
                                 (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
-                                  (setq num-non-special-buffers (+ 1 num-non-special-buffers))))
-                              (if (<= num-non-special-buffers 1)
-                                  (eless/save-buffers-maybe-and-kill-emacs) ;Kill emacs if one or less non-special buffers are open
-                                (when (and (buffer-file-name)
-                                           (file-exists-p (buffer-file-name))
-                                           view-mode) ;If in view-mode, force-revert current file buffer before attempting kill
-                                  (revert-buffer :ignore-auto :noconfirm)
-                                  (view-mode 1))
+                                  (setq num-non-special-buffers (+ 1 num-non-special-buffers)))
+                                (with-current-buffer buf
+                                  ;; Mark all view-mode buffers as "not modified" to prevent save prompt on
+                                  ;; quitting.
+                                  (when view-mode
+                                    (set-buffer-modified-p nil)
+                                    (when (local-variable-p (quote kill-buffer-hook))
+                                      (setq kill-buffer-hook nil)))))
+                              (if (or kill-emacs
+                                      (<= num-non-special-buffers 1))
+                                  (save-buffers-kill-emacs)
                                 (kill-buffer (current-buffer))))) ;Else only kill the current buffer
+
+                          (defun eless/save-buffers-maybe-and-kill-emacs ()
+                            (interactive)
+                            (eless/kill-emacs-or-buffer :kill-emacs))
 
                           (defun eless/dired-mode-customization ()
                             (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
@@ -410,9 +408,11 @@ function emacs_Q_view_mode {
                           (define-key view-mode-map (kbd "0") (quote delete-window))
                           (define-key view-mode-map (kbd "1") (quote delete-other-windows))
                           (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
+                          (define-key view-mode-map (kbd "D") (quote dired))
                           (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
                           (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
                           (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
+                          (define-key view-mode-map (kbd "a") (quote auto-revert-mode))
                           (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
                           (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
                           (define-key view-mode-map (kbd "n") (quote next-line))
@@ -421,7 +421,7 @@ function emacs_Q_view_mode {
                           (define-key view-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer))
                           (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
 
-                          ;; global custom bindings
+                          ;; Global custom bindings
                           (global-set-key (kbd "M-/") (quote hippie-expand))
                           (global-set-key (kbd "C-x C-b") (quote ibuffer))
                           (global-set-key (kbd "C-x C-c") (quote eless/save-buffers-maybe-and-kill-emacs))

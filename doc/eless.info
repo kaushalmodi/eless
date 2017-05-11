@@ -242,8 +242,10 @@ Binding        Description
 0              Delete this window
 1              Keep only this window
 A              Auto-revert Tail Mode (like tail -f on current buffer)
+D              Dired
 N              Next error (next line in *occur*)
 P              Previous error (previous line in *occur*)
+a              Auto-revert Mode
 g or F5        Revert buffer (probably after keep/delete lines)
 n              Next line
 o              Occur
@@ -281,7 +283,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     1acc699
+     37ad3c4
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -724,31 +726,36 @@ File: eless.info,  Node: ``Do The Right Thing'' Kill,  Next: dired-mode setup,  
 7.7.6.6 “Do The Right Thing” Kill
 .................................
 
-     (defun eless/save-buffers-maybe-and-kill-emacs ()
-       (interactive)
-       (dolist (buf (buffer-list))
-         (with-current-buffer buf
-           (when (and (buffer-file-name)
-                      (file-exists-p (buffer-file-name))
-                      view-mode) ;Force-revert all view-mode file buffers to prevent save prompt on quitting
-             (revert-buffer :ignore-auto :noconfirm)
-             (view-mode 1))))
-       (save-buffers-kill-emacs))
+Before killing emacs, loop through all the buffers and mark all the
+view-mode buffers as being unmodified (regardless of if they actually
+were).  The view-mode buffers would have been auto-marked as modified if
+filtering commands like eless/delete-matching-lines, eless/keep-lines,
+etc.  were used.
 
-     (defun eless/kill-emacs-or-buffer ()
-       (interactive)
+   By overriding the state of these buffers as being unmodified, we are
+saved from emacs prompting to save those modified view-mode buffers at
+the time of quitting.
+     (defun eless/kill-emacs-or-buffer (&optional kill-emacs)
+       (interactive "P")
        (let ((num-non-special-buffers 0))
          (dolist (buf (buffer-list))
            (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
-             (setq num-non-special-buffers (+ 1 num-non-special-buffers))))
-         (if (<= num-non-special-buffers 1)
-             (eless/save-buffers-maybe-and-kill-emacs) ;Kill emacs if one or less non-special buffers are open
-           (when (and (buffer-file-name)
-                      (file-exists-p (buffer-file-name))
-                      view-mode) ;If in view-mode, force-revert current file buffer before attempting kill
-             (revert-buffer :ignore-auto :noconfirm)
-             (view-mode 1))
+             (setq num-non-special-buffers (+ 1 num-non-special-buffers)))
+           (with-current-buffer buf
+             ;; Mark all view-mode buffers as "not modified" to prevent save prompt on
+             ;; quitting.
+             (when view-mode
+               (set-buffer-modified-p nil)
+               (when (local-variable-p (quote kill-buffer-hook))
+                 (setq kill-buffer-hook nil)))))
+         (if (or kill-emacs
+                 (<= num-non-special-buffers 1))
+             (save-buffers-kill-emacs)
            (kill-buffer (current-buffer))))) ;Else only kill the current buffer
+
+     (defun eless/save-buffers-maybe-and-kill-emacs ()
+       (interactive)
+       (eless/kill-emacs-or-buffer :kill-emacs))
 
 
 File: eless.info,  Node: dired-mode setup,  Next: Man-mode setup,  Prev: ``Do The Right Thing'' Kill,  Up: Custom functions
@@ -818,9 +825,11 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
      (define-key view-mode-map (kbd "0") (quote delete-window))
      (define-key view-mode-map (kbd "1") (quote delete-other-windows))
      (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
+     (define-key view-mode-map (kbd "D") (quote dired))
      (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
      (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
      (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
+     (define-key view-mode-map (kbd "a") (quote auto-revert-mode))
      (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
      (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
      (define-key view-mode-map (kbd "n") (quote next-line))
@@ -829,7 +838,7 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
      (define-key view-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer))
      (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
 
-     ;; global custom bindings
+     ;; Global custom bindings
      (global-set-key (kbd "M-/") (quote hippie-expand))
      (global-set-key (kbd "C-x C-b") (quote ibuffer))
      (global-set-key (kbd "C-x C-c") (quote eless/save-buffers-maybe-and-kill-emacs))
@@ -1187,49 +1196,49 @@ Node: Contributors4575
 Node: Eless Options4807
 Node: view-mode Common Bindings5131
 Node: Custom Bindings6107
-Node: Usage Examples7089
-Node: Current eless Version8182
-Node: Code8554
-Node: Unofficial Bash Strict Mode8862
-Node: Initialize variables9547
-Node: Input/Output10162
-Node: Parse options12057
-Node: Print Help13797
-Node: Emacs with -Q in view-mode14130
-Node: Emacs Configuration15011
-Node: General setup15398
-Node: Ido setup16372
-Node: Isearch setup16870
-Node: Enable line truncation17279
-Node: Highlight the current line17628
-Node: Custom functions17855
-Node: Keep/delete matching lines18335
-Node: Frame and font re-sizing19017
-Node: Revert buffer in view-mode20028
-Node: Detect if diff-mode should be enabled20493
-Node: Detect if ANSI codes need to be converted to colors21967
-Node: ``Do The Right Thing'' Kill23124
-Node: dired-mode setup24697
-Node: Man-mode setup25577
-Node: Info-mode setup26084
-Node: Auto-setting of major modes26574
-Node: Key bindings27273
-Node: User config override29497
-Node: Input/Output Scenarios30122
-Node: Output is going to a pipe30378
-Node: Input is coming from a pipe31071
-Node: Input is piped from man command33160
-Node: Input is piped from info command34621
-Node: Input is piped from something else35414
-Node: Input is an argument to the script36372
-Node: Contributing36760
-Node: How to help debug37128
-Node: Development37772
-Node: Dependencies37960
-Node: Steps to build eless and documentation38698
-Node: Other Wikis40751
-Node: Home40903
-Node: Example eless config in tcsh41639
+Node: Usage Examples7142
+Node: Current eless Version8235
+Node: Code8607
+Node: Unofficial Bash Strict Mode8915
+Node: Initialize variables9600
+Node: Input/Output10215
+Node: Parse options12110
+Node: Print Help13850
+Node: Emacs with -Q in view-mode14183
+Node: Emacs Configuration15064
+Node: General setup15451
+Node: Ido setup16425
+Node: Isearch setup16923
+Node: Enable line truncation17332
+Node: Highlight the current line17681
+Node: Custom functions17908
+Node: Keep/delete matching lines18388
+Node: Frame and font re-sizing19070
+Node: Revert buffer in view-mode20081
+Node: Detect if diff-mode should be enabled20546
+Node: Detect if ANSI codes need to be converted to colors22020
+Node: ``Do The Right Thing'' Kill23177
+Node: dired-mode setup24904
+Node: Man-mode setup25784
+Node: Info-mode setup26291
+Node: Auto-setting of major modes26781
+Node: Key bindings27480
+Node: User config override29827
+Node: Input/Output Scenarios30452
+Node: Output is going to a pipe30708
+Node: Input is coming from a pipe31401
+Node: Input is piped from man command33490
+Node: Input is piped from info command34951
+Node: Input is piped from something else35744
+Node: Input is an argument to the script36702
+Node: Contributing37090
+Node: How to help debug37458
+Node: Development38102
+Node: Dependencies38290
+Node: Steps to build eless and documentation39028
+Node: Other Wikis41081
+Node: Home41233
+Node: Example eless config in tcsh41969
 
 End Tag Table
 
