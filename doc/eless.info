@@ -283,7 +283,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     c39ffb1
+     7b33bae
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -556,6 +556,7 @@ File: eless.info,  Node: Ido setup,  Next: Isearch setup,  Prev: General setup, 
 7.7.2 Ido setup
 ---------------
 
+     (setq ido-save-directory-list-file nil) ;Do not save ido history
      (ido-mode 1)
      (setq ido-enable-flex-matching t)       ;Enable fuzzy search
      (setq ido-everywhere t)
@@ -935,7 +936,7 @@ File: eless.info,  Node: Input is coming from a pipe,  Next: Input is an argumen
              #   FOO(1)  optional something something FOO(1)
              # It is not mandatory for the below grep to always pass, so OR it with
              # "true" so that "set -e" does not kill the script at this point.
-             man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
+             man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)' || true)
 
              # The first line of info manuals is assumed to be
              #   /path/to/some.info or /path/to/some.info.gz
@@ -1210,37 +1211,37 @@ Node: Emacs with -Q in view-mode14183
 Node: Emacs Configuration15064
 Node: General setup15451
 Node: Ido setup16510
-Node: Isearch setup17008
-Node: Enable line truncation17417
-Node: Highlight the current line17766
-Node: Custom functions17993
-Node: Keep/delete matching lines18473
-Node: Frame and font re-sizing19155
-Node: Revert buffer in view-mode20166
-Node: Detect if diff-mode should be enabled20631
-Node: Detect if ANSI codes need to be converted to colors22105
-Node: ``Do The Right Thing'' Kill23262
-Node: dired-mode setup24989
-Node: Man-mode setup25869
-Node: Info-mode setup26376
-Node: Auto-setting of major modes26866
-Node: Key bindings27565
-Node: User config override29912
-Node: Input/Output Scenarios30526
-Node: Output is going to a pipe30782
-Node: Input is coming from a pipe31475
-Node: Input is piped from man command33564
-Node: Input is piped from info command35025
-Node: Input is piped from something else35818
-Node: Input is an argument to the script36776
-Node: Contributing37164
-Node: How to help debug37532
-Node: Development38176
-Node: Dependencies38364
-Node: Steps to build eless and documentation39102
-Node: Other Wikis41155
-Node: Home41307
-Node: Example eless config in tcsh42043
+Node: Isearch setup17078
+Node: Enable line truncation17487
+Node: Highlight the current line17836
+Node: Custom functions18063
+Node: Keep/delete matching lines18543
+Node: Frame and font re-sizing19225
+Node: Revert buffer in view-mode20236
+Node: Detect if diff-mode should be enabled20701
+Node: Detect if ANSI codes need to be converted to colors22175
+Node: ``Do The Right Thing'' Kill23332
+Node: dired-mode setup25059
+Node: Man-mode setup25939
+Node: Info-mode setup26446
+Node: Auto-setting of major modes26936
+Node: Key bindings27635
+Node: User config override29982
+Node: Input/Output Scenarios30596
+Node: Output is going to a pipe30852
+Node: Input is coming from a pipe31545
+Node: Input is piped from man command33635
+Node: Input is piped from info command35096
+Node: Input is piped from something else35889
+Node: Input is an argument to the script36847
+Node: Contributing37235
+Node: How to help debug37603
+Node: Development38247
+Node: Dependencies38435
+Node: Steps to build eless and documentation39173
+Node: Other Wikis41226
+Node: Home41378
+Node: Example eless config in tcsh42114
 
 End Tag Table
 

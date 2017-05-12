@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='c39ffb1'
+eless_git_hash='7b33bae'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -250,6 +250,7 @@ function emacs_Q_view_mode {
 
                           (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
 
+                          (setq ido-save-directory-list-file nil) ;Do not save ido history
                           (ido-mode 1)
                           (setq ido-enable-flex-matching t)       ;Enable fuzzy search
                           (setq ido-everywhere t)
@@ -476,7 +477,7 @@ else
         #   FOO(1)  optional something something FOO(1)
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
+        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)' || true)
 
         # The first line of info manuals is assumed to be
         #   /path/to/some.info or /path/to/some.info.gz

@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-11 13:53:25 kmodi>
+# Time-stamp: <2017-05-11 23:02:34 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -180,7 +180,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-c39ffb1
+7b33bae
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -481,6 +481,7 @@ function emacs_Q_view_mode {
 #+END_SRC
 *** Ido setup
 #+BEGIN_SRC emacs-lisp
+(setq ido-save-directory-list-file nil) ;Do not save ido history
 (ido-mode 1)
 (setq ido-enable-flex-matching t)       ;Enable fuzzy search
 (setq ido-everywhere t)
@@ -763,7 +764,7 @@ else
         #   FOO(1)  optional something something FOO(1)
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z]+\([0-9]+\))(?=\s+.*?\1$)' || true)
+        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)' || true)
 
         # The first line of info manuals is assumed to be
         #   /path/to/some.info or /path/to/some.info.gz
