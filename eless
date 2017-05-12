@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='7b33bae'
+eless_git_hash='4f6da10'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -81,8 +81,10 @@ less, diff, man, (probably ls too).
     PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
     PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
     diff foo bar | eless        # Colored diff!
+    diff -u foo bar | eless     # Colored diff for unified diff format
     eless .                     # Open dired in the current directory (enhanced 'ls')
     ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
+    PAGER=eless git diff        # Show git diff with ANSI coded colors
     eless -h | eless            # See eless help ;-)
     info emacs | eless          # Read emacs Info manual in eless
 "
@@ -231,7 +233,7 @@ function emacs_Q_view_mode {
 
                           ;; No clutter
                           (menu-bar-mode -1)
-                          (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
+                          (if (fboundp (function tool-bar-mode)) (tool-bar-mode -1))
 
                           ;; Show line and column numbers in the mode-line
                           (line-number-mode 1)
@@ -244,7 +246,7 @@ function emacs_Q_view_mode {
                           (setq require-final-newline t)
                           (setq visible-bell t)
                           (setq load-prefer-newer t)
-                          (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
+                          (setq ediff-window-setup-function (function ediff-setup-windows-plain))
 
                           (setq org-src-fontify-natively t)       ;Syntax-highlight source blocks in org
 
@@ -260,7 +262,7 @@ function emacs_Q_view_mode {
 
                           (setq isearch-allow-scroll t) ;Allow scrolling using isearch
                           ;; DEL during isearch should edit the search string, not jump back to the previous result.
-                          (define-key isearch-mode-map [remap isearch-delete-char] (quote isearch-del-char))
+                          (define-key isearch-mode-map [remap isearch-delete-char] (function isearch-del-char))
 
                           ;; Truncate long lines by default
                           (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
@@ -273,14 +275,14 @@ function emacs_Q_view_mode {
                             (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
                               (save-excursion
                                 (goto-char (point-min))
-                                (call-interactively (quote keep-lines)))))
+                                (call-interactively (function keep-lines)))))
 
                           (defun eless/delete-matching-lines ()
                             (interactive)
                             (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
                               (save-excursion
                                 (goto-char (point-min))
-                                (call-interactively (quote delete-matching-lines)))))
+                                (call-interactively (function delete-matching-lines)))))
 
                           (defun eless/frame-width-half (double)
                             (interactive "P")
@@ -308,31 +310,50 @@ function emacs_Q_view_mode {
                                 (view-mode 1))))
 
                           (defun eless/enable-diff-mode-maybe ()
-                            (save-excursion
-                              (let* ((max-line 10) ;Search first MAX-LINE lines of the buffer
-                                     (bound (progn
-                                              (goto-char (point-min))
-                                              (forward-line max-line)
-                                              (point))))
-                                (goto-char (point-min))
-                                (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
-                                  (forward-line 1)
-                                  (let ((diff-type (match-string-no-properties 1))
-                                        (diff-mode-enable nil))
-                                    (cond
-                                     ;; Line(s) added
-                                     ((string= diff-type "a")
-                                      (when (re-search-forward "^> " nil :noerror)
-                                        (setq diff-mode-enable t)))
-                                     ;; Line(s) deleted or changed
-                                     (t
-                                      (when (re-search-forward "^< " nil :noerror)
-                                        (setq diff-mode-enable t))))
-                                    (when diff-mode-enable
-                                      (message "Auto-enabling diff-mode")
-                                      (diff-mode)
-                                      (rename-buffer "*Diff*" :unique)
-                                      (view-mode 1))))))) ;Re-enable view-mode
+                            (let* ((max-line 10)                ;Search first MAX-LINE lines of the buffer
+                                   (bound (save-excursion
+                                            (goto-char (point-min))
+                                            (forward-line max-line)
+                                            (point))))
+                              (save-excursion
+                                (let ((diff-mode-enable))
+                                  (goto-char (point-min))
+                                  (when (and ;First header line of unified/context diff begins with "--- "/"*** "
+                                         (string-match-p "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
+                                         ;; Second header line of unified/context diff begins with "+++ "/"--- "
+                                         (progn
+                                           (forward-line 1)
+                                           (string-match-p "^\\(\\+\\+\\+\\|---\\) " (thing-at-point (quote line)))))
+                                    (setq diff-mode-enable t))
+                                  ;; Check if the diff format is neither context nor unified
+                                  (unless diff-mode-enable
+                                    (goto-char (point-min))
+                                    (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
+                                      (forward-line 1)
+                                      (let ((diff-type (match-string-no-properties 1)))
+                                        (cond
+                                         ;; Line(s) added
+                                         ((string= diff-type "a")
+                                          (when (re-search-forward "^> " nil :noerror)
+                                            (setq diff-mode-enable t)))
+                                         ;; Line(s) deleted or changed
+                                         (t
+                                          (when (re-search-forward "^< " nil :noerror)
+                                            (setq diff-mode-enable t)))))))
+                                  (when diff-mode-enable
+                                    (message "Auto-enabling diff-mode")
+                                    (diff-mode)
+                                    (rename-buffer "*Diff*" :unique)
+                                    (view-mode 1))))))            ;Re-enable view-mode
+
+                          (setq whitespace-style
+                                (quote (face                      ;Enable all visualization via faces
+                                        trailing                  ;Show white space at end of lines
+                                        tabs                      ;Show tabs using faces
+                                        spaces space-mark         ;space-mark shows spaces as dots
+                                        space-before-tab space-after-tab ;mix of tabs and spaces
+                                        indentation))) ;Highlight spaces/tabs at BOL depending on indent-tabs-mode
+                          (add-hook (quote diff-mode-hook) (function whitespace-mode))
 
                           (defun eless/enable-ansi-color-maybe ()
                             (save-excursion
@@ -378,23 +399,23 @@ function emacs_Q_view_mode {
                             ;; dired-find-file is bound to "f" and "RET" by default
                             ;; So changing the "RET" binding to dired-view-file so that the file opens
                             ;; in view-mode in the spirit of eless.
-                            (define-key dired-mode-map (kbd "RET") (quote dired-view-file))
-                            (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode))
-                            (define-key dired-mode-map (kbd "Q") (quote quit-window))
-                            (define-key dired-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
-                          (add-hook (quote dired-mode-hook) (quote eless/dired-mode-customization))
+                            (define-key dired-mode-map (kbd "RET") (function dired-view-file))
+                            (define-key dired-mode-map (kbd "E") (function wdired-change-to-wdired-mode))
+                            (define-key dired-mode-map (kbd "Q") (function quit-window))
+                            (define-key dired-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
+                          (add-hook (quote dired-mode-hook) (function eless/dired-mode-customization))
 
                           (defun eless/Man-mode-customization ()
                             (view-mode -1) ;Prevent view-mode bindings from shadowing Man-mode bindings
-                            (define-key Man-mode-map (kbd "Q") (quote quit-window))
-                            (define-key Man-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
-                          (add-hook (quote Man-mode-hook) (quote eless/Man-mode-customization))
+                            (define-key Man-mode-map (kbd "Q") (function quit-window))
+                            (define-key Man-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
+                          (add-hook (quote Man-mode-hook) (function eless/Man-mode-customization))
 
                           (defun eless/Info-mode-customization ()
                             (view-mode -1) ;Prevent view-mode bindings from shadowing Info-mode bindings
-                            (define-key Info-mode-map (kbd "Q") (quote quit-window))
-                            (define-key Info-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
-                          (add-hook (quote Info-mode-hook) (quote eless/Info-mode-customization))
+                            (define-key Info-mode-map (kbd "Q") (function quit-window))
+                            (define-key Info-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
+                          (add-hook (quote Info-mode-hook) (function eless/Info-mode-customization))
 
                           (cond
                            ((derived-mode-p (quote dired-mode)) (eless/dired-mode-customization))
@@ -406,40 +427,40 @@ function emacs_Q_view_mode {
                             ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
                             (eless/enable-ansi-color-maybe)))
 
-                          (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
-                          (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
-                          (define-key view-mode-map (kbd "0") (quote delete-window))
-                          (define-key view-mode-map (kbd "1") (quote delete-other-windows))
-                          (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
-                          (define-key view-mode-map (kbd "D") (quote dired))
-                          (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
-                          (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
-                          (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
-                          (define-key view-mode-map (kbd "a") (quote auto-revert-mode))
-                          (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
-                          (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
-                          (define-key view-mode-map (kbd "n") (quote next-line))
-                          (define-key view-mode-map (kbd "o") (quote occur))
-                          (define-key view-mode-map (kbd "p") (quote previous-line))
-                          (define-key view-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer))
-                          (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
+                          (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
+                          (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+                          (define-key view-mode-map (kbd "0") (function delete-window))
+                          (define-key view-mode-map (kbd "1") (function delete-other-windows))
+                          (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
+                          (define-key view-mode-map (kbd "D") (function dired))
+                          (define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
+                          (define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
+                          (define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
+                          (define-key view-mode-map (kbd "a") (function auto-revert-mode))
+                          (define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
+                          (define-key view-mode-map (kbd "k") (function eless/keep-lines))
+                          (define-key view-mode-map (kbd "n") (function next-line))
+                          (define-key view-mode-map (kbd "o") (function occur))
+                          (define-key view-mode-map (kbd "p") (function previous-line))
+                          (define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
+                          (define-key view-mode-map (kbd "t") (function toggle-truncate-lines))
 
                           ;; Global custom bindings
-                          (global-set-key (kbd "M-/") (quote hippie-expand))
-                          (global-set-key (kbd "C-x C-b") (quote ibuffer))
-                          (global-set-key (kbd "C-x C-c") (quote eless/save-buffers-maybe-and-kill-emacs))
-                          (global-set-key (kbd "C-x C-f") (quote view-file))
-                          (global-set-key (kbd "C-c q") (quote query-replace-regexp))
-                          (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
+                          (global-set-key (kbd "M-/") (function hippie-expand))
+                          (global-set-key (kbd "C-x C-b") (function ibuffer))
+                          (global-set-key (kbd "C-x C-c") (function eless/save-buffers-maybe-and-kill-emacs))
+                          (global-set-key (kbd "C-x C-f") (function view-file))
+                          (global-set-key (kbd "C-c q") (function query-replace-regexp))
+                          (global-set-key (kbd "<f5>") (function eless/revert-buffer-retain-view-mode))
 
                           (when (display-graphic-p)
-                            (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
-                            (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
-                            (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
-                            (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
-                            (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
-                            (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
-                            (global-set-key (kbd "C-<up>") (quote eless/frame-height-half)))
+                            (define-key view-mode-map (kbd "+") (function text-scale-adjust))
+                            (define-key view-mode-map (kbd "-") (function text-scale-adjust))
+                            (define-key view-mode-map (kbd "=") (function text-scale-adjust))
+                            (global-set-key (kbd "C-<right>") (function eless/frame-width-double))
+                            (global-set-key (kbd "C-<left>") (function eless/frame-width-half))
+                            (global-set-key (kbd "C-<down>") (function eless/frame-height-double))
+                            (global-set-key (kbd "C-<up>") (function eless/frame-height-half)))
 
                           (unless (load (locate-user-emacs-file "elesscfg") :noerror)
                             (load-theme (quote manoj-dark) :no-confirm))

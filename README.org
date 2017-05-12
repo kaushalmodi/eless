@@ -55,8 +55,10 @@ grep 'bar' foo.txt | eless  #
 PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
 PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
 diff foo bar | eless        # Colored diff!
+diff -u foo bar | eless     # Colored diff for unified diff format
 eless .                     # Open dired in the current directory (enhanced 'ls')
 ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
+PAGER=eless git diff        # Show git diff with ANSI coded colors
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 #+END_SRC

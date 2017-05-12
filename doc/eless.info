@@ -183,8 +183,10 @@ Here are some usage examples:
      PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
      PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
      diff foo bar | eless        # Colored diff!
+     diff -u foo bar | eless     # Colored diff for unified diff format
      eless .                     # Open dired in the current directory (enhanced 'ls')
      ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
+     PAGER=eless git diff        # Show git diff with ANSI coded colors
      eless -h | eless            # See eless help ;-)
      info emacs | eless          # Read emacs Info manual in eless
 
@@ -270,8 +272,10 @@ File: eless.info,  Node: Usage Examples,  Next: Current eless Version,  Prev: Cu
      PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
      PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
      diff foo bar | eless        # Colored diff!
+     diff -u foo bar | eless     # Colored diff for unified diff format
      eless .                     # Open dired in the current directory (enhanced 'ls')
      ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
+     PAGER=eless git diff        # Show git diff with ANSI coded colors
      eless -h | eless            # See eless help ;-)
      info emacs | eless          # Read emacs Info manual in eless
 
@@ -283,7 +287,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     7b33bae
+     4f6da10
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -531,7 +535,7 @@ File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configurati
 
      ;; No clutter
      (menu-bar-mode -1)
-     (if (fboundp (quote tool-bar-mode)) (tool-bar-mode -1))
+     (if (fboundp (function tool-bar-mode)) (tool-bar-mode -1))
 
      ;; Show line and column numbers in the mode-line
      (line-number-mode 1)
@@ -544,7 +548,7 @@ File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configurati
      (setq require-final-newline t)
      (setq visible-bell t)
      (setq load-prefer-newer t)
-     (setq ediff-window-setup-function (quote ediff-setup-windows-plain))
+     (setq ediff-window-setup-function (function ediff-setup-windows-plain))
 
      (setq org-src-fontify-natively t)       ;Syntax-highlight source blocks in org
 
@@ -572,7 +576,7 @@ File: eless.info,  Node: Isearch setup,  Next: Enable line truncation,  Prev: Id
 
      (setq isearch-allow-scroll t) ;Allow scrolling using isearch
      ;; DEL during isearch should edit the search string, not jump back to the previous result.
-     (define-key isearch-mode-map [remap isearch-delete-char] (quote isearch-del-char))
+     (define-key isearch-mode-map [remap isearch-delete-char] (function isearch-del-char))
 
 
 File: eless.info,  Node: Enable line truncation,  Next: Highlight the current line,  Prev: Isearch setup,  Up: Emacs Configuration
@@ -621,14 +625,14 @@ File: eless.info,  Node: Keep/delete matching lines,  Next: Frame and font re-si
        (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
          (save-excursion
            (goto-char (point-min))
-           (call-interactively (quote keep-lines)))))
+           (call-interactively (function keep-lines)))))
 
      (defun eless/delete-matching-lines ()
        (interactive)
        (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
          (save-excursion
            (goto-char (point-min))
-           (call-interactively (quote delete-matching-lines)))))
+           (call-interactively (function delete-matching-lines)))))
 
 
 File: eless.info,  Node: Frame and font re-sizing,  Next: Revert buffer in view-mode,  Prev: Keep/delete matching lines,  Up: Custom functions
@@ -674,31 +678,54 @@ File: eless.info,  Node: Detect if diff-mode should be enabled,  Next: Detect if
 .............................................
 
      (defun eless/enable-diff-mode-maybe ()
-       (save-excursion
-         (let* ((max-line 10) ;Search first MAX-LINE lines of the buffer
-                (bound (progn
-                         (goto-char (point-min))
-                         (forward-line max-line)
-                         (point))))
-           (goto-char (point-min))
-           (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
-             (forward-line 1)
-             (let ((diff-type (match-string-no-properties 1))
-                   (diff-mode-enable nil))
-               (cond
-                ;; Line(s) added
-                ((string= diff-type "a")
-                 (when (re-search-forward "^> " nil :noerror)
-                   (setq diff-mode-enable t)))
-                ;; Line(s) deleted or changed
-                (t
-                 (when (re-search-forward "^< " nil :noerror)
-                   (setq diff-mode-enable t))))
-               (when diff-mode-enable
-                 (message "Auto-enabling diff-mode")
-                 (diff-mode)
-                 (rename-buffer "*Diff*" :unique)
-                 (view-mode 1))))))) ;Re-enable view-mode
+       (let* ((max-line 10)                ;Search first MAX-LINE lines of the buffer
+              (bound (save-excursion
+                       (goto-char (point-min))
+                       (forward-line max-line)
+                       (point))))
+         (save-excursion
+           (let ((diff-mode-enable))
+             (goto-char (point-min))
+             (when (and ;First header line of unified/context diff begins with "--- "/"*** "
+                    (string-match-p "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
+                    ;; Second header line of unified/context diff begins with "+++ "/"--- "
+                    (progn
+                      (forward-line 1)
+                      (string-match-p "^\\(\\+\\+\\+\\|---\\) " (thing-at-point (quote line)))))
+               (setq diff-mode-enable t))
+             ;; Check if the diff format is neither context nor unified
+             (unless diff-mode-enable
+               (goto-char (point-min))
+               (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
+                 (forward-line 1)
+                 (let ((diff-type (match-string-no-properties 1)))
+                   (cond
+                    ;; Line(s) added
+                    ((string= diff-type "a")
+                     (when (re-search-forward "^> " nil :noerror)
+                       (setq diff-mode-enable t)))
+                    ;; Line(s) deleted or changed
+                    (t
+                     (when (re-search-forward "^< " nil :noerror)
+                       (setq diff-mode-enable t)))))))
+             (when diff-mode-enable
+               (message "Auto-enabling diff-mode")
+               (diff-mode)
+               (rename-buffer "*Diff*" :unique)
+               (view-mode 1))))))            ;Re-enable view-mode
+
+  1. Enable whitespace-mode in diff-mode
+
+     Enable whitespace-mode to easily detect presence of tabs and
+     trailing spaces in diffs.
+          (setq whitespace-style
+                (quote (face                      ;Enable all visualization via faces
+                        trailing                  ;Show white space at end of lines
+                        tabs                      ;Show tabs using faces
+                        spaces space-mark         ;space-mark shows spaces as dots
+                        space-before-tab space-after-tab ;mix of tabs and spaces
+                        indentation))) ;Highlight spaces/tabs at BOL depending on indent-tabs-mode
+          (add-hook (quote diff-mode-hook) (function whitespace-mode))
 
 
 File: eless.info,  Node: Detect if ANSI codes need to be converted to colors,  Next: ``Do The Right Thing'' Kill,  Prev: Detect if diff-mode should be enabled,  Up: Custom functions
@@ -771,11 +798,11 @@ File: eless.info,  Node: dired-mode setup,  Next: Man-mode setup,  Prev: ``Do Th
        ;; dired-find-file is bound to "f" and "RET" by default
        ;; So changing the "RET" binding to dired-view-file so that the file opens
        ;; in view-mode in the spirit of eless.
-       (define-key dired-mode-map (kbd "RET") (quote dired-view-file))
-       (define-key dired-mode-map (kbd "E") (quote wdired-change-to-wdired-mode))
-       (define-key dired-mode-map (kbd "Q") (quote quit-window))
-       (define-key dired-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
-     (add-hook (quote dired-mode-hook) (quote eless/dired-mode-customization))
+       (define-key dired-mode-map (kbd "RET") (function dired-view-file))
+       (define-key dired-mode-map (kbd "E") (function wdired-change-to-wdired-mode))
+       (define-key dired-mode-map (kbd "Q") (function quit-window))
+       (define-key dired-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
+     (add-hook (quote dired-mode-hook) (function eless/dired-mode-customization))
 
 
 File: eless.info,  Node: Man-mode setup,  Next: Info-mode setup,  Prev: dired-mode setup,  Up: Custom functions
@@ -785,9 +812,9 @@ File: eless.info,  Node: Man-mode setup,  Next: Info-mode setup,  Prev: dired-mo
 
      (defun eless/Man-mode-customization ()
        (view-mode -1) ;Prevent view-mode bindings from shadowing Man-mode bindings
-       (define-key Man-mode-map (kbd "Q") (quote quit-window))
-       (define-key Man-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
-     (add-hook (quote Man-mode-hook) (quote eless/Man-mode-customization))
+       (define-key Man-mode-map (kbd "Q") (function quit-window))
+       (define-key Man-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
+     (add-hook (quote Man-mode-hook) (function eless/Man-mode-customization))
 
 
 File: eless.info,  Node: Info-mode setup,  Prev: Man-mode setup,  Up: Custom functions
@@ -797,9 +824,9 @@ File: eless.info,  Node: Info-mode setup,  Prev: Man-mode setup,  Up: Custom fun
 
      (defun eless/Info-mode-customization ()
        (view-mode -1) ;Prevent view-mode bindings from shadowing Info-mode bindings
-       (define-key Info-mode-map (kbd "Q") (quote quit-window))
-       (define-key Info-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer)))
-     (add-hook (quote Info-mode-hook) (quote eless/Info-mode-customization))
+       (define-key Info-mode-map (kbd "Q") (function quit-window))
+       (define-key Info-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
+     (add-hook (quote Info-mode-hook) (function eless/Info-mode-customization))
 
 
 File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev: Custom functions,  Up: Emacs Configuration
@@ -823,40 +850,40 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
 7.7.8 Key bindings
 ------------------
 
-     (define-key view-mode-map (kbd "!") (quote eless/delete-matching-lines))
-     (define-key view-mode-map (kbd "&") (quote eless/keep-lines))
-     (define-key view-mode-map (kbd "0") (quote delete-window))
-     (define-key view-mode-map (kbd "1") (quote delete-other-windows))
-     (define-key view-mode-map (kbd "A") (quote auto-revert-tail-mode))
-     (define-key view-mode-map (kbd "D") (quote dired))
-     (define-key view-mode-map (kbd "N") (quote next-error)) ;Next line in *occur*
-     (define-key view-mode-map (kbd "P") (quote previous-error)) ;Previous line in *occur*
-     (define-key view-mode-map (kbd "K") (quote eless/delete-matching-lines))
-     (define-key view-mode-map (kbd "a") (quote auto-revert-mode))
-     (define-key view-mode-map (kbd "g") (quote eless/revert-buffer-retain-view-mode))
-     (define-key view-mode-map (kbd "k") (quote eless/keep-lines))
-     (define-key view-mode-map (kbd "n") (quote next-line))
-     (define-key view-mode-map (kbd "o") (quote occur))
-     (define-key view-mode-map (kbd "p") (quote previous-line))
-     (define-key view-mode-map (kbd "q") (quote eless/kill-emacs-or-buffer))
-     (define-key view-mode-map (kbd "t") (quote toggle-truncate-lines))
+     (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
+     (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+     (define-key view-mode-map (kbd "0") (function delete-window))
+     (define-key view-mode-map (kbd "1") (function delete-other-windows))
+     (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
+     (define-key view-mode-map (kbd "D") (function dired))
+     (define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
+     (define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
+     (define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
+     (define-key view-mode-map (kbd "a") (function auto-revert-mode))
+     (define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
+     (define-key view-mode-map (kbd "k") (function eless/keep-lines))
+     (define-key view-mode-map (kbd "n") (function next-line))
+     (define-key view-mode-map (kbd "o") (function occur))
+     (define-key view-mode-map (kbd "p") (function previous-line))
+     (define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
+     (define-key view-mode-map (kbd "t") (function toggle-truncate-lines))
 
      ;; Global custom bindings
-     (global-set-key (kbd "M-/") (quote hippie-expand))
-     (global-set-key (kbd "C-x C-b") (quote ibuffer))
-     (global-set-key (kbd "C-x C-c") (quote eless/save-buffers-maybe-and-kill-emacs))
-     (global-set-key (kbd "C-x C-f") (quote view-file))
-     (global-set-key (kbd "C-c q") (quote query-replace-regexp))
-     (global-set-key (kbd "<f5>") (quote eless/revert-buffer-retain-view-mode))
+     (global-set-key (kbd "M-/") (function hippie-expand))
+     (global-set-key (kbd "C-x C-b") (function ibuffer))
+     (global-set-key (kbd "C-x C-c") (function eless/save-buffers-maybe-and-kill-emacs))
+     (global-set-key (kbd "C-x C-f") (function view-file))
+     (global-set-key (kbd "C-c q") (function query-replace-regexp))
+     (global-set-key (kbd "<f5>") (function eless/revert-buffer-retain-view-mode))
 
      (when (display-graphic-p)
-       (define-key view-mode-map (kbd "+") (quote text-scale-adjust))
-       (define-key view-mode-map (kbd "-") (quote text-scale-adjust))
-       (define-key view-mode-map (kbd "=") (quote text-scale-adjust))
-       (global-set-key (kbd "C-<right>") (quote eless/frame-width-double))
-       (global-set-key (kbd "C-<left>") (quote eless/frame-width-half))
-       (global-set-key (kbd "C-<down>") (quote eless/frame-height-double))
-       (global-set-key (kbd "C-<up>") (quote eless/frame-height-half)))
+       (define-key view-mode-map (kbd "+") (function text-scale-adjust))
+       (define-key view-mode-map (kbd "-") (function text-scale-adjust))
+       (define-key view-mode-map (kbd "=") (function text-scale-adjust))
+       (global-set-key (kbd "C-<right>") (function eless/frame-width-double))
+       (global-set-key (kbd "C-<left>") (function eless/frame-width-half))
+       (global-set-key (kbd "C-<down>") (function eless/frame-height-double))
+       (global-set-key (kbd "C-<up>") (function eless/frame-height-half)))
 
 
 File: eless.info,  Node: User config override,  Prev: Key bindings,  Up: Emacs Configuration
@@ -1195,53 +1222,53 @@ Tag Table:
 Node: Top188
 Node: Readme1738
 Node: Try it out3490
-Node: Contributors4575
-Node: Eless Options4807
-Node: view-mode Common Bindings5131
-Node: Custom Bindings6107
-Node: Usage Examples7142
-Node: Current eless Version8235
-Node: Code8607
-Node: Unofficial Bash Strict Mode8915
-Node: Initialize variables9600
-Node: Input/Output10215
-Node: Parse options12110
-Node: Print Help13850
-Node: Emacs with -Q in view-mode14183
-Node: Emacs Configuration15064
-Node: General setup15451
-Node: Ido setup16510
-Node: Isearch setup17078
-Node: Enable line truncation17487
-Node: Highlight the current line17836
-Node: Custom functions18063
-Node: Keep/delete matching lines18543
-Node: Frame and font re-sizing19225
-Node: Revert buffer in view-mode20236
-Node: Detect if diff-mode should be enabled20701
-Node: Detect if ANSI codes need to be converted to colors22175
-Node: ``Do The Right Thing'' Kill23332
-Node: dired-mode setup25059
-Node: Man-mode setup25939
-Node: Info-mode setup26446
-Node: Auto-setting of major modes26936
-Node: Key bindings27635
-Node: User config override29982
-Node: Input/Output Scenarios30596
-Node: Output is going to a pipe30852
-Node: Input is coming from a pipe31545
-Node: Input is piped from man command33635
-Node: Input is piped from info command35096
-Node: Input is piped from something else35889
-Node: Input is an argument to the script36847
-Node: Contributing37235
-Node: How to help debug37603
-Node: Development38247
-Node: Dependencies38435
-Node: Steps to build eless and documentation39173
-Node: Other Wikis41226
-Node: Home41378
-Node: Example eless config in tcsh42114
+Node: Contributors4719
+Node: Eless Options4951
+Node: view-mode Common Bindings5275
+Node: Custom Bindings6251
+Node: Usage Examples7286
+Node: Current eless Version8523
+Node: Code8895
+Node: Unofficial Bash Strict Mode9203
+Node: Initialize variables9888
+Node: Input/Output10503
+Node: Parse options12398
+Node: Print Help14138
+Node: Emacs with -Q in view-mode14471
+Node: Emacs Configuration15352
+Node: General setup15739
+Node: Ido setup16804
+Node: Isearch setup17372
+Node: Enable line truncation17784
+Node: Highlight the current line18133
+Node: Custom functions18360
+Node: Keep/delete matching lines18840
+Node: Frame and font re-sizing19528
+Node: Revert buffer in view-mode20539
+Node: Detect if diff-mode should be enabled21004
+Node: Detect if ANSI codes need to be converted to colors23924
+Node: ``Do The Right Thing'' Kill25081
+Node: dired-mode setup26808
+Node: Man-mode setup27703
+Node: Info-mode setup28219
+Node: Auto-setting of major modes28718
+Node: Key bindings29417
+Node: User config override31854
+Node: Input/Output Scenarios32468
+Node: Output is going to a pipe32724
+Node: Input is coming from a pipe33417
+Node: Input is piped from man command35507
+Node: Input is piped from info command36968
+Node: Input is piped from something else37761
+Node: Input is an argument to the script38719
+Node: Contributing39107
+Node: How to help debug39475
+Node: Development40119
+Node: Dependencies40307
+Node: Steps to build eless and documentation41045
+Node: Other Wikis43098
+Node: Home43250
+Node: Example eless config in tcsh43986
 
 End Tag Table
 
