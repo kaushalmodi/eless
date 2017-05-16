@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-12 08:52:46 kmodi>
+# Time-stamp: <2017-05-16 14:23:01 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -163,6 +163,7 @@ ls --color=always | eless   # Auto-detect ANSI color codes and convert those to 
 PAGER=eless git diff        # Show git diff with ANSI coded colors
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
+eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
 #+END_SRC
 * Current =eless= Version
 # Using noweb is a nifty way to do sort of search/replace in all code blocks.
@@ -182,7 +183,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-4f6da10
+b747c86
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -442,7 +443,6 @@ function emacs_Q_view_mode {
         echo "Args passed to emacs_Q_view_mode : $*"
     fi
     exec emacs -Q "$@" \
-               -f view-mode \
                --eval '(progn
                           <<emacs-config>>
                        )' 2>/dev/null </dev/tty
@@ -660,7 +660,6 @@ at the time of quitting.
 **** =dired-mode= setup
 #+BEGIN_SRC emacs-lisp
 (defun eless/dired-mode-customization ()
-  (view-mode -1) ;Prevent view-mode bindings from shadowing dired-mode bindings
   ;; dired-find-file is bound to "f" and "RET" by default
   ;; So changing the "RET" binding to dired-view-file so that the file opens
   ;; in view-mode in the spirit of eless.
@@ -673,7 +672,6 @@ at the time of quitting.
 **** =Man-mode= setup
 #+BEGIN_SRC emacs-lisp
 (defun eless/Man-mode-customization ()
-  (view-mode -1) ;Prevent view-mode bindings from shadowing Man-mode bindings
   (define-key Man-mode-map (kbd "Q") (function quit-window))
   (define-key Man-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
 (add-hook (quote Man-mode-hook) (function eless/Man-mode-customization))
@@ -681,10 +679,24 @@ at the time of quitting.
 **** =Info-mode= setup
 #+BEGIN_SRC emacs-lisp
 (defun eless/Info-mode-customization ()
-  (view-mode -1) ;Prevent view-mode bindings from shadowing Info-mode bindings
   (define-key Info-mode-map (kbd "Q") (function quit-window))
   (define-key Info-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
 (add-hook (quote Info-mode-hook) (function eless/Info-mode-customization))
+#+END_SRC
+**** =tar-mode= setup
+When =eless= is passed an archive file as an argument, the =tar-mode=
+is enabled automatically that will do the job of showing the archive
+contents, extracting and viewing them.
+#+BEGIN_SRC shell :noweb-ref dont-tangle
+eless foo.tar.xz
+eless bar.tar.gz
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+(defun eless/tar-mode-customization ()
+  (define-key tar-mode-map (kbd "RET") (function tar-view))
+  (define-key tar-mode-map (kbd "Q") (function quit-window))
+  (define-key tar-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
+(add-hook (quote tar-mode-hook) (function eless/tar-mode-customization))
 #+END_SRC
 *** Auto-setting of major modes
 #+BEGIN_SRC emacs-lisp
@@ -692,31 +704,34 @@ at the time of quitting.
  ((derived-mode-p (quote dired-mode)) (eless/dired-mode-customization))
  ((derived-mode-p (quote Man-mode)) (eless/Man-mode-customization))
  ((derived-mode-p (quote Info-mode)) (eless/Info-mode-customization))
- (t
+ ((derived-mode-p (quote tar-mode)) (eless/tar-mode-customization))
+ (t     ;Enable view-mode if none of the above major-modes are active
   ;; Auto-enable diff-mode. For example, when doing "diff foo bar | eless"
   (eless/enable-diff-mode-maybe)
   ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
-  (eless/enable-ansi-color-maybe)))
+  (eless/enable-ansi-color-maybe)
+  (view-mode 1)))
 #+END_SRC
 *** Key bindings
 #+BEGIN_SRC emacs-lisp
-(define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
-(define-key view-mode-map (kbd "&") (function eless/keep-lines))
-(define-key view-mode-map (kbd "0") (function delete-window))
-(define-key view-mode-map (kbd "1") (function delete-other-windows))
-(define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
-(define-key view-mode-map (kbd "D") (function dired))
-(define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
-(define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
-(define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
-(define-key view-mode-map (kbd "a") (function auto-revert-mode))
-(define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
-(define-key view-mode-map (kbd "k") (function eless/keep-lines))
-(define-key view-mode-map (kbd "n") (function next-line))
-(define-key view-mode-map (kbd "o") (function occur))
-(define-key view-mode-map (kbd "p") (function previous-line))
-(define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
-(define-key view-mode-map (kbd "t") (function toggle-truncate-lines))
+(with-eval-after-load (quote view)
+  (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
+  (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+  (define-key view-mode-map (kbd "0") (function delete-window))
+  (define-key view-mode-map (kbd "1") (function delete-other-windows))
+  (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
+  (define-key view-mode-map (kbd "D") (function dired))
+  (define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
+  (define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
+  (define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
+  (define-key view-mode-map (kbd "a") (function auto-revert-mode))
+  (define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
+  (define-key view-mode-map (kbd "k") (function eless/keep-lines))
+  (define-key view-mode-map (kbd "n") (function next-line))
+  (define-key view-mode-map (kbd "o") (function occur))
+  (define-key view-mode-map (kbd "p") (function previous-line))
+  (define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
+  (define-key view-mode-map (kbd "t") (function toggle-truncate-lines)))
 
 ;; Global custom bindings
 (global-set-key (kbd "M-/") (function hippie-expand))
