@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-16 14:23:01 kmodi>
+# Time-stamp: <2017-05-16 23:03:37 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -272,7 +272,28 @@ cmd=''
 input_from_pipe_flag=0
 output_to_pipe_flag=0
 #+END_SRC
-
+** Debug function
+This function redefines itself the first time it is called.  When
+debugging is enabled, it defines itself as a function which outputs to
+STDERR, then calls itself to do the first output.  When debugging is
+disabled, it defines itself as a function that does nothing, so
+subsequent calls do not output.
+#+BEGIN_SRC shell
+function debug {
+    if [[ $debug -eq 1 ]]
+    then
+        function debug {
+            echo -e "DEBUG: $*" >&2
+        }
+        debug "$@"
+    else
+        function debug {
+            true
+        }
+    fi
+}
+#+END_SRC
+Above is a =bash= /collapsing function/. See [[http://wiki.bash-hackers.org/howto/collapsing_functions][here]] and [[https://github.com/kaushalmodi/eless/issues/13][here]] for more info.
 #+BEGIN_SRC shell :exports none :noweb yes
 function eless_print_version {
     if [[ "${eless_version}" == "master" ]]
@@ -327,19 +348,13 @@ if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interact
 then
     # eless foo
     # eless foo | cat -
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "--> Input from terminal"
-    fi
+    debug "--> Input from terminal"
     input_from_pipe_flag=0
 else # Script is getting input from pipe or file - non-interactive
     # echo bar | eless foo
     # echo bar | eless foo | cat -
     piped_data="$(cat)"
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "--> Input from pipe/file"
-    fi
+    debug "--> Input from pipe/file"
     input_from_pipe_flag=1
 fi
 
@@ -348,18 +363,12 @@ if [[ -t 1 ]] # Output is going to the terminal
 then
     # eless foo
     # echo bar | eless foo
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "    Output to terminal -->"
-    fi
+    debug "    Output to terminal -->"
     output_to_pipe_flag=0
 else # Output is going to a pipe, file?
     # eless foo | cat -
     # echo bar | eless foo | cat -
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "    Output to a pipe -->"
-    fi
+    debug "    Output to a pipe -->"
     output_to_pipe_flag=1
 fi
 #+END_SRC
@@ -373,10 +382,8 @@ basic approach of looping through all the arguments ="$@"= is used.
 #+BEGIN_SRC shell :noweb yes
 for var in "$@"
 do
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "var : $var"
-    fi
+    debug "var : $var"
+
     if [[ "${var}" == '-D' ]]
     then
         : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
@@ -418,12 +425,9 @@ fi
 #+END_SRC
 
 #+BEGIN_SRC shell :exports none
-if [[ ${debug} -eq 1 ]]
-then
-    echo "Raw Args                       : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
-    echo "Emacs Args                     : ${emacs_args[*]}"
-    echo "Pipe Contents (up to 10 lines) : $(echo "${piped_data}" | head -n 10)"
-fi
+debug "Raw Args                       : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
+debug "Emacs Args                     : ${emacs_args[*]}"
+debug "Pipe Contents (up to 10 lines) : $(echo "${piped_data}" | head -n 10)"
 #+END_SRC
 ** Emacs with =-Q= in =view-mode=
 The =emacs_Q_view_mode= function is defined to launch emacs with a
@@ -436,12 +440,10 @@ the =<<emacs-config>>= *noweb* placeholder in the below snippet./
 #+BEGIN_SRC shell :noweb no-export
 function emacs_Q_view_mode {
 
-    if [[ ${debug} -eq 1 ]]
-    then
-        # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
-        # not to eless.
-        echo "Args passed to emacs_Q_view_mode : $*"
-    fi
+    # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
+    # not to eless.
+    debug "Args passed to emacs_Q_view_mode : $*"
+
     exec emacs -Q "$@" \
                --eval '(progn
                           <<emacs-config>>
@@ -787,18 +789,12 @@ else
     if [[ ${input_from_pipe_flag} -eq 1 ]]
     then
         tempfile="$(mktemp emacs-stdin-"$USER".XXXXXXX --tmpdir)" # https://github.com/koalaman/shellcheck/wiki/SC2086
-        if [[ ${debug} -eq 1 ]]
-        then
-            echo "Temp File : $tempfile"
-        fi
+        debug "Temp File : $tempfile"
         echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
 
         # Parse the first line of the piped data to check if it's a man page
         first_line_piped_data=$(head -n 1 "${tempfile}")
-        if [[ ${debug} -eq 1 ]]
-        then
-            echo "first_line_piped_data = ${first_line_piped_data}"
-        fi
+        debug "first_line_piped_data = ${first_line_piped_data}"
 
         # The first line of man pages is assumed to be
         #   FOO(1)  optional something something FOO(1)
@@ -818,10 +814,8 @@ else
         then
             # After setting PAGER variable to eless, try something like `man grep'.
             # That will launch the man page in eless.
-            if [[ ${debug} -eq 1 ]]
-            then
-                echo "Man Page = ${man_page}"
-            fi
+            debug "Man Page = ${man_page}"
+
             cmd="emacs_Q_view_mode \
                          ${emacs_args[*]} \
                          --eval '(progn
@@ -842,10 +836,8 @@ was reported in [[https://github.com/kaushalmodi/eless/issues/3][this issue]].
         then
             # Try something like `info emacs | eless'.
             # That will launch the Info manual in eless.
-            if [[ ${debug} -eq 1 ]]
-            then
-                echo "Info Manual = ${info_man}"
-            fi
+            debug "Info Manual = ${info_man}"
+
             cmd="emacs_Q_view_mode \
                          ${emacs_args[*]} \
                          --eval '(progn
@@ -863,10 +855,8 @@ In that case, just open the =${tempfile}= saved from the =STDIN=
 stream using =emacs_Q_view_mode=.
 #+BEGIN_SRC shell :padline no
         else # No man page or info manual detected
-            if [[ ${debug} -eq 1 ]]
-            then
-                echo "No man page or info manual detected"
-            fi
+            debug "No man page or info manual detected"
+
             cmd="emacs_Q_view_mode ${tempfile} \
                          ${emacs_args[*]} \
                          --eval '(progn
@@ -884,10 +874,8 @@ stream using =emacs_Q_view_mode=.
     fi
 #+END_SRC
 #+BEGIN_SRC shell :exports none
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "Eless Command : $cmd"
-    fi
+    debug "Eless Command : $cmd"
+
     eval "$cmd"
     if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
     then
