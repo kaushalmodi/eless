@@ -24,6 +24,42 @@
           (re-search-forward "^git rev-parse HEAD")
           (org-babel-execute-src-block))))))
 (add-hook 'org-babel-pre-tangle-hook #'eless/eval-commit-hash)
+(defvar eless-package-user-dir (format "%selpa_%s/"
+                                       (concat temporary-file-directory
+                                               (getenv "USER") "/" "eless/")
+                                       emacs-major-version)
+  "Package base directory for installing the latest stable version of
+ org for eless.")
+
+(defun eless-update-org ()
+  "Install the latest stable version of org in `eless-package-user-dir'."
+  (interactive)
+  ;; First, remove the org that ships with emacs from the `load-path'.
+  ;; That org version is too old: 8.2.x (even on emacs 25.2).
+  (dolist (path load-path)
+    (when (string-match-p
+           (concat "emacs/"
+                   ;; If `emacs-version' is x.y.z.w, remove the ".w" portion
+                   ;; Though, this will do nothing in emacs 26+
+                   ;; http://git.savannah.gnu.org/cgit/emacs.git/commit/?id=22b2207471807bda86534b4faf1a29b3a6447536
+                   (replace-regexp-in-string
+                    "\\([0-9]+\\.[0-9]+\\.[0-9]+\\).*" "\\1" emacs-version)
+                   "/lisp/org\\'")
+           path)
+      (setq load-path (delete path load-path))))
+
+  ;; Let-bind `package-user-dir'
+  (let ((package-user-dir eless-package-user-dir))
+    (require 'package)
+    ;; Install `org-plus-contrib'; `org' cannot be "installed", only upgraded.
+    (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+    (package-initialize)
+    (package-refresh-contents)
+    (unless (package-installed-p 'org-plus-contrib)
+      (message "Installing `org-plus-contrib' to %s .." package-user-dir)
+      (package-install 'org-plus-contrib))
+    (when (called-interactively-p 'interactive)
+      (message "Org version: %s.  Now run `eless-build'." (org-version)))))
 
 (defun eless-build ()
   "Use eless.org to tangle out the `eless' script and documentation."
