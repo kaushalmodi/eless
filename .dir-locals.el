@@ -9,7 +9,7 @@
                           "Use eless.org to generate the `eless' script and documentation."
                           :interactive)
                         (autoload
-                          'eless-update-org (expand-file-name "build/build.el" (vc-git-root (buffer-file-name)))
-                          "Install the latest stable version of org in `eless-package-user-dir'."
+                          'eless-install-dependencies (expand-file-name "build/build.el" (vc-git-root (buffer-file-name)))
+                          "Install dependencies for building `eless', in `eless-package-user-dir'."
                           :interactive))))))
     (org-mode . ((mode . auto-fill)))))
