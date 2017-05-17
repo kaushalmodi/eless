@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-16 23:14:54 kmodi>
+# Time-stamp: <2017-05-17 09:51:37 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -998,14 +998,3 @@ alias diffg '\diff \!* | eless --gui'
 
 alias ev eless
 #+END_SRC
-* Local Variables                                     :noexport:
-# Local Variables:
-# indent-tabs-mode: nil
-# fill-column: 70
-# org-src-preserve-indentation: t
-# org-html-htmlize-output-type: css
-# org-html-htmlize-font-prefix: "org-"
-# eval: (load (expand-file-name "build/build.el")) ; For M-x eless-build
-# eval: (auto-fill-mode 1)
-# org-confirm-babel-evaluate: (lambda (lang body) (let ((unsafe t)) (when (or (string= lang "org") (string= body "git rev-parse HEAD | head -c 7")) (setq unsafe nil)) unsafe))
-# End:
