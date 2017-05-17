@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='b747c86'
+eless_git_hash='d619d0e'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -108,6 +108,20 @@ cmd=''
 input_from_pipe_flag=0
 output_to_pipe_flag=0
 
+function debug {
+    if [[ $debug -eq 1 ]]
+    then
+        function debug {
+            echo -e "DEBUG: $*" >&2
+        }
+        debug "$@"
+    else
+        function debug {
+            true
+        }
+    fi
+}
+
 function eless_print_version {
     if [[ "${eless_version}" == "master" ]]
     then
@@ -133,19 +147,13 @@ if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interact
 then
     # eless foo
     # eless foo | cat -
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "--> Input from terminal"
-    fi
+    debug "--> Input from terminal"
     input_from_pipe_flag=0
 else # Script is getting input from pipe or file - non-interactive
     # echo bar | eless foo
     # echo bar | eless foo | cat -
     piped_data="$(cat)"
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "--> Input from pipe/file"
-    fi
+    debug "--> Input from pipe/file"
     input_from_pipe_flag=1
 fi
 
@@ -154,27 +162,19 @@ if [[ -t 1 ]] # Output is going to the terminal
 then
     # eless foo
     # echo bar | eless foo
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "    Output to terminal -->"
-    fi
+    debug "    Output to terminal -->"
     output_to_pipe_flag=0
 else # Output is going to a pipe, file?
     # eless foo | cat -
     # echo bar | eless foo | cat -
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "    Output to a pipe -->"
-    fi
+    debug "    Output to a pipe -->"
     output_to_pipe_flag=1
 fi
 
 for var in "$@"
 do
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "var : $var"
-    fi
+    debug "var : $var"
+
     if [[ "${var}" == '-D' ]]
     then
         : # Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923
@@ -210,21 +210,16 @@ then
     exit 0
 fi
 
-if [[ ${debug} -eq 1 ]]
-then
-    echo "Raw Args                       : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
-    echo "Emacs Args                     : ${emacs_args[*]}"
-    echo "Pipe Contents (up to 10 lines) : $(echo "${piped_data}" | head -n 10)"
-fi
+debug "Raw Args                       : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
+debug "Emacs Args                     : ${emacs_args[*]}"
+debug "Pipe Contents (up to 10 lines) : $(echo "${piped_data}" | head -n 10)"
 
 function emacs_Q_view_mode {
 
-    if [[ ${debug} -eq 1 ]]
-    then
-        # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
-        # not to eless.
-        echo "Args passed to emacs_Q_view_mode : $*"
-    fi
+    # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
+    # not to eless.
+    debug "Args passed to emacs_Q_view_mode : $*"
+
     exec emacs -Q "$@" \
                --eval '(progn
                           ;; Keep the default-directory to be the same from where
@@ -487,18 +482,12 @@ else
     if [[ ${input_from_pipe_flag} -eq 1 ]]
     then
         tempfile="$(mktemp emacs-stdin-"$USER".XXXXXXX --tmpdir)" # https://github.com/koalaman/shellcheck/wiki/SC2086
-        if [[ ${debug} -eq 1 ]]
-        then
-            echo "Temp File : $tempfile"
-        fi
+        debug "Temp File : $tempfile"
         echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
 
         # Parse the first line of the piped data to check if it's a man page
         first_line_piped_data=$(head -n 1 "${tempfile}")
-        if [[ ${debug} -eq 1 ]]
-        then
-            echo "first_line_piped_data = ${first_line_piped_data}"
-        fi
+        debug "first_line_piped_data = ${first_line_piped_data}"
 
         # The first line of man pages is assumed to be
         #   FOO(1)  optional something something FOO(1)
@@ -516,10 +505,8 @@ else
         then
             # After setting PAGER variable to eless, try something like `man grep'.
             # That will launch the man page in eless.
-            if [[ ${debug} -eq 1 ]]
-            then
-                echo "Man Page = ${man_page}"
-            fi
+            debug "Man Page = ${man_page}"
+
             cmd="emacs_Q_view_mode \
                          ${emacs_args[*]} \
                          --eval '(progn
@@ -535,19 +522,15 @@ else
         then
             # Try something like `info emacs | eless'.
             # That will launch the Info manual in eless.
-            if [[ ${debug} -eq 1 ]]
-            then
-                echo "Info Manual = ${info_man}"
-            fi
+            debug "Info Manual = ${info_man}"
+
             cmd="emacs_Q_view_mode \
                          ${emacs_args[*]} \
                          --eval '(progn
                                    (info (downcase \"${info_man}\")))'"
         else # No man page or info manual detected
-            if [[ ${debug} -eq 1 ]]
-            then
-                echo "No man page or info manual detected"
-            fi
+            debug "No man page or info manual detected"
+
             cmd="emacs_Q_view_mode ${tempfile} \
                          ${emacs_args[*]} \
                          --eval '(progn
@@ -561,10 +544,8 @@ else
         cmd="emacs_Q_view_mode ${emacs_args[*]}"
     fi
 
-    if [[ ${debug} -eq 1 ]]
-    then
-        echo "Eless Command : $cmd"
-    fi
+    debug "Eless Command : $cmd"
+
     eval "$cmd"
     if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
     then

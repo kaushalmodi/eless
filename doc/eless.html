@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-16 Tue 14:23 -->
+<!-- 2017-05-16 Tue 23:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -253,47 +253,48 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgb9c4df0">7.1. Unofficial Bash Strict Mode</a></li>
 <li><a href="#org878a3e4">7.2. Initialize variables</a></li>
-<li><a href="#org649359d">7.3. Input/Output</a></li>
-<li><a href="#orgfcaf2ea">7.4. Parse options</a></li>
-<li><a href="#org3b72a5c">7.5. Print Help</a></li>
-<li><a href="#org583f552">7.6. Emacs with <code>-Q</code> in <code>view-mode</code></a></li>
-<li><a href="#org310a64d">7.7. Emacs Configuration</a>
+<li><a href="#orge7bbb1c">7.3. Debug function</a></li>
+<li><a href="#org649359d">7.4. Input/Output</a></li>
+<li><a href="#orgfcaf2ea">7.5. Parse options</a></li>
+<li><a href="#org3b72a5c">7.6. Print Help</a></li>
+<li><a href="#org583f552">7.7. Emacs with <code>-Q</code> in <code>view-mode</code></a></li>
+<li><a href="#org310a64d">7.8. Emacs Configuration</a>
 <ul>
-<li><a href="#orgf74e1fd">7.7.1. General setup</a></li>
-<li><a href="#org360fbe3">7.7.2. Ido setup</a></li>
-<li><a href="#org670a0e6">7.7.3. Isearch setup</a></li>
-<li><a href="#org6e15bf4">7.7.4. Enable line truncation</a></li>
-<li><a href="#orgca46834">7.7.5. Highlight the current line</a></li>
-<li><a href="#org85dc783">7.7.6. Custom functions</a>
+<li><a href="#orgf74e1fd">7.8.1. General setup</a></li>
+<li><a href="#org360fbe3">7.8.2. Ido setup</a></li>
+<li><a href="#org670a0e6">7.8.3. Isearch setup</a></li>
+<li><a href="#org6e15bf4">7.8.4. Enable line truncation</a></li>
+<li><a href="#orgca46834">7.8.5. Highlight the current line</a></li>
+<li><a href="#org85dc783">7.8.6. Custom functions</a>
 <ul>
-<li><a href="#org9055898">7.7.6.1. Keep/delete matching lines</a></li>
-<li><a href="#orgbad5745">7.7.6.2. Frame and font re-sizing</a></li>
-<li><a href="#org6e29c30">7.7.6.3. Revert buffer in <code>view-mode</code></a></li>
-<li><a href="#org88202a6">7.7.6.4. Detect if <code>diff-mode</code> should be enabled</a></li>
-<li><a href="#org677b5a7">7.7.6.5. Detect if ANSI codes need to be converted to colors</a></li>
-<li><a href="#orga766de2">7.7.6.6. &ldquo;Do The Right Thing&rdquo; Kill</a></li>
-<li><a href="#org895b28d">7.7.6.7. <code>dired-mode</code> setup</a></li>
-<li><a href="#orga9eb0d9">7.7.6.8. <code>Man-mode</code> setup</a></li>
-<li><a href="#orgf9b0104">7.7.6.9. <code>Info-mode</code> setup</a></li>
-<li><a href="#org930f846">7.7.6.10. <code>tar-mode</code> setup</a></li>
+<li><a href="#org9055898">7.8.6.1. Keep/delete matching lines</a></li>
+<li><a href="#orgbad5745">7.8.6.2. Frame and font re-sizing</a></li>
+<li><a href="#org6e29c30">7.8.6.3. Revert buffer in <code>view-mode</code></a></li>
+<li><a href="#org88202a6">7.8.6.4. Detect if <code>diff-mode</code> should be enabled</a></li>
+<li><a href="#org677b5a7">7.8.6.5. Detect if ANSI codes need to be converted to colors</a></li>
+<li><a href="#orga766de2">7.8.6.6. &ldquo;Do The Right Thing&rdquo; Kill</a></li>
+<li><a href="#org895b28d">7.8.6.7. <code>dired-mode</code> setup</a></li>
+<li><a href="#orga9eb0d9">7.8.6.8. <code>Man-mode</code> setup</a></li>
+<li><a href="#orgf9b0104">7.8.6.9. <code>Info-mode</code> setup</a></li>
+<li><a href="#org930f846">7.8.6.10. <code>tar-mode</code> setup</a></li>
 </ul>
 </li>
-<li><a href="#orga69f2d9">7.7.7. Auto-setting of major modes</a></li>
-<li><a href="#org114edb0">7.7.8. Key bindings</a></li>
-<li><a href="#orgc9107ee">7.7.9. User config override</a></li>
+<li><a href="#orga69f2d9">7.8.7. Auto-setting of major modes</a></li>
+<li><a href="#org114edb0">7.8.8. Key bindings</a></li>
+<li><a href="#orgc9107ee">7.8.9. User config override</a></li>
 </ul>
 </li>
-<li><a href="#org1fcedd6">7.8. Input/Output Scenarios</a>
+<li><a href="#org1fcedd6">7.9. Input/Output Scenarios</a>
 <ul>
-<li><a href="#org4e41e6e">7.8.1. Output is going to a pipe</a></li>
-<li><a href="#org7b5fad3">7.8.2. Input is coming from a pipe</a>
+<li><a href="#org4e41e6e">7.9.1. Output is going to a pipe</a></li>
+<li><a href="#org7b5fad3">7.9.2. Input is coming from a pipe</a>
 <ul>
-<li><a href="#org67dd9b5">7.8.2.1. Input is piped from <code>man</code> command</a></li>
-<li><a href="#orgbdffa84">7.8.2.2. Input is piped from <code>info</code> command</a></li>
-<li><a href="#orgef5af72">7.8.2.3. Input is piped from something else</a></li>
+<li><a href="#org67dd9b5">7.9.2.1. Input is piped from <code>man</code> command</a></li>
+<li><a href="#orgbdffa84">7.9.2.2. Input is piped from <code>info</code> command</a></li>
+<li><a href="#orgef5af72">7.9.2.3. Input is piped from something else</a></li>
 </ul>
 </li>
-<li><a href="#orgb871e69">7.8.3. Input is an argument to the script</a></li>
+<li><a href="#orgb871e69">7.9.3. Input is an argument to the script</a></li>
 </ul>
 </li>
 </ul>
@@ -684,7 +685,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">b747c86
+<pre><code class="src src-shell">d619d0e
 </code></pre>
 </div>
 <p>
@@ -751,27 +752,55 @@ Any undefined variable is referenced.
 <span class="org-variable-name">output_to_pipe_flag</span>=0
 </code></pre>
 </div>
-
+</div>
+</div>
+<div id="outline-container-orge7bbb1c" class="outline-3">
+<h3 id="orge7bbb1c"><span class="section-number-3">7.3</span> Debug function</h3>
+<div class="outline-text-3" id="text-7-3">
 <p>
+This function redefines itself the first time it is called.  When
+debugging is enabled, it defines itself as a function which outputs to
+STDERR, then calls itself to do the first output.  When debugging is
+disabled, it defines itself as a function that does nothing, so
+subsequent calls do not output.
+</p>
+<div class="org-src-container">
+<pre><code class="src src-shell"><span class="org-keyword">function</span> <span class="org-function-name">debug</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span> $<span class="org-variable-name">debug</span> -eq 1 <span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span>
+    <span class="org-keyword">then</span>
+        <span class="org-keyword">function</span> <span class="org-function-name">debug</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+            <span class="org-builtin">echo</span> -e <span class="org-string">"DEBUG: $*"</span> &gt;&amp;2
+        <span class="org-rainbow-delimiters-depth-2">}</span>
+        debug <span class="org-string">"$@"</span>
+    <span class="org-keyword">else</span>
+        <span class="org-keyword">function</span> <span class="org-function-name">debug</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+            true
+        <span class="org-rainbow-delimiters-depth-2">}</span>
+    <span class="org-keyword">fi</span>
+<span class="org-rainbow-delimiters-depth-1">}</span>
+</code></pre>
+</div>
+<p>
+Above is a <code>bash</code> <i>collapsing function</i>. See <a href="http://wiki.bash-hackers.org/howto/collapsing_functions">here</a> and <a href="https://github.com/kaushalmodi/eless/issues/13">here</a> for more info.
 If user has passed the <code>-D</code> option, run the script in debug mode.
 </p>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">for var<span class="org-keyword"> in</span> <span class="org-string">"$@"</span>
-do
+<pre><code class="src src-shell"><span class="org-keyword">for</span> var<span class="org-keyword"> in</span> <span class="org-string">"$@"</span>
+<span class="org-keyword">do</span>
     <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-D'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
     <span class="org-keyword">then</span>
         eless_print_version
         <span class="org-variable-name">debug</span>=1
-    fi
-done
+    <span class="org-keyword">fi</span>
+<span class="org-keyword">done</span>
 </code></pre>
 </div>
 </div>
 </div>
 <div id="outline-container-org649359d" class="outline-3">
-<h3 id="org649359d"><span class="section-number-3">7.3</span> Input/Output</h3>
-<div class="outline-text-3" id="text-7-3">
+<h3 id="org649359d"><span class="section-number-3">7.4</span> Input/Output</h3>
+<div class="outline-text-3" id="text-7-4">
 <p>
 We need this script to know:
 </p>
@@ -824,48 +853,36 @@ Below code determines that using <code>[[ -t 0 ]]</code> and <code>[[ -t 1]]</co
 <span class="org-keyword">then</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">eless foo</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">eless foo | cat -</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-    <span class="org-keyword">then</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"--&gt; Input from terminal"</span>
-    fi
+    debug <span class="org-string">"--&gt; Input from terminal"</span>
     <span class="org-variable-name">input_from_pipe_flag</span>=0
 <span class="org-keyword">else</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Script is getting input from pipe or file - non-interactive</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">echo bar | eless foo</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">echo bar | eless foo | cat -</span>
-    <span class="org-variable-name">piped_data</span>=<span class="org-string">"$(cat)"</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-    <span class="org-keyword">then</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"--&gt; Input from pipe/file"</span>
-    fi
+    <span class="org-variable-name">piped_data</span>=<span class="org-string">"$(</span><span class="org-sh-quoted-exec">cat</span><span class="org-string">)"</span>
+    debug <span class="org-string">"--&gt; Input from pipe/file"</span>
     <span class="org-variable-name">input_from_pipe_flag</span>=1
-fi
+<span class="org-keyword">fi</span>
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">http://stackoverflow.com/a/911213/1219634</span>
 <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> -t 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Output is going to the terminal</span>
 <span class="org-keyword">then</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">eless foo</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">echo bar | eless foo</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-    <span class="org-keyword">then</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"    Output to terminal --&gt;"</span>
-    fi
+    debug <span class="org-string">"    Output to terminal --&gt;"</span>
     <span class="org-variable-name">output_to_pipe_flag</span>=0
 <span class="org-keyword">else</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Output is going to a pipe, file?</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">eless foo | cat -</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">echo bar | eless foo | cat -</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-    <span class="org-keyword">then</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"    Output to a pipe --&gt;"</span>
-    fi
+    debug <span class="org-string">"    Output to a pipe --&gt;"</span>
     <span class="org-variable-name">output_to_pipe_flag</span>=1
-fi
+<span class="org-keyword">fi</span>
 </code></pre>
 </div>
 </div>
 </div>
 <div id="outline-container-orgfcaf2ea" class="outline-3">
-<h3 id="orgfcaf2ea"><span class="section-number-3">7.4</span> Parse options</h3>
-<div class="outline-text-3" id="text-7-4">
+<h3 id="orgfcaf2ea"><span class="section-number-3">7.5</span> Parse options</h3>
+<div class="outline-text-3" id="text-7-5">
 <p>
 We need to parse the arguments such that arguments specific to this
 script like <code>-D</code> and <code>--gui</code> get consumed here, and the ones not known
@@ -877,30 +894,28 @@ to this script get passed to <code>emacs</code>.
 basic approach of looping through all the arguments <code>"$@"</code> is used.
 </p>
 <div class="org-src-container">
-<pre><code class="src src-shell">for var<span class="org-keyword"> in</span> <span class="org-string">"$@"</span>
-do
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-    <span class="org-keyword">then</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"var : $var"</span>
-    fi
+<pre><code class="src src-shell"><span class="org-keyword">for</span> var<span class="org-keyword"> in</span> <span class="org-string">"$@"</span>
+<span class="org-keyword">do</span>
+    debug <span class="org-string">"var : $var"</span>
+
     <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-D'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
     <span class="org-keyword">then</span>
         : <span class="org-comment-delimiter"># </span><span class="org-comment">Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923</span>
           <span class="org-comment-delimiter"># </span><span class="org-comment">Do not pass -D option to emacs.</span>
-    elif <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-V'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-V'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
     <span class="org-keyword">then</span>
         eless_print_version
         <span class="org-keyword">exit</span> 0
-    elif <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
     <span class="org-keyword">then</span>
         : <span class="org-comment-delimiter"># </span><span class="org-comment">Discard the '-'; it does nothing. (for the cases where a user might do "echo foo | eless -")</span>
-    elif <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-nw'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-nw'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
     <span class="org-keyword">then</span>
         : <span class="org-comment-delimiter"># </span><span class="org-comment">Ignore the user-passed "-nw" option; we are adding it by default.</span>
-    elif <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-h'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Do not hijack --help; use that to show emacs help</span>
+    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-h'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Do not hijack --help; use that to show emacs help</span>
     <span class="org-keyword">then</span>
         <span class="org-variable-name">help</span>=1
-    elif <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'--gui'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'--gui'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
     <span class="org-keyword">then</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "--gui" option</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">http://stackoverflow.com/a/16861932/1219634</span>
@@ -908,34 +923,34 @@ do
     <span class="org-keyword">else</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">Collect all other arguments passed to eless and forward them to emacs.</span>
         <span class="org-variable-name">emacs_args</span>=<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"${emacs_args[@]}"</span> <span class="org-string">"${var}"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-    fi
-done
+    <span class="org-keyword">fi</span>
+<span class="org-keyword">done</span>
 </code></pre>
 </div>
 </div>
 </div>
 <div id="outline-container-org3b72a5c" class="outline-3">
-<h3 id="org3b72a5c"><span class="section-number-3">7.5</span> Print Help</h3>
-<div class="outline-text-3" id="text-7-5">
+<h3 id="org3b72a5c"><span class="section-number-3">7.6</span> Print Help</h3>
+<div class="outline-text-3" id="text-7-6">
 <p>
 If user asked for this script&rsquo;s help, just print it and exit with
 success code.
 </p>
 <div class="org-src-container">
-<pre><code class="src src-shell"><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">help</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<pre><code class="src src-shell"><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-builtin">help</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
 <span class="org-keyword">then</span>
     eless_print_version
     <span class="org-builtin">echo</span> <span class="org-string">"${h}"</span>
     <span class="org-keyword">exit</span> 0
-fi
+<span class="org-keyword">fi</span>
 </code></pre>
 </div>
 </div>
 </div>
 
 <div id="outline-container-org583f552" class="outline-3">
-<h3 id="org583f552"><span class="section-number-3">7.6</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
-<div class="outline-text-3" id="text-7-6">
+<h3 id="org583f552"><span class="section-number-3">7.7</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
+<div class="outline-text-3" id="text-7-7">
 <p>
 The <code>emacs_Q_view_mode</code> function is defined to launch emacs with a
 customized <code>view-mode</code>.
@@ -947,14 +962,12 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </p>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">function emacs_Q_view_mode <span class="org-rainbow-delimiters-depth-1">{</span>
+<pre><code class="src src-shell"><span class="org-keyword">function</span> <span class="org-function-name">emacs_Q_view_mode</span> <span class="org-rainbow-delimiters-depth-1">{</span>
 
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span> $<span class="org-rainbow-delimiters-depth-4">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-4">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span>
-    <span class="org-keyword">then</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,</span>
-        <span class="org-comment-delimiter"># </span><span class="org-comment">not to eless.</span>
-        <span class="org-builtin">echo</span> <span class="org-string">"Args passed to emacs_Q_view_mode : $*"</span>
-    fi
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">not to eless.</span>
+    debug <span class="org-string">"Args passed to emacs_Q_view_mode : $*"</span>
+
     <span class="org-keyword">exec</span> emacs -Q <span class="org-string">"$@"</span> <span class="org-sh-escaped-newline">\</span>
                --eval <span class="org-string">'(progn</span>
 <span class="org-string">                          &lt;&lt;emacs-config&gt;&gt;</span>
@@ -965,12 +978,12 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-org310a64d" class="outline-3">
-<h3 id="org310a64d"><span class="section-number-3">7.7</span> Emacs Configuration</h3>
-<div class="outline-text-3" id="text-7-7">
+<h3 id="org310a64d"><span class="section-number-3">7.8</span> Emacs Configuration</h3>
+<div class="outline-text-3" id="text-7-8">
 </div>
 <div id="outline-container-orgf74e1fd" class="outline-4">
-<h4 id="orgf74e1fd"><span class="section-number-4">7.7.1</span> General setup</h4>
-<div class="outline-text-4" id="text-7-7-1">
+<h4 id="orgf74e1fd"><span class="section-number-4">7.8.1</span> General setup</h4>
+<div class="outline-text-4" id="text-7-8-1">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Keep the default-directory to be the same from where</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">this script was launched from; useful during C-x C-f</span>
@@ -1001,8 +1014,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-org360fbe3" class="outline-4">
-<h4 id="org360fbe3"><span class="section-number-4">7.7.2</span> Ido setup</h4>
-<div class="outline-text-4" id="text-7-7-2">
+<h4 id="org360fbe3"><span class="section-number-4">7.8.2</span> Ido setup</h4>
+<div class="outline-text-4" id="text-7-8-2">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ido-save-directory-list-file nil<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not save ido history</span>
 <span class="org-rainbow-delimiters-depth-1">(</span>ido-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
@@ -1016,8 +1029,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-org670a0e6" class="outline-4">
-<h4 id="org670a0e6"><span class="section-number-4">7.7.3</span> Isearch setup</h4>
-<div class="outline-text-4" id="text-7-7-3">
+<h4 id="org670a0e6"><span class="section-number-4">7.8.3</span> Isearch setup</h4>
+<div class="outline-text-4" id="text-7-8-3">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> isearch-allow-scroll t<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Allow scrolling using isearch</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">DEL during isearch should edit the search string, not jump back to the previous result.</span>
@@ -1027,8 +1040,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-org6e15bf4" class="outline-4">
-<h4 id="org6e15bf4"><span class="section-number-4">7.7.4</span> Enable line truncation</h4>
-<div class="outline-text-4" id="text-7-7-4">
+<h4 id="org6e15bf4"><span class="section-number-4">7.8.4</span> Enable line truncation</h4>
+<div class="outline-text-4" id="text-7-8-4">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Truncate long lines by default</span>
 <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> truncate-partial-width-windows nil<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Respect the value of truncate-lines</span>
@@ -1038,8 +1051,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-orgca46834" class="outline-4">
-<h4 id="orgca46834"><span class="section-number-4">7.7.5</span> Highlight the current line</h4>
-<div class="outline-text-4" id="text-7-7-5">
+<h4 id="orgca46834"><span class="section-number-4">7.8.5</span> Highlight the current line</h4>
+<div class="outline-text-4" id="text-7-8-5">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>hl-line-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
@@ -1047,12 +1060,12 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-org85dc783" class="outline-4">
-<h4 id="org85dc783"><span class="section-number-4">7.7.6</span> Custom functions</h4>
-<div class="outline-text-4" id="text-7-7-6">
+<h4 id="org85dc783"><span class="section-number-4">7.8.6</span> Custom functions</h4>
+<div class="outline-text-4" id="text-7-8-6">
 </div>
 <div id="outline-container-org9055898" class="outline-5">
-<h5 id="org9055898"><span class="section-number-5">7.7.6.1</span> Keep/delete matching lines</h5>
-<div class="outline-text-5" id="text-7-7-6-1">
+<h5 id="org9055898"><span class="section-number-5">7.8.6.1</span> Keep/delete matching lines</h5>
+<div class="outline-text-5" id="text-7-8-6-1">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/keep-lines</span> <span class="org-rainbow-delimiters-depth-2">()</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1072,8 +1085,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-orgbad5745" class="outline-5">
-<h5 id="orgbad5745"><span class="section-number-5">7.7.6.2</span> Frame and font re-sizing</h5>
-<div class="outline-text-5" id="text-7-7-6-2">
+<h5 id="orgbad5745"><span class="section-number-5">7.8.6.2</span> Frame and font re-sizing</h5>
+<div class="outline-text-5" id="text-7-8-6-2">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-width-half</span> <span class="org-rainbow-delimiters-depth-2">(</span>double<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1097,8 +1110,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-org6e29c30" class="outline-5">
-<h5 id="org6e29c30"><span class="section-number-5">7.7.6.3</span> Revert buffer in <code>view-mode</code></h5>
-<div class="outline-text-5" id="text-7-7-6-3">
+<h5 id="org6e29c30"><span class="section-number-5">7.8.6.3</span> Revert buffer in <code>view-mode</code></h5>
+<div class="outline-text-5" id="text-7-8-6-3">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/revert-buffer-retain-view-mode</span> <span class="org-rainbow-delimiters-depth-2">()</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1111,8 +1124,8 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 </div>
 <div id="outline-container-org88202a6" class="outline-5">
-<h5 id="org88202a6"><span class="section-number-5">7.7.6.4</span> Detect if <code>diff-mode</code> should be enabled</h5>
-<div class="outline-text-5" id="text-7-7-6-4">
+<h5 id="org88202a6"><span class="section-number-5">7.8.6.4</span> Detect if <code>diff-mode</code> should be enabled</h5>
+<div class="outline-text-5" id="text-7-8-6-4">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-diff-mode-maybe</span> <span class="org-rainbow-delimiters-depth-2">()</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>max-line 10<span class="org-rainbow-delimiters-depth-4">)</span>                <span class="org-comment-delimiter">;</span><span class="org-comment">Search first MAX-LINE lines of the buffer</span>
@@ -1155,7 +1168,7 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the be
 </div>
 <ol class="org-ol">
 <li><a id="orgb79e34c"></a>Enable <code>whitespace-mode</code> in <code>diff-mode</code><br />
-<div class="outline-text-6" id="text-7-7-6-4-1">
+<div class="outline-text-6" id="text-7-8-6-4-1">
 <p>
 Enable <code>whitespace-mode</code> to easily detect presence of tabs and
 trailing spaces in diffs.
@@ -1176,8 +1189,8 @@ trailing spaces in diffs.
 </ol>
 </div>
 <div id="outline-container-org677b5a7" class="outline-5">
-<h5 id="org677b5a7"><span class="section-number-5">7.7.6.5</span> Detect if ANSI codes need to be converted to colors</h5>
-<div class="outline-text-5" id="text-7-7-6-5">
+<h5 id="org677b5a7"><span class="section-number-5">7.8.6.5</span> Detect if ANSI codes need to be converted to colors</h5>
+<div class="outline-text-5" id="text-7-8-6-5">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-ansi-color-maybe</span> <span class="org-rainbow-delimiters-depth-2">()</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">save-excursion</span>
@@ -1200,8 +1213,8 @@ trailing spaces in diffs.
 </div>
 </div>
 <div id="outline-container-orga766de2" class="outline-5">
-<h5 id="orga766de2"><span class="section-number-5">7.7.6.6</span> &ldquo;Do The Right Thing&rdquo; Kill</h5>
-<div class="outline-text-5" id="text-7-7-6-6">
+<h5 id="orga766de2"><span class="section-number-5">7.8.6.6</span> &ldquo;Do The Right Thing&rdquo; Kill</h5>
+<div class="outline-text-5" id="text-7-8-6-6">
 <p>
 Before killing emacs, loop through all the buffers and mark all
 the <code>view-mode</code> buffers as being unmodified (regardless of if they
@@ -1242,8 +1255,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-org895b28d" class="outline-5">
-<h5 id="org895b28d"><span class="section-number-5">7.7.6.7</span> <code>dired-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-7-6-7">
+<h5 id="org895b28d"><span class="section-number-5">7.8.6.7</span> <code>dired-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-8-6-7">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/dired-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">dired-find-file is bound to "f" and "RET" by default</span>
@@ -1259,8 +1272,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-orga9eb0d9" class="outline-5">
-<h5 id="orga9eb0d9"><span class="section-number-5">7.7.6.8</span> <code>Man-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-7-6-8">
+<h5 id="orga9eb0d9"><span class="section-number-5">7.8.6.8</span> <code>Man-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-8-6-8">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/Man-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
   <span class="org-rainbow-delimiters-depth-2">(</span>define-key Man-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"Q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> quit-window<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1271,8 +1284,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-orgf9b0104" class="outline-5">
-<h5 id="orgf9b0104"><span class="section-number-5">7.7.6.9</span> <code>Info-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-7-6-9">
+<h5 id="orgf9b0104"><span class="section-number-5">7.8.6.9</span> <code>Info-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-8-6-9">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/Info-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
   <span class="org-rainbow-delimiters-depth-2">(</span>define-key Info-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"Q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> quit-window<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1283,8 +1296,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-org930f846" class="outline-5">
-<h5 id="org930f846"><span class="section-number-5">7.7.6.10</span> <code>tar-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-7-6-10">
+<h5 id="org930f846"><span class="section-number-5">7.8.6.10</span> <code>tar-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-8-6-10">
 <p>
 When <code>eless</code> is passed an archive file as an argument, the <code>tar-mode</code>
 is enabled automatically that will do the job of showing the archive
@@ -1307,8 +1320,8 @@ eless bar.tar.gz
 </div>
 </div>
 <div id="outline-container-orga69f2d9" class="outline-4">
-<h4 id="orga69f2d9"><span class="section-number-4">7.7.7</span> Auto-setting of major modes</h4>
-<div class="outline-text-4" id="text-7-7-7">
+<h4 id="orga69f2d9"><span class="section-number-4">7.8.7</span> Auto-setting of major modes</h4>
+<div class="outline-text-4" id="text-7-8-7">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">cond</span>
  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>derived-mode-p <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">quote</span> dired-mode<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>eless/dired-mode-customization<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1326,8 +1339,8 @@ eless bar.tar.gz
 </div>
 </div>
 <div id="outline-container-org114edb0" class="outline-4">
-<h4 id="org114edb0"><span class="section-number-4">7.7.8</span> Key bindings</h4>
-<div class="outline-text-4" id="text-7-7-8">
+<h4 id="org114edb0"><span class="section-number-4">7.8.8</span> Key bindings</h4>
+<div class="outline-text-4" id="text-7-8-8">
 <div class="org-src-container">
 <pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">with-eval-after-load</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> view<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"!"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/delete-matching-lines<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
@@ -1369,8 +1382,8 @@ eless bar.tar.gz
 </div>
 </div>
 <div id="outline-container-orgc9107ee" class="outline-4">
-<h4 id="orgc9107ee"><span class="section-number-4">7.7.9</span> User config override</h4>
-<div class="outline-text-4" id="text-7-7-9">
+<h4 id="orgc9107ee"><span class="section-number-4">7.8.9</span> User config override</h4>
+<div class="outline-text-4" id="text-7-8-9">
 <p>
 If an <code>elesscfg</code> file is present in the <code>user-emacs-directory</code>
 (default value is <code>~/.emacs.d/</code>), load that. As the user can be using
@@ -1391,12 +1404,12 @@ key-bindings in this file.
 </div>
 </div>
 <div id="outline-container-org1fcedd6" class="outline-3">
-<h3 id="org1fcedd6"><span class="section-number-3">7.8</span> Input/Output Scenarios</h3>
-<div class="outline-text-3" id="text-7-8">
+<h3 id="org1fcedd6"><span class="section-number-3">7.9</span> Input/Output Scenarios</h3>
+<div class="outline-text-3" id="text-7-9">
 </div>
 <div id="outline-container-org4e41e6e" class="outline-4">
-<h4 id="org4e41e6e"><span class="section-number-4">7.8.1</span> Output is going to a pipe</h4>
-<div class="outline-text-4" id="text-7-8-1">
+<h4 id="org4e41e6e"><span class="section-number-4">7.9.1</span> Output is going to a pipe</h4>
+<div class="outline-text-4" id="text-7-9-1">
 <p>
 This scenario is not supported at the moment. There
 <a href="https://github.com/kaushalmodi/eless/issues/4">is a plan to support it in future</a> though.
@@ -1419,8 +1432,8 @@ is being piped to something else.
 </div>
 </div>
 <div id="outline-container-org7b5fad3" class="outline-4">
-<h4 id="org7b5fad3"><span class="section-number-4">7.8.2</span> Input is coming from a pipe</h4>
-<div class="outline-text-4" id="text-7-8-2">
+<h4 id="org7b5fad3"><span class="section-number-4">7.9.2</span> Input is coming from a pipe</h4>
+<div class="outline-text-4" id="text-7-9-2">
 <div class="org-src-container">
 <pre><code class="src src-shell">    <span class="org-comment-delimiter"># </span><span class="org-comment">Below if condition is reached when you do this:</span>
     <span class="org-comment-delimiter">#   </span><span class="org-comment">grep 'foo' bar.txt | eless, or</span>
@@ -1428,46 +1441,38 @@ is being piped to something else.
     <span class="org-comment-delimiter"># </span><span class="org-comment">i.e. Input to eless is coming through a pipe (from grep, in above example)</span>
     <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">input_from_pipe_flag</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
     <span class="org-keyword">then</span>
-        <span class="org-variable-name">tempfile</span>=<span class="org-string">"$(mktemp emacs-stdin-"$USER".XXXXXXX --tmpdir)"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-        <span class="org-keyword">then</span>
-            <span class="org-builtin">echo</span> <span class="org-string">"Temp File : $tempfile"</span>
-        fi
+        <span class="org-variable-name">tempfile</span>=<span class="org-string">"$(</span><span class="org-sh-quoted-exec">mktemp</span><span class="org-string"> emacs-stdin-"$USER".XXXXXXX --tmpdir)"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
+        debug <span class="org-string">"Temp File : $tempfile"</span>
         <span class="org-builtin">echo</span> <span class="org-string">"${piped_data}"</span> &gt; <span class="org-string">"${tempfile}"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
 
         <span class="org-comment-delimiter"># </span><span class="org-comment">Parse the first line of the piped data to check if it's a man page</span>
-        <span class="org-variable-name">first_line_piped_data</span>=$<span class="org-rainbow-delimiters-depth-1">(</span>head -n 1 <span class="org-string">"${tempfile}"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-        <span class="org-keyword">then</span>
-            <span class="org-builtin">echo</span> <span class="org-string">"first_line_piped_data = ${first_line_piped_data}"</span>
-        fi
+        <span class="org-variable-name">first_line_piped_data</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">head</span> -n 1 <span class="org-string">"${tempfile}"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+        debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}"</span>
 
         <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of man pages is assumed to be</span>
         <span class="org-comment-delimiter">#   </span><span class="org-comment">FOO(1)  optional something something FOO(1)</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass, so OR it with</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">"true" so that "set -e" does not kill the script at this point.</span>
-        <span class="org-variable-name">man_page</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">echo</span> <span class="org-string">"${first_line_piped_data}"</span> | grep -Po <span class="org-string">'^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)'</span> || true<span class="org-rainbow-delimiters-depth-1">)</span>
+        <span class="org-variable-name">man_page</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> | grep -Po <span class="org-string">'^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)'</span> || true<span class="org-rainbow-delimiters-depth-1">)</span>
 
         <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of info manuals is assumed to be</span>
         <span class="org-comment-delimiter">#   </span><span class="org-comment">/path/to/some.info or /path/to/some.info.gz</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass, so OR it with</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">"true" so that "set -e" does not kill the script at this point.</span>
-        <span class="org-variable-name">info_man</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-builtin">echo</span> <span class="org-string">"${first_line_piped_data}"</span> | grep -Po <span class="org-string">'^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'</span> || true<span class="org-rainbow-delimiters-depth-1">)</span>
+        <span class="org-variable-name">info_man</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> | grep -Po <span class="org-string">'^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'</span> || true<span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
 </div>
 </div>
 <div id="outline-container-org67dd9b5" class="outline-5">
-<h5 id="org67dd9b5"><span class="section-number-5">7.8.2.1</span> Input is piped from <code>man</code> command</h5>
-<div class="outline-text-5" id="text-7-8-2-1">
+<h5 id="org67dd9b5"><span class="section-number-5">7.9.2.1</span> Input is piped from <code>man</code> command</h5>
+<div class="outline-text-5" id="text-7-9-2-1">
 <div class="org-src-container">
-<pre><code class="src src-shell">        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> ! -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">man_page</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<pre><code class="src src-shell">        <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">man_page</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
         <span class="org-keyword">then</span>
             <span class="org-comment-delimiter"># </span><span class="org-comment">After setting PAGER variable to eless, try something like `man grep'.</span>
             <span class="org-comment-delimiter"># </span><span class="org-comment">That will launch the man page in eless.</span>
-            <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-            <span class="org-keyword">then</span>
-                <span class="org-builtin">echo</span> <span class="org-string">"Man Page = ${man_page}"</span>
-            fi
+            debug <span class="org-string">"Man Page = ${man_page}"</span>
+
             <span class="org-variable-name">cmd</span>=<span class="org-string">"emacs_Q_view_mode \</span>
 <span class="org-string">                         ${emacs_args[*]} \</span>
 <span class="org-string">                         --eval '(progn</span>
@@ -1488,17 +1493,15 @@ was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this iss
 </div>
 </div>
 <div id="outline-container-orgbdffa84" class="outline-5">
-<h5 id="orgbdffa84"><span class="section-number-5">7.8.2.2</span> Input is piped from <code>info</code> command</h5>
-<div class="outline-text-5" id="text-7-8-2-2">
+<h5 id="orgbdffa84"><span class="section-number-5">7.9.2.2</span> Input is piped from <code>info</code> command</h5>
+<div class="outline-text-5" id="text-7-9-2-2">
 <div class="org-src-container">
-<pre><code class="src src-shell">        elif <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> ! -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">info_man</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<pre><code class="src src-shell">        <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">info_man</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
         <span class="org-keyword">then</span>
             <span class="org-comment-delimiter"># </span><span class="org-comment">Try something like `info emacs | eless'.</span>
             <span class="org-comment-delimiter"># </span><span class="org-comment">That will launch the Info manual in eless.</span>
-            <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-            <span class="org-keyword">then</span>
-                <span class="org-builtin">echo</span> <span class="org-string">"Info Manual = ${info_man}"</span>
-            fi
+            debug <span class="org-string">"Info Manual = ${info_man}"</span>
+
             <span class="org-variable-name">cmd</span>=<span class="org-string">"emacs_Q_view_mode \</span>
 <span class="org-string">                         ${emacs_args[*]} \</span>
 <span class="org-string">                         --eval '(progn</span>
@@ -1508,8 +1511,8 @@ was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this iss
 </div>
 </div>
 <div id="outline-container-orgef5af72" class="outline-5">
-<h5 id="orgef5af72"><span class="section-number-5">7.8.2.3</span> Input is piped from something else</h5>
-<div class="outline-text-5" id="text-7-8-2-3">
+<h5 id="orgef5af72"><span class="section-number-5">7.9.2.3</span> Input is piped from something else</h5>
+<div class="outline-text-5" id="text-7-9-2-3">
 <p>
 This scenario could be anything, like:
 </p>
@@ -1526,31 +1529,29 @@ stream using <code>emacs_Q_view_mode</code>.
 </p>
 <div class="org-src-container">
 <pre><code class="src src-shell">        <span class="org-keyword">else</span> <span class="org-comment-delimiter"># </span><span class="org-comment">No man page or info manual detected</span>
-            <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">debug</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
-            <span class="org-keyword">then</span>
-                <span class="org-builtin">echo</span> <span class="org-string">"No man page or info manual detected"</span>
-            fi
+            debug <span class="org-string">"No man page or info manual detected"</span>
+
             <span class="org-variable-name">cmd</span>=<span class="org-string">"emacs_Q_view_mode ${tempfile} \</span>
 <span class="org-string">                         ${emacs_args[*]} \</span>
 <span class="org-string">                         --eval '(progn</span>
 <span class="org-string">                                   (set-visited-file-name nil)</span>
 <span class="org-string">                                   (rename-buffer \"*Stdin*\" :unique))'"</span>
 
-        fi
+        <span class="org-keyword">fi</span>
 </code></pre>
 </div>
 </div>
 </div>
 </div>
 <div id="outline-container-orgb871e69" class="outline-4">
-<h4 id="orgb871e69"><span class="section-number-4">7.8.3</span> Input is an argument to the script</h4>
-<div class="outline-text-4" id="text-7-8-3">
+<h4 id="orgb871e69"><span class="section-number-4">7.9.3</span> Input is an argument to the script</h4>
+<div class="outline-text-4" id="text-7-9-3">
 <div class="org-src-container">
 <pre><code class="src src-shell">        <span class="org-comment-delimiter"># </span><span class="org-comment">Below else condition is reached when you do this:</span>
         <span class="org-comment-delimiter">#   </span><span class="org-comment">eless foo.txt</span>
     <span class="org-keyword">else</span>
         <span class="org-variable-name">cmd</span>=<span class="org-string">"emacs_Q_view_mode ${emacs_args[*]}"</span>
-    fi
+    <span class="org-keyword">fi</span>
 </code></pre>
 </div>
 </div>
@@ -1712,7 +1713,7 @@ push them directly using <code>git</code> or manually edit those here.
 <h3 id="orga5e62e5"><span class="section-number-3">9.2</span> Example <code>eless</code> config in <code>tcsh</code></h3>
 <div class="outline-text-3" id="text-9-2">
 <div class="org-src-container">
-<pre><code class="src src-shell"><span class="org-builtin">setenv</span> PAGER eless <span class="org-comment-delimiter"># </span><span class="org-comment">Show man pages using eless</span>
+<pre><code class="src src-shell">setenv PAGER eless <span class="org-comment-delimiter"># </span><span class="org-comment">Show man pages using eless</span>
 
 <span class="org-builtin">alias</span> info  <span class="org-string">'\info \!* | eless'</span>
 
