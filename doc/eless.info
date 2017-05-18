@@ -292,7 +292,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     bab55a3
+     ca170fb
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -1136,17 +1136,29 @@ File: eless.info,  Node: Dependencies,  Next: Steps to build eless and documenta
 8.2.1 Dependencies
 ------------------
 
-There are virtually no dependencies, except of course that you need org.
+Here’s a short list of dependencies if you would like to build eless and
+the documentation from eless.org:
+
+  1. Org version 9.x – Latest version of Org from Melpa or Org Elpa
+  2. htmlize package for syntax highlighting of code in html exports –
+     Melpa
+  3. rainbow-delimiters package for syntax highlighting of parenthese in
+     elisp code in html exports – Melpa
+
+   The recommended way is to run emacs -Q and then run M-x
+eless-install-dependencies to install the dependencies in your
+temporary-file-directory.  _You can choose to even install these
+manually in your emacs config if you like._
 
    I used the latest emacs and org-mode versions built from their master
 branches for this project.  So if any of the below steps do not work for
-you, open an issue.
+you, open an issue!
 
    Talking about dependencies, this project builds *everything* from
 eless.org file, the eless script _plus_ all the HTML, Info
 documentation, README.org, CONTRIBUTING.org, and even the Wiki pages.
 So before running M-x eless-build mentioned in below build steps, you
-need to:
+also need to:
      cd doc/
      git clone https://github.com/kaushalmodi/eless.wiki.git
 
@@ -1156,33 +1168,54 @@ File: eless.info,  Node: Steps to build eless and documentation,  Prev: Dependen
 8.2.2 Steps to build eless and documentation
 --------------------------------------------
 
-   • Open eless.org.
+   • emacs -Q
+   • *First* open a non-org file like build/build.el.
+        • The emphasis on opening a non-org file is so that the
+          older-than-required version of org in emacs -Q doesn’t get
+          auto-loaded.  The next step would be to install newer version
+          of org to a temp location, and that step will fail due to
+          mixed org versions.
         • You will be prompted to mark certain _Local Variables_
-          settings as safe:
-               (org-confirm-babel-evaluate lambda
-                                           (lang body)
-                                           (let
-                                               ((unsafe t))
-                                             (when
-                                                 (or
-                                                  (string= lang "org")
-                                                  (string= body "git rev-parse HEAD | head -c 7"))
-                                               (setq unsafe nil))
-                                             unsafe))
-               (eval load
-                     (expand-file-name "build/build.el"))
-               (org-html-htmlize-font-prefix . "org-")
-               (org-html-htmlize-output-type . css)
-               (org-src-preserve-indentation . t)
+          settings as safe.  You can review the .dir-locals.el file in
+          this project for that.
+               (nil
+                . ((nil . ((indent-tabs-mode . nil)
+                           (fill-column . 70)
+                           (eval . (progn
+                                     (when (buffer-file-name)
+                                       (require 'vc-git) ;For `vc-git-root'
+                                       (autoload
+                                         'eless-build (expand-file-name "build/build.el" (vc-git-root (buffer-file-name)))
+                                         "Use eless.org to generate the `eless' script and documentation."
+                                         :interactive)
+                                       (autoload
+                                         'eless-install-dependencies (expand-file-name "build/build.el" (vc-git-root (buffer-file-name)))
+                                         "Install dependencies for building `eless', in `eless-package-user-dir'."
+                                         :interactive))))))
+                   (org-mode . ((mode . auto-fill)))))
         • Approving that permanently will exclamation mark will ensure
-          that the build.el gets loaded each time you open eless.org.
-          In addition it also enables auto-evaluating of the git rev-parse
-              HEAD command and setting of few org variables.
-   • Do M-x eless-build.  _This command got defined when the
-     build/build.el got auto-loaded in the above step._
+          that you will be able to run M-x eless-install-dependencies or
+M-x
+              eless-build after this point.
+   • Do M-x eless-install-dependencies.
+        • You will need to do this step only for the very first time you
+          start working on this project.
+        • This step will also _autoload_ build/build.el.
+   • Do M-x eless-build.
    • Run the tangled eless through shellcheck
      (http://www.shellcheck.net/) to ensure that there are no errors.
    • Understand the changes made in eless, _plus_ all the other files.
+        • I build the HTML documentation using the Org version from
+          master branch.  So if you build the HTML documentation using
+          the latest stable as of today (version 9.0.7), your HTML
+          export will look a bit different (absence of nested <code>
+          blocks inside <pre>), but that’s OK.
+        • Also the randomly generated hyperlinks and section numbers (if
+          you added/removed/moved documentation sections) will be
+          different in the HTML and Info exports.
+        • ..  and the git rev-parse returned commit hash will be
+          different.
+        • Other than that, you shouldn’t see any unexpected changes.
    • Provide a PR.
    • If changes are only to the Wiki, I believe you can push them
      directly using git or manually edit those here
@@ -1289,10 +1322,10 @@ Node: Contributing40176
 Node: How to help debug40544
 Node: Development41188
 Node: Dependencies41376
-Node: Steps to build eless and documentation42114
-Node: Other Wikis44167
-Node: Home44319
-Node: Example eless config in tcsh45055
+Node: Steps to build eless and documentation42657
+Node: Other Wikis46061
+Node: Home46213
+Node: Example eless config in tcsh46949
 
 End Tag Table
 

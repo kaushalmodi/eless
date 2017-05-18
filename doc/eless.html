@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-18 Thu 13:21 -->
+<!-- 2017-05-18 Thu 13:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -685,7 +685,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">bab55a3
+<pre><code class="src src-shell">ca170fb
 </code></pre>
 </div>
 <p>
@@ -1602,14 +1602,29 @@ This guide is for you if you&rsquo;d like to do any of the below:
 <h4 id="org0a78374"><span class="section-number-4">8.2.1</span> Dependencies</h4>
 <div class="outline-text-4" id="text-8-2-1">
 <p>
-There are virtually no dependencies, except of course that you need
-org.
+Here&rsquo;s a short list of dependencies if you would like to build <code>eless</code>
+and the documentation from <code>eless.org</code>:
+</p>
+
+<ol class="org-ol">
+<li>Org version 9.x &#x2013; Latest version of Org from Melpa or Org Elpa</li>
+<li><code>htmlize</code> package for syntax highlighting of code in html exports
+&#x2013; Melpa</li>
+<li><code>rainbow-delimiters</code> package for syntax highlighting of parenthese
+in elisp code in html exports &#x2013; Melpa</li>
+</ol>
+
+<p>
+The recommended way is to run <code>emacs -Q</code> and then run <code>M-x
+eless-install-dependencies</code> to install the dependencies in your
+<code>temporary-file-directory</code>. <i>You can choose to even install these
+manually in your emacs config if you like.</i>
 </p>
 
 <p>
-I used the latest emacs and org-mode versions built from their master
+I used the latest emacs and org-mode versions built from their <code>master</code>
 branches for this project. So if any of the below steps do not work
-for you, open an issue.
+for you, open an issue!
 </p>
 
 <p>
@@ -1617,7 +1632,7 @@ Talking about dependencies, this project builds <b>everything</b> from
 <code>eless.org</code> file, the <code>eless</code> script <i>plus</i> all the HTML, Info
 documentation, <code>README.org</code>, <code>CONTRIBUTING.org</code>, and even the Wiki
 pages. So before running <code>M-x eless-build</code> mentioned in below build
-steps, you need to:
+steps, you also need to:
 </p>
 <div class="org-src-container">
 <pre><code class="src src-shell"><span class="org-builtin">cd</span> doc/
@@ -1630,40 +1645,63 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
 <h4 id="org6ed66b9"><span class="section-number-4">8.2.2</span> Steps to build <code>eless</code> and documentation</h4>
 <div class="outline-text-4" id="text-8-2-2">
 <ul class="org-ul">
-<li>Open <code>eless.org</code>.
+<li><code>emacs -Q</code></li>
+<li><b>First</b> open a non-org file like <code>build/build.el</code>.
 <ul class="org-ul">
+<li>The emphasis on opening a non-org file is so that the
+older-than-required version of <code>org</code> in <code>emacs -Q</code> doesn&rsquo;t get
+auto-loaded.  The next step would be to install newer version of
+org to a temp location, and that step will fail due to mixed org
+versions.</li>
 <li><p>
 You will be prompted to mark certain <i>Local Variables</i> settings as
-safe:
+safe.  You can review the <code>.dir-locals.el</code> file in this project
+for that.
 </p>
 <div class="org-src-container">
-<pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>org-confirm-babel-evaluate lambda
-                            <span class="org-rainbow-delimiters-depth-2">(</span>lang body<span class="org-rainbow-delimiters-depth-2">)</span>
-                            <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span>
-                                <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>unsafe t<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-                              <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">when</span>
-                                  <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">or</span>
-                                   <span class="org-rainbow-delimiters-depth-5">(</span>string= lang <span class="org-string">"org"</span><span class="org-rainbow-delimiters-depth-5">)</span>
-                                   <span class="org-rainbow-delimiters-depth-5">(</span>string= body <span class="org-string">"git rev-parse HEAD | head -c 7"</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-                                <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">setq</span> unsafe nil<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-                              unsafe<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>eval load
-      <span class="org-rainbow-delimiters-depth-2">(</span>expand-file-name <span class="org-string">"build/build.el"</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>org-html-htmlize-font-prefix . <span class="org-string">"org-"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>org-html-htmlize-output-type . css<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>org-src-preserve-indentation . t<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre><code class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>nil
+ . <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>nil . <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-rainbow-delimiters-depth-5">(</span>indent-tabs-mode . nil<span class="org-rainbow-delimiters-depth-5">)</span>
+            <span class="org-rainbow-delimiters-depth-5">(</span>fill-column . 70<span class="org-rainbow-delimiters-depth-5">)</span>
+            <span class="org-rainbow-delimiters-depth-5">(</span>eval . <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">progn</span>
+                      <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-8">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-8">)</span>
+                        <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">require</span> '<span class="org-constant">vc-git</span><span class="org-rainbow-delimiters-depth-8">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">For `</span><span class="org-comment"><span class="org-constant">vc-git-root</span></span><span class="org-comment">'</span>
+                        <span class="org-rainbow-delimiters-depth-8">(</span>autoload
+                          'eless-build <span class="org-rainbow-delimiters-depth-9">(</span>expand-file-name <span class="org-string">"build/build.el"</span> <span class="org-rainbow-delimiters-depth-1">(</span>vc-git-root <span class="org-rainbow-delimiters-depth-2">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span>
+                          <span class="org-doc">"Use eless.org to generate the `</span><span class="org-doc"><span class="org-constant">eless</span></span><span class="org-doc">' script and documentation."</span>
+                          <span class="org-builtin">:interactive</span><span class="org-rainbow-delimiters-depth-8">)</span>
+                        <span class="org-rainbow-delimiters-depth-8">(</span>autoload
+                          'eless-install-dependencies <span class="org-rainbow-delimiters-depth-9">(</span>expand-file-name <span class="org-string">"build/build.el"</span> <span class="org-rainbow-delimiters-depth-1">(</span>vc-git-root <span class="org-rainbow-delimiters-depth-2">(</span>buffer-file-name<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span>
+                          <span class="org-doc">"Install dependencies for building `</span><span class="org-doc"><span class="org-constant">eless</span></span><span class="org-doc">', in `</span><span class="org-doc"><span class="org-constant">eless-package-user-dir</span></span><span class="org-doc">'."</span>
+                          <span class="org-builtin">:interactive</span><span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span>org-mode . <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-rainbow-delimiters-depth-5">(</span>mode . auto-fill<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
 </div></li>
 <li>Approving that permanently will exclamation mark will ensure that
-the <code>build.el</code> gets loaded each time you open <code>eless.org</code>. In
-addition it also enables auto-evaluating of the <code>git rev-parse
-    HEAD</code> command and setting of few org variables.</li>
+you will be able to run <code>M-x eless-install-dependencies</code> or <code>M-x
+    eless-build</code> after this point.</li>
 </ul></li>
-<li>Do <code>M-x eless-build</code>. <i>This command got defined when the
-<code>build/build.el</code> got auto-loaded in the above step.</i></li>
+<li>Do <code>M-x eless-install-dependencies</code>.
+<ul class="org-ul">
+<li>You will need to do this step only for the very first time you
+start working on this project.</li>
+<li>This step will also <i>autoload</i> <code>build/build.el</code>.</li>
+</ul></li>
+<li>Do <code>M-x eless-build</code>.</li>
 <li>Run the tangled <code>eless</code> through <a href="http://www.shellcheck.net/">shellcheck</a> to ensure that there are
 no errors.</li>
-<li>Understand the changes made in <code>eless</code>, <i>plus</i> all the other files.</li>
+<li>Understand the changes made in <code>eless</code>, <i>plus</i> all the other files.
+<ul class="org-ul">
+<li>I build the HTML documentation using the Org version from <code>master</code>
+branch. So if you build the HTML documentation using the latest
+stable as of today (version <code>9.0.7</code>), your HTML export will look a
+bit different (absence of nested <code>&lt;code&gt;</code> blocks inside <code>&lt;pre&gt;</code>),
+but that&rsquo;s OK.</li>
+<li>Also the randomly generated hyperlinks and section numbers (if you
+added/removed/moved documentation sections) will be different in
+the HTML and Info exports.</li>
+<li>.. and the <code>git rev-parse</code> returned commit hash will be different.</li>
+<li>Other than that, you shouldn&rsquo;t see any unexpected changes.</li>
+</ul></li>
 <li>Provide a PR.</li>
 <li>If changes are only to the Wiki, I believe you can push them
 directly using <code>git</code> or manually edit those <a href="https://github.com/kaushalmodi/eless/wiki">here</a>. /I have to yet
