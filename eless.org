@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-17 09:51:37 kmodi>
+# Time-stamp: <2017-05-18 13:20:51 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -183,7 +183,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-d619d0e
+bab55a3
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -641,7 +641,7 @@ at the time of quitting.
   (interactive "P")
   (let ((num-non-special-buffers 0))
     (dolist (buf (buffer-list))
-      (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
+      (unless (string-match-p "\\`[ *]" (buffer-name buf)) ;Do not count buffers with names starting with space or *
         (setq num-non-special-buffers (+ 1 num-non-special-buffers)))
       (with-current-buffer buf
         ;; Mark all view-mode buffers as "not modified" to prevent save prompt on

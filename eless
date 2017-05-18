@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='d619d0e'
+eless_git_hash='bab55a3'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -371,7 +371,7 @@ function emacs_Q_view_mode {
                             (interactive "P")
                             (let ((num-non-special-buffers 0))
                               (dolist (buf (buffer-list))
-                                (unless (string-match-p "\\`\\s-*\\*" (buffer-name buf)) ;Do not count buffers with names starting with space or *
+                                (unless (string-match-p "\\`[ *]" (buffer-name buf)) ;Do not count buffers with names starting with space or *
                                   (setq num-non-special-buffers (+ 1 num-non-special-buffers)))
                                 (with-current-buffer buf
                                   ;; Mark all view-mode buffers as "not modified" to prevent save prompt on

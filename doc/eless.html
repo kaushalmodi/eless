@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-16 Tue 23:15 -->
+<!-- 2017-05-18 Thu 13:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -685,7 +685,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">d619d0e
+<pre><code class="src src-shell">bab55a3
 </code></pre>
 </div>
 <p>
@@ -1233,7 +1233,7 @@ at the time of quitting.
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>num-non-special-buffers 0<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
     <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">dolist</span> <span class="org-rainbow-delimiters-depth-4">(</span>buf <span class="org-rainbow-delimiters-depth-5">(</span>buffer-list<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-5">(</span>string-match-p <span class="org-string">"</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">`</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">s-*</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">*"</span> <span class="org-rainbow-delimiters-depth-6">(</span>buffer-name buf<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not count buffers with names starting with space or *</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-5">(</span>string-match-p <span class="org-string">"</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">`[ *]"</span> <span class="org-rainbow-delimiters-depth-6">(</span>buffer-name buf<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not count buffers with names starting with space or *</span>
         <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">setq</span> num-non-special-buffers <span class="org-rainbow-delimiters-depth-6">(</span>+ 1 num-non-special-buffers<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
       <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">with-current-buffer</span> buf
         <span class="org-comment-delimiter">;; </span><span class="org-comment">Mark all view-mode buffers as "not modified" to prevent save prompt on</span>
