@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-18 13:42:24 kmodi>
+# Time-stamp: <2017-05-18 14:00:42 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -183,7 +183,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-ca170fb
+d665210
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -949,9 +949,9 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
     safe.  You can review the =.dir-locals.el= file in this project
     for that.
     #+INCLUDE: ".dir-locals.el" :src emacs-lisp
-  - Approving that permanently will exclamation mark will ensure that
-    you will be able to run =M-x eless-install-dependencies= or =M-x
-    eless-build= after this point.
+  - Approving that permanently with the exclamation mark will ensure
+    that you will be able to run =M-x eless-install-dependencies= or
+    =M-x eless-build= after this point.
 - Do =M-x eless-install-dependencies=.
   - You will need to do this step only for the very first time you
     start working on this project.

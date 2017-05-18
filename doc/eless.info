@@ -292,7 +292,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     ca170fb
+     d665210
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -1193,10 +1193,10 @@ File: eless.info,  Node: Steps to build eless and documentation,  Prev: Dependen
                                          "Install dependencies for building `eless', in `eless-package-user-dir'."
                                          :interactive))))))
                    (org-mode . ((mode . auto-fill)))))
-        • Approving that permanently will exclamation mark will ensure
-          that you will be able to run M-x eless-install-dependencies or
-M-x
-              eless-build after this point.
+        • Approving that permanently with the exclamation mark will
+          ensure that you will be able to run
+          M-x eless-install-dependencies or M-x eless-build after this
+          point.
    • Do M-x eless-install-dependencies.
         • You will need to do this step only for the very first time you
           start working on this project.
@@ -1323,9 +1323,9 @@ Node: How to help debug40544
 Node: Development41188
 Node: Dependencies41376
 Node: Steps to build eless and documentation42657
-Node: Other Wikis46061
-Node: Home46213
-Node: Example eless config in tcsh46949
+Node: Other Wikis46071
+Node: Home46223
+Node: Example eless config in tcsh46959
 
 End Tag Table
 

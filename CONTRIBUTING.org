@@ -71,9 +71,9 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
                               :interactive))))))
         (org-mode . ((mode . auto-fill)))))
     #+END_SRC
-  - Approving that permanently will exclamation mark will ensure that
-    you will be able to run =M-x eless-install-dependencies= or =M-x
-        eless-build= after this point.
+  - Approving that permanently with the exclamation mark will ensure
+    that you will be able to run =M-x eless-install-dependencies= or
+    =M-x eless-build= after this point.
 - Do =M-x eless-install-dependencies=.
   - You will need to do this step only for the very first time you
     start working on this project.
