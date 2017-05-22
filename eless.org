@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-18 14:00:42 kmodi>
+# Time-stamp: <2017-05-22 15:55:15 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -183,7 +183,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-d665210
+f06aef4
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -567,6 +567,7 @@ function emacs_Q_view_mode {
       (let ((diff-mode-enable))
         (goto-char (point-min))
         (when (and ;First header line of unified/context diff begins with "--- "/"*** "
+               (thing-at-point (quote line)) ;Prevent error in string-match-p if the buffer is empty
                (string-match-p "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
                ;; Second header line of unified/context diff begins with "+++ "/"--- "
                (progn

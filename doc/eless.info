@@ -292,7 +292,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     d665210
+     f06aef4
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -704,6 +704,7 @@ File: eless.info,  Node: Detect if diff-mode should be enabled,  Next: Detect if
            (let ((diff-mode-enable))
              (goto-char (point-min))
              (when (and ;First header line of unified/context diff begins with "--- "/"*** "
+                    (thing-at-point (quote line)) ;Prevent error in string-match-p if the buffer is empty
                     (string-match-p "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
                     ;; Second header line of unified/context diff begins with "+++ "/"--- "
                     (progn
@@ -1302,30 +1303,30 @@ Node: Keep/delete matching lines19617
 Node: Frame and font re-sizing20305
 Node: Revert buffer in view-mode21316
 Node: Detect if diff-mode should be enabled21781
-Node: Detect if ANSI codes need to be converted to colors24701
-Node: ``Do The Right Thing'' Kill25858
-Node: dired-mode setup27581
-Node: Man-mode setup28391
-Node: Info-mode setup28824
-Node: tar-mode setup29262
-Node: Auto-setting of major modes29955
-Node: Key bindings30814
-Node: User config override33326
-Node: Input/Output Scenarios33940
-Node: Output is going to a pipe34196
-Node: Input is coming from a pipe34889
-Node: Input is piped from man command36831
-Node: Input is piped from info command38207
-Node: Input is piped from something else38915
-Node: Input is an argument to the script39788
-Node: Contributing40176
-Node: How to help debug40544
-Node: Development41188
-Node: Dependencies41376
-Node: Steps to build eless and documentation42657
-Node: Other Wikis46071
-Node: Home46223
-Node: Example eless config in tcsh46959
+Node: Detect if ANSI codes need to be converted to colors24807
+Node: ``Do The Right Thing'' Kill25964
+Node: dired-mode setup27687
+Node: Man-mode setup28497
+Node: Info-mode setup28930
+Node: tar-mode setup29368
+Node: Auto-setting of major modes30061
+Node: Key bindings30920
+Node: User config override33432
+Node: Input/Output Scenarios34046
+Node: Output is going to a pipe34302
+Node: Input is coming from a pipe34995
+Node: Input is piped from man command36937
+Node: Input is piped from info command38313
+Node: Input is piped from something else39021
+Node: Input is an argument to the script39894
+Node: Contributing40282
+Node: How to help debug40650
+Node: Development41294
+Node: Dependencies41482
+Node: Steps to build eless and documentation42763
+Node: Other Wikis46177
+Node: Home46329
+Node: Example eless config in tcsh47065
 
 End Tag Table
 
