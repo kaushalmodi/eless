@@ -45,39 +45,17 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
 #+END_SRC
 ** Steps to build =eless= and documentation
 - =emacs -Q=
-- *First* open a non-org file like =build/build.el=.
+- *First* open a non-org file like =build/build.el= and *evaluate it*.
   - The emphasis on opening a non-org file is so that the
     older-than-required version of =org= in =emacs -Q= doesn't get
     auto-loaded.  The next step would be to install newer version of
-    org to a temp location, and that step will fail due to mixed org
-    versions.
-  - You will be prompted to mark certain /Local Variables/ settings as
-    safe.  You can review the =.dir-locals.el= file in this project
-    for that.
-    #+BEGIN_SRC emacs-lisp
-    (nil
-     . ((nil . ((indent-tabs-mode . nil)
-                (fill-column . 70)
-                (eval . (progn
-                          (when (buffer-file-name)
-                            (require 'vc-git) ;For `vc-git-root'
-                            (autoload
-                              'eless-build (expand-file-name "build/build.el" (vc-git-root (buffer-file-name)))
-                              "Use eless.org to generate the `eless' script and documentation."
-                              :interactive)
-                            (autoload
-                              'eless-install-dependencies (expand-file-name "build/build.el" (vc-git-root (buffer-file-name)))
-                              "Install dependencies for building `eless', in `eless-package-user-dir'."
-                              :interactive))))))
-        (org-mode . ((mode . auto-fill)))))
-    #+END_SRC
-  - Approving that permanently with the exclamation mark will ensure
-    that you will be able to run =M-x eless-install-dependencies= or
-    =M-x eless-build= after this point.
+    org to a temp location. That step would fail due to mixed org
+    versions if the default org version got loaded first.
+  - Evaluating this file will now allow you to run =M-x
+        eless-install-dependencies= or =M-x eless-build=.
 - Do =M-x eless-install-dependencies=.
   - You will need to do this step only for the very first time you
     start working on this project.
-  - This step will also /autoload/ =build/build.el=.
 - Do =M-x eless-build=.
 - Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are
   no errors.

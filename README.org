@@ -1,12 +1,10 @@
 #+TITLE: Eless - A Better Less
 #+AUTHOR: Kaushal Modi
-*ShellCheck status:*
-
-[[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
+*ShellCheck Status*: [[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
 
 -----
 
-[[https://cdn.rawgit.com/kaushalmodi/eless/master/doc/eless.html][Full Documentation]]
+*Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/doc/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
 
 -----
 
@@ -16,20 +14,21 @@ This script is designed to:
 
 - Be portable -- Just one bash script to download to run
 - Be independent of a user's emacs config
+  - /You can still [[https://github.com/kaushalmodi/eless/wiki/Code-Explanation#user-config-override][customize]] the =eless= config if you like./
 - Not require an emacs server to be already running
 
 It was created out of a need to have something /like/ =less= (in the sense of
-/launch quickly, do, and quit/, but better in these ways:
+/launch quickly, do, and quit/, but /better/ in these ways:
 
-- Do syntax highlighting
-- Render Org-mode files
+- Syntax highlighting
+- Org-mode file rendering
 - A better navigable man page viewer
 - A better Info viewer
 - Dired, especially =wdired= (batch edit symbolic links, for
   example?)
-- Show colored diffs
-- Filter log files to only show or not show lines matching a regexp
-- Start auto-reverting log files when I want (like =tail -f=)
+- Colored diffs, =git diff=, =git log=, =ls=, etc. (auto ANSI detection)
+- Filter log files to only show (or not show) lines matching a regexp
+- Auto-revert log files when I want (like =tail -f=)
 - Quickly change frame and font sizes
 - .. and more; basically everything that emacs has to offer!
 
@@ -43,6 +42,9 @@ As a bonus:
 
 - This script passes [[http://www.shellcheck.net][ShellCheck]], and
 - Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
+- Always-in-sync documentation as the =eless= script and
+  documentation are generated using Org Babel from [[https://github.com/kaushalmodi/eless/blob/master/eless.org][one file]] (even this
+  README).
 
 * Try it out
 Here are some usage examples:
@@ -66,3 +68,6 @@ eless foo.tar.xz            # Read the contents of archives; emacs does the unar
 * Contributors
 - Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
   =emacs -Q -nw=.
+- Thanks to [[https://github.com/alphapapa][Adam Porter]] for adding a =bash= /collapsing function/ for
+  debug statements, and testing out and providing suggestions on
+  improving the =eless= build flow.
