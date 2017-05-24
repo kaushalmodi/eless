@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-24 09:22:54 kmodi>
+# Time-stamp: <2017-05-24 09:41:21 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -183,7 +183,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-6b7cc23
+a7c47cf
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -507,13 +507,20 @@ debug "first_line_piped_data = ${first_line_piped_data}"
 #   FOO(1)  optional something something FOO(1)
 # It is not mandatory for the below grep to always pass, so OR it with
 # "true" so that "set -e" does not kill the script at this point.
-man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)' || true)
+# For some odd reason, the "BASH_BUILTINS" man page is just "builtins", so
+# deal with that corner case.. faced this when trying to do "man read".
+man_page=$(echo "${first_line_piped_data}" \
+               | grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)' \
+               | sed -r 's/bash_builtins/builtins/I' \
+               || true)
 
 # The first line of info manuals is assumed to be
 #   /path/to/some.info or /path/to/some.info.gz
 # It is not mandatory for the below grep to always pass, so OR it with
 # "true" so that "set -e" does not kill the script at this point.
-info_man=$(echo "${first_line_piped_data}" | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' || true)
+info_man=$(echo "${first_line_piped_data}" \
+               | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' \
+               || true)
 
 if [[ ! -z ${man_page} ]]
 then

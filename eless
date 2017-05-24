@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='6b7cc23'
+eless_git_hash='a7c47cf'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -494,13 +494,20 @@ else
         #   FOO(1)  optional something something FOO(1)
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)' || true)
+        # For some odd reason, the "BASH_BUILTINS" man page is just "builtins", so
+        # deal with that corner case.. faced this when trying to do "man read".
+        man_page=$(echo "${first_line_piped_data}" \
+                       | grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)' \
+                       | sed -r 's/bash_builtins/builtins/I' \
+                       || true)
 
         # The first line of info manuals is assumed to be
         #   /path/to/some.info or /path/to/some.info.gz
         # It is not mandatory for the below grep to always pass, so OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        info_man=$(echo "${first_line_piped_data}" | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' || true)
+        info_man=$(echo "${first_line_piped_data}" \
+                       | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' \
+                       || true)
 
         if [[ ! -z ${man_page} ]]
         then

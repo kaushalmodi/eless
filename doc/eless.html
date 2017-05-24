@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-24 Wed 09:23 -->
+<!-- 2017-05-24 Wed 09:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -686,7 +686,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">6b7cc23
+<pre><code class="src src-shell">a7c47cf
 </code></pre>
 </div>
 <p>
@@ -1046,13 +1046,20 @@ debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}
 <span class="org-comment-delimiter">#   </span><span class="org-comment">FOO(1)  optional something something FOO(1)</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass, so OR it with</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">"true" so that "set -e" does not kill the script at this point.</span>
-<span class="org-variable-name">man_page</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> | grep -Po <span class="org-string">'^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)'</span> || true<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">For some odd reason, the "BASH_BUILTINS" man page is just "builtins", so</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">deal with that corner case.. faced this when trying to do "man read".</span>
+<span class="org-variable-name">man_page</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
+               | grep -Po <span class="org-string">'^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)'</span> <span class="org-sh-escaped-newline">\</span>
+               | sed -r <span class="org-string">'s/bash_builtins/builtins/I'</span> <span class="org-sh-escaped-newline">\</span>
+               || true<span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of info manuals is assumed to be</span>
 <span class="org-comment-delimiter">#   </span><span class="org-comment">/path/to/some.info or /path/to/some.info.gz</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass, so OR it with</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">"true" so that "set -e" does not kill the script at this point.</span>
-<span class="org-variable-name">info_man</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> | grep -Po <span class="org-string">'^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'</span> || true<span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">info_man</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
+               | grep -Po <span class="org-string">'^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'</span> <span class="org-sh-escaped-newline">\</span>
+               || true<span class="org-rainbow-delimiters-depth-1">)</span>
 
 <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">man_page</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
 <span class="org-keyword">then</span>

@@ -294,7 +294,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     6b7cc23
+     a7c47cf
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -595,13 +595,20 @@ File: eless.info,  Node: Output is going to _stdout_ Input is coming from a pipe
      #   FOO(1)  optional something something FOO(1)
      # It is not mandatory for the below grep to always pass, so OR it with
      # "true" so that "set -e" does not kill the script at this point.
-     man_page=$(echo "${first_line_piped_data}" | grep -Po '^([A-Za-z-]+\([0-9]+\))(?=\s+.*?\1$)' || true)
+     # For some odd reason, the "BASH_BUILTINS" man page is just "builtins", so
+     # deal with that corner case.. faced this when trying to do "man read".
+     man_page=$(echo "${first_line_piped_data}" \
+                    | grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)' \
+                    | sed -r 's/bash_builtins/builtins/I' \
+                    || true)
 
      # The first line of info manuals is assumed to be
      #   /path/to/some.info or /path/to/some.info.gz
      # It is not mandatory for the below grep to always pass, so OR it with
      # "true" so that "set -e" does not kill the script at this point.
-     info_man=$(echo "${first_line_piped_data}" | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' || true)
+     info_man=$(echo "${first_line_piped_data}" \
+                    | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' \
+                    || true)
 
      if [[ ! -z ${man_page} ]]
      then
@@ -1327,39 +1334,39 @@ Node: Emacs with -Q in view-mode15652
 Node: Input/Output Scenarios16474
 Node: Output is going to a pipe17934
 Node: Output is going to _stdout_ Input is coming from a pipe18474
-Node: Input is piped from man command20331
-Node: Input is piped from info command21510
-Node: Input is piped from something else22103
-Node: Output is going to _stdout_ Input is an argument to the script22859
-Node: Eval and Cleanup23231
-Node: Emacs Configuration23491
-Node: General setup24013
-Node: Ido setup25080
-Node: Isearch setup25650
-Node: Enable line truncation26064
-Node: Highlight the current line26415
-Node: Custom functions26644
-Node: Keep/delete matching lines27145
-Node: Frame and font re-sizing27835
-Node: Revert buffer in view-mode28848
-Node: Detect if diff-mode should be enabled29315
-Node: Detect if ANSI codes need to be converted to colors32343
-Node: ``Do The Right Thing'' Kill33502
-Node: dired-mode setup35227
-Node: Man-mode setup36039
-Node: Info-mode setup36474
-Node: tar-mode setup36914
-Node: Auto-setting of major modes37609
-Node: Key bindings38470
-Node: User config override40984
-Node: Contributing41600
-Node: How to help debug41968
-Node: Development42612
-Node: Dependencies42800
-Node: Steps to build eless and documentation44081
-Node: Other Wikis47495
-Node: Home47647
-Node: Example eless config in tcsh48383
+Node: Input is piped from man command20637
+Node: Input is piped from info command21816
+Node: Input is piped from something else22409
+Node: Output is going to _stdout_ Input is an argument to the script23165
+Node: Eval and Cleanup23537
+Node: Emacs Configuration23797
+Node: General setup24319
+Node: Ido setup25386
+Node: Isearch setup25956
+Node: Enable line truncation26370
+Node: Highlight the current line26721
+Node: Custom functions26950
+Node: Keep/delete matching lines27451
+Node: Frame and font re-sizing28141
+Node: Revert buffer in view-mode29154
+Node: Detect if diff-mode should be enabled29621
+Node: Detect if ANSI codes need to be converted to colors32649
+Node: ``Do The Right Thing'' Kill33808
+Node: dired-mode setup35533
+Node: Man-mode setup36345
+Node: Info-mode setup36780
+Node: tar-mode setup37220
+Node: Auto-setting of major modes37915
+Node: Key bindings38776
+Node: User config override41290
+Node: Contributing41906
+Node: How to help debug42274
+Node: Development42918
+Node: Dependencies43106
+Node: Steps to build eless and documentation44387
+Node: Other Wikis47801
+Node: Home47953
+Node: Example eless config in tcsh48689
 
 End Tag Table
 
