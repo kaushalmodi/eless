@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-24 Wed 12:36 -->
+<!-- 2017-05-24 Wed 12:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -376,15 +376,25 @@ example?)</li>
 I call it <code>eless</code> and here&rsquo;s a little taste of what it looks like:
 </p>
 
-<p>
-<i>Click the below image to see a GIF animation in larger size.</i>
-</p>
-
 
 <div class="figure">
-<p><a href="https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif"><img src="https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png" alt="eless.png" /></a>
+<p><a href="https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png"><img src="https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png" alt="eless-examples.png" /></a>
 </p>
 </div>
+
+<p>
+<i>Shown above, starting from top left image and proceeding clock-wise..</i>
+</p>
+<ul class="org-ul">
+<li><code>eless eless.org</code></li>
+<li><code>rg --color=ansi 'man pages' | eless</code> (rg<a href="https://github.com/BurntSushi/ripgrep">?</a>)</li>
+<li><code>man grep</code> (I have set my <code>PAGER</code> env var to <code>eless</code>.)</li>
+<li><code>info eless</code> (I have aliased <code>info</code> to <code>'\info \!* | eless'</code> in my
+tcsh shell.)</li>
+<li><code>eless .</code> (Shows the current directory contents in <code>dired</code>.)</li>
+<li><code>diff</code> of <code>eless.org</code> with an older saved version and piping the
+result to <code>eless</code></li>
+</ul>
 
 <p>
 As a bonus:
@@ -691,7 +701,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">d432d86
+<pre><code class="src src-shell">b39efd2
 </code></pre>
 </div>
 <p>

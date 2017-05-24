@@ -159,10 +159,20 @@ sense of _launch quickly, do, and quit_, but _better_ in these ways:
 
    I call it eless and here’s a little taste of what it looks like:
 
-   _Click the below image to see a GIF animation in larger size._
+   https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png
+(https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png)
 
-   https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png
-(https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif)
+   _Shown above, starting from top left image and proceeding
+clock-wise.._
+   • eless eless.org
+   • rg --color=ansi 'man pages' | eless (rg?
+     (https://github.com/BurntSushi/ripgrep))
+   • man grep (I have set my PAGER env var to eless.)
+   • info eless (I have aliased info to '\info \!* | eless' in my tcsh
+     shell.)
+   • eless . (Shows the current directory contents in dired.)
+   • diff of eless.org with an older saved version and piping the result
+     to eless
 
    As a bonus:
 
@@ -304,7 +314,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     d432d86
+     b39efd2
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking eless
 version, it would always refer to the one-earlier commit.
@@ -1309,57 +1319,57 @@ File: eless.info,  Node: Example eless config in tcsh,  Prev: Home,  Up: Other W
 Tag Table:
 Node: Top188
 Node: Readme2015
-Node: Try it out4255
-Node: Contributors5591
-Node: Eless Options6032
-Node: view-mode Common Bindings6356
-Node: Custom Bindings7332
-Node: Usage Examples8367
-Node: Current eless Version9711
-Node: Code10083
-Node: Unofficial Bash Strict Mode10441
-Node: Initialize variables11126
-Node: Debug function11520
-Node: Input/Output Detection12656
-Node: Parse options14327
-Node: Print Help16016
-Node: Emacs with -Q in view-mode16349
-Node: Input/Output Scenarios17171
-Node: Output is going to a pipe18631
-Node: Output is going to _stdout_ Input is coming from a pipe19171
-Node: Input is piped from man command21334
-Node: Input is piped from info command22513
-Node: Input is piped from something else23106
-Node: Output is going to _stdout_ Input is an argument to the script23862
-Node: Eval and Cleanup24234
-Node: Emacs Configuration24494
-Node: General setup25016
-Node: Ido setup26083
-Node: Isearch setup26653
-Node: Enable line truncation27067
-Node: Highlight the current line27418
-Node: Custom functions27654
-Node: Keep/delete matching lines28155
-Node: Frame and font re-sizing28845
-Node: Revert buffer in view-mode29858
-Node: Detect if diff-mode should be enabled30325
-Node: Detect if ANSI codes need to be converted to colors33353
-Node: ``Do The Right Thing'' Kill34512
-Node: dired-mode setup36237
-Node: Man-mode setup37049
-Node: Info-mode setup37484
-Node: tar-mode setup37924
-Node: Auto-setting of major modes38619
-Node: Key bindings39480
-Node: User config override41994
-Node: Contributing42802
-Node: How to help debug43170
-Node: Development43814
-Node: Dependencies44002
-Node: Steps to build eless and documentation45283
-Node: Other Wikis47398
-Node: Home47550
-Node: Example eless config in tcsh48286
+Node: Try it out4702
+Node: Contributors6038
+Node: Eless Options6479
+Node: view-mode Common Bindings6803
+Node: Custom Bindings7779
+Node: Usage Examples8814
+Node: Current eless Version10158
+Node: Code10530
+Node: Unofficial Bash Strict Mode10888
+Node: Initialize variables11573
+Node: Debug function11967
+Node: Input/Output Detection13103
+Node: Parse options14774
+Node: Print Help16463
+Node: Emacs with -Q in view-mode16796
+Node: Input/Output Scenarios17618
+Node: Output is going to a pipe19078
+Node: Output is going to _stdout_ Input is coming from a pipe19618
+Node: Input is piped from man command21781
+Node: Input is piped from info command22960
+Node: Input is piped from something else23553
+Node: Output is going to _stdout_ Input is an argument to the script24309
+Node: Eval and Cleanup24681
+Node: Emacs Configuration24941
+Node: General setup25463
+Node: Ido setup26530
+Node: Isearch setup27100
+Node: Enable line truncation27514
+Node: Highlight the current line27865
+Node: Custom functions28101
+Node: Keep/delete matching lines28602
+Node: Frame and font re-sizing29292
+Node: Revert buffer in view-mode30305
+Node: Detect if diff-mode should be enabled30772
+Node: Detect if ANSI codes need to be converted to colors33800
+Node: ``Do The Right Thing'' Kill34959
+Node: dired-mode setup36684
+Node: Man-mode setup37496
+Node: Info-mode setup37931
+Node: tar-mode setup38371
+Node: Auto-setting of major modes39066
+Node: Key bindings39927
+Node: User config override42441
+Node: Contributing43249
+Node: How to help debug43617
+Node: Development44261
+Node: Dependencies44449
+Node: Steps to build eless and documentation45730
+Node: Other Wikis47845
+Node: Home47997
+Node: Example eless config in tcsh48733
 
 End Tag Table
 

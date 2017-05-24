@@ -34,9 +34,17 @@ It was created out of a need to have something /like/ =less= (in the sense of
 
 I call it =eless= and here's a little taste of what it looks like:
 
-/Click the below image to see a GIF animation in larger size./
+[[https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png][https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png]]
 
-[[https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif][https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png]]
+/Shown above, starting from top left image and proceeding clock-wise../
+- =eless eless.org=
+- =rg --color=ansi 'man pages' | eless= (rg[[https://github.com/BurntSushi/ripgrep][?]])
+- =man grep= (I have set my =PAGER= env var to =eless=.)
+- =info eless= (I have aliased =info= to ='\info \!* | eless'= in my
+  tcsh shell.)
+- =eless .= (Shows the current directory contents in =dired=.)
+- =diff= of =eless.org= with an older saved version and piping the
+  result to =eless=
 
 As a bonus:
 

@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-24 12:36:42 kmodi>
+# Time-stamp: <2017-05-24 12:55:03 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -59,11 +59,17 @@ It was created out of a need to have something /like/ =less= (in the sense of
 
 I call it =eless= and here's a little taste of what it looks like:
 
-/Click the below image to see a GIF animation in larger size./
-# #+BEGIN_EXPORT md
-# [![eless GIF](https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png)](https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif)
-# #+END_EXPORT
-[[https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.gif][https://raw.githubusercontent.com/kaushalmodi/eless/images/images/eless.png]]
+[[https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png][https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png]]
+
+/Shown above, starting from top left image and proceeding clock-wise../
+- =eless eless.org=
+- =rg --color=ansi 'man pages' | eless= (rg[[https://github.com/BurntSushi/ripgrep][?]])
+- =man grep= (I have set my =PAGER= env var to =eless=.)
+- =info eless= (I have aliased =info= to ='\info \!* | eless'= in my
+  tcsh shell.)
+- =eless .= (Shows the current directory contents in =dired=.)
+- =diff= of =eless.org= with an older saved version and piping the
+  result to =eless=
 
 As a bonus:
 
@@ -185,7 +191,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-d432d86
+b39efd2
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
