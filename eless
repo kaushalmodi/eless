@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='f06aef4'
+eless_git_hash='6b7cc23'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -537,21 +537,21 @@ else
                          --eval '(progn
                                    (set-visited-file-name nil)
                                    (rename-buffer \"*Stdin*\" :unique))'"
-
         fi
         # Below else condition is reached when you do this:
         #   eless foo.txt
     else
         cmd="emacs_Q_view_mode ${emacs_args[*]}"
     fi
+fi
 
-    debug "Eless Command : $cmd"
+debug "Eless Command : $cmd"
 
-    eval "$cmd"
-    if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
-    then
-        rm -f "${tempfile}"
-    fi
+eval "$cmd"
+
+if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
+then
+    rm -f "${tempfile}"
 fi
 
 # References:
