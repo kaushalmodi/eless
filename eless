@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='b39efd2'
+eless_git_hash='32a2308'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -505,6 +505,12 @@ else
                        | sed -r 's/bash_builtins/builtins/I' \
                        || true)
 
+        # The first line of Python package MODULE help is assumed to be
+        #   Help on package MODULE:
+        python_module_help=$(echo "${first_line_piped_data}" \
+                                 | grep -Po '^Help on package \K(.*)(?=:$)' \
+                                 || true)
+
         # The first line of info manuals is assumed to be
         #   /path/to/some.info or /path/to/some.info.gz
         # It is not mandatory for the below grep to always pass, so OR it with
@@ -530,6 +536,22 @@ else
                                    (when (version<= emacs-version \"24.5.99\")
                                       (sit-for 1))
                                    (delete-window))'"
+        elif [[ ! -z ${python_module_help} ]]
+        then
+            debug "Python Module = ${python_module_help}"
+
+            cmd="emacs_Q_view_mode \
+                         ${emacs_args[*]} \
+                         --eval '(progn
+                                   (man \"${tempfile}\")
+                                   ;; Below workaround is only for emacs 24.5.x and older releases
+                                   ;; where the man page takes some time to load.
+                                   ;; 1-second delay before killing the *scratch* window
+                                   ;; seems to be sufficient
+                                   (when (version<= emacs-version \"24.5.99\")
+                                      (sit-for 1))
+                                   (delete-window)
+                                   (rename-buffer \"${python_module_help}\"))'"
         elif [[ ! -z ${info_man} ]]
         then
             # Try something like `info emacs | eless'.

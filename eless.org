@@ -1,4 +1,4 @@
-# Time-stamp: <2017-05-24 12:55:03 kmodi>
+# Time-stamp: <2017-07-28 13:39:31 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -191,7 +191,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-b39efd2
+32a2308
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -522,6 +522,12 @@ man_page=$(echo "${first_line_piped_data}" \
                | sed -r 's/bash_builtins/builtins/I' \
                || true)
 
+# The first line of Python package MODULE help is assumed to be
+#   Help on package MODULE:
+python_module_help=$(echo "${first_line_piped_data}" \
+                         | grep -Po '^Help on package \K(.*)(?=:$)' \
+                         || true)
+
 # The first line of info manuals is assumed to be
 #   /path/to/some.info or /path/to/some.info.gz
 # It is not mandatory for the below grep to always pass, so OR it with
@@ -533,6 +539,9 @@ info_man=$(echo "${first_line_piped_data}" \
 if [[ ! -z ${man_page} ]]
 then
     <<man-page>>
+elif [[ ! -z ${python_module_help} ]]
+then
+    <<python-module-help>>
 elif [[ ! -z ${info_man} ]]
 then
     <<info-manual>>
@@ -557,6 +566,25 @@ cmd="emacs_Q_view_mode \
                        (when (version<= emacs-version \"24.5.99\")
                           (sit-for 1))
                        (delete-window))'"
+#+END_SRC
+The =sit-for= hack is needed for emacs versions older than 25.x. It
+was reported in [[https://github.com/kaushalmodi/eless/issues/3][this issue]].
+**** Input is piped from a =modules= help in /IPython/
+#+BEGIN_SRC shell :noweb-ref python-module-help :tangle no
+debug "Python Module = ${python_module_help}"
+
+cmd="emacs_Q_view_mode \
+             ${emacs_args[*]} \
+             --eval '(progn
+                       (man \"${tempfile}\")
+                       ;; Below workaround is only for emacs 24.5.x and older releases
+                       ;; where the man page takes some time to load.
+                       ;; 1-second delay before killing the *scratch* window
+                       ;; seems to be sufficient
+                       (when (version<= emacs-version \"24.5.99\")
+                          (sit-for 1))
+                       (delete-window)
+                       (rename-buffer \"${python_module_help}\"))'"
 #+END_SRC
 The =sit-for= hack is needed for emacs versions older than 25.x. It
 was reported in [[https://github.com/kaushalmodi/eless/issues/3][this issue]].

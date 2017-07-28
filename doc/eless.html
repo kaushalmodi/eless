@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-05-24 Wed 12:55 -->
+<!-- 2017-07-28 Fri 13:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -264,8 +264,9 @@ for the JavaScript code in this tag.
 <li><a href="#org66fb325">7.8.2. Output is going to <i>stdout</i>, Input is coming from a pipe</a>
 <ul>
 <li><a href="#org67dd9b5">7.8.2.1. Input is piped from <code>man</code> command</a></li>
-<li><a href="#orgbdffa84">7.8.2.2. Input is piped from <code>info</code> command</a></li>
-<li><a href="#orgef5af72">7.8.2.3. Input is piped from something else</a></li>
+<li><a href="#org02e2efd">7.8.2.2. Input is piped from a <code>modules</code> help in <i>IPython</i></a></li>
+<li><a href="#orgbdffa84">7.8.2.3. Input is piped from <code>info</code> command</a></li>
+<li><a href="#orgef5af72">7.8.2.4. Input is piped from something else</a></li>
 </ul>
 </li>
 <li><a href="#org4be6ee6">7.8.3. Output is going to <i>stdout</i>, Input is an argument to the script</a></li>
@@ -701,7 +702,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre><code class="src src-shell">b39efd2
+<pre><code class="src src-shell">32a2308
 </code></pre>
 </div>
 <p>
@@ -1068,6 +1069,12 @@ debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}
                | sed -r <span class="org-string">'s/bash_builtins/builtins/I'</span> <span class="org-sh-escaped-newline">\</span>
                || true<span class="org-rainbow-delimiters-depth-1">)</span>
 
+<span class="org-comment-delimiter"># </span><span class="org-comment">The first line of Python package MODULE help is assumed to be</span>
+<span class="org-comment-delimiter">#   </span><span class="org-comment">Help on package MODULE:</span>
+<span class="org-variable-name">python_module_help</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
+                         | grep -Po <span class="org-string">'^Help on package \K(.*)(?=:$)'</span> <span class="org-sh-escaped-newline">\</span>
+                         || true<span class="org-rainbow-delimiters-depth-1">)</span>
+
 <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of info manuals is assumed to be</span>
 <span class="org-comment-delimiter">#   </span><span class="org-comment">/path/to/some.info or /path/to/some.info.gz</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass, so OR it with</span>
@@ -1079,6 +1086,9 @@ debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}
 <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">man_page</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
 <span class="org-keyword">then</span>
     &lt;&lt;man-page&gt;&gt;
+<span class="org-sh-heredoc">elif [[ ! -z ${python_module_help} ]]</span>
+<span class="org-sh-heredoc">then</span>
+<span class="org-sh-heredoc">    &lt;&lt;python-module-help&gt;&gt;</span>
 <span class="org-sh-heredoc">elif [[ ! -z ${info_man} ]]</span>
 <span class="org-sh-heredoc">then</span>
 <span class="org-sh-heredoc">    &lt;&lt;info-manual&gt;&gt;</span>
@@ -1115,9 +1125,35 @@ was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this iss
 </p>
 </div>
 </div>
-<div id="outline-container-orgbdffa84" class="outline-5">
-<h5 id="orgbdffa84"><span class="section-number-5">7.8.2.2</span> Input is piped from <code>info</code> command</h5>
+<div id="outline-container-org02e2efd" class="outline-5">
+<h5 id="org02e2efd"><span class="section-number-5">7.8.2.2</span> Input is piped from a <code>modules</code> help in <i>IPython</i></h5>
 <div class="outline-text-5" id="text-7-8-2-2">
+<div class="org-src-container">
+<pre><code class="src src-shell">debug <span class="org-string">"Python Module = ${python_module_help}"</span>
+
+<span class="org-variable-name">cmd</span>=<span class="org-string">"emacs_Q_view_mode \</span>
+<span class="org-string">             ${emacs_args[*]} \</span>
+<span class="org-string">             --eval '(progn</span>
+<span class="org-string">                       (man \"${tempfile}\")</span>
+<span class="org-string">                       ;; Below workaround is only for emacs 24.5.x and older releases</span>
+<span class="org-string">                       ;; where the man page takes some time to load.</span>
+<span class="org-string">                       ;; 1-second delay before killing the *scratch* window</span>
+<span class="org-string">                       ;; seems to be sufficient</span>
+<span class="org-string">                       (when (version&lt;= emacs-version \"24.5.99\")</span>
+<span class="org-string">                          (sit-for 1))</span>
+<span class="org-string">                       (delete-window)</span>
+<span class="org-string">                       (rename-buffer \"${python_module_help}\"))'"</span>
+</code></pre>
+</div>
+<p>
+The <code>sit-for</code> hack is needed for emacs versions older than 25.x. It
+was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this issue</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgbdffa84" class="outline-5">
+<h5 id="orgbdffa84"><span class="section-number-5">7.8.2.3</span> Input is piped from <code>info</code> command</h5>
+<div class="outline-text-5" id="text-7-8-2-3">
 <div class="org-src-container">
 <pre><code class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">Try something like `info emacs | eless'.</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">That will launch the Info manual in eless.</span>
@@ -1132,8 +1168,8 @@ debug <span class="org-string">"Info Manual = ${info_man}"</span>
 </div>
 </div>
 <div id="outline-container-orgef5af72" class="outline-5">
-<h5 id="orgef5af72"><span class="section-number-5">7.8.2.3</span> Input is piped from something else</h5>
-<div class="outline-text-5" id="text-7-8-2-3">
+<h5 id="orgef5af72"><span class="section-number-5">7.8.2.4</span> Input is piped from something else</h5>
+<div class="outline-text-5" id="text-7-8-2-4">
 <p>
 This scenario could be anything, like:
 </p>
@@ -1804,7 +1840,7 @@ push them directly using <code>git</code> or manually edit those here.
 </div>
 </div>
 <div id="postamble" class="status">
-Exported using <div style="display: inline" class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 26.0.50 (<a href="http://orgmode.org">Org</a> mode 9.0.7)</div> by Kaushal Modi.
+Exported using <div style="display: inline" class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 26.0.50 (<a href="http://orgmode.org">Org</a> mode 9.0.9)</div> by Kaushal Modi.
 </div>
 </body>
 </html>
