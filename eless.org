@@ -1,4 +1,4 @@
-# Time-stamp: <2017-07-28 13:45:17 kmodi>
+# Time-stamp: <2017-07-28 13:47:40 kmodi>
 #+TITLE: eless -- A Better less
 #+AUTHOR: Kaushal Modi
 
@@ -176,7 +176,7 @@ eless foo.tar.xz            # Read the contents of archives; emacs does the unar
 * Current =eless= Version
 # Using noweb is a nifty way to do sort of search/replace in all code blocks.
 #+BEGIN_SRC text :noweb-ref version
-v0.4
+master
 #+END_SRC
 #+BEGIN_SRC text :exports none :noweb-ref git-repo
 https://github.com/kaushalmodi/eless
@@ -191,7 +191,7 @@ git rev-parse HEAD | head -c 7
 #+END_SRC
 #+RESULTS:
 #+BEGIN_SRC shell :noweb-ref git-hash
-4033588
+b995b24
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
