@@ -1,22 +1,22 @@
-# Time-stamp: <2017-07-28 13:47:40 kmodi>
-#+TITLE: eless -- A Better less
-#+AUTHOR: Kaushal Modi
+# Time-stamp: <2018-02-02 12:49:28 kmodi>
+#+title: eless -- A Better less
+#+author: Kaushal Modi
 
-#+TEXINFO_DIR_CATEGORY: Emacs
-#+TEXINFO_DIR_TITLE: Eless: (eless).
-#+TEXINFO_DIR_DESC: Use emacs view-mode as less
+#+texinfo_dir_category: Emacs
+#+texinfo_dir_title: Eless: (eless).
+#+texinfo_dir_desc: Use emacs view-mode as less
 
 # https://raw.githubusercontent.com/magit/magit/master/Documentation/magit.org
-# #+TEXINFO_DEFFN: t
-# #+TEXINFO_CLASS: info+
+# #+texinfo_deffn: t
+# #+texinfo_class: info+
 
-#+HTML_HEAD: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-#+HTML_HEAD: <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
-#+HTML_HEAD: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/leuven_theme.css" rel="stylesheet">
-#+HTML_HEAD: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/bootstrap.extra.css" rel="stylesheet">
+#+html_head: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+#+html_head: <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+#+html_head: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/leuven_theme.css" rel="stylesheet">
+#+html_head: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/bootstrap.extra.css" rel="stylesheet">
 
 # Make the tangled shell scripts executables
-#+PROPERTY: header-args:shell :shebang "#!/usr/bin/env bash"
+#+property: header-args:shell :shebang "#!/usr/bin/env bash"
 
 * Readme                                                             :readme:
 :PROPERTIES:
@@ -24,9 +24,9 @@
 :EXPORT_TITLE: Eless - A Better Less
 :END:
 *ShellCheck Status*: [[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
-# #+BEGIN_EXPORT md
+# #+begin_export md
 # [![ShellCheck Status](https://travis-ci.org/kaushalmodi/eless.svg?branch=master)](https://travis-ci.org/kaushalmodi/eless)
-# #+END_EXPORT
+# #+end_export
 -----
 
 *Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/doc/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
@@ -81,9 +81,9 @@ As a bonus:
 
 ** Try it out
 Here are some usage examples:
-#+BEGIN_SRC shell :noweb yes
+#+begin_src shell :noweb yes
 <<usage-examples>>
-#+END_SRC
+#+end_src
 ** Contributors
 - Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
   =emacs -Q -nw=.
@@ -95,7 +95,7 @@ Here are some usage examples:
 :EXPORT_FILE_NAME: eless Options
 :END:
 # Do "C-c '" in the below block to edit the org table
-#+BEGIN_SRC org :noweb-ref eless-options :exports results :results output replace
+#+begin_src org :noweb-ref eless-options :exports results :results output replace
 |--------+--------------------------|
 | Option | Description              |
 |--------+--------------------------|
@@ -104,12 +104,12 @@ Here are some usage examples:
 | -V     | Print version and quit   |
 | -D     | Run with debug messages  |
 |--------+--------------------------|
-#+END_SRC
+#+end_src
 * =view-mode= Common Bindings                                          :wiki:
 :PROPERTIES:
 :EXPORT_FILE_NAME: view-mode Common Bindings
 :END:
-#+BEGIN_SRC org :noweb-ref view-mode-common-bindings :exports results :results output replace
+#+begin_src org :noweb-ref view-mode-common-bindings :exports results :results output replace
 |--------------+------------------------------------------------------------------------------|
 | Binding      | Description                                                                  |
 |--------------+------------------------------------------------------------------------------|
@@ -123,12 +123,12 @@ Here are some usage examples:
 | e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
 |              | the opened file if needed.                                                   |
 |--------------+------------------------------------------------------------------------------|
-#+END_SRC
+#+end_src
 * Custom Bindings                                                      :wiki:
 :PROPERTIES:
 :EXPORT_FILE_NAME: eless Custom Bindings
 :END:
-#+BEGIN_SRC org :noweb-ref custom-bindings :exports results :results output replace
+#+begin_src org :noweb-ref custom-bindings :exports results :results output replace
 |--------------+------------------------------------------------------------|
 | Binding      | Description                                                |
 |--------------+------------------------------------------------------------|
@@ -151,12 +151,12 @@ Here are some usage examples:
 | C-down/up    | Inc/Dec frame height (in GUI mode)                         |
 | C-right/left | Inc/Dec frame width (in GUI mode)                          |
 |--------------+------------------------------------------------------------|
-#+END_SRC
+#+end_src
 * Usage Examples                                                       :wiki:
 :PROPERTIES:
 :EXPORT_FILE_NAME: Usage Examples
 :END:
-#+BEGIN_SRC shell :noweb-ref usage-examples
+#+begin_src shell :noweb-ref usage-examples
 eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
 eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless          #
@@ -172,27 +172,27 @@ PAGER=eless git diff        # Show git diff with ANSI coded colors
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
-#+END_SRC
+#+end_src
 * Current =eless= Version
 # Using noweb is a nifty way to do sort of search/replace in all code blocks.
-#+BEGIN_SRC text :noweb-ref version
+#+begin_src text :noweb-ref version
 master
-#+END_SRC
-#+BEGIN_SRC text :exports none :noweb-ref git-repo
+#+end_src
+#+begin_src text :exports none :noweb-ref git-repo
 https://github.com/kaushalmodi/eless
-#+END_SRC
+#+end_src
 
 # Get the current commit hash
 # To update manually , put the point in the below source block
 # and hit "C-c C-c" to update the git-hash source block -
 # https://emacs.stackexchange.com/a/13352/115
-#+BEGIN_SRC shell :exports results :results output code :results_switches ":noweb-ref git-hash"
+#+begin_src shell :exports results :results output code :results_switches ":noweb-ref git-hash"
 git rev-parse HEAD | head -c 7
-#+END_SRC
-#+RESULTS:
-#+BEGIN_SRC shell :noweb-ref git-hash
-b995b24
-#+END_SRC
+#+end_src
+#+results:
+#+begin_src shell :noweb-ref git-hash
+b344fba
+#+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
 version, it would always refer to the one-earlier commit.
@@ -202,7 +202,7 @@ version, it would always refer to the one-earlier commit.
 :HEADER-ARGS: :tangle eless
 :END:
 ** Script Header                                                   :noexport:
-#+BEGIN_SRC shell :noweb yes :exports none
+#+begin_src shell :noweb yes :exports none
 
 # Version: <<version>>
 
@@ -214,14 +214,14 @@ version, it would always refer to the one-earlier commit.
 #
 # This file is tangled from <<git-repo>>/blob/<<version>>/eless.org
 #   Do NOT edit this manually.
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC shell :noweb yes :exports none
+#+begin_src shell :noweb yes :exports none
 eless_version='<<version>>'
 eless_git_hash='<<git-hash>>'
-#+END_SRC
+#+end_src
 ** Help String                                                     :noexport:
-#+BEGIN_SRC shell :noweb yes :exports none
+#+begin_src shell :noweb yes :exports none
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
@@ -244,31 +244,31 @@ less, diff, man, (probably ls too).
 
     <<usage-examples>>
 "
-#+END_SRC
+#+end_src
 ** Unofficial Bash Strict Mode
 The [[http://redsymbol.net/articles/unofficial-bash-strict-mode/][/Unofficial Bash Strict Mode/]] is enabled to make this script more
 robust and reliable.
 
 The script will error out immediately when,
 1. Any command in a pipeline in this code fails.
- #+BEGIN_SRC shell
+ #+begin_src shell
 set -o pipefail
-#+END_SRC
+#+end_src
 2. Any line in this script returns an error
- #+BEGIN_SRC shell :padline no
+ #+begin_src shell :padline no
 set -e # Error out and exit the script when any line in this script returns an error
-#+END_SRC
+#+end_src
 3. Any undefined variable is referenced.
- #+BEGIN_SRC shell :padline no
+ #+begin_src shell :padline no
 set -u # Error out when unbound variables are found
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC shell :exports none
+#+begin_src shell :exports none
 # IFS=$'\n\t' # Separate fields in a sequence only at newlines and tab characters
 IFS=$' ' # Separate each field in a sequence at space characters
-#+END_SRC
+#+end_src
 ** Initialize variables
-#+BEGIN_SRC shell
+#+begin_src shell
 help=0
 debug=0
 no_window_arg="-nw"
@@ -279,14 +279,14 @@ cmd=''
 
 input_from_pipe_flag=0
 output_to_pipe_flag=0
-#+END_SRC
+#+end_src
 ** Debug function
 This function redefines itself the first time it is called.  When
 debugging is enabled, it defines itself as a function which outputs to
 STDERR, then calls itself to do the first output.  When debugging is
 disabled, it defines itself as a function that does nothing, so
 subsequent calls do not output.
-#+BEGIN_SRC shell
+#+begin_src shell
 function debug {
     if [[ $debug -eq 1 ]]
     then
@@ -300,9 +300,9 @@ function debug {
         }
     fi
 }
-#+END_SRC
+#+end_src
 Above is a =bash= /collapsing function/. See [[http://wiki.bash-hackers.org/howto/collapsing_functions][here]] and [[https://github.com/kaushalmodi/eless/issues/13][here]] for more info.
-#+BEGIN_SRC shell :exports none :noweb yes
+#+begin_src shell :exports none :noweb yes
 function eless_print_version {
     if [[ "${eless_version}" == "master" ]]
     then
@@ -313,11 +313,11 @@ function eless_print_version {
         echo "<<git-repo>>/tree/${eless_version}"
     fi
 }
-#+END_SRC
+#+end_src
 
 If user has passed the =-D= option, run the script in debug mode.
 
-#+BEGIN_SRC shell
+#+begin_src shell
 for var in "$@"
 do
     if [[ "${var}" == '-D' ]]
@@ -326,7 +326,7 @@ do
         debug=1
     fi
 done
-#+END_SRC
+#+end_src
 ** Input/Output Detection
 :PROPERTIES:
 :CUSTOM_ID: input-output-detection
@@ -334,26 +334,26 @@ done
 We need this script to know:
 - Where it is getting the input from:
   - From the terminal?
-    #+BEGIN_SRC shell :tangle no
+    #+begin_src shell :tangle no
     eless foo
-    #+END_SRC
+    #+end_src
   - From a pipe?
-    #+BEGIN_SRC shell :tangle no
+    #+begin_src shell :tangle no
     diff a b | eless
-    #+END_SRC
+    #+end_src
 - Where the output is going to:
   - To the terminal?
-    #+BEGIN_SRC shell :tangle no
+    #+begin_src shell :tangle no
     eless foo
-    #+END_SRC
+    #+end_src
   - To a pipe?
-    #+BEGIN_SRC shell :tangle no
+    #+begin_src shell :tangle no
     eless | grep foo
-    #+END_SRC
+    #+end_src
     In this case, we do not do anything at the moment. See [[https://github.com/kaushalmodi/eless/issues/4][here]].
 
 Below code determines that using =[[ -t 0 ]]= and =[[ -t 1]]=.
-#+BEGIN_SRC shell
+#+begin_src shell
 # https://gist.github.com/davejamesmiller/1966557
 if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interactive
 then
@@ -382,7 +382,7 @@ else # Output is going to a pipe, file?
     debug "    Output to a pipe -->"
     output_to_pipe_flag=1
 fi
-#+END_SRC
+#+end_src
 ** Parse options
 We need to parse the arguments such that arguments specific to this
 script like =-D= and =--gui= get consumed here, and the ones not known
@@ -390,7 +390,7 @@ to this script get passed to =emacs=.
 
 =getopt= does not support ignoring undefined options. So the below
 basic approach of looping through all the arguments ="$@"= is used.
-#+BEGIN_SRC shell :noweb yes
+#+begin_src shell :noweb yes
 for var in "$@"
 do
     debug "var : $var"
@@ -422,24 +422,24 @@ do
         emacs_args=("${emacs_args[@]}" "${var}")
     fi
 done
-#+END_SRC
+#+end_src
 ** Print Help
 If user asked for this script's help, just print it and exit with
 success code.
-#+BEGIN_SRC shell
+#+begin_src shell
 if [[ ${help} -eq 1 ]]
 then
     eless_print_version
     echo "${h}"
     exit 0
 fi
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC shell :exports none
+#+begin_src shell :exports none
 debug "Raw Args                       : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
 debug "Emacs Args                     : ${emacs_args[*]}"
 debug "Pipe Contents (up to 10 lines) : $(echo "${piped_data}" | head -n 10)"
-#+END_SRC
+#+end_src
 ** Emacs with =-Q= in =view-mode=
 :PROPERTIES:
 :CUSTOM_ID: emacs-Q-view-mode-function
@@ -452,7 +452,7 @@ the =<<emacs-config>>= *noweb* placeholder in the
 [[#emacs-configuration][Emacs Configuration]] section./
 # :noweb no-export will prevent expansion of the <<noweb ref>> when
 # exporting
-#+BEGIN_SRC shell :noweb no-export
+#+begin_src shell :noweb no-export
 function emacs_Q_view_mode {
 
     # Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,
@@ -464,13 +464,13 @@ function emacs_Q_view_mode {
                           <<emacs-config>>
                        )' 2>/dev/null </dev/tty
 }
-#+END_SRC
+#+end_src
 ** Input/Output Scenarios
 We saw in section [[#input-output-detection][Input/Output Detection]] how we detected if input was
 coming from the /pipe/ or /stdin/ and if output was going to a /pipe/
 or /stdout/. Now we make use of that information to call the
 =emacs_Q_view_mode= function with the right arguments.
-#+BEGIN_SRC shell :noweb no-export
+#+begin_src shell :noweb no-export
 # Below if condition is reached if you try to do this:
 #   eless foo.txt | grep bar .. Not allowed!
 if [[ ${output_to_pipe_flag} -eq 1 ]]
@@ -490,19 +490,19 @@ else
         <<output-stdout--input-stdin>>
     fi
 fi
-#+END_SRC
+#+end_src
 *** Output is going to a pipe
 This scenario is not supported at the moment. There
 [[https://github.com/kaushalmodi/eless/issues/4][is a plan to support it in future]] though.
 
 For now, the =eless= script will exit with an error code if the output
 is being piped to something else.
-#+BEGIN_SRC shell :noweb-ref output-pipe :tangle no
+#+begin_src shell :noweb-ref output-pipe :tangle no
 echo "This script is not supposed to send output to a pipe"
 exit 1
-#+END_SRC
+#+end_src
 *** Output is going to /stdout/, Input is coming from a pipe
-#+BEGIN_SRC shell :noweb no-export :noweb-ref output-stdout--input-pipe :tangle no
+#+begin_src shell :noweb no-export :noweb-ref output-stdout--input-pipe :tangle no
 tempfile="$(mktemp emacs-stdin-"$USER".XXXXXXX --tmpdir)" # https://github.com/koalaman/shellcheck/wiki/SC2086
 debug "Temp File : $tempfile"
 echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
@@ -548,9 +548,9 @@ then
 else # No man page or info manual detected
     <<neither-man-nor-info>>
 fi
-#+END_SRC
+#+end_src
 **** Input is piped from =man= command
-#+BEGIN_SRC shell :noweb-ref man-page :tangle no
+#+begin_src shell :noweb-ref man-page :tangle no
 # After setting PAGER variable to eless, try something like `man grep'.
 # That will launch the man page in eless.
 debug "Man Page = ${man_page}"
@@ -566,11 +566,11 @@ cmd="emacs_Q_view_mode \
                        (when (version<= emacs-version \"24.5.99\")
                           (sit-for 1))
                        (delete-window))'"
-#+END_SRC
+#+end_src
 The =sit-for= hack is needed for emacs versions older than 25.x. It
 was reported in [[https://github.com/kaushalmodi/eless/issues/3][this issue]].
 **** Input is piped from a =modules= help in /IPython/
-#+BEGIN_SRC shell :noweb-ref python-module-help :tangle no
+#+begin_src shell :noweb-ref python-module-help :tangle no
 debug "Python Module = ${python_module_help}"
 
 cmd="emacs_Q_view_mode \
@@ -585,11 +585,11 @@ cmd="emacs_Q_view_mode \
                           (sit-for 1))
                        (delete-window)
                        (rename-buffer \"${python_module_help}\"))'"
-#+END_SRC
+#+end_src
 The =sit-for= hack is needed for emacs versions older than 25.x. It
 was reported in [[https://github.com/kaushalmodi/eless/issues/3][this issue]].
 **** Input is piped from =info= command
-#+BEGIN_SRC shell :noweb-ref info-manual :tangle no
+#+begin_src shell :noweb-ref info-manual :tangle no
 # Try something like `info emacs | eless'.
 # That will launch the Info manual in eless.
 debug "Info Manual = ${info_man}"
@@ -598,18 +598,18 @@ cmd="emacs_Q_view_mode \
              ${emacs_args[*]} \
              --eval '(progn
                        (info (downcase \"${info_man}\")))'"
-#+END_SRC
+#+end_src
 **** Input is piped from something else
 This scenario could be anything, like:
-#+BEGIN_SRC shell :tangle no
+#+begin_src shell :tangle no
 diff a b | eless
 grep 'foo' bar | eless
 ls --color=always | eless
-#+END_SRC
+#+end_src
 
 In that case, just open the =${tempfile}= saved from the =STDIN=
 stream using =emacs_Q_view_mode=.
-#+BEGIN_SRC shell :noweb-ref neither-man-nor-info :tangle no
+#+begin_src shell :noweb-ref neither-man-nor-info :tangle no
 debug "No man page or info manual detected"
 
 cmd="emacs_Q_view_mode ${tempfile} \
@@ -617,19 +617,19 @@ cmd="emacs_Q_view_mode ${tempfile} \
              --eval '(progn
                        (set-visited-file-name nil)
                        (rename-buffer \"*Stdin*\" :unique))'"
-#+END_SRC
+#+end_src
 *** Output is going to /stdout/, Input is an argument to the script
-#+BEGIN_SRC shell :noweb-ref output-stdout--input-stdin :tangle no
+#+begin_src shell :noweb-ref output-stdout--input-stdin :tangle no
 cmd="emacs_Q_view_mode ${emacs_args[*]}"
-#+END_SRC
+#+end_src
 ** Eval and Cleanup
 Finally we =eval= the constructed =${cmd}= variable.
-#+BEGIN_SRC shell
+#+begin_src shell
 debug "Eless Command : $cmd"
 
 eval "$cmd"
-#+END_SRC
-#+BEGIN_SRC shell :exports none
+#+end_src
+#+begin_src shell :exports none
 if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
 then
     rm -f "${tempfile}"
@@ -640,7 +640,7 @@ fi
 #  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin (Kept just for
 #    reference, not using this in this script any more.)
 #  https://github.com/dj08/utils-generic/blob/master/eless
-#+END_SRC
+#+end_src
 ** Emacs Configuration
 :PROPERTIES:
 :HEADER-ARGS: :noweb-ref emacs-config :noweb-sep "\n\n"
@@ -651,7 +651,7 @@ fi
 Here is a "Do The Right Thing" config for =view-mode= that gets
 loaded in the emacs instance launched in the [[#emacs-Q-view-mode-function][=emacs_Q_view_mode= function]].
 *** General setup
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Keep the default-directory to be the same from where
 ;; this script was launched from; useful during C-x C-f
 (setq default-directory "'"$(pwd)"'/")
@@ -676,9 +676,9 @@ loaded in the emacs instance launched in the [[#emacs-Q-view-mode-function][=ema
 (setq org-src-fontify-natively t)       ;Syntax-highlight source blocks in org
 
 (fset (quote yes-or-no-p) (quote y-or-n-p)) ;Use y or n instead of yes or no
-#+END_SRC
+#+end_src
 *** Ido setup
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq ido-save-directory-list-file nil) ;Do not save ido history
 (ido-mode 1)
 (setq ido-enable-flex-matching t)       ;Enable fuzzy search
@@ -686,26 +686,26 @@ loaded in the emacs instance launched in the [[#emacs-Q-view-mode-function][=ema
 (setq ido-create-new-buffer (quote always)) ;Create a new buffer if no buffer matches substringv
 (setq ido-use-filename-at-point (quote guess)) ;Find file at point using ido
 (add-to-list (quote ido-ignore-buffers) "*Messages*")
-#+END_SRC
+#+end_src
 *** Isearch setup
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq isearch-allow-scroll t) ;Allow scrolling using isearch
 ;; DEL during isearch should edit the search string, not jump back to the previous result.
 (define-key isearch-mode-map [remap isearch-delete-char] (function isearch-del-char))
-#+END_SRC
+#+end_src
 *** Enable line truncation
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Truncate long lines by default
 (setq truncate-partial-width-windows nil) ;Respect the value of truncate-lines
 (toggle-truncate-lines +1)
-#+END_SRC
+#+end_src
 *** Highlight the current line
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (global-hl-line-mode 1)
-#+END_SRC
+#+end_src
 *** Custom functions
 **** Keep/delete matching lines
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/keep-lines ()
   (interactive)
   (let ((inhibit-read-only t)) ;Ignore read-only status of buffer
@@ -719,9 +719,9 @@ loaded in the emacs instance launched in the [[#emacs-Q-view-mode-function][=ema
     (save-excursion
       (goto-char (point-min))
       (call-interactively (function delete-matching-lines)))))
-#+END_SRC
+#+end_src
 **** Frame and font re-sizing
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/frame-width-half (double)
   (interactive "P")
   (let ((frame-resize-pixelwise t) ;Do not round frame sizes to character h/w
@@ -739,18 +739,18 @@ loaded in the emacs instance launched in the [[#emacs-Q-view-mode-function][=ema
 (defun eless/frame-height-double ()
   (interactive)
   (eless/frame-height-half :double))
-#+END_SRC
+#+end_src
 **** Revert buffer in =view-mode=
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/revert-buffer-retain-view-mode ()
   (interactive)
   (let ((view-mode-state view-mode)) ;save the current state of view-mode
     (revert-buffer)
     (when view-mode-state
       (view-mode 1))))
-#+END_SRC
+#+end_src
 **** Detect if =diff-mode= should be enabled
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/enable-diff-mode-maybe ()
   (let* ((max-line 10)                ;Search first MAX-LINE lines of the buffer
          (bound (save-excursion
@@ -788,11 +788,11 @@ loaded in the emacs instance launched in the [[#emacs-Q-view-mode-function][=ema
           (diff-mode)
           (rename-buffer "*Diff*" :unique)
           (view-mode 1))))))            ;Re-enable view-mode
-#+END_SRC
+#+end_src
 ***** Enable =whitespace-mode= in =diff-mode=
 Enable =whitespace-mode= to easily detect presence of tabs and
 trailing spaces in diffs.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq whitespace-style
       (quote (face                      ;Enable all visualization via faces
               trailing                  ;Show white space at end of lines
@@ -801,9 +801,9 @@ trailing spaces in diffs.
               space-before-tab space-after-tab ;mix of tabs and spaces
               indentation))) ;Highlight spaces/tabs at BOL depending on indent-tabs-mode
 (add-hook (quote diff-mode-hook) (function whitespace-mode))
-#+END_SRC
+#+end_src
 **** Detect if ANSI codes need to be converted to colors
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/enable-ansi-color-maybe ()
   (save-excursion
     (let* ((max-line 100) ;Search first MAX-LINE lines of the buffer
@@ -820,7 +820,7 @@ trailing spaces in diffs.
           (message "Auto-converting ANSI codes to colors")
           (require (quote ansi-color))
           (ansi-color-apply-on-region (point-min) (point-max)))))))
-#+END_SRC
+#+end_src
 **** "Do The Right Thing" Kill
 Before killing emacs, loop through all the buffers and mark all
 the =view-mode= buffers as being unmodified (regardless of if they
@@ -831,7 +831,7 @@ as modified if filtering commands like =eless/delete-matching-lines=,
 By overriding the state of these buffers as being unmodified, we are
 saved from emacs prompting to save those modified =view-mode= buffers
 at the time of quitting.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/kill-emacs-or-buffer (&optional kill-emacs)
   (interactive "P")
   (let ((num-non-special-buffers 0))
@@ -853,9 +853,9 @@ at the time of quitting.
 (defun eless/save-buffers-maybe-and-kill-emacs ()
   (interactive)
   (eless/kill-emacs-or-buffer :kill-emacs))
-#+END_SRC
+#+end_src
 **** =dired-mode= setup
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/dired-mode-customization ()
   ;; dired-find-file is bound to "f" and "RET" by default
   ;; So changing the "RET" binding to dired-view-file so that the file opens
@@ -865,38 +865,38 @@ at the time of quitting.
   (define-key dired-mode-map (kbd "Q") (function quit-window))
   (define-key dired-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
 (add-hook (quote dired-mode-hook) (function eless/dired-mode-customization))
-#+END_SRC
+#+end_src
 **** =Man-mode= setup
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/Man-mode-customization ()
   (define-key Man-mode-map (kbd "Q") (function quit-window))
   (define-key Man-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
 (add-hook (quote Man-mode-hook) (function eless/Man-mode-customization))
-#+END_SRC
+#+end_src
 **** =Info-mode= setup
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun eless/Info-mode-customization ()
   (define-key Info-mode-map (kbd "Q") (function quit-window))
   (define-key Info-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
 (add-hook (quote Info-mode-hook) (function eless/Info-mode-customization))
-#+END_SRC
+#+end_src
 **** =tar-mode= setup
 When =eless= is passed an archive file as an argument, the =tar-mode=
 is enabled automatically that will do the job of showing the archive
 contents, extracting and viewing them.
-#+BEGIN_SRC shell :noweb-ref dont-tangle
+#+begin_src shell :noweb-ref dont-tangle
 eless foo.tar.xz
 eless bar.tar.gz
-#+END_SRC
-#+BEGIN_SRC emacs-lisp
+#+end_src
+#+begin_src emacs-lisp
 (defun eless/tar-mode-customization ()
   (define-key tar-mode-map (kbd "RET") (function tar-view))
   (define-key tar-mode-map (kbd "Q") (function quit-window))
   (define-key tar-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
 (add-hook (quote tar-mode-hook) (function eless/tar-mode-customization))
-#+END_SRC
+#+end_src
 *** Auto-setting of major modes
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (cond
  ((derived-mode-p (quote dired-mode)) (eless/dired-mode-customization))
  ((derived-mode-p (quote Man-mode)) (eless/Man-mode-customization))
@@ -908,9 +908,9 @@ eless bar.tar.gz
   ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
   (eless/enable-ansi-color-maybe)
   (view-mode 1)))
-#+END_SRC
+#+end_src
 *** Key bindings
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (with-eval-after-load (quote view)
   (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
   (define-key view-mode-map (kbd "&") (function eless/keep-lines))
@@ -946,7 +946,7 @@ eless bar.tar.gz
   (global-set-key (kbd "C-<left>") (function eless/frame-width-half))
   (global-set-key (kbd "C-<down>") (function eless/frame-height-double))
   (global-set-key (kbd "C-<up>") (function eless/frame-height-half)))
-#+END_SRC
+#+end_src
 *** User config override
 If an =elesscfg= file is present in the =user-emacs-directory=
 (default value is =~/.emacs.d/=), load that. As the user can be using
@@ -955,14 +955,14 @@ that file to set their favorite theme (or not set one), the
 
 User can further choose to re-define any of the above functions or
 key-bindings in this file.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (unless (load (locate-user-emacs-file "elesscfg") :noerror)
   (load-theme (quote tango-dark) :no-confirm)
   ;; The tango-dark theme is good except for the bright yellow hl-line face
   (custom-theme-set-faces
    (quote user)
    (quote (hl-line ((t (:background "color-238")))))))
-#+END_SRC
+#+end_src
 * Contributing                                                 :contributing:
 :PROPERTIES:
 :EXPORT_FILE_NAME: CONTRIBUTING
@@ -1007,10 +1007,10 @@ Talking about dependencies, this project builds *everything* from
 documentation, =README.org=, =CONTRIBUTING.org=, and even the Wiki
 pages. So before running =M-x eless-build= mentioned in below build
 steps, you also need to:
-#+BEGIN_SRC shell
+#+begin_src shell
 cd doc/
 git clone https://github.com/kaushalmodi/eless.wiki.git
-#+END_SRC
+#+end_src
 *** Steps to build =eless= and documentation
 - =emacs -Q=
 - *First* open a non-org file like =build/build.el= and *evaluate it*.
@@ -1056,10 +1056,10 @@ pages.
 
 So before running =M-x eless-build= mentioned in the
 [[https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org][Contributing Guide]], you need to:
-#+BEGIN_SRC shell
+#+begin_src shell
 cd doc/
 git clone https://github.com/kaushalmodi/eless.wiki.git
-#+END_SRC
+#+end_src
 
 If changes are only to this Wiki, I believe you can
 push them directly using =git= or manually edit those here.
@@ -1070,7 +1070,7 @@ push them directly using =git= or manually edit those here.
 :PROPERTIES:
 :EXPORT_FILE_NAME: Example eless Config in tcsh
 :END:
-#+BEGIN_SRC shell
+#+begin_src shell
 setenv PAGER eless # Show man pages using eless
 
 alias info  '\info \!* | eless'
@@ -1079,4 +1079,4 @@ alias diff  '\diff \!* | eless'
 alias diffg '\diff \!* | eless --gui'
 
 alias ev eless
-#+END_SRC
+#+end_src
