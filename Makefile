@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-13 18:26:27 kmodi>
+# Time-stamp: <2018-02-13 18:41:13 kmodi>
 
 # Makefile to export org documents to md for Hugo from the command line
 # Run just "make" to see usage examples.
@@ -27,7 +27,7 @@ ORG_FILE=$(shell pwd)/eless.org
 FUNC=
 
 .PHONY: default help emacs-batch \
-	eless doc docs all vcheck \
+	eless html info ghub doc docs all vcheck \
 	ctemp clean
 
 default: eless
@@ -61,8 +61,16 @@ emacs-batch:
 eless:
 	@$(MAKE_) emacs-batch FUNC=eless-build-script
 
-doc docs:
-	@$(MAKE_) emacs-batch FUNC=eless-build-docs
+html:
+	@$(MAKE_) emacs-batch FUNC=eless-build-html-docs
+
+info:
+	@$(MAKE_) emacs-batch FUNC=eless-build-info-docs
+
+ghub:
+	@$(MAKE_) emacs-batch FUNC=eless-build-github-docs
+
+doc docs: html info ghub
 
 all: vcheck eless doc
 
