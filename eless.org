@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-13 15:24:41 kmodi>
+# Time-stamp: <2018-02-13 16:19:19 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -81,16 +81,29 @@ As a bonus:
   documentation are generated using Org Babel from [[https://github.com/kaushalmodi/eless/blob/master/eless.org][one file]] (even this
   README).
 ** Requirements
+:PROPERTIES:
+:CUSTOM_ID: requirements
+:END:
+- This is a =bash= script. So even if you don't use =bash= shell, you
+  need to have the =bash= binary discoverable through your environment
+  variable =PATH=.
+  - Tested to work in =tcsh= shell (/I know/) on RHEL 6.6.
 - *GNU =grep=* for =-P= flag (Perl regex) support
   - Tested to work with GNU =grep= 2.6.3 on RHEL 6.6.
   - Mac OS users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using =brew
     install=]].
 ** Try it out
+:PROPERTIES:
+:CUSTOM_ID: try-it-out
+:END:
 Here are some usage examples:
 #+begin_src shell :noweb yes
 <<usage-examples>>
 #+end_src
 ** Contributors
+:PROPERTIES:
+:CUSTOM_ID: contributors
+:END:
 - Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
   =emacs -Q -nw=.
 - Thanks to [[https://github.com/alphapapa][Adam Porter]] for adding a =bash= /collapsing function/ for
@@ -197,7 +210,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-hash
-a192b7f
+82fdc15
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
