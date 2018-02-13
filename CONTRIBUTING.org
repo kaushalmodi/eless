@@ -40,7 +40,7 @@ documentation, =README.org=, =CONTRIBUTING.org=, and even the Wiki
 pages. So before running =M-x eless-build= mentioned in below build
 steps, you also need to:
 #+begin_src shell
-cd doc/
+cd docs/
 git clone https://github.com/kaushalmodi/eless.wiki.git
 #+end_src
 ** Steps to build =eless= and documentation

@@ -4,7 +4,7 @@
 
 -----
 
-*Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/doc/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
+*Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/docs/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
 
 -----
 
@@ -34,7 +34,7 @@ It was created out of a need to have something /like/ =less= (in the sense of
 
 I call it =eless= and here's a little taste of what it looks like:
 
-[[https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png][https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png]]
+[[https://raw.githubusercontent.com/kaushalmodi/eless/master/docs/images/eless-examples.png][https://raw.githubusercontent.com/kaushalmodi/eless/master/docs/images/eless-examples.png]]
 
 /Shown above, starting from top left image and proceeding clock-wise../
 - =eless eless.org=

@@ -126,8 +126,8 @@ Installed dependencies:
   (message "Org version detected: %s" (org-version nil :full))
   (let* ((eless-root-dir (cdr (project-current))) ;Requires emacs 25.1
          (eless-org-file (expand-file-name "eless.org" eless-root-dir))
-         (eless-doc-dir (concat eless-root-dir "doc/"))
-         ;; cd doc/
+         (eless-doc-dir (concat eless-root-dir "docs/"))
+         ;; cd docs/
          ;; git clone https://github.com/kaushalmodi/eless.wiki.git
          (eless-wiki-dir (concat eless-doc-dir "eless.wiki/"))
          (org-babel-post-tangle-hook nil) ;Initialize `org-babel-post-tangle-hook' to nil in this let-bound copy
@@ -231,7 +231,7 @@ INFO is the property list of export options."
                       (rename-file (expand-file-name exported-file eless-root-dir)
                                    (expand-file-name exported-file eless-wiki-dir)
                                    :ok-if-already-exists))))))
-          (user-error "eless.wiki dir does not exist. You need to `cd doc/' and `git clone https://github.com/kaushalmodi/eless.wiki.git'"))))
+          (user-error "eless.wiki dir does not exist. You need to `cd docs/' and `git clone https://github.com/kaushalmodi/eless.wiki.git'"))))
 
     ;; Export to HTML and Info
     (let ((org-html-htmlize-output-type 'css)

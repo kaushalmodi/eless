@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-13 14:59:07 kmodi>
+# Time-stamp: <2018-02-13 15:11:58 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -31,7 +31,7 @@
 # #+end_export
 -----
 
-*Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/doc/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
+*Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/docs/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
 
 -----
 
@@ -61,7 +61,7 @@ It was created out of a need to have something /like/ =less= (in the sense of
 
 I call it =eless= and here's a little taste of what it looks like:
 
-[[https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png][https://raw.githubusercontent.com/kaushalmodi/eless/master/doc/images/eless-examples.png]]
+[[https://raw.githubusercontent.com/kaushalmodi/eless/master/docs/images/eless-examples.png][https://raw.githubusercontent.com/kaushalmodi/eless/master/docs/images/eless-examples.png]]
 
 /Shown above, starting from top left image and proceeding clock-wise../
 - =eless eless.org=
@@ -197,7 +197,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-hash
-f2eee31
+b31cc97
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1020,7 +1020,7 @@ documentation, =README.org=, =CONTRIBUTING.org=, and even the Wiki
 pages. So before running =M-x eless-build= mentioned in below build
 steps, you also need to:
 #+begin_src shell
-cd doc/
+cd docs/
 git clone https://github.com/kaushalmodi/eless.wiki.git
 #+end_src
 *** Steps to build =eless= and documentation
@@ -1069,7 +1069,7 @@ pages.
 So before running =M-x eless-build= mentioned in the
 [[https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org][Contributing Guide]], you need to:
 #+begin_src shell
-cd doc/
+cd docs/
 git clone https://github.com/kaushalmodi/eless.wiki.git
 #+end_src
 
@@ -1085,7 +1085,7 @@ push them directly using =git= or manually edit those here.
 #+begin_src shell
 setenv PAGER eless # Show man pages using eless
 
-alias info  '\info \!* | eless'
+alias info  '\info \!* | eless'vvcrrrlfuhnrhhhlhrgutculgdeknrjdgiicnvkgtiri
 
 alias diff  '\diff \!* | eless'
 alias diffg '\diff \!* | eless --gui'
