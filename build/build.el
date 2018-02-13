@@ -62,7 +62,7 @@ Installed dependencies:
   (let ((package-user-dir eless-package-user-dir))
     (require 'package)
     ;; Install `org-plus-contrib'; `org' cannot be "installed", only upgraded.
-    (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+    (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
     (package-initialize)
     (package-refresh-contents)
     (unless (package-installed-p 'org-plus-contrib)
@@ -70,7 +70,7 @@ Installed dependencies:
       (package-install 'org-plus-contrib))
     (unless (and (package-installed-p 'htmlize)
                  (package-installed-p 'rainbow-delimiters)) ;For syntax highlighting of parentheses in elisp code
-      (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+      (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
       (package-refresh-contents)
       (package-install 'htmlize)
       (package-install 'rainbow-delimiters))
