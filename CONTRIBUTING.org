@@ -15,62 +15,33 @@ This guide is for you if you'd like to do any of the below:
      - If you are providing debug info for something like =man foo=, do
        - =PAGER=​"eless -D" man foo=
 * Development
-** Dependencies
-Here's a short list of dependencies if you would like to build =eless=
-and the documentation from =eless.org=:
-
-1. Org version 9.x -- Latest version of Org from Melpa or Org Elpa
-2. =htmlize= package for syntax highlighting of code in html exports
-   -- Melpa
-3. =rainbow-delimiters= package for syntax highlighting of parenthese
-   in elisp code in html exports -- Melpa
-
-The recommended way is to run =emacs -Q= and then run =M-x
-eless-install-dependencies= to install the dependencies in your
-=temporary-file-directory=. /You can choose to even install these
-manually in your emacs config if you like./
-
-I used the latest emacs and org-mode versions built from their =master=
-branches for this project. So if any of the below steps do not work
-for you, open an issue!
-
-Talking about dependencies, this project builds *everything* from
-=eless.org= file, the =eless= script /plus/ all the [[https://kaushalmodi.github.io/eless/][HTML]], Info
-documentation, =README.org=, =CONTRIBUTING.org=, and even the Wiki
-pages. So before running =M-x eless-build= mentioned in below build
-steps, you also need to:
-#+begin_src shell
+** Preparation
+This project builds *everything* from the =eless.org= file --- the
+=eless= Bash script /plus/ all the [[https://kaushalmodi.github.io/eless/][HTML]], Info documentation,
+=README.org=, =CONTRIBUTING.org=, and even the Wiki pages. So before
+your proceed, you also need to:
+#+BEGIN_SRC shell
 cd docs/
 git clone https://github.com/kaushalmodi/eless.wiki.git
-#+end_src
-** Steps to build =eless= and documentation
-- =emacs -Q=
-- *First* open a non-org file like =build/build.el= and *evaluate it*.
-  - The emphasis on opening a non-org file is so that the
-    older-than-required version of =org= in =emacs -Q= doesn't get
-    auto-loaded.  The next step would be to install newer version of
-    org to a temp location. That step would fail due to mixed org
-    versions if the default org version got loaded first.
-  - Evaluating this file will now allow you to run =M-x
-        eless-install-dependencies= or =M-x eless-build=.
-- Do =M-x eless-install-dependencies=.
-  - You will need to do this step only for the very first time you
-    start working on this project.
-- Do =M-x eless-build=.
-- Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are
-  no errors.
-- Understand the changes made in =eless=, /plus/ all the other files.
-  - I build the HTML documentation using the Org version from =master=
-    branch. So if you build the HTML documentation using the latest
-    stable as of today (version =9.0.7=), your HTML export will look a
-    bit different (absence of nested =<code>= blocks inside =<pre>=),
-    but that's OK.
-  - Also the randomly generated hyperlinks and section numbers (if you
-    added/removed/moved documentation sections) will be different in
-    the HTML and Info exports.
-  - .. and the =git rev-parse= returned commit hash will be different.
-  - Other than that, you shouldn't see any unexpected changes.
-- Provide a PR.
+#+END_SRC
+** To build =eless= and documentation
+#+BEGIN_SRC shell
+make eless
+#+END_SRC
+*** Sanity check of the tangled =eless=
+Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are no
+errors.
+** To build documentation
+#+BEGIN_SRC shell
+make doc
+#+END_SRC
+*** Understand the changes
+- The randomly generated hyperlinks and section numbers in the Info
+  document and HTML will be different.
+- Other than that, you shouldn't see any unexpected changes.
+** Submitting PR
+- You can submit a PR once you have reviewed all the changes in the
+  tangled =eless= script and documentation.
 - If changes are only to the Wiki, I believe you can push them
   directly using =git= or manually edit those [[https://github.com/kaushalmodi/eless/wiki][here]]. /I have to yet
   figure out how to keep the non-git Wiki changes and changes in

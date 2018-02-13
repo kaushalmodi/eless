@@ -1,11 +1,26 @@
-# https://github.com/koalaman/shellcheck/wiki/TravisCI
-# Reference: https://github.com/ccztux/glsysbackup/blob/c59fedeafa9398e4f0aa65de1f63fdbabe2d54f8/.travis.yml
+dist: trusty
 sudo: required
-language: bash
+language: generic
+env:
+  global:
+    - CURL="curl -fsSkL --retry 9 --retry-delay 9"
+  matrix:
+  # https://github.com/npostavs/emacs-travis/releases
+  - EMACS_VERSION=26 # emacs-26 branch
+  - EMACS_VERSION=25.3
+  - EMACS_VERSION=25.1
+  - EMACS_VERSION=24.5
+  - EMACS_VERSION=24.4
+  - EMACS_VERSION=master # master branch
 services:
   - docker
 before_install:
   - docker pull koalaman/shellcheck
+install:
+  - $CURL -O https://github.com/npostavs/emacs-travis/releases/download/bins/emacs-bin-${EMACS_VERSION}.tar.gz
+  - tar xf emacs-bin-${EMACS_VERSION}.tar.gz -C /
+  - export EMACS=/tmp/emacs/bin/emacs
+  - $EMACS --version
 script:
   - docker run koalaman/shellcheck --version
   # https://docs.docker.com/engine/reference/commandline/run/#mount-volume--v---read-only
@@ -15,8 +30,19 @@ script:
   #   So this combination executes the command using the container, but inside
   # the current working directory.
   - docker run -v $(pwd):/repo_root -w /repo_root koalaman/shellcheck eless
+  - make --no-print-directory all EMACS=${EMACS} # Just ensure that "make all" doesn't fail for any reason.. this is *not* used to generate the script or the docs on Travis.
 matrix:
   fast_finish: true
 branches:
   except:
   - images
+notifications:
+  email:
+    # Default is change, but that includes a new branch's 1st success.
+    on_success: never
+    on_failure: always # The default
+
+# References:
+# https://github.com/magit/magit/blob/master/.travis.yml
+# https://github.com/koalaman/shellcheck/wiki/TravisCI
+# https://github.com/ccztux/glsysbackup/blob/c59fedeafa9398e4f0aa65de1f63fdbabe2d54f8/.travis.yml

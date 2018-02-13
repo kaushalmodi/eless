@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-02-13 Tue 16:20 -->
+<!-- 2018-02-13 Tue 18:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -161,19 +161,6 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -320,8 +307,18 @@ for the JavaScript code in this tag.
 <li><a href="#org2169b22">8.1. How to help debug</a></li>
 <li><a href="#orge37ef69">8.2. Development</a>
 <ul>
-<li><a href="#org7168862">8.2.1. Dependencies</a></li>
-<li><a href="#orgc871e7f">8.2.2. Steps to build <code>eless</code> and documentation</a></li>
+<li><a href="#orge447d4c">8.2.1. Preparation</a></li>
+<li><a href="#org5bf3991">8.2.2. To build <code>eless</code> and documentation</a>
+<ul>
+<li><a href="#org0679d38">8.2.2.1. Sanity check of the tangled <code>eless</code></a></li>
+</ul>
+</li>
+<li><a href="#orgb99d4ed">8.2.3. To build documentation</a>
+<ul>
+<li><a href="#org3cdee39">8.2.3.1. Understand the changes</a></li>
+</ul>
+</li>
+<li><a href="#org12ee794">8.2.4. Submitting PR</a></li>
 </ul>
 </li>
 </ul>
@@ -424,7 +421,7 @@ README).</li>
 </ul>
 </div>
 <div id="outline-container-orge948767" class="outline-3">
-<h3 id="requirements"><span class="section-number-3">1.1</span> Requirements</h3>
+<h3 id="requirements"><a id="orge948767"></a><span class="section-number-3">1.1</span> Requirements</h3>
 <div class="outline-text-3" id="text-requirements">
 <ul class="org-ul">
 <li>This is a <code>bash</code> script. So even if you don&rsquo;t use <code>bash</code> shell, you
@@ -443,7 +440,7 @@ variable <code>PATH</code>.
 </div>
 </div>
 <div id="outline-container-org6dba5bd" class="outline-3">
-<h3 id="try-it-out"><span class="section-number-3">1.2</span> Try it out</h3>
+<h3 id="try-it-out"><a id="org6dba5bd"></a><span class="section-number-3">1.2</span> Try it out</h3>
 <div class="outline-text-3" id="text-try-it-out">
 <p>
 Here are some usage examples:
@@ -469,7 +466,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 <div id="outline-container-orgf2f0a25" class="outline-3">
-<h3 id="contributors"><span class="section-number-3">1.3</span> Contributors</h3>
+<h3 id="contributors"><a id="orgf2f0a25"></a><span class="section-number-3">1.3</span> Contributors</h3>
 <div class="outline-text-3" id="text-contributors">
 <ul class="org-ul">
 <li>Thanks to <a href="https://github.com/iqbalansari">Iqbal Ansari</a> for adding support to read piped data in
@@ -723,6 +720,11 @@ info emacs | eless          <span class="org-comment-delimiter"># </span><span c
 eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span class="org-comment">Read the contents of archives; emacs does the unarchiving automatically</span>
 </pre>
 </div>
+<dl class="org-dl">
+<dt>NOTE</dt><dd>Above examples are tested to work in a <b><code>bash</code>
+shell</b>. Specifically, examples like <code>PAGER=eless man grep</code>
+will need to be adapted for the shell you are using.</dd>
+</dl>
 </div>
 </div>
 <div id="outline-container-org238ea3b" class="outline-2">
@@ -734,7 +736,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell">82fdc15
+<pre class="src src-shell">45b5745
 </pre>
 </div>
 <p>
@@ -792,7 +794,7 @@ Any undefined variable is referenced.
 <pre class="src src-shell"><span class="org-variable-name">help</span>=0
 <span class="org-variable-name">debug</span>=0
 <span class="org-variable-name">no_window_arg</span>=<span class="org-string">"-nw"</span>
-<span class="org-variable-name">emacs_args</span>=<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"${no_window_arg}"</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Run emacs with -nw by default</span>
+<span class="org-variable-name">emacs_args</span>=(<span class="org-string">"${no_window_arg}"</span>) <span class="org-comment-delimiter"># </span><span class="org-comment">Run emacs with -nw by default</span>
 <span class="org-variable-name">piped_data</span>=<span class="org-string">''</span>
 <span class="org-variable-name">tempfile</span>=<span class="org-string">''</span>
 <span class="org-variable-name">cmd</span>=<span class="org-string">''</span>
@@ -814,19 +816,19 @@ disabled, it defines itself as a function that does nothing, so
 subsequent calls do not output.
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span class="org-keyword">function</span> <span class="org-function-name">debug</span> <span class="org-rainbow-delimiters-depth-1">{</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">[</span><span class="org-rainbow-delimiters-depth-3">[</span> $<span class="org-variable-name">debug</span> -eq 1 <span class="org-rainbow-delimiters-depth-3">]</span><span class="org-rainbow-delimiters-depth-2">]</span>
+<pre class="src src-shell"><span class="org-keyword">function</span> <span class="org-function-name">debug</span> {
+    <span class="org-keyword">if</span> [[ $<span class="org-variable-name">debug</span> -eq 1 ]]
     <span class="org-keyword">then</span>
-        <span class="org-keyword">function</span> <span class="org-function-name">debug</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+        <span class="org-keyword">function</span> <span class="org-function-name">debug</span> {
             <span class="org-builtin">echo</span> -e <span class="org-string">"DEBUG: $*"</span> &gt;&amp;2
-        <span class="org-rainbow-delimiters-depth-2">}</span>
+        }
         debug <span class="org-string">"$@"</span>
     <span class="org-keyword">else</span>
-        <span class="org-keyword">function</span> <span class="org-function-name">debug</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+        <span class="org-keyword">function</span> <span class="org-function-name">debug</span> {
             true
-        <span class="org-rainbow-delimiters-depth-2">}</span>
+        }
     <span class="org-keyword">fi</span>
-<span class="org-rainbow-delimiters-depth-1">}</span>
+}
 </pre>
 </div>
 <p>
@@ -837,7 +839,7 @@ If user has passed the <code>-D</code> option, run the script in debug mode.
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-keyword">for</span> var<span class="org-keyword"> in</span> <span class="org-string">"$@"</span>
 <span class="org-keyword">do</span>
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-D'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">if</span> [[ <span class="org-string">"${var}"</span> == <span class="org-string">'-D'</span> ]]
     <span class="org-keyword">then</span>
         eless_print_version
         <span class="org-variable-name">debug</span>=1
@@ -848,7 +850,7 @@ If user has passed the <code>-D</code> option, run the script in debug mode.
 </div>
 </div>
 <div id="outline-container-org7206787" class="outline-3">
-<h3 id="input-output-detection"><span class="section-number-3">7.4</span> Input/Output Detection</h3>
+<h3 id="input-output-detection"><a id="org7206787"></a><span class="section-number-3">7.4</span> Input/Output Detection</h3>
 <div class="outline-text-3" id="text-input-output-detection">
 <p>
 We need this script to know:
@@ -898,7 +900,7 @@ Below code determines that using <code>[[ -t 0 ]]</code> and <code>[[ -t 1]]</co
 </p>
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">https://gist.github.com/davejamesmiller/1966557</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> -t 0 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Script is called normally - Terminal input (keyboard) - interactive</span>
+<span class="org-keyword">if</span> [[ -t 0 ]] <span class="org-comment-delimiter"># </span><span class="org-comment">Script is called normally - Terminal input (keyboard) - interactive</span>
 <span class="org-keyword">then</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">eless foo</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">eless foo | cat -</span>
@@ -907,13 +909,13 @@ Below code determines that using <code>[[ -t 0 ]]</code> and <code>[[ -t 1]]</co
 <span class="org-keyword">else</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Script is getting input from pipe or file - non-interactive</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">echo bar | eless foo</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">echo bar | eless foo | cat -</span>
-    <span class="org-variable-name">piped_data</span>=<span class="org-string">"$(</span><span class="org-sh-quoted-exec">cat</span><span class="org-string">)"</span>
+    <span class="org-variable-name">piped_data</span>=<span class="org-string">"$(cat)"</span>
     debug <span class="org-string">"--&gt; Input from pipe/file"</span>
     <span class="org-variable-name">input_from_pipe_flag</span>=1
 <span class="org-keyword">fi</span>
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">http://stackoverflow.com/a/911213/1219634</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> -t 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Output is going to the terminal</span>
+<span class="org-keyword">if</span> [[ -t 1 ]] <span class="org-comment-delimiter"># </span><span class="org-comment">Output is going to the terminal</span>
 <span class="org-keyword">then</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">eless foo</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">echo bar | eless foo</span>
@@ -947,31 +949,31 @@ basic approach of looping through all the arguments <code>"$@"</code> is used.
 <span class="org-keyword">do</span>
     debug <span class="org-string">"var : $var"</span>
 
-    <span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-D'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">if</span> [[ <span class="org-string">"${var}"</span> == <span class="org-string">'-D'</span> ]]
     <span class="org-keyword">then</span>
         : <span class="org-comment-delimiter"># </span><span class="org-comment">Put just a colon to represent null operation # https://unix.stackexchange.com/a/133976/57923</span>
           <span class="org-comment-delimiter"># </span><span class="org-comment">Do not pass -D option to emacs.</span>
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-V'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> [[ <span class="org-string">"${var}"</span> == <span class="org-string">'-V'</span> ]]
     <span class="org-keyword">then</span>
         eless_print_version
         <span class="org-keyword">exit</span> 0
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> [[ <span class="org-string">"${var}"</span> == <span class="org-string">'-'</span> ]]
     <span class="org-keyword">then</span>
         : <span class="org-comment-delimiter"># </span><span class="org-comment">Discard the '-'; it does nothing. (for the cases where a user might do "echo foo | eless -")</span>
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-nw'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> [[ <span class="org-string">"${var}"</span> == <span class="org-string">'-nw'</span> ]]
     <span class="org-keyword">then</span>
         : <span class="org-comment-delimiter"># </span><span class="org-comment">Ignore the user-passed "-nw" option; we are adding it by default.</span>
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'-h'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">Do not hijack --help; use that to show emacs help</span>
+    <span class="org-keyword">elif</span> [[ <span class="org-string">"${var}"</span> == <span class="org-string">'-h'</span> ]]  <span class="org-comment-delimiter"># </span><span class="org-comment">Do not hijack --help; use that to show emacs help</span>
     <span class="org-keyword">then</span>
         <span class="org-variable-name">help</span>=1
-    <span class="org-keyword">elif</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-string">"${var}"</span> == <span class="org-string">'--gui'</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+    <span class="org-keyword">elif</span> [[ <span class="org-string">"${var}"</span> == <span class="org-string">'--gui'</span> ]]
     <span class="org-keyword">then</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "--gui" option</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">http://stackoverflow.com/a/16861932/1219634</span>
-        <span class="org-variable-name">emacs_args</span>=<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"${emacs_args[@]/${no_window_arg}}"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+        <span class="org-variable-name">emacs_args</span>=(<span class="org-string">"${emacs_args[@]/${no_window_arg}}"</span>)
     <span class="org-keyword">else</span>
         <span class="org-comment-delimiter"># </span><span class="org-comment">Collect all other arguments passed to eless and forward them to emacs.</span>
-        <span class="org-variable-name">emacs_args</span>=<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-string">"${emacs_args[@]}"</span> <span class="org-string">"${var}"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+        <span class="org-variable-name">emacs_args</span>=(<span class="org-string">"${emacs_args[@]}"</span> <span class="org-string">"${var}"</span>)
     <span class="org-keyword">fi</span>
 <span class="org-keyword">done</span>
 </pre>
@@ -986,7 +988,7 @@ If user asked for this script&rsquo;s help, just print it and exit with
 success code.
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-builtin">help</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<pre class="src src-shell"><span class="org-keyword">if</span> [[ ${<span class="org-variable-name">help</span>} -eq 1 ]]
 <span class="org-keyword">then</span>
     eless_print_version
     <span class="org-builtin">echo</span> <span class="org-string">"${h}"</span>
@@ -998,7 +1000,7 @@ success code.
 </div>
 
 <div id="outline-container-orge4c83ed" class="outline-3">
-<h3 id="emacs-Q-view-mode-function"><span class="section-number-3">7.7</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
+<h3 id="emacs-Q-view-mode-function"><a id="orge4c83ed"></a><span class="section-number-3">7.7</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
 <div class="outline-text-3" id="text-emacs-Q-view-mode-function">
 <p>
 The <code>emacs_Q_view_mode</code> function is defined to launch emacs with a
@@ -1012,7 +1014,7 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span class="org-keyword">function</span> <span class="org-function-name">emacs_Q_view_mode</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+<pre class="src src-shell"><span class="org-keyword">function</span> <span class="org-function-name">emacs_Q_view_mode</span> {
 
     <span class="org-comment-delimiter"># </span><span class="org-comment">Here $@ is the list of arguments passed specifically to emacs_Q_view_mode,</span>
     <span class="org-comment-delimiter"># </span><span class="org-comment">not to eless.</span>
@@ -1022,7 +1024,7 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the
                --eval <span class="org-string">'(progn</span>
 <span class="org-string">                          &lt;&lt;emacs-config&gt;&gt;</span>
 <span class="org-string">                       )'</span> 2&gt;/dev/null &lt;/dev/tty
-<span class="org-rainbow-delimiters-depth-1">}</span>
+}
 </pre>
 </div>
 </div>
@@ -1039,7 +1041,7 @@ or <i>stdout</i>. Now we make use of that information to call the
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">Below if condition is reached if you try to do this:</span>
 <span class="org-comment-delimiter">#   </span><span class="org-comment">eless foo.txt | grep bar .. Not allowed!</span>
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">output_to_pipe_flag</span><span class="org-rainbow-delimiters-depth-3">}</span> -eq 1 <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-keyword">if</span> [[ ${<span class="org-variable-name">output_to_pipe_flag</span>} -eq 1 ]]
 <span class="org-keyword">then</span>
     &lt;&lt;output-pipe&gt;&gt;
 <span class="org-sh-heredoc">else</span>
@@ -1092,12 +1094,12 @@ template on Mac OS (See <code>eless</code> issue #<a href="https://github.com/ka
  regex) support).
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span class="org-variable-name">tempfile</span>=<span class="org-string">"$(</span><span class="org-sh-quoted-exec">mktemp</span><span class="org-string"> -t emacs-stdin-"$USER".XXXXXXX)"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
+<pre class="src src-shell"><span class="org-variable-name">tempfile</span>=<span class="org-string">"$(mktemp -t emacs-stdin-"$USER".XXXXXXX)"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
 debug <span class="org-string">"Temp File : $tempfile"</span>
 <span class="org-builtin">echo</span> <span class="org-string">"${piped_data}"</span> &gt; <span class="org-string">"${tempfile}"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">Parse the first line of the piped data to check if it's a man page</span>
-<span class="org-variable-name">first_line_piped_data</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">head</span> -n 1 <span class="org-string">"${tempfile}"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-variable-name">first_line_piped_data</span>=$(head -n 1 <span class="org-string">"${tempfile}"</span>)
 debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}"</span>
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of man pages is assumed to be</span>
@@ -1106,26 +1108,26 @@ debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}
 <span class="org-comment-delimiter"># </span><span class="org-comment">"true" so that "set -e" does not kill the script at this point.</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">For some odd reason, the "BASH_BUILTINS" man page is just "builtins", so</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">deal with that corner case.. faced this when trying to do "man read".</span>
-<span class="org-variable-name">man_page</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
+<span class="org-variable-name">man_page</span>=$(<span class="org-builtin">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
                | grep -Po <span class="org-string">'^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)'</span> <span class="org-sh-escaped-newline">\</span>
                | sed -r <span class="org-string">'s/bash_builtins/builtins/I'</span> <span class="org-sh-escaped-newline">\</span>
-               || true<span class="org-rainbow-delimiters-depth-1">)</span>
+               || true)
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of Python package MODULE help is assumed to be</span>
 <span class="org-comment-delimiter">#   </span><span class="org-comment">Help on package MODULE:</span>
-<span class="org-variable-name">python_module_help</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
+<span class="org-variable-name">python_module_help</span>=$(<span class="org-builtin">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
                          | grep -Po <span class="org-string">'^Help on package \K(.*)(?=:$)'</span> <span class="org-sh-escaped-newline">\</span>
-                         || true<span class="org-rainbow-delimiters-depth-1">)</span>
+                         || true)
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of info manuals is assumed to be</span>
 <span class="org-comment-delimiter">#   </span><span class="org-comment">/path/to/some.info or /path/to/some.info.gz</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass, so OR it with</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">"true" so that "set -e" does not kill the script at this point.</span>
-<span class="org-variable-name">info_man</span>=$<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-sh-quoted-exec">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
+<span class="org-variable-name">info_man</span>=$(<span class="org-builtin">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
                | grep -Po <span class="org-string">'^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'</span> <span class="org-sh-escaped-newline">\</span>
-               || true<span class="org-rainbow-delimiters-depth-1">)</span>
+               || true)
 
-<span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-1">[</span><span class="org-rainbow-delimiters-depth-2">[</span> <span class="org-negation-char">!</span> -z $<span class="org-rainbow-delimiters-depth-3">{</span><span class="org-variable-name">man_page</span><span class="org-rainbow-delimiters-depth-3">}</span> <span class="org-rainbow-delimiters-depth-2">]</span><span class="org-rainbow-delimiters-depth-1">]</span>
+<span class="org-keyword">if</span> [[ <span class="org-negation-char">!</span> -z ${<span class="org-variable-name">man_page</span>} ]]
 <span class="org-keyword">then</span>
     &lt;&lt;man-page&gt;&gt;
 <span class="org-sh-heredoc">elif [[ ! -z ${python_module_help} ]]</span>
@@ -1264,7 +1266,7 @@ Finally we <code>eval</code> the constructed <code>${cmd}</code> variable.
 </div>
 </div>
 <div id="outline-container-org2adb4d2" class="outline-3">
-<h3 id="emacs-configuration"><span class="section-number-3">7.10</span> Emacs Configuration</h3>
+<h3 id="emacs-configuration"><a id="org2adb4d2"></a><span class="section-number-3">7.10</span> Emacs Configuration</h3>
 <div class="outline-text-3" id="text-emacs-configuration">
 <p>
 Here is a &ldquo;Do The Right Thing&rdquo; config for <code>view-mode</code> that gets
@@ -1277,28 +1279,28 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Keep the default-directory to be the same from where</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">this script was launched from; useful during C-x C-f</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> default-directory <span class="org-string">"'"</span>$<span class="org-rainbow-delimiters-depth-2">(</span>pwd<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-string">"'/"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(<span class="org-keyword">setq</span> default-directory <span class="org-string">"'"</span>$(pwd)<span class="org-string">"'/"</span>)
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">No clutter</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>menu-bar-mode -1<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-2">(</span>fboundp <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> tool-bar-mode<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span>tool-bar-mode -1<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(menu-bar-mode -1)
+(<span class="org-keyword">if</span> (fboundp (<span class="org-keyword">function</span> tool-bar-mode)) (tool-bar-mode -1))
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Show line and column numbers in the mode-line</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>line-number-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>column-number-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
+(line-number-mode 1)
+(column-number-mode 1)
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq-default</span> indent-tabs-mode nil<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Use spaces instead of tabs for indentation</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> x-select-enable-clipboard t<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> x-select-enable-primary t<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> save-interprogram-paste-before-kill t<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> require-final-newline t<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> visible-bell t<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> load-prefer-newer t<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ediff-window-setup-function <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> ediff-setup-windows-plain<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(<span class="org-keyword">setq-default</span> indent-tabs-mode nil) <span class="org-comment-delimiter">;</span><span class="org-comment">Use spaces instead of tabs for indentation</span>
+(<span class="org-keyword">setq</span> x-select-enable-clipboard t)
+(<span class="org-keyword">setq</span> x-select-enable-primary t)
+(<span class="org-keyword">setq</span> save-interprogram-paste-before-kill t)
+(<span class="org-keyword">setq</span> require-final-newline t)
+(<span class="org-keyword">setq</span> visible-bell t)
+(<span class="org-keyword">setq</span> load-prefer-newer t)
+(<span class="org-keyword">setq</span> ediff-window-setup-function (<span class="org-keyword">function</span> ediff-setup-windows-plain))
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> org-src-fontify-natively t<span class="org-rainbow-delimiters-depth-1">)</span>       <span class="org-comment-delimiter">;</span><span class="org-comment">Syntax-highlight source blocks in org</span>
+(<span class="org-keyword">setq</span> org-src-fontify-natively t)       <span class="org-comment-delimiter">;</span><span class="org-comment">Syntax-highlight source blocks in org</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span>fset <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> yes-or-no-p<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> y-or-n-p<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Use y or n instead of yes or no</span>
+(fset (<span class="org-keyword">quote</span> yes-or-no-p) (<span class="org-keyword">quote</span> y-or-n-p)) <span class="org-comment-delimiter">;</span><span class="org-comment">Use y or n instead of yes or no</span>
 </pre>
 </div>
 </div>
@@ -1307,13 +1309,13 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <h4 id="orgf3bb98f"><span class="section-number-4">7.10.2</span> Ido setup</h4>
 <div class="outline-text-4" id="text-7-10-2">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ido-save-directory-list-file nil<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not save ido history</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>ido-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ido-enable-flex-matching t<span class="org-rainbow-delimiters-depth-1">)</span>       <span class="org-comment-delimiter">;</span><span class="org-comment">Enable fuzzy search</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ido-everywhere t<span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ido-create-new-buffer <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> always<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Create a new buffer if no buffer matches substringv</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> ido-use-filename-at-point <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> guess<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Find file at point using ido</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>add-to-list <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> ido-ignore-buffers<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-string">"*Messages*"</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> ido-save-directory-list-file nil) <span class="org-comment-delimiter">;</span><span class="org-comment">Do not save ido history</span>
+(ido-mode 1)
+(<span class="org-keyword">setq</span> ido-enable-flex-matching t)       <span class="org-comment-delimiter">;</span><span class="org-comment">Enable fuzzy search</span>
+(<span class="org-keyword">setq</span> ido-everywhere t)
+(<span class="org-keyword">setq</span> ido-create-new-buffer (<span class="org-keyword">quote</span> always)) <span class="org-comment-delimiter">;</span><span class="org-comment">Create a new buffer if no buffer matches substringv</span>
+(<span class="org-keyword">setq</span> ido-use-filename-at-point (<span class="org-keyword">quote</span> guess)) <span class="org-comment-delimiter">;</span><span class="org-comment">Find file at point using ido</span>
+(add-to-list (<span class="org-keyword">quote</span> ido-ignore-buffers) <span class="org-string">"*Messages*"</span>)
 </pre>
 </div>
 </div>
@@ -1322,9 +1324,9 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <h4 id="org5b34868"><span class="section-number-4">7.10.3</span> Isearch setup</h4>
 <div class="outline-text-4" id="text-7-10-3">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> isearch-allow-scroll t<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Allow scrolling using isearch</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> isearch-allow-scroll t) <span class="org-comment-delimiter">;</span><span class="org-comment">Allow scrolling using isearch</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">DEL during isearch should edit the search string, not jump back to the previous result.</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>define-key isearch-mode-map <span class="org-rainbow-delimiters-depth-2">[</span>remap isearch-delete-char<span class="org-rainbow-delimiters-depth-2">]</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> isearch-del-char<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(define-key isearch-mode-map [remap isearch-delete-char] (<span class="org-keyword">function</span> isearch-del-char))
 </pre>
 </div>
 </div>
@@ -1334,8 +1336,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <div class="outline-text-4" id="text-7-10-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Truncate long lines by default</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> truncate-partial-width-windows nil<span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Respect the value of truncate-lines</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>toggle-truncate-lines +1<span class="org-rainbow-delimiters-depth-1">)</span>
+(<span class="org-keyword">setq</span> truncate-partial-width-windows nil) <span class="org-comment-delimiter">;</span><span class="org-comment">Respect the value of truncate-lines</span>
+(toggle-truncate-lines +1)
 </pre>
 </div>
 </div>
@@ -1344,7 +1346,7 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <h4 id="orgf5ff4bd"><span class="section-number-4">7.10.5</span> Highlight the current line</h4>
 <div class="outline-text-4" id="text-7-10-5">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span>global-hl-line-mode 1<span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(global-hl-line-mode 1)
 </pre>
 </div>
 </div>
@@ -1357,19 +1359,19 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <h5 id="orgcb2f964"><span class="section-number-5">7.10.6.1</span> Keep/delete matching lines</h5>
 <div class="outline-text-5" id="text-7-10-6-1">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/keep-lines</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>inhibit-read-only t<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Ignore read-only status of buffer</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">save-excursion</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span>goto-char <span class="org-rainbow-delimiters-depth-5">(</span>point-min<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span>call-interactively <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">function</span> keep-lines<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/keep-lines</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((inhibit-read-only t)) <span class="org-comment-delimiter">;</span><span class="org-comment">Ignore read-only status of buffer</span>
+    (<span class="org-keyword">save-excursion</span>
+      (goto-char (point-min))
+      (call-interactively (<span class="org-keyword">function</span> keep-lines)))))
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/delete-matching-lines</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>inhibit-read-only t<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Ignore read-only status of buffer</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">save-excursion</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span>goto-char <span class="org-rainbow-delimiters-depth-5">(</span>point-min<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span>call-interactively <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">function</span> delete-matching-lines<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">eless/delete-matching-lines</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((inhibit-read-only t)) <span class="org-comment-delimiter">;</span><span class="org-comment">Ignore read-only status of buffer</span>
+    (<span class="org-keyword">save-excursion</span>
+      (goto-char (point-min))
+      (call-interactively (<span class="org-keyword">function</span> delete-matching-lines)))))
 </pre>
 </div>
 </div>
@@ -1378,23 +1380,23 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <h5 id="org00f5428"><span class="section-number-5">7.10.6.2</span> Frame and font re-sizing</h5>
 <div class="outline-text-5" id="text-7-10-6-2">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-width-half</span> <span class="org-rainbow-delimiters-depth-2">(</span>double<span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>frame-resize-pixelwise t<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not round frame sizes to character h/w</span>
-        <span class="org-rainbow-delimiters-depth-4">(</span>factor <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">if</span> double 2 0.5<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>set-frame-size nil <span class="org-rainbow-delimiters-depth-4">(</span>round <span class="org-rainbow-delimiters-depth-5">(</span>* factor <span class="org-rainbow-delimiters-depth-6">(</span>frame-text-width<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">(</span>frame-text-height<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-builtin">:pixelwise</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-width-double</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>eless/frame-width-half <span class="org-builtin">:double</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-width-half</span> (double)
+  (<span class="org-keyword">interactive</span> <span class="org-string">"P"</span>)
+  (<span class="org-keyword">let</span> ((frame-resize-pixelwise t) <span class="org-comment-delimiter">;</span><span class="org-comment">Do not round frame sizes to character h/w</span>
+        (factor (<span class="org-keyword">if</span> double 2 0.5)))
+    (set-frame-size nil (round (* factor (frame-text-width))) (frame-text-height) <span class="org-builtin">:pixelwise</span>)))
+(<span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-width-double</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (eless/frame-width-half <span class="org-builtin">:double</span>))
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-height-half</span> <span class="org-rainbow-delimiters-depth-2">(</span>double<span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>frame-resize-pixelwise t<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not round frame sizes to character h/w</span>
-        <span class="org-rainbow-delimiters-depth-4">(</span>factor <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">if</span> double 2 0.5<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>set-frame-size nil  <span class="org-rainbow-delimiters-depth-4">(</span>frame-text-width<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">(</span>round <span class="org-rainbow-delimiters-depth-5">(</span>* factor <span class="org-rainbow-delimiters-depth-6">(</span>frame-text-height<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-builtin">:pixelwise</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-height-double</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>eless/frame-height-half <span class="org-builtin">:double</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-height-half</span> (double)
+  (<span class="org-keyword">interactive</span> <span class="org-string">"P"</span>)
+  (<span class="org-keyword">let</span> ((frame-resize-pixelwise t) <span class="org-comment-delimiter">;</span><span class="org-comment">Do not round frame sizes to character h/w</span>
+        (factor (<span class="org-keyword">if</span> double 2 0.5)))
+    (set-frame-size nil  (frame-text-width) (round (* factor (frame-text-height))) <span class="org-builtin">:pixelwise</span>)))
+(<span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-height-double</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (eless/frame-height-half <span class="org-builtin">:double</span>))
 </pre>
 </div>
 </div>
@@ -1403,12 +1405,12 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <h5 id="org6c38b16"><span class="section-number-5">7.10.6.3</span> Revert buffer in <code>view-mode</code></h5>
 <div class="outline-text-5" id="text-7-10-6-3">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/revert-buffer-retain-view-mode</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>view-mode-state view-mode<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">save the current state of view-mode</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span>revert-buffer<span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">when</span> view-mode-state
-      <span class="org-rainbow-delimiters-depth-4">(</span>view-mode 1<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/revert-buffer-retain-view-mode</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((view-mode-state view-mode)) <span class="org-comment-delimiter">;</span><span class="org-comment">save the current state of view-mode</span>
+    (revert-buffer)
+    (<span class="org-keyword">when</span> view-mode-state
+      (view-mode 1))))
 </pre>
 </div>
 </div>
@@ -1417,43 +1419,43 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 <h5 id="orgf6c7091"><span class="section-number-5">7.10.6.4</span> Detect if <code>diff-mode</code> should be enabled</h5>
 <div class="outline-text-5" id="text-7-10-6-4">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-diff-mode-maybe</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>max-line 10<span class="org-rainbow-delimiters-depth-4">)</span>                <span class="org-comment-delimiter">;</span><span class="org-comment">Search first MAX-LINE lines of the buffer</span>
-         <span class="org-rainbow-delimiters-depth-4">(</span>bound <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">save-excursion</span>
-                  <span class="org-rainbow-delimiters-depth-6">(</span>goto-char <span class="org-rainbow-delimiters-depth-7">(</span>point-min<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
-                  <span class="org-rainbow-delimiters-depth-6">(</span>forward-line max-line<span class="org-rainbow-delimiters-depth-6">)</span>
-                  <span class="org-rainbow-delimiters-depth-6">(</span>point<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">save-excursion</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-rainbow-delimiters-depth-6">(</span>diff-mode-enable<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span>goto-char <span class="org-rainbow-delimiters-depth-6">(</span>point-min<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">and</span> <span class="org-comment-delimiter">;</span><span class="org-comment">First header line of unified/context diff begins with "--- "/"*** "</span>
-               <span class="org-rainbow-delimiters-depth-7">(</span>thing-at-point <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">quote</span> line<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Prevent error in string-match-p if the buffer is empty</span>
-               <span class="org-rainbow-delimiters-depth-7">(</span>string-match-p <span class="org-string">"^</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">(</span></span></span><span class="org-string">---</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">|</span></span></span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">*</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">*</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">*</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">)</span></span></span><span class="org-string"> "</span> <span class="org-rainbow-delimiters-depth-8">(</span>thing-at-point <span class="org-rainbow-delimiters-depth-9">(</span><span class="org-keyword">quote</span> line<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-diff-mode-maybe</span> ()
+  (<span class="org-keyword">let*</span> ((max-line 10)                <span class="org-comment-delimiter">;</span><span class="org-comment">Search first MAX-LINE lines of the buffer</span>
+         (bound (<span class="org-keyword">save-excursion</span>
+                  (goto-char (point-min))
+                  (forward-line max-line)
+                  (point))))
+    (<span class="org-keyword">save-excursion</span>
+      (<span class="org-keyword">let</span> ((diff-mode-enable))
+        (goto-char (point-min))
+        (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> <span class="org-comment-delimiter">;</span><span class="org-comment">First header line of unified/context diff begins with "--- "/"*** "</span>
+               (thing-at-point (<span class="org-keyword">quote</span> line)) <span class="org-comment-delimiter">;</span><span class="org-comment">Prevent error in string-match-p if the buffer is empty</span>
+               (string-match-p <span class="org-string">"^</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">---</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">\\*\\*\\*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> "</span> (thing-at-point (<span class="org-keyword">quote</span> line)))
                <span class="org-comment-delimiter">;; </span><span class="org-comment">Second header line of unified/context diff begins with "+++ "/"--- "</span>
-               <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">progn</span>
-                 <span class="org-rainbow-delimiters-depth-8">(</span>forward-line 1<span class="org-rainbow-delimiters-depth-8">)</span>
-                 <span class="org-rainbow-delimiters-depth-8">(</span>string-match-p <span class="org-string">"^</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">(</span></span></span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">+</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">+</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">+</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">|</span></span></span><span class="org-string">---</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">)</span></span></span><span class="org-string"> "</span> <span class="org-rainbow-delimiters-depth-9">(</span>thing-at-point <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">quote</span> line<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">setq</span> diff-mode-enable t<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
+               (<span class="org-keyword">progn</span>
+                 (forward-line 1)
+                 (string-match-p <span class="org-string">"^</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">\\+\\+\\+</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">---</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> "</span> (thing-at-point (<span class="org-keyword">quote</span> line)))))
+          (<span class="org-keyword">setq</span> diff-mode-enable t))
         <span class="org-comment-delimiter">;; </span><span class="org-comment">Check if the diff format is neither context nor unified</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">unless</span> diff-mode-enable
-          <span class="org-rainbow-delimiters-depth-6">(</span>goto-char <span class="org-rainbow-delimiters-depth-7">(</span>point-min<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-7">(</span>re-search-forward <span class="org-string">"^</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">(</span></span></span><span class="org-string"><span class="org-regexp-grouping-construct">?:</span></span><span class="org-string">[0-9]+,</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">)</span></span></span><span class="org-string">?[0-9]+</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">(</span></span></span><span class="org-string"><span class="org-regexp-grouping-construct">?1:</span></span><span class="org-string">[adc]</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">)</span></span></span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">(</span></span></span><span class="org-string"><span class="org-regexp-grouping-construct">?:</span></span><span class="org-string">[0-9]+,</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">)</span></span></span><span class="org-string">?[0-9]+$"</span> bound <span class="org-builtin">:noerror</span><span class="org-rainbow-delimiters-depth-7">)</span>
-            <span class="org-rainbow-delimiters-depth-7">(</span>forward-line 1<span class="org-rainbow-delimiters-depth-7">)</span>
-            <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-rainbow-delimiters-depth-9">(</span>diff-type <span class="org-rainbow-delimiters-depth-1">(</span>match-string-no-properties 1<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span>
-              <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">cond</span>
+        (<span class="org-keyword">unless</span> diff-mode-enable
+          (goto-char (point-min))
+          (<span class="org-keyword">when</span> (re-search-forward <span class="org-string">"^</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(?:</span></span><span class="org-string">[0-9]+,</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">?[0-9]+</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(?1:</span></span><span class="org-string">[adc]</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(?:</span></span><span class="org-string">[0-9]+,</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">?[0-9]+$"</span> bound <span class="org-builtin">:noerror</span>)
+            (forward-line 1)
+            (<span class="org-keyword">let</span> ((diff-type (match-string-no-properties 1)))
+              (<span class="org-keyword">cond</span>
                <span class="org-comment-delimiter">;; </span><span class="org-comment">Line(s) added</span>
-               <span class="org-rainbow-delimiters-depth-9">(</span><span class="org-rainbow-delimiters-depth-1">(</span>string= diff-type <span class="org-string">"a"</span><span class="org-rainbow-delimiters-depth-1">)</span>
-                <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-2">(</span>re-search-forward <span class="org-string">"^&gt; "</span> nil <span class="org-builtin">:noerror</span><span class="org-rainbow-delimiters-depth-2">)</span>
-                  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">setq</span> diff-mode-enable t<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span>
+               ((string= diff-type <span class="org-string">"a"</span>)
+                (<span class="org-keyword">when</span> (re-search-forward <span class="org-string">"^&gt; "</span> nil <span class="org-builtin">:noerror</span>)
+                  (<span class="org-keyword">setq</span> diff-mode-enable t)))
                <span class="org-comment-delimiter">;; </span><span class="org-comment">Line(s) deleted or changed</span>
-               <span class="org-rainbow-delimiters-depth-9">(</span>t
-                <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-2">(</span>re-search-forward <span class="org-string">"^&lt; "</span> nil <span class="org-builtin">:noerror</span><span class="org-rainbow-delimiters-depth-2">)</span>
-                  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">setq</span> diff-mode-enable t<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when</span> diff-mode-enable
-          <span class="org-rainbow-delimiters-depth-6">(</span>message <span class="org-string">"Auto-enabling diff-mode"</span><span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span>diff-mode<span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span>rename-buffer <span class="org-string">"*Diff*"</span> <span class="org-builtin">:unique</span><span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span>view-mode 1<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>            <span class="org-comment-delimiter">;</span><span class="org-comment">Re-enable view-mode</span>
+               (t
+                (<span class="org-keyword">when</span> (re-search-forward <span class="org-string">"^&lt; "</span> nil <span class="org-builtin">:noerror</span>)
+                  (<span class="org-keyword">setq</span> diff-mode-enable t)))))))
+        (<span class="org-keyword">when</span> diff-mode-enable
+          (message <span class="org-string">"Auto-enabling diff-mode"</span>)
+          (diff-mode)
+          (rename-buffer <span class="org-string">"*Diff*"</span> <span class="org-builtin">:unique</span>)
+          (view-mode 1))))))            <span class="org-comment-delimiter">;</span><span class="org-comment">Re-enable view-mode</span>
 </pre>
 </div>
 </div>
@@ -1465,14 +1467,14 @@ Enable <code>whitespace-mode</code> to easily detect presence of tabs and
 trailing spaces in diffs.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> whitespace-style
-      <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> <span class="org-rainbow-delimiters-depth-3">(</span>face                      <span class="org-comment-delimiter">;</span><span class="org-comment">Enable all visualization via faces</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> whitespace-style
+      (<span class="org-keyword">quote</span> (face                      <span class="org-comment-delimiter">;</span><span class="org-comment">Enable all visualization via faces</span>
               trailing                  <span class="org-comment-delimiter">;</span><span class="org-comment">Show white space at end of lines</span>
               tabs                      <span class="org-comment-delimiter">;</span><span class="org-comment">Show tabs using faces</span>
               spaces space-mark         <span class="org-comment-delimiter">;</span><span class="org-comment">space-mark shows spaces as dots</span>
               space-before-tab space-after-tab <span class="org-comment-delimiter">;</span><span class="org-comment">mix of tabs and spaces</span>
-              indentation<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Highlight spaces/tabs at BOL depending on indent-tabs-mode</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>add-hook <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> diff-mode-hook<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> whitespace-mode<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+              indentation))) <span class="org-comment-delimiter">;</span><span class="org-comment">Highlight spaces/tabs at BOL depending on indent-tabs-mode</span>
+(add-hook (<span class="org-keyword">quote</span> diff-mode-hook) (<span class="org-keyword">function</span> whitespace-mode))
 </pre>
 </div>
 </div>
@@ -1483,22 +1485,22 @@ trailing spaces in diffs.
 <h5 id="org32802ab"><span class="section-number-5">7.10.6.5</span> Detect if ANSI codes need to be converted to colors</h5>
 <div class="outline-text-5" id="text-7-10-6-5">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-ansi-color-maybe</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">save-excursion</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">let*</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-rainbow-delimiters-depth-5">(</span>max-line 100<span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Search first MAX-LINE lines of the buffer</span>
-           <span class="org-rainbow-delimiters-depth-5">(</span>bound <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">progn</span>
-                    <span class="org-rainbow-delimiters-depth-7">(</span>goto-char <span class="org-rainbow-delimiters-depth-8">(</span>point-min<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span>
-                    <span class="org-rainbow-delimiters-depth-7">(</span>forward-line max-line<span class="org-rainbow-delimiters-depth-7">)</span>
-                    <span class="org-rainbow-delimiters-depth-7">(</span>point<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span>
-           <span class="org-rainbow-delimiters-depth-5">(</span>ESC <span class="org-string">"\u001b"</span><span class="org-rainbow-delimiters-depth-5">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-ansi-color-maybe</span> ()
+  (<span class="org-keyword">save-excursion</span>
+    (<span class="org-keyword">let*</span> ((max-line 100) <span class="org-comment-delimiter">;</span><span class="org-comment">Search first MAX-LINE lines of the buffer</span>
+           (bound (<span class="org-keyword">progn</span>
+                    (goto-char (point-min))
+                    (forward-line max-line)
+                    (point)))
+           (ESC <span class="org-string">"\u001b"</span>)
            <span class="org-comment-delimiter">;; </span><span class="org-comment">Example ANSI codes: ^[[0;36m, or ^[[0m where ^[ is the ESC char</span>
-           <span class="org-rainbow-delimiters-depth-5">(</span>ansi-regexp <span class="org-rainbow-delimiters-depth-6">(</span>concat ESC <span class="org-string">"</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">["</span> <span class="org-string">"[0-9]+</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">(</span></span></span><span class="org-string">;[0-9]+</span><span class="org-string"><span class="org-easy-escape"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-backslash">\\</span></span></span></span><span class="org-string"><span class="org-easy-escape-delimiter"><span class="org-regexp-grouping-construct">)</span></span></span><span class="org-string">*m"</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span>goto-char <span class="org-rainbow-delimiters-depth-5">(</span>point-min<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-5">(</span>re-search-forward ansi-regexp bound <span class="org-builtin">:noerror</span><span class="org-rainbow-delimiters-depth-5">)</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-rainbow-delimiters-depth-7">(</span>inhibit-read-only t<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Ignore read-only status of buffer</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span>message <span class="org-string">"Auto-converting ANSI codes to colors"</span><span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">require</span> <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">quote</span> ansi-color<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span>ansi-color-apply-on-region <span class="org-rainbow-delimiters-depth-7">(</span>point-min<span class="org-rainbow-delimiters-depth-7">)</span> <span class="org-rainbow-delimiters-depth-7">(</span>point-max<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+           (ansi-regexp (concat ESC <span class="org-string">"\\["</span> <span class="org-string">"[0-9]+</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">;[0-9]+</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">*m"</span>)))
+      (goto-char (point-min))
+      (<span class="org-keyword">when</span> (re-search-forward ansi-regexp bound <span class="org-builtin">:noerror</span>)
+        (<span class="org-keyword">let</span> ((inhibit-read-only t)) <span class="org-comment-delimiter">;</span><span class="org-comment">Ignore read-only status of buffer</span>
+          (message <span class="org-string">"Auto-converting ANSI codes to colors"</span>)
+          (<span class="org-keyword">require</span> (<span class="org-keyword">quote</span> ansi-color))
+          (ansi-color-apply-on-region (point-min) (point-max)))))))
 </pre>
 </div>
 </div>
@@ -1520,27 +1522,27 @@ saved from emacs prompting to save those modified <code>view-mode</code> buffers
 at the time of quitting.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/kill-emacs-or-buffer</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-type">&amp;optional</span> kill-emacs<span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span> <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>num-non-special-buffers 0<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">dolist</span> <span class="org-rainbow-delimiters-depth-4">(</span>buf <span class="org-rainbow-delimiters-depth-5">(</span>buffer-list<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-5">(</span>string-match-p <span class="org-string">"</span><span class="org-string"><span class="org-easy-escape">\\</span></span><span class="org-string">`[ *]"</span> <span class="org-rainbow-delimiters-depth-6">(</span>buffer-name buf<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Do not count buffers with names starting with space or *</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">setq</span> num-non-special-buffers <span class="org-rainbow-delimiters-depth-6">(</span>+ 1 num-non-special-buffers<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">with-current-buffer</span> buf
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/kill-emacs-or-buffer</span> (<span class="org-type">&amp;optional</span> kill-emacs)
+  (<span class="org-keyword">interactive</span> <span class="org-string">"P"</span>)
+  (<span class="org-keyword">let</span> ((num-non-special-buffers 0))
+    (<span class="org-keyword">dolist</span> (buf (buffer-list))
+      (<span class="org-keyword">unless</span> (string-match-p <span class="org-string">"\\`[ *]"</span> (buffer-name buf)) <span class="org-comment-delimiter">;</span><span class="org-comment">Do not count buffers with names starting with space or *</span>
+        (<span class="org-keyword">setq</span> num-non-special-buffers (+ 1 num-non-special-buffers)))
+      (<span class="org-keyword">with-current-buffer</span> buf
         <span class="org-comment-delimiter">;; </span><span class="org-comment">Mark all view-mode buffers as "not modified" to prevent save prompt on</span>
         <span class="org-comment-delimiter">;; </span><span class="org-comment">quitting.</span>
-        <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">when</span> view-mode
-          <span class="org-rainbow-delimiters-depth-6">(</span>set-buffer-modified-p nil<span class="org-rainbow-delimiters-depth-6">)</span>
-          <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-7">(</span>local-variable-p <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">quote</span> kill-buffer-hook<span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span>
-            <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">setq</span> kill-buffer-hook nil<span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
-    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">or</span> kill-emacs
-            <span class="org-rainbow-delimiters-depth-5">(</span>&lt;= num-non-special-buffers 1<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
-        <span class="org-rainbow-delimiters-depth-4">(</span>save-buffers-kill-emacs<span class="org-rainbow-delimiters-depth-4">)</span>
-      <span class="org-rainbow-delimiters-depth-4">(</span>kill-buffer <span class="org-rainbow-delimiters-depth-5">(</span>current-buffer<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Else only kill the current buffer</span>
+        (<span class="org-keyword">when</span> view-mode
+          (set-buffer-modified-p nil)
+          (<span class="org-keyword">when</span> (local-variable-p (<span class="org-keyword">quote</span> kill-buffer-hook))
+            (<span class="org-keyword">setq</span> kill-buffer-hook nil)))))
+    (<span class="org-keyword">if</span> (<span class="org-keyword">or</span> kill-emacs
+            (&lt;= num-non-special-buffers 1))
+        (save-buffers-kill-emacs)
+      (kill-buffer (current-buffer))))) <span class="org-comment-delimiter">;</span><span class="org-comment">Else only kill the current buffer</span>
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/save-buffers-maybe-and-kill-emacs</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">interactive</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>eless/kill-emacs-or-buffer <span class="org-builtin">:kill-emacs</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">eless/save-buffers-maybe-and-kill-emacs</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (eless/kill-emacs-or-buffer <span class="org-builtin">:kill-emacs</span>))
 </pre>
 </div>
 </div>
@@ -1549,15 +1551,15 @@ at the time of quitting.
 <h5 id="orgbc438ab"><span class="section-number-5">7.10.6.7</span> <code>dired-mode</code> setup</h5>
 <div class="outline-text-5" id="text-7-10-6-7">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/dired-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/dired-mode-customization</span> ()
   <span class="org-comment-delimiter">;; </span><span class="org-comment">dired-find-file is bound to "f" and "RET" by default</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">So changing the "RET" binding to dired-view-file so that the file opens</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">in view-mode in the spirit of eless.</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key dired-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"RET"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> dired-view-file<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key dired-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"E"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> wdired-change-to-wdired-mode<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key dired-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"Q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> quit-window<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key dired-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/kill-emacs-or-buffer<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>add-hook <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> dired-mode-hook<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> eless/dired-mode-customization<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  (define-key dired-mode-map (kbd <span class="org-string">"RET"</span>) (<span class="org-keyword">function</span> dired-view-file))
+  (define-key dired-mode-map (kbd <span class="org-string">"E"</span>) (<span class="org-keyword">function</span> wdired-change-to-wdired-mode))
+  (define-key dired-mode-map (kbd <span class="org-string">"Q"</span>) (<span class="org-keyword">function</span> quit-window))
+  (define-key dired-mode-map (kbd <span class="org-string">"q"</span>) (<span class="org-keyword">function</span> eless/kill-emacs-or-buffer)))
+(add-hook (<span class="org-keyword">quote</span> dired-mode-hook) (<span class="org-keyword">function</span> eless/dired-mode-customization))
 </pre>
 </div>
 </div>
@@ -1566,10 +1568,10 @@ at the time of quitting.
 <h5 id="orga5147e7"><span class="section-number-5">7.10.6.8</span> <code>Man-mode</code> setup</h5>
 <div class="outline-text-5" id="text-7-10-6-8">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/Man-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key Man-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"Q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> quit-window<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key Man-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/kill-emacs-or-buffer<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>add-hook <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> Man-mode-hook<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> eless/Man-mode-customization<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/Man-mode-customization</span> ()
+  (define-key Man-mode-map (kbd <span class="org-string">"Q"</span>) (<span class="org-keyword">function</span> quit-window))
+  (define-key Man-mode-map (kbd <span class="org-string">"q"</span>) (<span class="org-keyword">function</span> eless/kill-emacs-or-buffer)))
+(add-hook (<span class="org-keyword">quote</span> Man-mode-hook) (<span class="org-keyword">function</span> eless/Man-mode-customization))
 </pre>
 </div>
 </div>
@@ -1578,10 +1580,10 @@ at the time of quitting.
 <h5 id="org9e4fcb4"><span class="section-number-5">7.10.6.9</span> <code>Info-mode</code> setup</h5>
 <div class="outline-text-5" id="text-7-10-6-9">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/Info-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key Info-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"Q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> quit-window<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key Info-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/kill-emacs-or-buffer<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>add-hook <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> Info-mode-hook<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> eless/Info-mode-customization<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/Info-mode-customization</span> ()
+  (define-key Info-mode-map (kbd <span class="org-string">"Q"</span>) (<span class="org-keyword">function</span> quit-window))
+  (define-key Info-mode-map (kbd <span class="org-string">"q"</span>) (<span class="org-keyword">function</span> eless/kill-emacs-or-buffer)))
+(add-hook (<span class="org-keyword">quote</span> Info-mode-hook) (<span class="org-keyword">function</span> eless/Info-mode-customization))
 </pre>
 </div>
 </div>
@@ -1600,11 +1602,11 @@ eless bar.tar.gz
 </pre>
 </div>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">eless/tar-mode-customization</span> <span class="org-rainbow-delimiters-depth-2">()</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key tar-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"RET"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> tar-view<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key tar-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"Q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> quit-window<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key tar-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/kill-emacs-or-buffer<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>add-hook <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> tar-mode-hook<span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> eless/tar-mode-customization<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/tar-mode-customization</span> ()
+  (define-key tar-mode-map (kbd <span class="org-string">"RET"</span>) (<span class="org-keyword">function</span> tar-view))
+  (define-key tar-mode-map (kbd <span class="org-string">"Q"</span>) (<span class="org-keyword">function</span> quit-window))
+  (define-key tar-mode-map (kbd <span class="org-string">"q"</span>) (<span class="org-keyword">function</span> eless/kill-emacs-or-buffer)))
+(add-hook (<span class="org-keyword">quote</span> tar-mode-hook) (<span class="org-keyword">function</span> eless/tar-mode-customization))
 </pre>
 </div>
 </div>
@@ -1614,17 +1616,17 @@ eless bar.tar.gz
 <h4 id="orgcfb1b01"><span class="section-number-4">7.10.7</span> Auto-setting of major modes</h4>
 <div class="outline-text-4" id="text-7-10-7">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">cond</span>
- <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>derived-mode-p <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">quote</span> dired-mode<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>eless/dired-mode-customization<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
- <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>derived-mode-p <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">quote</span> Man-mode<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>eless/Man-mode-customization<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
- <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>derived-mode-p <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">quote</span> Info-mode<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>eless/Info-mode-customization<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
- <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-rainbow-delimiters-depth-3">(</span>derived-mode-p <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-keyword">quote</span> tar-mode<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span>eless/tar-mode-customization<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
- <span class="org-rainbow-delimiters-depth-2">(</span>t     <span class="org-comment-delimiter">;</span><span class="org-comment">Enable view-mode if none of the above major-modes are active</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">cond</span>
+ ((derived-mode-p (<span class="org-keyword">quote</span> dired-mode)) (eless/dired-mode-customization))
+ ((derived-mode-p (<span class="org-keyword">quote</span> Man-mode)) (eless/Man-mode-customization))
+ ((derived-mode-p (<span class="org-keyword">quote</span> Info-mode)) (eless/Info-mode-customization))
+ ((derived-mode-p (<span class="org-keyword">quote</span> tar-mode)) (eless/tar-mode-customization))
+ (t     <span class="org-comment-delimiter">;</span><span class="org-comment">Enable view-mode if none of the above major-modes are active</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Auto-enable diff-mode. For example, when doing "diff foo bar | eless"</span>
-  <span class="org-rainbow-delimiters-depth-3">(</span>eless/enable-diff-mode-maybe<span class="org-rainbow-delimiters-depth-3">)</span>
+  (eless/enable-diff-mode-maybe)
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"</span>
-  <span class="org-rainbow-delimiters-depth-3">(</span>eless/enable-ansi-color-maybe<span class="org-rainbow-delimiters-depth-3">)</span>
-  <span class="org-rainbow-delimiters-depth-3">(</span>view-mode 1<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  (eless/enable-ansi-color-maybe)
+  (view-mode 1)))
 </pre>
 </div>
 </div>
@@ -1633,41 +1635,41 @@ eless bar.tar.gz
 <h4 id="orgb867865"><span class="section-number-4">7.10.8</span> Key bindings</h4>
 <div class="outline-text-4" id="text-7-10-8">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">with-eval-after-load</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">quote</span> view<span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"!"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/delete-matching-lines<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"&amp;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/keep-lines<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"0"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> delete-window<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"1"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> delete-other-windows<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"A"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> auto-revert-tail-mode<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"D"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> dired<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"N"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> next-error<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Next line in *occur*</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"P"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> previous-error<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-comment-delimiter">;</span><span class="org-comment">Previous line in *occur*</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"K"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/delete-matching-lines<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"a"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> auto-revert-mode<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"g"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/revert-buffer-retain-view-mode<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"k"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/keep-lines<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"n"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> next-line<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"o"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> occur<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"p"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> previous-line<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"q"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/kill-emacs-or-buffer<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"t"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> toggle-truncate-lines<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> (<span class="org-keyword">quote</span> view)
+  (define-key view-mode-map (kbd <span class="org-string">"!"</span>) (<span class="org-keyword">function</span> eless/delete-matching-lines))
+  (define-key view-mode-map (kbd <span class="org-string">"&amp;"</span>) (<span class="org-keyword">function</span> eless/keep-lines))
+  (define-key view-mode-map (kbd <span class="org-string">"0"</span>) (<span class="org-keyword">function</span> delete-window))
+  (define-key view-mode-map (kbd <span class="org-string">"1"</span>) (<span class="org-keyword">function</span> delete-other-windows))
+  (define-key view-mode-map (kbd <span class="org-string">"A"</span>) (<span class="org-keyword">function</span> auto-revert-tail-mode))
+  (define-key view-mode-map (kbd <span class="org-string">"D"</span>) (<span class="org-keyword">function</span> dired))
+  (define-key view-mode-map (kbd <span class="org-string">"N"</span>) (<span class="org-keyword">function</span> next-error)) <span class="org-comment-delimiter">;</span><span class="org-comment">Next line in *occur*</span>
+  (define-key view-mode-map (kbd <span class="org-string">"P"</span>) (<span class="org-keyword">function</span> previous-error)) <span class="org-comment-delimiter">;</span><span class="org-comment">Previous line in *occur*</span>
+  (define-key view-mode-map (kbd <span class="org-string">"K"</span>) (<span class="org-keyword">function</span> eless/delete-matching-lines))
+  (define-key view-mode-map (kbd <span class="org-string">"a"</span>) (<span class="org-keyword">function</span> auto-revert-mode))
+  (define-key view-mode-map (kbd <span class="org-string">"g"</span>) (<span class="org-keyword">function</span> eless/revert-buffer-retain-view-mode))
+  (define-key view-mode-map (kbd <span class="org-string">"k"</span>) (<span class="org-keyword">function</span> eless/keep-lines))
+  (define-key view-mode-map (kbd <span class="org-string">"n"</span>) (<span class="org-keyword">function</span> next-line))
+  (define-key view-mode-map (kbd <span class="org-string">"o"</span>) (<span class="org-keyword">function</span> occur))
+  (define-key view-mode-map (kbd <span class="org-string">"p"</span>) (<span class="org-keyword">function</span> previous-line))
+  (define-key view-mode-map (kbd <span class="org-string">"q"</span>) (<span class="org-keyword">function</span> eless/kill-emacs-or-buffer))
+  (define-key view-mode-map (kbd <span class="org-string">"t"</span>) (<span class="org-keyword">function</span> toggle-truncate-lines)))
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Global custom bindings</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"M-/"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> hippie-expand<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-x C-b"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> ibuffer<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-x C-c"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> eless/save-buffers-maybe-and-kill-emacs<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-x C-f"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> view-file<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"C-c q"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> query-replace-regexp<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
-<span class="org-rainbow-delimiters-depth-1">(</span>global-set-key <span class="org-rainbow-delimiters-depth-2">(</span>kbd <span class="org-string">"&lt;f5&gt;"</span><span class="org-rainbow-delimiters-depth-2">)</span> <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">function</span> eless/revert-buffer-retain-view-mode<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(global-set-key (kbd <span class="org-string">"M-/"</span>) (<span class="org-keyword">function</span> hippie-expand))
+(global-set-key (kbd <span class="org-string">"C-x C-b"</span>) (<span class="org-keyword">function</span> ibuffer))
+(global-set-key (kbd <span class="org-string">"C-x C-c"</span>) (<span class="org-keyword">function</span> eless/save-buffers-maybe-and-kill-emacs))
+(global-set-key (kbd <span class="org-string">"C-x C-f"</span>) (<span class="org-keyword">function</span> view-file))
+(global-set-key (kbd <span class="org-string">"C-c q"</span>) (<span class="org-keyword">function</span> query-replace-regexp))
+(global-set-key (kbd <span class="org-string">"&lt;f5&gt;"</span>) (<span class="org-keyword">function</span> eless/revert-buffer-retain-view-mode))
 
-<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">when</span> <span class="org-rainbow-delimiters-depth-2">(</span>display-graphic-p<span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"+"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> text-scale-adjust<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"-"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> text-scale-adjust<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>define-key view-mode-map <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"="</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> text-scale-adjust<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>global-set-key <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"C-&lt;right&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/frame-width-double<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>global-set-key <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"C-&lt;left&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/frame-width-half<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>global-set-key <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"C-&lt;down&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/frame-height-double<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>global-set-key <span class="org-rainbow-delimiters-depth-3">(</span>kbd <span class="org-string">"C-&lt;up&gt;"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">function</span> eless/frame-height-half<span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+(<span class="org-keyword">when</span> (display-graphic-p)
+  (define-key view-mode-map (kbd <span class="org-string">"+"</span>) (<span class="org-keyword">function</span> text-scale-adjust))
+  (define-key view-mode-map (kbd <span class="org-string">"-"</span>) (<span class="org-keyword">function</span> text-scale-adjust))
+  (define-key view-mode-map (kbd <span class="org-string">"="</span>) (<span class="org-keyword">function</span> text-scale-adjust))
+  (global-set-key (kbd <span class="org-string">"C-&lt;right&gt;"</span>) (<span class="org-keyword">function</span> eless/frame-width-double))
+  (global-set-key (kbd <span class="org-string">"C-&lt;left&gt;"</span>) (<span class="org-keyword">function</span> eless/frame-width-half))
+  (global-set-key (kbd <span class="org-string">"C-&lt;down&gt;"</span>) (<span class="org-keyword">function</span> eless/frame-height-double))
+  (global-set-key (kbd <span class="org-string">"C-&lt;up&gt;"</span>) (<span class="org-keyword">function</span> eless/frame-height-half)))
 </pre>
 </div>
 </div>
@@ -1687,12 +1689,12 @@ User can further choose to re-define any of the above functions or
 key-bindings in this file.
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">unless</span> <span class="org-rainbow-delimiters-depth-2">(</span>load <span class="org-rainbow-delimiters-depth-3">(</span>locate-user-emacs-file <span class="org-string">"elesscfg"</span><span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:noerror</span><span class="org-rainbow-delimiters-depth-2">)</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>load-theme <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> tango-dark<span class="org-rainbow-delimiters-depth-3">)</span> <span class="org-builtin">:no-confirm</span><span class="org-rainbow-delimiters-depth-2">)</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">unless</span> (load (locate-user-emacs-file <span class="org-string">"elesscfg"</span>) <span class="org-builtin">:noerror</span>)
+  (load-theme (<span class="org-keyword">quote</span> tango-dark) <span class="org-builtin">:no-confirm</span>)
   <span class="org-comment-delimiter">;; </span><span class="org-comment">The tango-dark theme is good except for the bright yellow hl-line face</span>
-  <span class="org-rainbow-delimiters-depth-2">(</span>custom-theme-set-faces
-   <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> user<span class="org-rainbow-delimiters-depth-3">)</span>
-   <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">quote</span> <span class="org-rainbow-delimiters-depth-4">(</span>hl-line <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-rainbow-delimiters-depth-6">(</span>t <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-builtin">:background</span> <span class="org-string">"color-238"</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
+  (custom-theme-set-faces
+   (<span class="org-keyword">quote</span> user)
+   (<span class="org-keyword">quote</span> (hl-line ((t (<span class="org-builtin">:background</span> <span class="org-string">"color-238"</span>)))))))
 </pre>
 </div>
 </div>
@@ -1728,7 +1730,7 @@ This guide is for you if you&rsquo;d like to do any of the below:
 </ul></li>
 <li>If you are providing debug info for something like <code>man foo</code>, do
 <ul class="org-ul">
-<li><code>PAGER</code>​&ldquo;eless -D&rdquo; man foo=</li>
+<li><code>PAGER=​"eless -D" man foo</code></li>
 </ul></li>
 </ul></li>
 </ol></li>
@@ -1739,41 +1741,14 @@ This guide is for you if you&rsquo;d like to do any of the below:
 <h3 id="orge37ef69"><span class="section-number-3">8.2</span> Development</h3>
 <div class="outline-text-3" id="text-8-2">
 </div>
-<div id="outline-container-org7168862" class="outline-4">
-<h4 id="org7168862"><span class="section-number-4">8.2.1</span> Dependencies</h4>
+<div id="outline-container-orge447d4c" class="outline-4">
+<h4 id="orge447d4c"><span class="section-number-4">8.2.1</span> Preparation</h4>
 <div class="outline-text-4" id="text-8-2-1">
 <p>
-Here&rsquo;s a short list of dependencies if you would like to build <code>eless</code>
-and the documentation from <code>eless.org</code>:
-</p>
-
-<ol class="org-ol">
-<li>Org version 9.x &#x2013; Latest version of Org from Melpa or Org Elpa</li>
-<li><code>htmlize</code> package for syntax highlighting of code in html exports
-&#x2013; Melpa</li>
-<li><code>rainbow-delimiters</code> package for syntax highlighting of parenthese
-in elisp code in html exports &#x2013; Melpa</li>
-</ol>
-
-<p>
-The recommended way is to run <code>emacs -Q</code> and then run <code>M-x
-eless-install-dependencies</code> to install the dependencies in your
-<code>temporary-file-directory</code>. <i>You can choose to even install these
-manually in your emacs config if you like.</i>
-</p>
-
-<p>
-I used the latest emacs and org-mode versions built from their <code>master</code>
-branches for this project. So if any of the below steps do not work
-for you, open an issue!
-</p>
-
-<p>
-Talking about dependencies, this project builds <b>everything</b> from
-<code>eless.org</code> file, the <code>eless</code> script <i>plus</i> all the <a href="https://kaushalmodi.github.io/eless/">HTML</a>, Info
-documentation, <code>README.org</code>, <code>CONTRIBUTING.org</code>, and even the Wiki
-pages. So before running <code>M-x eless-build</code> mentioned in below build
-steps, you also need to:
+This project builds <b>everything</b> from the <code>eless.org</code> file &#x2014; the
+<code>eless</code> Bash script <i>plus</i> all the <a href="https://kaushalmodi.github.io/eless/">HTML</a>, Info documentation,
+<code>README.org</code>, <code>CONTRIBUTING.org</code>, and even the Wiki pages. So before
+your proceed, you also need to:
 </p>
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-builtin">cd</span> docs/
@@ -1782,43 +1757,49 @@ git clone https://github.com/kaushalmodi/eless.wiki.git
 </div>
 </div>
 </div>
-<div id="outline-container-orgc871e7f" class="outline-4">
-<h4 id="orgc871e7f"><span class="section-number-4">8.2.2</span> Steps to build <code>eless</code> and documentation</h4>
+<div id="outline-container-org5bf3991" class="outline-4">
+<h4 id="org5bf3991"><span class="section-number-4">8.2.2</span> To build <code>eless</code> and documentation</h4>
 <div class="outline-text-4" id="text-8-2-2">
+<div class="org-src-container">
+<pre class="src src-shell">make eless
+</pre>
+</div>
+</div>
+<div id="outline-container-org0679d38" class="outline-5">
+<h5 id="org0679d38"><span class="section-number-5">8.2.2.1</span> Sanity check of the tangled <code>eless</code></h5>
+<div class="outline-text-5" id="text-8-2-2-1">
+<p>
+Run the tangled <code>eless</code> through <a href="http://www.shellcheck.net/">shellcheck</a> to ensure that there are no
+errors.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb99d4ed" class="outline-4">
+<h4 id="orgb99d4ed"><span class="section-number-4">8.2.3</span> To build documentation</h4>
+<div class="outline-text-4" id="text-8-2-3">
+<div class="org-src-container">
+<pre class="src src-shell">make doc
+</pre>
+</div>
+</div>
+<div id="outline-container-org3cdee39" class="outline-5">
+<h5 id="org3cdee39"><span class="section-number-5">8.2.3.1</span> Understand the changes</h5>
+<div class="outline-text-5" id="text-8-2-3-1">
 <ul class="org-ul">
-<li><code>emacs -Q</code></li>
-<li><b>First</b> open a non-org file like <code>build/build.el</code> and <b>evaluate it</b>.
-<ul class="org-ul">
-<li>The emphasis on opening a non-org file is so that the
-older-than-required version of <code>org</code> in <code>emacs -Q</code> doesn&rsquo;t get
-auto-loaded.  The next step would be to install newer version of
-org to a temp location. That step would fail due to mixed org
-versions if the default org version got loaded first.</li>
-<li>Evaluating this file will now allow you to run <code>M-x
-    eless-install-dependencies</code> or <code>M-x eless-build</code>.</li>
-</ul></li>
-<li>Do <code>M-x eless-install-dependencies</code>.
-<ul class="org-ul">
-<li>You will need to do this step only for the very first time you
-start working on this project.</li>
-</ul></li>
-<li>Do <code>M-x eless-build</code>.</li>
-<li>Run the tangled <code>eless</code> through <a href="http://www.shellcheck.net/">shellcheck</a> to ensure that there are
-no errors.</li>
-<li>Understand the changes made in <code>eless</code>, <i>plus</i> all the other files.
-<ul class="org-ul">
-<li>I build the HTML documentation using the Org version from <code>master</code>
-branch. So if you build the HTML documentation using the latest
-stable as of today (version <code>9.0.7</code>), your HTML export will look a
-bit different (absence of nested <code>&lt;code&gt;</code> blocks inside <code>&lt;pre&gt;</code>),
-but that&rsquo;s OK.</li>
-<li>Also the randomly generated hyperlinks and section numbers (if you
-added/removed/moved documentation sections) will be different in
-the HTML and Info exports.</li>
-<li>.. and the <code>git rev-parse</code> returned commit hash will be different.</li>
+<li>The randomly generated hyperlinks and section numbers in the Info
+document and HTML will be different.</li>
 <li>Other than that, you shouldn&rsquo;t see any unexpected changes.</li>
-</ul></li>
-<li>Provide a PR.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org12ee794" class="outline-4">
+<h4 id="org12ee794"><span class="section-number-4">8.2.4</span> Submitting PR</h4>
+<div class="outline-text-4" id="text-8-2-4">
+<ul class="org-ul">
+<li>You can submit a PR once you have reviewed all the changes in the
+tangled <code>eless</code> script and documentation.</li>
 <li>If changes are only to the Wiki, I believe you can push them
 directly using <code>git</code> or manually edit those <a href="https://github.com/kaushalmodi/eless/wiki">here</a>. <i>I have to yet
 figure out how to keep the non-git Wiki changes and changes in
@@ -1843,8 +1824,8 @@ pages.
 </p>
 
 <p>
-So before running <code>M-x eless-build</code> mentioned in the
-<a href="https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org">Contributing Guide</a>, you need to:
+So before running <code>make doc</code> as mentioned in the <a href="https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org">Contributing Guide</a>,
+you need to:
 </p>
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-builtin">cd</span> docs/
@@ -1869,12 +1850,12 @@ push them directly using <code>git</code> or manually edit those here.
 <div class="org-src-container">
 <pre class="src src-shell">setenv PAGER eless <span class="org-comment-delimiter"># </span><span class="org-comment">Show man pages using eless</span>
 
-<span class="org-builtin">alias</span> info  <span class="org-string">'\info \!* | eless'</span>
+alias info  <span class="org-string">'\info \!* | eless'</span>
 
-<span class="org-builtin">alias</span> diff  <span class="org-string">'\diff \!* | eless'</span>
-<span class="org-builtin">alias</span> diffg <span class="org-string">'\diff \!* | eless --gui'</span>
+alias diff  <span class="org-string">'\diff \!* | eless'</span>
+alias diffg <span class="org-string">'\diff \!* | eless --gui'</span>
 
-<span class="org-builtin">alias</span> ev eless
+alias ev eless
 </pre>
 </div>
 </div>

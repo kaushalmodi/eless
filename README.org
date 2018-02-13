@@ -64,7 +64,7 @@ As a bonus:
         install=]].
 * Try it out
 Here are some usage examples:
-#+begin_src shell
+#+BEGIN_SRC shell
 eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
 eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless          #
@@ -80,7 +80,7 @@ PAGER=eless git diff        # Show git diff with ANSI coded colors
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
-#+end_src
+#+END_SRC
 * Contributors
 - Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
   =emacs -Q -nw=.

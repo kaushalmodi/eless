@@ -89,8 +89,18 @@ Contributing
 
 Development
 
-* Dependencies::
-* Steps to build ‘eless’ and documentation::
+* Preparation::
+* To build ‘eless’ and documentation::
+* To build documentation::
+* Submitting PR::
+
+To build ‘eless’ and documentation
+
+* Sanity check of the tangled ‘eless’::
+
+To build documentation
+
+* Understand the changes::
 
 Other Wikis
 
@@ -304,6 +314,10 @@ File: eless.info,  Node: Usage Examples,  Next: Current ‘eless’ Version,  Pr
      eless -h | eless            # See eless help ;-)
      info emacs | eless          # Read emacs Info manual in eless
      eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
+NOTE
+     Above examples are tested to work in a *‘bash’ shell*.
+     Specifically, examples like ‘PAGER=eless man grep’ will need to be
+     adapted for the shell you are using.
 
 
 File: eless.info,  Node: Current ‘eless’ Version,  Next: Code,  Prev: Usage Examples,  Up: Top
@@ -313,7 +327,7 @@ File: eless.info,  Node: Current ‘eless’ Version,  Next: Code,  Prev: Usage 
 
      master
 
-     82fdc15
+     45b5745
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1221,7 +1235,7 @@ File: eless.info,  Node: How to help debug,  Next: Development,  Up: Contributin
                   • ‘info org | eless -D’
              • If you are providing debug info for something like ‘man
                foo’, do
-                  • ‘PAGER’​“eless -D” man foo=
+                  • ‘PAGER=​"eless -D" man foo’
 
 
 File: eless.info,  Node: Development,  Prev: How to help debug,  Up: Contributing
@@ -1231,77 +1245,75 @@ File: eless.info,  Node: Development,  Prev: How to help debug,  Up: Contributin
 
 * Menu:
 
-* Dependencies::
-* Steps to build ‘eless’ and documentation::
+* Preparation::
+* To build ‘eless’ and documentation::
+* To build documentation::
+* Submitting PR::
 
 
-File: eless.info,  Node: Dependencies,  Next: Steps to build ‘eless’ and documentation,  Up: Development
+File: eless.info,  Node: Preparation,  Next: To build ‘eless’ and documentation,  Up: Development
 
-8.2.1 Dependencies
-------------------
+8.2.1 Preparation
+-----------------
 
-Here’s a short list of dependencies if you would like to build ‘eless’
-and the documentation from ‘eless.org’:
-
-  1. Org version 9.x – Latest version of Org from Melpa or Org Elpa
-  2. ‘htmlize’ package for syntax highlighting of code in html exports –
-     Melpa
-  3. ‘rainbow-delimiters’ package for syntax highlighting of parenthese
-     in elisp code in html exports – Melpa
-
-   The recommended way is to run ‘emacs -Q’ and then run ‘M-x
-eless-install-dependencies’ to install the dependencies in your
-‘temporary-file-directory’.  _You can choose to even install these
-manually in your emacs config if you like._
-
-   I used the latest emacs and org-mode versions built from their
-‘master’ branches for this project.  So if any of the below steps do not
-work for you, open an issue!
-
-   Talking about dependencies, this project builds *everything* from
-‘eless.org’ file, the ‘eless’ script _plus_ all the HTML
-(https://kaushalmodi.github.io/eless/), Info documentation,
-‘README.org’, ‘CONTRIBUTING.org’, and even the Wiki pages.  So before
-running ‘M-x eless-build’ mentioned in below build steps, you also need
-to:
+This project builds *everything* from the ‘eless.org’ file — the ‘eless’
+Bash script _plus_ all the HTML (https://kaushalmodi.github.io/eless/),
+Info documentation, ‘README.org’, ‘CONTRIBUTING.org’, and even the Wiki
+pages.  So before your proceed, you also need to:
      cd docs/
      git clone https://github.com/kaushalmodi/eless.wiki.git
 
 
-File: eless.info,  Node: Steps to build ‘eless’ and documentation,  Prev: Dependencies,  Up: Development
+File: eless.info,  Node: To build ‘eless’ and documentation,  Next: To build documentation,  Prev: Preparation,  Up: Development
 
-8.2.2 Steps to build ‘eless’ and documentation
-----------------------------------------------
+8.2.2 To build ‘eless’ and documentation
+----------------------------------------
 
-   • ‘emacs -Q’
-   • *First* open a non-org file like ‘build/build.el’ and *evaluate
-     it*.
-        • The emphasis on opening a non-org file is so that the
-          older-than-required version of ‘org’ in ‘emacs -Q’ doesn’t get
-          auto-loaded.  The next step would be to install newer version
-          of org to a temp location.  That step would fail due to mixed
-          org versions if the default org version got loaded first.
-        • Evaluating this file will now allow you to run ‘M-x
-          eless-install-dependencies’ or ‘M-x eless-build’.
-   • Do ‘M-x eless-install-dependencies’.
-        • You will need to do this step only for the very first time you
-          start working on this project.
-   • Do ‘M-x eless-build’.
-   • Run the tangled ‘eless’ through shellcheck
-     (http://www.shellcheck.net/) to ensure that there are no errors.
-   • Understand the changes made in ‘eless’, _plus_ all the other files.
-        • I build the HTML documentation using the Org version from
-          ‘master’ branch.  So if you build the HTML documentation using
-          the latest stable as of today (version ‘9.0.7’), your HTML
-          export will look a bit different (absence of nested ‘<code>’
-          blocks inside ‘<pre>’), but that’s OK.
-        • Also the randomly generated hyperlinks and section numbers (if
-          you added/removed/moved documentation sections) will be
-          different in the HTML and Info exports.
-        • ..  and the ‘git rev-parse’ returned commit hash will be
-          different.
-        • Other than that, you shouldn’t see any unexpected changes.
-   • Provide a PR.
+     make eless
+
+* Menu:
+
+* Sanity check of the tangled ‘eless’::
+
+
+File: eless.info,  Node: Sanity check of the tangled ‘eless’,  Up: To build ‘eless’ and documentation
+
+8.2.2.1 Sanity check of the tangled ‘eless’
+...........................................
+
+Run the tangled ‘eless’ through shellcheck (http://www.shellcheck.net/)
+to ensure that there are no errors.
+
+
+File: eless.info,  Node: To build documentation,  Next: Submitting PR,  Prev: To build ‘eless’ and documentation,  Up: Development
+
+8.2.3 To build documentation
+----------------------------
+
+     make doc
+
+* Menu:
+
+* Understand the changes::
+
+
+File: eless.info,  Node: Understand the changes,  Up: To build documentation
+
+8.2.3.1 Understand the changes
+..............................
+
+   • The randomly generated hyperlinks and section numbers in the Info
+     document and HTML will be different.
+   • Other than that, you shouldn’t see any unexpected changes.
+
+
+File: eless.info,  Node: Submitting PR,  Prev: To build documentation,  Up: Development
+
+8.2.4 Submitting PR
+-------------------
+
+   • You can submit a PR once you have reviewed all the changes in the
+     tangled ‘eless’ script and documentation.
    • If changes are only to the Wiki, I believe you can push them
      directly using ‘git’ or manually edit those here
      (https://github.com/kaushalmodi/eless/wiki).  _I have to yet figure
@@ -1330,8 +1342,7 @@ This project in unique in the sense that *everything* is built from
 documentation, ‘README.org’, ‘CONTRIBUTING.org’, and even these Wiki
 pages.
 
-   So before running ‘M-x eless-build’ mentioned in the Contributing
-Guide
+   So before running ‘make doc’ as mentioned in the Contributing Guide
 (https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org), you
 need to:
      cd docs/
@@ -1362,60 +1373,64 @@ File: eless.info,  Node: Example ‘eless’ config in ‘tcsh’,  Prev: Home, 
 
 Tag Table:
 Node: Top188
-Node: Readme2159
-Node: Requirements4993
-Node: Try it out5633
-Node: Contributors6990
-Node: Eless Options7449
-Node: ‘view-mode’ Common Bindings7779
-Node: Custom Bindings8769
-Node: Usage Examples9810
-Node: Current ‘eless’ Version11160
-Node: Code11552
-Node: Unofficial Bash Strict Mode11928
-Node: Initialize variables12613
-Node: Debug function13007
-Node: Input/Output Detection14155
-Node: Parse options15838
-Node: Print Help17557
-Node: Emacs with ‘-Q’ in ‘view-mode’17902
-Node: Input/Output Scenarios18750
-Node: Output is going to a pipe20205
-Node: Output is going to _stdout_ Input is coming from a pipe20751
-Node: Input is piped from ‘man’ command23691
-Node: Input is piped from a ‘modules’ help in _IPython_24911
-Node: Input is piped from ‘info’ command26160
-Node: Input is piped from something else26789
-Node: Output is going to _stdout_ Input is an argument to the script27569
-Node: Eval and Cleanup27941
-Node: Emacs Configuration28213
-Node: General setup28759
-Node: Ido setup29826
-Node: Isearch setup30396
-Node: Enable line truncation30810
-Node: Highlight the current line31161
-Node: Custom functions31397
-Node: Keep/delete matching lines31934
-Node: Frame and font re-sizing32624
-Node: Revert buffer in ‘view-mode’33643
-Node: Detect if ‘diff-mode’ should be enabled34130
-Node: Detect if ANSI codes need to be converted to colors37196
-Node: ``Do The Right Thing'' Kill38361
-Node: ‘dired-mode’ setup40122
-Node: ‘Man-mode’ setup40954
-Node: ‘Info-mode’ setup41415
-Node: ‘tar-mode’ setup41881
-Node: Auto-setting of major modes42608
-Node: Key bindings43469
-Node: User config override45983
-Node: Contributing46815
-Node: How to help debug47189
-Node: Development47905
-Node: Dependencies48099
-Node: Steps to build ‘eless’ and documentation49505
-Node: Other Wikis51737
-Node: Home51901
-Node: Example ‘eless’ config in ‘tcsh’52692
+Node: Readme2334
+Node: Requirements5168
+Node: Try it out5808
+Node: Contributors7165
+Node: Eless Options7624
+Node: ‘view-mode’ Common Bindings7954
+Node: Custom Bindings8944
+Node: Usage Examples9985
+Node: Current ‘eless’ Version11522
+Node: Code11914
+Node: Unofficial Bash Strict Mode12290
+Node: Initialize variables12975
+Node: Debug function13369
+Node: Input/Output Detection14517
+Node: Parse options16200
+Node: Print Help17919
+Node: Emacs with ‘-Q’ in ‘view-mode’18264
+Node: Input/Output Scenarios19112
+Node: Output is going to a pipe20567
+Node: Output is going to _stdout_ Input is coming from a pipe21113
+Node: Input is piped from ‘man’ command24053
+Node: Input is piped from a ‘modules’ help in _IPython_25273
+Node: Input is piped from ‘info’ command26522
+Node: Input is piped from something else27151
+Node: Output is going to _stdout_ Input is an argument to the script27931
+Node: Eval and Cleanup28303
+Node: Emacs Configuration28575
+Node: General setup29121
+Node: Ido setup30188
+Node: Isearch setup30758
+Node: Enable line truncation31172
+Node: Highlight the current line31523
+Node: Custom functions31759
+Node: Keep/delete matching lines32296
+Node: Frame and font re-sizing32986
+Node: Revert buffer in ‘view-mode’34005
+Node: Detect if ‘diff-mode’ should be enabled34492
+Node: Detect if ANSI codes need to be converted to colors37558
+Node: ``Do The Right Thing'' Kill38723
+Node: ‘dired-mode’ setup40484
+Node: ‘Man-mode’ setup41316
+Node: ‘Info-mode’ setup41777
+Node: ‘tar-mode’ setup42243
+Node: Auto-setting of major modes42970
+Node: Key bindings43831
+Node: User config override46345
+Node: Contributing47177
+Node: How to help debug47551
+Node: Development48263
+Node: Preparation48495
+Node: To build ‘eless’ and documentation48998
+Node: Sanity check of the tangled ‘eless’49292
+Node: To build documentation49611
+Node: Understand the changes49860
+Node: Submitting PR50187
+Node: Other Wikis50735
+Node: Home50899
+Node: Example ‘eless’ config in ‘tcsh’51686
 
 End Tag Table
 
