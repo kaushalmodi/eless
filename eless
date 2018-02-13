@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='b995b24'
+eless_git_hash='f2eee31'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -486,7 +486,7 @@ else
     # i.e. Input to eless is coming through a pipe (from grep, in above example)
     if [[ ${input_from_pipe_flag} -eq 1 ]]
     then
-        tempfile="$(mktemp emacs-stdin-"$USER".XXXXXXX --tmpdir)" # https://github.com/koalaman/shellcheck/wiki/SC2086
+        tempfile="$(mktemp -t emacs-stdin-"$USER".XXXXXXX)" # https://github.com/koalaman/shellcheck/wiki/SC2086
         debug "Temp File : $tempfile"
         echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
 

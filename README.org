@@ -53,7 +53,11 @@ As a bonus:
 - Always-in-sync documentation as the =eless= script and
   documentation are generated using Org Babel from [[https://github.com/kaushalmodi/eless/blob/master/eless.org][one file]] (even this
   README).
-
+* Requirements
+- *GNU =grep=* for =-P= flag (Perl regex) support
+  - Tested to work with GNU =grep= 2.6.3 on RHEL 6.6.
+  - Mac OS users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using =brew
+        install=]].
 * Try it out
 Here are some usage examples:
 #+begin_src shell

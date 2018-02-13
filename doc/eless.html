@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-02-02 Fri 12:49 -->
+<!-- 2018-02-13 Tue 14:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -253,8 +253,9 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org13ec50e">1. Readme</a>
 <ul>
-<li><a href="#org6dba5bd">1.1. Try it out</a></li>
-<li><a href="#orgf2f0a25">1.2. Contributors</a></li>
+<li><a href="#orge948767">1.1. Requirements</a></li>
+<li><a href="#org6dba5bd">1.2. Try it out</a></li>
+<li><a href="#orgf2f0a25">1.3. Contributors</a></li>
 </ul>
 </li>
 <li><a href="#org8ac7fe5">2. Eless Options</a></li>
@@ -422,10 +423,22 @@ documentation are generated using Org Babel from <a href="https://github.com/kau
 README).</li>
 </ul>
 </div>
-
-<div id="outline-container-org6dba5bd" class="outline-3">
-<h3 id="org6dba5bd"><span class="section-number-3">1.1</span> Try it out</h3>
+<div id="outline-container-orge948767" class="outline-3">
+<h3 id="orge948767"><span class="section-number-3">1.1</span> Requirements</h3>
 <div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li><b>GNU <code>grep</code></b> for <code>-P</code> flag (Perl regex) support
+<ul class="org-ul">
+<li>Tested to work with GNU <code>grep</code> 2.6.3 on RHEL 6.6.</li>
+<li>Mac OS users would need to install GNU <code>grep</code> <a href="https://apple.stackexchange.com/a/193300">using <code>brew
+    install</code></a>.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6dba5bd" class="outline-3">
+<h3 id="org6dba5bd"><span class="section-number-3">1.2</span> Try it out</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
 Here are some usage examples:
 </p>
@@ -450,8 +463,8 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 </div>
 <div id="outline-container-orgf2f0a25" class="outline-3">
-<h3 id="orgf2f0a25"><span class="section-number-3">1.2</span> Contributors</h3>
-<div class="outline-text-3" id="text-1-2">
+<h3 id="orgf2f0a25"><span class="section-number-3">1.3</span> Contributors</h3>
+<div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>Thanks to <a href="https://github.com/iqbalansari">Iqbal Ansari</a> for adding support to read piped data in
 <code>emacs -Q -nw</code>.</li>
@@ -715,7 +728,7 @@ eless foo.tar.xz            <span class="org-comment-delimiter"># </span><span c
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell">b344fba
+<pre class="src src-shell">f2eee31
 </pre>
 </div>
 <p>
@@ -1062,8 +1075,18 @@ is being piped to something else.
 <div id="outline-container-orge32e436" class="outline-4">
 <h4 id="orge32e436"><span class="section-number-4">7.8.2</span> Output is going to <i>stdout</i>, Input is coming from a pipe</h4>
 <div class="outline-text-4" id="text-7-8-2">
+<p>
+<code>mktemp</code> requires the <code>-t</code> argument to specify the temporary file name
+template on Mac OS (See <code>eless</code> issue #<a href="https://github.com/kaushalmodi/eless/issues/18">18</a>.)
+</p>
+
+<p>
+<b>Note to Mac OS users</b>: Using the <b>GNU <code>grep</code></b> version of <code>grep</code> is a
+ requirement for <code>eless</code> to work on your systems (for the <code>-P</code> (Perl
+ regex) support).
+</p>
 <div class="org-src-container">
-<pre class="src src-shell"><span class="org-variable-name">tempfile</span>=<span class="org-string">"$(</span><span class="org-sh-quoted-exec">mktemp</span><span class="org-string"> emacs-stdin-"$USER".XXXXXXX --tmpdir)"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
+<pre class="src src-shell"><span class="org-variable-name">tempfile</span>=<span class="org-string">"$(</span><span class="org-sh-quoted-exec">mktemp</span><span class="org-string"> -t emacs-stdin-"$USER".XXXXXXX)"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
 debug <span class="org-string">"Temp File : $tempfile"</span>
 <span class="org-builtin">echo</span> <span class="org-string">"${piped_data}"</span> &gt; <span class="org-string">"${tempfile}"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">https://github.com/koalaman/shellcheck/wiki/SC2086</span>
 
