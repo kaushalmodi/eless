@@ -109,7 +109,7 @@ https://travis-ci.org/kaushalmodi/eless.svg?branch=master
 (https://travis-ci.org/kaushalmodi/eless)
 
    *Documentation*: Org exported HTML
-(https://cdn.rawgit.com/kaushalmodi/eless/master/docs/eless.html) | Wiki
+(https://kaushalmodi.github.io/eless/) | Wiki
 (https://github.com/kaushalmodi/eless/wiki)
 
    ‘eless’ is a combination of Bash script and a minimal emacs
@@ -309,7 +309,7 @@ File: eless.info,  Node: Current ‘eless’ Version,  Next: Code,  Prev: Usage 
 
      master
 
-     b31cc97
+     a192b7f
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1255,10 +1255,11 @@ manually in your emacs config if you like._
 work for you, open an issue!
 
    Talking about dependencies, this project builds *everything* from
-‘eless.org’ file, the ‘eless’ script _plus_ all the HTML, Info
-documentation, ‘README.org’, ‘CONTRIBUTING.org’, and even the Wiki
-pages.  So before running ‘M-x eless-build’ mentioned in below build
-steps, you also need to:
+‘eless.org’ file, the ‘eless’ script _plus_ all the HTML
+(https://kaushalmodi.github.io/eless/), Info documentation,
+‘README.org’, ‘CONTRIBUTING.org’, and even the Wiki pages.  So before
+running ‘M-x eless-build’ mentioned in below build steps, you also need
+to:
      cd docs/
      git clone https://github.com/kaushalmodi/eless.wiki.git
 
@@ -1358,59 +1359,59 @@ File: eless.info,  Node: Example ‘eless’ config in ‘tcsh’,  Prev: Home, 
 Tag Table:
 Node: Top188
 Node: Readme2159
-Node: Requirements5020
-Node: Try it out5399
-Node: Contributors6756
-Node: Eless Options7215
-Node: ‘view-mode’ Common Bindings7545
-Node: Custom Bindings8535
-Node: Usage Examples9576
-Node: Current ‘eless’ Version10926
-Node: Code11318
-Node: Unofficial Bash Strict Mode11694
-Node: Initialize variables12379
-Node: Debug function12773
-Node: Input/Output Detection13921
-Node: Parse options15604
-Node: Print Help17323
-Node: Emacs with ‘-Q’ in ‘view-mode’17668
-Node: Input/Output Scenarios18516
-Node: Output is going to a pipe19971
-Node: Output is going to _stdout_ Input is coming from a pipe20517
-Node: Input is piped from ‘man’ command23457
-Node: Input is piped from a ‘modules’ help in _IPython_24677
-Node: Input is piped from ‘info’ command25926
-Node: Input is piped from something else26555
-Node: Output is going to _stdout_ Input is an argument to the script27335
-Node: Eval and Cleanup27707
-Node: Emacs Configuration27979
-Node: General setup28525
-Node: Ido setup29592
-Node: Isearch setup30162
-Node: Enable line truncation30576
-Node: Highlight the current line30927
-Node: Custom functions31163
-Node: Keep/delete matching lines31700
-Node: Frame and font re-sizing32390
-Node: Revert buffer in ‘view-mode’33409
-Node: Detect if ‘diff-mode’ should be enabled33896
-Node: Detect if ANSI codes need to be converted to colors36962
-Node: ``Do The Right Thing'' Kill38127
-Node: ‘dired-mode’ setup39888
-Node: ‘Man-mode’ setup40720
-Node: ‘Info-mode’ setup41181
-Node: ‘tar-mode’ setup41647
-Node: Auto-setting of major modes42374
-Node: Key bindings43235
-Node: User config override45749
-Node: Contributing46581
-Node: How to help debug46955
-Node: Development47671
-Node: Dependencies47865
-Node: Steps to build ‘eless’ and documentation49232
-Node: Other Wikis51464
-Node: Home51628
-Node: Example ‘eless’ config in ‘tcsh’52419
+Node: Requirements4993
+Node: Try it out5372
+Node: Contributors6729
+Node: Eless Options7188
+Node: ‘view-mode’ Common Bindings7518
+Node: Custom Bindings8508
+Node: Usage Examples9549
+Node: Current ‘eless’ Version10899
+Node: Code11291
+Node: Unofficial Bash Strict Mode11667
+Node: Initialize variables12352
+Node: Debug function12746
+Node: Input/Output Detection13894
+Node: Parse options15577
+Node: Print Help17296
+Node: Emacs with ‘-Q’ in ‘view-mode’17641
+Node: Input/Output Scenarios18489
+Node: Output is going to a pipe19944
+Node: Output is going to _stdout_ Input is coming from a pipe20490
+Node: Input is piped from ‘man’ command23430
+Node: Input is piped from a ‘modules’ help in _IPython_24650
+Node: Input is piped from ‘info’ command25899
+Node: Input is piped from something else26528
+Node: Output is going to _stdout_ Input is an argument to the script27308
+Node: Eval and Cleanup27680
+Node: Emacs Configuration27952
+Node: General setup28498
+Node: Ido setup29565
+Node: Isearch setup30135
+Node: Enable line truncation30549
+Node: Highlight the current line30900
+Node: Custom functions31136
+Node: Keep/delete matching lines31673
+Node: Frame and font re-sizing32363
+Node: Revert buffer in ‘view-mode’33382
+Node: Detect if ‘diff-mode’ should be enabled33869
+Node: Detect if ANSI codes need to be converted to colors36935
+Node: ``Do The Right Thing'' Kill38100
+Node: ‘dired-mode’ setup39861
+Node: ‘Man-mode’ setup40693
+Node: ‘Info-mode’ setup41154
+Node: ‘tar-mode’ setup41620
+Node: Auto-setting of major modes42347
+Node: Key bindings43208
+Node: User config override45722
+Node: Contributing46554
+Node: How to help debug46928
+Node: Development47644
+Node: Dependencies47838
+Node: Steps to build ‘eless’ and documentation49244
+Node: Other Wikis51476
+Node: Home51640
+Node: Example ‘eless’ config in ‘tcsh’52431
 
 End Tag Table
 

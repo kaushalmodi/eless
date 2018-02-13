@@ -35,7 +35,7 @@ branches for this project. So if any of the below steps do not work
 for you, open an issue!
 
 Talking about dependencies, this project builds *everything* from
-=eless.org= file, the =eless= script /plus/ all the HTML, Info
+=eless.org= file, the =eless= script /plus/ all the [[https://kaushalmodi.github.io/eless/][HTML]], Info
 documentation, =README.org=, =CONTRIBUTING.org=, and even the Wiki
 pages. So before running =M-x eless-build= mentioned in below build
 steps, you also need to:

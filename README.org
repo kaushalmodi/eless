@@ -4,7 +4,7 @@
 
 -----
 
-*Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/docs/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
+*Documentation*: [[https://kaushalmodi.github.io/eless/][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
 
 -----
 

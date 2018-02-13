@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-13 15:11:58 kmodi>
+# Time-stamp: <2018-02-13 15:24:41 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -31,7 +31,7 @@
 # #+end_export
 -----
 
-*Documentation*: [[https://cdn.rawgit.com/kaushalmodi/eless/master/docs/eless.html][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
+*Documentation*: [[https://kaushalmodi.github.io/eless/][Org exported HTML]] | [[https://github.com/kaushalmodi/eless/wiki][Wiki]]
 
 -----
 
@@ -197,7 +197,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-hash
-b31cc97
+a192b7f
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1015,7 +1015,7 @@ branches for this project. So if any of the below steps do not work
 for you, open an issue!
 
 Talking about dependencies, this project builds *everything* from
-=eless.org= file, the =eless= script /plus/ all the HTML, Info
+=eless.org= file, the =eless= script /plus/ all the [[https://kaushalmodi.github.io/eless/][HTML]], Info
 documentation, =README.org=, =CONTRIBUTING.org=, and even the Wiki
 pages. So before running =M-x eless-build= mentioned in below build
 steps, you also need to:
@@ -1085,7 +1085,7 @@ push them directly using =git= or manually edit those here.
 #+begin_src shell
 setenv PAGER eless # Show man pages using eless
 
-alias info  '\info \!* | eless'vvcrrrlfuhnrhhhlhrgutculgdeknrjdgiicnvkgtiri
+alias info  '\info \!* | eless'
 
 alias diff  '\diff \!* | eless'
 alias diffg '\diff \!* | eless --gui'
