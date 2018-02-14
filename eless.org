@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 13:08:55 kmodi>
+# Time-stamp: <2018-02-14 13:41:24 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -21,6 +21,12 @@
 #+property: header-args:shell :shebang "#!/usr/bin/env bash"
 
 #+macro: issue =eless= issue #[[https://github.com/kaushalmodi/eless/issues/$1][$1]]
+#+macro: user [[https://github.com/$1][$2]]
+
+# http://lists.gnu.org/r/emacs-orgmode/2017-04/msg00181.html
+# You need to have set `org-export-allow-bind-keywords' to t for below
+# to work.
+#+bind: org-html-inline-image-rules (("https" . "svg\\?branch="))
 
 * Readme                                                             :readme:
 :PROPERTIES:
@@ -37,7 +43,7 @@
 
 -----
 
-=eless= is a combination of Bash script and a minimal emacs =view-mode= config.
+[[https://github.com/kaushalmodi/eless][*eless*]] is a combination of Bash script and a minimal emacs =view-mode= config.
 
 This script is designed to:
 
@@ -77,11 +83,13 @@ I call it =eless= and here's a little taste of what it looks like:
 
 As a bonus:
 
-- [x] This script passes [[http://www.shellcheck.net][ShellCheck]], and
-- [x] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
-- [x] Always-in-sync documentation as the =eless= script and
+- [X] This script passes [[http://www.shellcheck.net][ShellCheck]], and
+- [X] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
+- [X] Always-in-sync documentation as the =eless= script and
   documentation are generated using Org Babel from [[https://github.com/kaushalmodi/eless/blob/master/eless.org][one file]] (even this
   README).
+- [X] The [[https://eless.scripter.co][documentation site]] is generated on-the-fly on Netlify using
+  that same /one file/.
 ** Requirements
 :PROPERTIES:
 :CUSTOM_ID: requirements
@@ -112,11 +120,13 @@ Here are some usage examples:
 :PROPERTIES:
 :CUSTOM_ID: contributors
 :END:
-- Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
-  =emacs -Q -nw=.
-- Thanks to [[https://github.com/alphapapa][Adam Porter]] for adding a =bash= /collapsing function/ for
-  debug statements, and testing out and providing suggestions on
-  improving the =eless= build flow.
+- Thanks to {{{user(sshaw,Skye Shaw)}}} for helping improving =eless=
+  so that it can run on /macOS/, and suggesting Bash =trap=.
+- Thanks to {{{user(iqbalansari,Iqbal Ansari)}}} for adding support to
+  read piped data in =emacs -Q -nw=.
+- Thanks to {{{user(alphapapa,Adam Porter)}}} for adding a =bash=
+  /collapsing function/ for debug statements, and testing out and
+  providing suggestions on improving the =eless= build flow.
 * Eless Options
 :PROPERTIES:
 :EXPORT_FILE_NAME: eless-options
@@ -228,7 +238,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-a375ab6
+869571e
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=

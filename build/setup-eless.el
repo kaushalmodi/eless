@@ -1,4 +1,4 @@
-;; Time-stamp: <2018-02-14 11:40:48 kmodi>
+;; Time-stamp: <2018-02-14 13:42:43 kmodi>
 
 ;; Setup to build eless and its documentation in an "emacs -Q" environment.
 
@@ -397,4 +397,5 @@ all the documents.  If non-nil, its valid values are `html',
     (setq org-confirm-babel-evaluate #'eless-org-confirm-babel-evaluate-fn))
 
   (with-eval-after-load 'ox
-    (setq org-export-headline-levels 4))) ;default is 3
+    (setq org-export-headline-levels 4) ;default is 3
+    (setq org-export-allow-bind-keywords t))) ;for #+bind: org-html-inline-image-rules (("https" . "svg\\?branch="))

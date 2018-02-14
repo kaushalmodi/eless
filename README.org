@@ -8,7 +8,7 @@
 
 -----
 
-=eless= is a combination of Bash script and a minimal emacs =view-mode= config.
+[[https://github.com/kaushalmodi/eless][*eless*]] is a combination of Bash script and a minimal emacs =view-mode= config.
 
 This script is designed to:
 
@@ -48,11 +48,13 @@ I call it =eless= and here's a little taste of what it looks like:
 
 As a bonus:
 
-- This script passes [[http://www.shellcheck.net][ShellCheck]], and
-- Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
-- Always-in-sync documentation as the =eless= script and
+- [X] This script passes [[http://www.shellcheck.net][ShellCheck]], and
+- [X] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
+- [X] Always-in-sync documentation as the =eless= script and
   documentation are generated using Org Babel from [[https://github.com/kaushalmodi/eless/blob/master/eless.org][one file]] (even this
   README).
+- [X] The [[https://eless.scripter.co][documentation site]] is generated on-the-fly on Netlify using
+  that same /one file/.
 * Requirements
 |------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Software   | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -87,8 +89,10 @@ info emacs | eless          # Read emacs Info manual in eless
 eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
 #+END_SRC
 * Contributors
-- Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
-  =emacs -Q -nw=.
-- Thanks to [[https://github.com/alphapapa][Adam Porter]] for adding a =bash= /collapsing function/ for
-  debug statements, and testing out and providing suggestions on
-  improving the =eless= build flow.
+- Thanks to [[https://github.com/sshaw][Skye Shaw]] for helping improving =eless=
+  so that it can run on /macOS/, and suggesting Bash =trap=.
+- Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to
+  read piped data in =emacs -Q -nw=.
+- Thanks to [[https://github.com/alphapapa][Adam Porter]] for adding a =bash=
+  /collapsing function/ for debug statements, and testing out and
+  providing suggestions on improving the =eless= build flow.
