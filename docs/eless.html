@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-02-14 Wed 01:19 -->
+<!-- 2018-02-14 Wed 11:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -423,26 +423,42 @@ README).</li>
 <div id="outline-container-orge948767" class="outline-3">
 <h3 id="requirements"><a id="orge948767"></a><span class="section-number-3">1.1</span> Requirements</h3>
 <div class="outline-text-3" id="text-requirements">
-<ul class="org-ul">
-<li>Emacs 24.4 or newer is needed if you want to build <code>eless</code> locally
-from <code>eless.org</code>.
-<ul class="org-ul">
-<li>If you plan to just download the use the <code>eless</code> script, it will
-run on older emacs versions too.</li>
-</ul></li>
-<li>This is a <code>bash</code> script. So even if you don&rsquo;t use <code>bash</code> shell, you
-need to have the <code>bash</code> binary discoverable through your environment
-variable <code>PATH</code>.
-<ul class="org-ul">
-<li>Tested to work in <code>tcsh</code> shell (<i>I know</i>) on RHEL 6.6.</li>
-</ul></li>
-<li><b>GNU <code>grep</code></b> for <code>-P</code> flag (Perl regex) support
-<ul class="org-ul">
-<li>Tested to work with GNU <code>grep</code> 2.6.3 on RHEL 6.6.</li>
-<li>Mac OS users would need to install GNU <code>grep</code> <a href="https://apple.stackexchange.com/a/193300">using <code>brew
-    install</code></a>.</li>
-</ul></li>
-</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" align="center" class="table-striped">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Software</th>
+<th scope="col" class="org-left">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>emacs</code></td>
+<td class="org-left">If <b>developing</b> (when running <code>make eless</code> or <code>make docs</code>), the minimum required version is 24.4. If only <b>running</b> the <code>eless</code> script, older emacs versions should work fine (sparsely tested). So if you face a problem, <a href="https://github.com/kaushalmodi/eless/issues">report it</a>, following the <b>How to help debug</b> section in <a href="https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org">CONTRIBUTING</a>. <i>Both building and running of <code>eless</code> tested on emacs 24.4, RHEL 6.6.</i></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bash</code></td>
+<td class="org-left">This is a <code>bash</code> script. So even if you don&rsquo;t use <code>bash</code> shell, you need to have the <code>bash</code> binary discoverable through your environment variable <code>PATH</code>. <i>Tested to work in <code>tcsh</code> shell on RHEL 6.6.</i></td>
+</tr>
+
+<tr>
+<td class="org-left">GNU <code>grep</code></td>
+<td class="org-left"><b>GNU</b> <code>grep</code> is required for the <code>-P</code> flag support (for Perl regex). <i>macOS</i> users would need to install GNU <code>grep</code> <a href="https://apple.stackexchange.com/a/193300">using <code>brew install</code></a>. <i>Tested to work with GNU <code>grep</code> 2.6.3 on RHEL 6.6.</i></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>perl</code></td>
+<td class="org-left">Perl is used to replace case-insensitive <code>sed</code> based replacements (using <code>/I</code>) as that feature is available only in GNU <code>sed</code>. Perl would be available on more systems compared to GNU <code>coreutils</code>. <i>Tested with Perl v5.16.3 on RHEL 6.6.</i></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="outline-container-org6dba5bd" class="outline-3">
@@ -742,7 +758,7 @@ will need to be adapted for the shell you are using.</dd>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell">c2e320f
+<pre class="src src-shell">79ec5a2
 </pre>
 </div>
 <p>
@@ -1110,13 +1126,14 @@ debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of man pages is assumed to be</span>
 <span class="org-comment-delimiter">#   </span><span class="org-comment">FOO(1)  optional something something FOO(1)</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass, so OR it with</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">It is not mandatory for the below grep to always pass. So OR it with</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">"true" so that "set -e" does not kill the script at this point.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">For some odd reason, the "BASH_BUILTINS" man page is just "builtins", so</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">deal with that corner case.. faced this when trying to do "man read".</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">For some odd reason, the "BASH_BUILTINS" man page is named just</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">"builtins"; below deals with that corner case.</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">.. faced this problem when trying to do "man read | eless".</span>
 <span class="org-variable-name">man_page</span>=$(<span class="org-builtin">echo</span> <span class="org-string">"${first_line_piped_data}"</span> <span class="org-sh-escaped-newline">\</span>
                | grep -Po <span class="org-string">'^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)'</span> <span class="org-sh-escaped-newline">\</span>
-               | sed -r <span class="org-string">'s/bash_builtins/builtins/I'</span> <span class="org-sh-escaped-newline">\</span>
+               | perl -pe <span class="org-string">'s/bash_builtins/builtins/i'</span> <span class="org-sh-escaped-newline">\</span>
                || true)
 
 <span class="org-comment-delimiter"># </span><span class="org-comment">The first line of Python package MODULE help is assumed to be</span>

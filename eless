@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='c2e320f'
+eless_git_hash='79ec5a2'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -498,13 +498,14 @@ else
 
         # The first line of man pages is assumed to be
         #   FOO(1)  optional something something FOO(1)
-        # It is not mandatory for the below grep to always pass, so OR it with
+        # It is not mandatory for the below grep to always pass. So OR it with
         # "true" so that "set -e" does not kill the script at this point.
-        # For some odd reason, the "BASH_BUILTINS" man page is just "builtins", so
-        # deal with that corner case.. faced this when trying to do "man read".
+        # For some odd reason, the "BASH_BUILTINS" man page is named just
+        # "builtins"; below deals with that corner case.
+        # .. faced this problem when trying to do "man read | eless".
         man_page=$(echo "${first_line_piped_data}" \
                        | grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)' \
-                       | sed -r 's/bash_builtins/builtins/I' \
+                       | perl -pe 's/bash_builtins/builtins/i' \
                        || true)
 
         # The first line of Python package MODULE help is assumed to be
