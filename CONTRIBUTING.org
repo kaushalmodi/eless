@@ -19,7 +19,7 @@ This guide is for you if you'd like to do any of the below:
 #+BEGIN_SRC shell
 git clone https://github.com/kaushalmodi/eless
 #+END_SRC
-Also see the [[*Requirements]] section if you'd like to build the =eless=
+Also see the [[*Requirements][*Requirements*]] section if you'd like to build the =eless=
 script + documentation locally.
 ** Building =eless=
 #+BEGIN_SRC shell

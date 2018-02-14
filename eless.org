@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 13:45:30 kmodi>
+# Time-stamp: <2018-02-14 13:56:40 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -94,20 +94,21 @@ As a bonus:
 :PROPERTIES:
 :CUSTOM_ID: requirements
 :END:
-|------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|            | <70>                                                                                                                                                                                                                                                                                                                                                                    |
-| Software   | Details                                                                                                                                                                                                                                                                                                                                                                 |
-|------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], following the *How to help debug* section in [[https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org][CONTRIBUTING]]. /Both building and running of =eless= tested on emacs 24.4, RHEL 6.6./ |
-| =bash=     | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                 |
-| GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                           |
-| =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                             |
-|------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|            | <70>                                                                                                                                                                                                                                                                                                                                                                       |
+| Software   | Details                                                                                                                                                                                                                                                                                                                                                                    |
+|------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= tested on emacs 24.4, RHEL 6.6./ |
+| =bash=     | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                    |
+| GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                              |
+| =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                |
+|------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 - NOTE :: The =eless= script relies on the emacs binary to be named
-          =emacs= (note the case). If your distribution ships emacs as
-          =Emacs= or named something else, symlink that binary to
-          =emacs= and ensure that the symlink lives in your =PATH=.
+          =emacs= (note that it is all lower-case). If your
+          distribution ships emacs as =Emacs= or named something else,
+          symlink that binary to =emacs= and ensure that the symlink
+          lives in your =PATH=.
 ** Try it out
 :PROPERTIES:
 :CUSTOM_ID: try-it-out
@@ -528,8 +529,8 @@ The =emacs_Q_view_mode= function is defined to launch emacs with a
 customized =view-mode=.
 
 /Refer to further sections below to see the elisp code referenced by
-the =<<emacs-config>>= *noweb* placeholder in the
-[[*Emacs Configuration]] section./
+the =<<emacs-config>>= *noweb* placeholder in section [[*Emacs
+Configuration]]./
 # :noweb no-export will prevent expansion of the <<noweb ref>> when
 # exporting
 #+begin_src shell :noweb no-export
@@ -1169,7 +1170,7 @@ This guide is for you if you'd like to do any of the below:
 #+begin_src shell
 git clone https://github.com/kaushalmodi/eless
 #+end_src
-Also see the [[*Requirements]] section if you'd like to build the =eless=
+Also see the [[*Requirements][*Requirements*]] section if you'd like to build the =eless=
 script + documentation locally.
 *** Building =eless=
 :PROPERTIES:
