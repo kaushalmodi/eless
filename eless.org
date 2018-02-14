@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 12:45:37 kmodi>
+# Time-stamp: <2018-02-14 13:08:55 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -43,7 +43,7 @@ This script is designed to:
 
 - Be portable -- Just one bash script to download to run
 - Be independent of a user's emacs config
-  - /You can still [[https://github.com/kaushalmodi/eless/wiki/Code-Explanation#user-config-override][customize]] the =eless= config if you like./
+  - /You can still [[https://eless.scripter.co/#user-config-override][customize]] the =eless= config if you like./
 - Not require an emacs server to be already running
 
 It was created out of a need to have something /like/ =less= (in the sense of

@@ -129,8 +129,8 @@ https://travis-ci.org/kaushalmodi/eless.svg?branch=master
    • Be portable – Just one bash script to download to run
    • Be independent of a user’s emacs config
         • _You can still customize
-          (https://github.com/kaushalmodi/eless/wiki/Code-Explanation#user-config-override)
-          the ‘eless’ config if you like._
+          (https://eless.scripter.co/#user-config-override) the ‘eless’
+          config if you like._
    • Not require an emacs server to be already running
 
    It was created out of a need to have something _like_ ‘less’ (in the
@@ -1380,64 +1380,64 @@ File: eless.info,  Node: Example eless config in tcsh,  Up: Miscellaneous
 Tag Table:
 Node: Top188
 Node: Readme2223
-Node: Requirements4977
-Node: Try it out7177
-Node: Contributors8534
-Node: Eless Options8993
-Node: view-mode Common Bindings9317
-Node: Custom Bindings10301
-Node: Usage Examples11336
-Node: Current eless Version12867
-Node: Code13253
-Node: Unofficial Bash Strict Mode13622
-Node: Initialize variables14307
-Node: Cleanup using trap14705
-Node: Debug function15315
-Node: Input/Output Detection16461
-Node: Parse options18144
-Node: Print Help19863
-Node: Emacs with -Q in view-mode20196
-Node: Input/Output Scenarios21012
-Node: Output is going to a pipe22443
-Node: Output is going to _stdout_ Input is coming from a pipe22989
-Node: Input is piped from man command25948
-Node: Input is piped from a modules help in _IPython_27156
-Node: Input is piped from info command28387
-Node: Input is piped from something else29004
-Node: Output is going to _stdout_ Input is an argument to the script29778
-Node: Eval30150
-Node: Emacs Configuration30388
-Node: General setup30910
-Node: Ido setup31977
-Node: Isearch setup32547
-Node: Enable line truncation32961
-Node: Highlight the current line33312
-Node: Custom functions33548
-Node: Keep/delete matching lines34049
-Node: Frame and font re-sizing34739
-Node: Revert buffer in view-mode35752
-Node: Detect if diff-mode should be enabled36227
-Node: Detect if ANSI codes need to be converted to colors39275
-Node: ``Do The Right Thing'' Kill40434
-Node: dired-mode setup42187
-Node: Man-mode setup43007
-Node: Info-mode setup43450
-Node: tar-mode setup43898
-Node: Auto-setting of major modes44613
-Node: Key bindings45474
-Node: User config override48065
-Node: Contributing48897
-Node: How to help debug49273
-Node: Development49985
-Node: Preparation50214
-Node: Building eless50503
-Node: Sanity check of the tangled eless50731
-Node: Building documentation51020
-Node: Understand the changes51351
-Node: Build everything51678
-Node: Submitting PR51940
-Node: Miscellaneous52191
-Node: Example eless config in tcsh52340
+Node: Requirements4945
+Node: Try it out7145
+Node: Contributors8502
+Node: Eless Options8961
+Node: view-mode Common Bindings9285
+Node: Custom Bindings10269
+Node: Usage Examples11304
+Node: Current eless Version12835
+Node: Code13221
+Node: Unofficial Bash Strict Mode13590
+Node: Initialize variables14275
+Node: Cleanup using trap14673
+Node: Debug function15283
+Node: Input/Output Detection16429
+Node: Parse options18112
+Node: Print Help19831
+Node: Emacs with -Q in view-mode20164
+Node: Input/Output Scenarios20980
+Node: Output is going to a pipe22411
+Node: Output is going to _stdout_ Input is coming from a pipe22957
+Node: Input is piped from man command25916
+Node: Input is piped from a modules help in _IPython_27124
+Node: Input is piped from info command28355
+Node: Input is piped from something else28972
+Node: Output is going to _stdout_ Input is an argument to the script29746
+Node: Eval30118
+Node: Emacs Configuration30356
+Node: General setup30878
+Node: Ido setup31945
+Node: Isearch setup32515
+Node: Enable line truncation32929
+Node: Highlight the current line33280
+Node: Custom functions33516
+Node: Keep/delete matching lines34017
+Node: Frame and font re-sizing34707
+Node: Revert buffer in view-mode35720
+Node: Detect if diff-mode should be enabled36195
+Node: Detect if ANSI codes need to be converted to colors39243
+Node: ``Do The Right Thing'' Kill40402
+Node: dired-mode setup42155
+Node: Man-mode setup42975
+Node: Info-mode setup43418
+Node: tar-mode setup43866
+Node: Auto-setting of major modes44581
+Node: Key bindings45442
+Node: User config override48033
+Node: Contributing48865
+Node: How to help debug49241
+Node: Development49953
+Node: Preparation50182
+Node: Building eless50471
+Node: Sanity check of the tangled eless50699
+Node: Building documentation50988
+Node: Understand the changes51319
+Node: Build everything51646
+Node: Submitting PR51908
+Node: Miscellaneous52159
+Node: Example eless config in tcsh52308
 
 End Tag Table
 
