@@ -17,21 +17,18 @@ This guide is for you if you'd like to do any of the below:
 * Development
 ** Preparation
 This project builds *everything* from the =eless.org= file --- the
-=eless= Bash script /plus/ all the [[https://kaushalmodi.github.io/eless/][HTML]], Info documentation,
-=README.org=, =CONTRIBUTING.org=, and even the Wiki pages. So before
-your proceed, you also need to:
-#+BEGIN_SRC shell
-cd docs/
-git clone https://github.com/kaushalmodi/eless.wiki.git
-#+END_SRC
-** To build =eless= and documentation
+=eless= Bash script /plus/ all the [[https://eless.scripter.co][HTML]], Info documentation, and even
+=README.org= and =CONTRIBUTING.org= for Github.
+** Building =eless=
 #+BEGIN_SRC shell
 make eless
 #+END_SRC
 *** Sanity check of the tangled =eless=
 Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are no
 errors.
-** To build documentation
+** Building documentation
+Below will generate/update the Info manual and =README.org= and
+=CONTRIBUTING.org= for Github.
 #+BEGIN_SRC shell
 make doc
 #+END_SRC
@@ -42,7 +39,3 @@ make doc
 ** Submitting PR
 - You can submit a PR once you have reviewed all the changes in the
   tangled =eless= script and documentation.
-- If changes are only to the Wiki, I believe you can push them
-  directly using =git= or manually edit those [[https://github.com/kaushalmodi/eless/wiki][here]]. /I have to yet
-  figure out how to keep the non-git Wiki changes and changes in
-  =eless.org= in sync./

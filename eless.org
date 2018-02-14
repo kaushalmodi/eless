@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 12:10:27 kmodi>
+# Time-stamp: <2018-02-14 12:14:56 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -223,7 +223,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-79ec5a2
+57aae99
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -497,7 +497,7 @@ customized =view-mode=.
 
 /Refer to further sections below to see the elisp code referenced by
 the =<<emacs-config>>= *noweb* placeholder in the
-[[#emacs-configuration][Emacs Configuration]] section./
+[[*Emacs Configuration]] section./
 # :noweb no-export will prevent expansion of the <<noweb ref>> when
 # exporting
 #+begin_src shell :noweb no-export
@@ -517,7 +517,7 @@ function emacs_Q_view_mode {
 :PROPERTIES:
 :CUSTOM_ID: input-output-scenarios
 :END:
-We saw in section [[#input-output-detection][Input/Output Detection]] how we detected if input was
+We saw in section [[*Input/Output Detection]] how we detected if input was
 coming from the /pipe/ or /stdin/ and if output was going to a /pipe/
 or /stdout/. Now we make use of that information to call the
 =emacs_Q_view_mode= function with the right arguments.
@@ -731,7 +731,7 @@ fi
 # :noweb-sep "\n\n" <- Inserts one empty line between noweb ref
 # source blocks
 Here is a "Do The Right Thing" config for =view-mode= that gets
-loaded in the emacs instance launched in the [[#emacs-Q-view-mode-function][=emacs_Q_view_mode= function]].
+loaded in the emacs instance launched in the [[#emacs-q-view-mode][=emacs_Q_view_mode= function]].
 *** General setup
 :PROPERTIES:
 :CUSTOM_ID: general-setup
