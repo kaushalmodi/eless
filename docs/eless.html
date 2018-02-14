@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-02-13 Tue 22:04 -->
+<!-- 2018-02-14 Wed 01:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -273,7 +273,7 @@ for the JavaScript code in this tag.
 <li><a href="#org256c6f7">7.8.3. Output is going to <i>stdout</i>, Input is an argument to the script</a></li>
 </ul>
 </li>
-<li><a href="#orgdca011c">7.9. Eval and Cleanup</a></li>
+<li><a href="#orgd4cb065">7.9. Eval and Cleanup</a></li>
 <li><a href="#emacs-configuration">7.10. Emacs Configuration</a>
 <ul>
 <li><a href="#org836df9e">7.10.1. General setup</a></li>
@@ -424,6 +424,12 @@ README).</li>
 <h3 id="requirements"><a id="orge948767"></a><span class="section-number-3">1.1</span> Requirements</h3>
 <div class="outline-text-3" id="text-requirements">
 <ul class="org-ul">
+<li>Emacs 24.4 or newer is needed if you want to build <code>eless</code> locally
+from <code>eless.org</code>.
+<ul class="org-ul">
+<li>If you plan to just download the use the <code>eless</code> script, it will
+run on older emacs versions too.</li>
+</ul></li>
 <li>This is a <code>bash</code> script. So even if you don&rsquo;t use <code>bash</code> shell, you
 need to have the <code>bash</code> binary discoverable through your environment
 variable <code>PATH</code>.
@@ -736,7 +742,7 @@ will need to be adapted for the shell you are using.</dd>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell">150a31c
+<pre class="src src-shell">c2e320f
 </pre>
 </div>
 <p>
@@ -1251,8 +1257,8 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-orgdca011c" class="outline-3">
-<h3 id="orgdca011c"><span class="section-number-3">7.9</span> Eval and Cleanup</h3>
+<div id="outline-container-orgd4cb065" class="outline-3">
+<h3 id="orgd4cb065"><span class="section-number-3">7.9</span> Eval and Cleanup</h3>
 <div class="outline-text-3" id="text-7-9">
 <p>
 Finally we <code>eval</code> the constructed <code>${cmd}</code> variable.

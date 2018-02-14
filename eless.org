@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-13 21:59:07 kmodi>
+# Time-stamp: <2018-02-14 01:16:44 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -84,6 +84,10 @@ As a bonus:
 :PROPERTIES:
 :CUSTOM_ID: requirements
 :END:
+- Emacs 24.4 or newer is needed if you want to build =eless= locally
+  from =eless.org=.
+  - If you plan to just download the use the =eless= script, it will
+    run on older emacs versions too.
 - This is a =bash= script. So even if you don't use =bash= shell, you
   need to have the =bash= binary discoverable through your environment
   variable =PATH=.
@@ -213,7 +217,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-150a31c
+c2e320f
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=

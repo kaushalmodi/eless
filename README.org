@@ -54,6 +54,10 @@ As a bonus:
   documentation are generated using Org Babel from [[https://github.com/kaushalmodi/eless/blob/master/eless.org][one file]] (even this
   README).
 * Requirements
+- Emacs 24.4 or newer is needed if you want to build =eless= locally
+  from =eless.org=.
+  - If you plan to just download the use the =eless= script, it will
+    run on older emacs versions too.
 - This is a =bash= script. So even if you don't use =bash= shell, you
   need to have the =bash= binary discoverable through your environment
   variable =PATH=.
