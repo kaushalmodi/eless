@@ -327,7 +327,7 @@ File: eless.info,  Node: Current ‘eless’ Version,  Next: Code,  Prev: Usage 
 
      master
 
-     45b5745
+     150a31c
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -966,12 +966,12 @@ File: eless.info,  Node: Detect if ‘diff-mode’ should be enabled,  Next: Det
            (let ((diff-mode-enable))
              (goto-char (point-min))
              (when (and ;First header line of unified/context diff begins with "--- "/"*** "
-                    (thing-at-point (quote line)) ;Prevent error in string-match-p if the buffer is empty
-                    (string-match-p "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
+                    (thing-at-point (quote line)) ;Prevent error in string-match if the buffer is empty
+                    (string-match "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
                     ;; Second header line of unified/context diff begins with "+++ "/"--- "
                     (progn
                       (forward-line 1)
-                      (string-match-p "^\\(\\+\\+\\+\\|---\\) " (thing-at-point (quote line)))))
+                      (string-match "^\\(\\+\\+\\+\\|---\\) " (thing-at-point (quote line)))))
                (setq diff-mode-enable t))
              ;; Check if the diff format is neither context nor unified
              (unless diff-mode-enable
@@ -1049,7 +1049,7 @@ the time of quitting.
        (interactive "P")
        (let ((num-non-special-buffers 0))
          (dolist (buf (buffer-list))
-           (unless (string-match-p "\\`[ *]" (buffer-name buf)) ;Do not count buffers with names starting with space or *
+           (unless (string-match "\\`[ *]" (buffer-name buf)) ;Do not count buffers with names starting with space or *
              (setq num-non-special-buffers (+ 1 num-non-special-buffers)))
            (with-current-buffer buf
              ;; Mark all view-mode buffers as "not modified" to prevent save prompt on
@@ -1146,24 +1146,26 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
 7.10.8 Key bindings
 -------------------
 
-     (with-eval-after-load (quote view)
-       (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
-       (define-key view-mode-map (kbd "&") (function eless/keep-lines))
-       (define-key view-mode-map (kbd "0") (function delete-window))
-       (define-key view-mode-map (kbd "1") (function delete-other-windows))
-       (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
-       (define-key view-mode-map (kbd "D") (function dired))
-       (define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
-       (define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
-       (define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
-       (define-key view-mode-map (kbd "a") (function auto-revert-mode))
-       (define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
-       (define-key view-mode-map (kbd "k") (function eless/keep-lines))
-       (define-key view-mode-map (kbd "n") (function next-line))
-       (define-key view-mode-map (kbd "o") (function occur))
-       (define-key view-mode-map (kbd "p") (function previous-line))
-       (define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
-       (define-key view-mode-map (kbd "t") (function toggle-truncate-lines)))
+     (eval-after-load (quote view)
+       (quote
+        (progn
+          (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
+          (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+          (define-key view-mode-map (kbd "0") (function delete-window))
+          (define-key view-mode-map (kbd "1") (function delete-other-windows))
+          (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
+          (define-key view-mode-map (kbd "D") (function dired))
+          (define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
+          (define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
+          (define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
+          (define-key view-mode-map (kbd "a") (function auto-revert-mode))
+          (define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
+          (define-key view-mode-map (kbd "k") (function eless/keep-lines))
+          (define-key view-mode-map (kbd "n") (function next-line))
+          (define-key view-mode-map (kbd "o") (function occur))
+          (define-key view-mode-map (kbd "p") (function previous-line))
+          (define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
+          (define-key view-mode-map (kbd "t") (function toggle-truncate-lines)))))
 
      ;; Global custom bindings
      (global-set-key (kbd "M-/") (function hippie-expand))
@@ -1410,27 +1412,27 @@ Node: Keep/delete matching lines32296
 Node: Frame and font re-sizing32986
 Node: Revert buffer in ‘view-mode’34005
 Node: Detect if ‘diff-mode’ should be enabled34492
-Node: Detect if ANSI codes need to be converted to colors37558
-Node: ``Do The Right Thing'' Kill38723
-Node: ‘dired-mode’ setup40484
-Node: ‘Man-mode’ setup41316
-Node: ‘Info-mode’ setup41777
-Node: ‘tar-mode’ setup42243
-Node: Auto-setting of major modes42970
-Node: Key bindings43831
-Node: User config override46345
-Node: Contributing47177
-Node: How to help debug47551
-Node: Development48263
-Node: Preparation48495
-Node: To build ‘eless’ and documentation48998
-Node: Sanity check of the tangled ‘eless’49292
-Node: To build documentation49611
-Node: Understand the changes49860
-Node: Submitting PR50187
-Node: Other Wikis50735
-Node: Home50899
-Node: Example ‘eless’ config in ‘tcsh’51686
+Node: Detect if ANSI codes need to be converted to colors37552
+Node: ``Do The Right Thing'' Kill38717
+Node: ‘dired-mode’ setup40476
+Node: ‘Man-mode’ setup41308
+Node: ‘Info-mode’ setup41769
+Node: ‘tar-mode’ setup42235
+Node: Auto-setting of major modes42962
+Node: Key bindings43823
+Node: User config override46414
+Node: Contributing47246
+Node: How to help debug47620
+Node: Development48332
+Node: Preparation48564
+Node: To build ‘eless’ and documentation49067
+Node: Sanity check of the tangled ‘eless’49361
+Node: To build documentation49680
+Node: Understand the changes49929
+Node: Submitting PR50256
+Node: Other Wikis50804
+Node: Home50968
+Node: Example ‘eless’ config in ‘tcsh’51755
 
 End Tag Table
 

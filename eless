@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='45b5745'
+eless_git_hash='150a31c'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -314,12 +314,12 @@ function emacs_Q_view_mode {
                                 (let ((diff-mode-enable))
                                   (goto-char (point-min))
                                   (when (and ;First header line of unified/context diff begins with "--- "/"*** "
-                                         (thing-at-point (quote line)) ;Prevent error in string-match-p if the buffer is empty
-                                         (string-match-p "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
+                                         (thing-at-point (quote line)) ;Prevent error in string-match if the buffer is empty
+                                         (string-match "^\\(---\\|\\*\\*\\*\\) " (thing-at-point (quote line)))
                                          ;; Second header line of unified/context diff begins with "+++ "/"--- "
                                          (progn
                                            (forward-line 1)
-                                           (string-match-p "^\\(\\+\\+\\+\\|---\\) " (thing-at-point (quote line)))))
+                                           (string-match "^\\(\\+\\+\\+\\|---\\) " (thing-at-point (quote line)))))
                                     (setq diff-mode-enable t))
                                   ;; Check if the diff format is neither context nor unified
                                   (unless diff-mode-enable
@@ -372,7 +372,7 @@ function emacs_Q_view_mode {
                             (interactive "P")
                             (let ((num-non-special-buffers 0))
                               (dolist (buf (buffer-list))
-                                (unless (string-match-p "\\`[ *]" (buffer-name buf)) ;Do not count buffers with names starting with space or *
+                                (unless (string-match "\\`[ *]" (buffer-name buf)) ;Do not count buffers with names starting with space or *
                                   (setq num-non-special-buffers (+ 1 num-non-special-buffers)))
                                 (with-current-buffer buf
                                   ;; Mark all view-mode buffers as "not modified" to prevent save prompt on
@@ -428,24 +428,26 @@ function emacs_Q_view_mode {
                             (eless/enable-ansi-color-maybe)
                             (view-mode 1)))
 
-                          (with-eval-after-load (quote view)
-                            (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
-                            (define-key view-mode-map (kbd "&") (function eless/keep-lines))
-                            (define-key view-mode-map (kbd "0") (function delete-window))
-                            (define-key view-mode-map (kbd "1") (function delete-other-windows))
-                            (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
-                            (define-key view-mode-map (kbd "D") (function dired))
-                            (define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
-                            (define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
-                            (define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
-                            (define-key view-mode-map (kbd "a") (function auto-revert-mode))
-                            (define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
-                            (define-key view-mode-map (kbd "k") (function eless/keep-lines))
-                            (define-key view-mode-map (kbd "n") (function next-line))
-                            (define-key view-mode-map (kbd "o") (function occur))
-                            (define-key view-mode-map (kbd "p") (function previous-line))
-                            (define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
-                            (define-key view-mode-map (kbd "t") (function toggle-truncate-lines)))
+                          (eval-after-load (quote view)
+                            (quote
+                             (progn
+                               (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
+                               (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+                               (define-key view-mode-map (kbd "0") (function delete-window))
+                               (define-key view-mode-map (kbd "1") (function delete-other-windows))
+                               (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
+                               (define-key view-mode-map (kbd "D") (function dired))
+                               (define-key view-mode-map (kbd "N") (function next-error)) ;Next line in *occur*
+                               (define-key view-mode-map (kbd "P") (function previous-error)) ;Previous line in *occur*
+                               (define-key view-mode-map (kbd "K") (function eless/delete-matching-lines))
+                               (define-key view-mode-map (kbd "a") (function auto-revert-mode))
+                               (define-key view-mode-map (kbd "g") (function eless/revert-buffer-retain-view-mode))
+                               (define-key view-mode-map (kbd "k") (function eless/keep-lines))
+                               (define-key view-mode-map (kbd "n") (function next-line))
+                               (define-key view-mode-map (kbd "o") (function occur))
+                               (define-key view-mode-map (kbd "p") (function previous-line))
+                               (define-key view-mode-map (kbd "q") (function eless/kill-emacs-or-buffer))
+                               (define-key view-mode-map (kbd "t") (function toggle-truncate-lines)))))
 
                           ;; Global custom bindings
                           (global-set-key (kbd "M-/") (function hippie-expand))

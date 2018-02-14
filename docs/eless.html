@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-02-13 Tue 18:27 -->
+<!-- 2018-02-13 Tue 22:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -736,7 +736,7 @@ will need to be adapted for the shell you are using.</dd>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell">45b5745
+<pre class="src src-shell">150a31c
 </pre>
 </div>
 <p>
@@ -1429,12 +1429,12 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
       (<span class="org-keyword">let</span> ((diff-mode-enable))
         (goto-char (point-min))
         (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> <span class="org-comment-delimiter">;</span><span class="org-comment">First header line of unified/context diff begins with "--- "/"*** "</span>
-               (thing-at-point (<span class="org-keyword">quote</span> line)) <span class="org-comment-delimiter">;</span><span class="org-comment">Prevent error in string-match-p if the buffer is empty</span>
-               (string-match-p <span class="org-string">"^</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">---</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">\\*\\*\\*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> "</span> (thing-at-point (<span class="org-keyword">quote</span> line)))
+               (thing-at-point (<span class="org-keyword">quote</span> line)) <span class="org-comment-delimiter">;</span><span class="org-comment">Prevent error in string-match if the buffer is empty</span>
+               (string-match <span class="org-string">"^</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">---</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">\\*\\*\\*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> "</span> (thing-at-point (<span class="org-keyword">quote</span> line)))
                <span class="org-comment-delimiter">;; </span><span class="org-comment">Second header line of unified/context diff begins with "+++ "/"--- "</span>
                (<span class="org-keyword">progn</span>
                  (forward-line 1)
-                 (string-match-p <span class="org-string">"^</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">\\+\\+\\+</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">---</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> "</span> (thing-at-point (<span class="org-keyword">quote</span> line)))))
+                 (string-match <span class="org-string">"^</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">\\+\\+\\+</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">---</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> "</span> (thing-at-point (<span class="org-keyword">quote</span> line)))))
           (<span class="org-keyword">setq</span> diff-mode-enable t))
         <span class="org-comment-delimiter">;; </span><span class="org-comment">Check if the diff format is neither context nor unified</span>
         (<span class="org-keyword">unless</span> diff-mode-enable
@@ -1526,7 +1526,7 @@ at the time of quitting.
   (<span class="org-keyword">interactive</span> <span class="org-string">"P"</span>)
   (<span class="org-keyword">let</span> ((num-non-special-buffers 0))
     (<span class="org-keyword">dolist</span> (buf (buffer-list))
-      (<span class="org-keyword">unless</span> (string-match-p <span class="org-string">"\\`[ *]"</span> (buffer-name buf)) <span class="org-comment-delimiter">;</span><span class="org-comment">Do not count buffers with names starting with space or *</span>
+      (<span class="org-keyword">unless</span> (string-match <span class="org-string">"\\`[ *]"</span> (buffer-name buf)) <span class="org-comment-delimiter">;</span><span class="org-comment">Do not count buffers with names starting with space or *</span>
         (<span class="org-keyword">setq</span> num-non-special-buffers (+ 1 num-non-special-buffers)))
       (<span class="org-keyword">with-current-buffer</span> buf
         <span class="org-comment-delimiter">;; </span><span class="org-comment">Mark all view-mode buffers as "not modified" to prevent save prompt on</span>
@@ -1635,24 +1635,26 @@ eless bar.tar.gz
 <h4 id="orgb867865"><span class="section-number-4">7.10.8</span> Key bindings</h4>
 <div class="outline-text-4" id="text-7-10-8">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> (<span class="org-keyword">quote</span> view)
-  (define-key view-mode-map (kbd <span class="org-string">"!"</span>) (<span class="org-keyword">function</span> eless/delete-matching-lines))
-  (define-key view-mode-map (kbd <span class="org-string">"&amp;"</span>) (<span class="org-keyword">function</span> eless/keep-lines))
-  (define-key view-mode-map (kbd <span class="org-string">"0"</span>) (<span class="org-keyword">function</span> delete-window))
-  (define-key view-mode-map (kbd <span class="org-string">"1"</span>) (<span class="org-keyword">function</span> delete-other-windows))
-  (define-key view-mode-map (kbd <span class="org-string">"A"</span>) (<span class="org-keyword">function</span> auto-revert-tail-mode))
-  (define-key view-mode-map (kbd <span class="org-string">"D"</span>) (<span class="org-keyword">function</span> dired))
-  (define-key view-mode-map (kbd <span class="org-string">"N"</span>) (<span class="org-keyword">function</span> next-error)) <span class="org-comment-delimiter">;</span><span class="org-comment">Next line in *occur*</span>
-  (define-key view-mode-map (kbd <span class="org-string">"P"</span>) (<span class="org-keyword">function</span> previous-error)) <span class="org-comment-delimiter">;</span><span class="org-comment">Previous line in *occur*</span>
-  (define-key view-mode-map (kbd <span class="org-string">"K"</span>) (<span class="org-keyword">function</span> eless/delete-matching-lines))
-  (define-key view-mode-map (kbd <span class="org-string">"a"</span>) (<span class="org-keyword">function</span> auto-revert-mode))
-  (define-key view-mode-map (kbd <span class="org-string">"g"</span>) (<span class="org-keyword">function</span> eless/revert-buffer-retain-view-mode))
-  (define-key view-mode-map (kbd <span class="org-string">"k"</span>) (<span class="org-keyword">function</span> eless/keep-lines))
-  (define-key view-mode-map (kbd <span class="org-string">"n"</span>) (<span class="org-keyword">function</span> next-line))
-  (define-key view-mode-map (kbd <span class="org-string">"o"</span>) (<span class="org-keyword">function</span> occur))
-  (define-key view-mode-map (kbd <span class="org-string">"p"</span>) (<span class="org-keyword">function</span> previous-line))
-  (define-key view-mode-map (kbd <span class="org-string">"q"</span>) (<span class="org-keyword">function</span> eless/kill-emacs-or-buffer))
-  (define-key view-mode-map (kbd <span class="org-string">"t"</span>) (<span class="org-keyword">function</span> toggle-truncate-lines)))
+<pre class="src src-emacs-lisp">(eval-after-load (<span class="org-keyword">quote</span> view)
+  (<span class="org-keyword">quote</span>
+   (<span class="org-keyword">progn</span>
+     (define-key view-mode-map (kbd <span class="org-string">"!"</span>) (<span class="org-keyword">function</span> eless/delete-matching-lines))
+     (define-key view-mode-map (kbd <span class="org-string">"&amp;"</span>) (<span class="org-keyword">function</span> eless/keep-lines))
+     (define-key view-mode-map (kbd <span class="org-string">"0"</span>) (<span class="org-keyword">function</span> delete-window))
+     (define-key view-mode-map (kbd <span class="org-string">"1"</span>) (<span class="org-keyword">function</span> delete-other-windows))
+     (define-key view-mode-map (kbd <span class="org-string">"A"</span>) (<span class="org-keyword">function</span> auto-revert-tail-mode))
+     (define-key view-mode-map (kbd <span class="org-string">"D"</span>) (<span class="org-keyword">function</span> dired))
+     (define-key view-mode-map (kbd <span class="org-string">"N"</span>) (<span class="org-keyword">function</span> next-error)) <span class="org-comment-delimiter">;</span><span class="org-comment">Next line in *occur*</span>
+     (define-key view-mode-map (kbd <span class="org-string">"P"</span>) (<span class="org-keyword">function</span> previous-error)) <span class="org-comment-delimiter">;</span><span class="org-comment">Previous line in *occur*</span>
+     (define-key view-mode-map (kbd <span class="org-string">"K"</span>) (<span class="org-keyword">function</span> eless/delete-matching-lines))
+     (define-key view-mode-map (kbd <span class="org-string">"a"</span>) (<span class="org-keyword">function</span> auto-revert-mode))
+     (define-key view-mode-map (kbd <span class="org-string">"g"</span>) (<span class="org-keyword">function</span> eless/revert-buffer-retain-view-mode))
+     (define-key view-mode-map (kbd <span class="org-string">"k"</span>) (<span class="org-keyword">function</span> eless/keep-lines))
+     (define-key view-mode-map (kbd <span class="org-string">"n"</span>) (<span class="org-keyword">function</span> next-line))
+     (define-key view-mode-map (kbd <span class="org-string">"o"</span>) (<span class="org-keyword">function</span> occur))
+     (define-key view-mode-map (kbd <span class="org-string">"p"</span>) (<span class="org-keyword">function</span> previous-line))
+     (define-key view-mode-map (kbd <span class="org-string">"q"</span>) (<span class="org-keyword">function</span> eless/kill-emacs-or-buffer))
+     (define-key view-mode-map (kbd <span class="org-string">"t"</span>) (<span class="org-keyword">function</span> toggle-truncate-lines)))))
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Global custom bindings</span>
 (global-set-key (kbd <span class="org-string">"M-/"</span>) (<span class="org-keyword">function</span> hippie-expand))
