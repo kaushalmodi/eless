@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-13 18:41:13 kmodi>
+# Time-stamp: <2018-02-13 22:03:45 kmodi>
 
 # Makefile to export org documents to md for Hugo from the command line
 # Run just "make" to see usage examples.
@@ -68,7 +68,7 @@ info:
 	@$(MAKE_) emacs-batch FUNC=eless-build-info-docs
 
 ghub:
-	@$(MAKE_) emacs-batch FUNC=eless-build-github-docs
+	@$(MAKE_) emacs-batch FUNC=eless-build-org-docs
 
 doc docs: html info ghub
 
