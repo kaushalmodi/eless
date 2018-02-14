@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-02-13 Tue 22:04 -->
+<!-- 2018-02-14 Wed 00:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>eless &#x2013; A Better less</title>
@@ -254,50 +254,51 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#org57652c4">7.1. Unofficial Bash Strict Mode</a></li>
 <li><a href="#org1d8ed59">7.2. Initialize variables</a></li>
-<li><a href="#orgbf9891e">7.3. Debug function</a></li>
-<li><a href="#input-output-detection">7.4. Input/Output Detection</a></li>
-<li><a href="#org3fb0d36">7.5. Parse options</a></li>
-<li><a href="#org5ca2afc">7.6. Print Help</a></li>
-<li><a href="#emacs-Q-view-mode-function">7.7. Emacs with <code>-Q</code> in <code>view-mode</code></a></li>
-<li><a href="#orgc2f9216">7.8. Input/Output Scenarios</a>
+<li><a href="#org3f508fb">7.3. Cleanup using <code>trap</code></a></li>
+<li><a href="#orgbf9891e">7.4. Debug function</a></li>
+<li><a href="#input-output-detection">7.5. Input/Output Detection</a></li>
+<li><a href="#org3fb0d36">7.6. Parse options</a></li>
+<li><a href="#org5ca2afc">7.7. Print Help</a></li>
+<li><a href="#emacs-Q-view-mode-function">7.8. Emacs with <code>-Q</code> in <code>view-mode</code></a></li>
+<li><a href="#orgc2f9216">7.9. Input/Output Scenarios</a>
 <ul>
-<li><a href="#orge839779">7.8.1. Output is going to a pipe</a></li>
-<li><a href="#orge32e436">7.8.2. Output is going to <i>stdout</i>, Input is coming from a pipe</a>
+<li><a href="#orge839779">7.9.1. Output is going to a pipe</a></li>
+<li><a href="#orge32e436">7.9.2. Output is going to <i>stdout</i>, Input is coming from a pipe</a>
 <ul>
-<li><a href="#org96c5daa">7.8.2.1. Input is piped from <code>man</code> command</a></li>
-<li><a href="#org0b276f4">7.8.2.2. Input is piped from a <code>modules</code> help in <i>IPython</i></a></li>
-<li><a href="#org8a7a7a7">7.8.2.3. Input is piped from <code>info</code> command</a></li>
-<li><a href="#org6ca215e">7.8.2.4. Input is piped from something else</a></li>
+<li><a href="#org96c5daa">7.9.2.1. Input is piped from <code>man</code> command</a></li>
+<li><a href="#org0b276f4">7.9.2.2. Input is piped from a <code>modules</code> help in <i>IPython</i></a></li>
+<li><a href="#org8a7a7a7">7.9.2.3. Input is piped from <code>info</code> command</a></li>
+<li><a href="#org6ca215e">7.9.2.4. Input is piped from something else</a></li>
 </ul>
 </li>
-<li><a href="#org256c6f7">7.8.3. Output is going to <i>stdout</i>, Input is an argument to the script</a></li>
+<li><a href="#org256c6f7">7.9.3. Output is going to <i>stdout</i>, Input is an argument to the script</a></li>
 </ul>
 </li>
-<li><a href="#orgdca011c">7.9. Eval and Cleanup</a></li>
-<li><a href="#emacs-configuration">7.10. Emacs Configuration</a>
+<li><a href="#org9a0e7f6">7.10. Eval</a></li>
+<li><a href="#emacs-configuration">7.11. Emacs Configuration</a>
 <ul>
-<li><a href="#org836df9e">7.10.1. General setup</a></li>
-<li><a href="#orgf3bb98f">7.10.2. Ido setup</a></li>
-<li><a href="#org5b34868">7.10.3. Isearch setup</a></li>
-<li><a href="#org523227b">7.10.4. Enable line truncation</a></li>
-<li><a href="#orgf5ff4bd">7.10.5. Highlight the current line</a></li>
-<li><a href="#orgcdc136f">7.10.6. Custom functions</a>
+<li><a href="#org836df9e">7.11.1. General setup</a></li>
+<li><a href="#orgf3bb98f">7.11.2. Ido setup</a></li>
+<li><a href="#org5b34868">7.11.3. Isearch setup</a></li>
+<li><a href="#org523227b">7.11.4. Enable line truncation</a></li>
+<li><a href="#orgf5ff4bd">7.11.5. Highlight the current line</a></li>
+<li><a href="#orgcdc136f">7.11.6. Custom functions</a>
 <ul>
-<li><a href="#orgcb2f964">7.10.6.1. Keep/delete matching lines</a></li>
-<li><a href="#org00f5428">7.10.6.2. Frame and font re-sizing</a></li>
-<li><a href="#org6c38b16">7.10.6.3. Revert buffer in <code>view-mode</code></a></li>
-<li><a href="#orgf6c7091">7.10.6.4. Detect if <code>diff-mode</code> should be enabled</a></li>
-<li><a href="#org32802ab">7.10.6.5. Detect if ANSI codes need to be converted to colors</a></li>
-<li><a href="#org79b2455">7.10.6.6. &ldquo;Do The Right Thing&rdquo; Kill</a></li>
-<li><a href="#orgbc438ab">7.10.6.7. <code>dired-mode</code> setup</a></li>
-<li><a href="#orga5147e7">7.10.6.8. <code>Man-mode</code> setup</a></li>
-<li><a href="#org9e4fcb4">7.10.6.9. <code>Info-mode</code> setup</a></li>
-<li><a href="#orgd0b7b02">7.10.6.10. <code>tar-mode</code> setup</a></li>
+<li><a href="#orgcb2f964">7.11.6.1. Keep/delete matching lines</a></li>
+<li><a href="#org00f5428">7.11.6.2. Frame and font re-sizing</a></li>
+<li><a href="#org6c38b16">7.11.6.3. Revert buffer in <code>view-mode</code></a></li>
+<li><a href="#orgf6c7091">7.11.6.4. Detect if <code>diff-mode</code> should be enabled</a></li>
+<li><a href="#org32802ab">7.11.6.5. Detect if ANSI codes need to be converted to colors</a></li>
+<li><a href="#org79b2455">7.11.6.6. &ldquo;Do The Right Thing&rdquo; Kill</a></li>
+<li><a href="#orgbc438ab">7.11.6.7. <code>dired-mode</code> setup</a></li>
+<li><a href="#orga5147e7">7.11.6.8. <code>Man-mode</code> setup</a></li>
+<li><a href="#org9e4fcb4">7.11.6.9. <code>Info-mode</code> setup</a></li>
+<li><a href="#orgd0b7b02">7.11.6.10. <code>tar-mode</code> setup</a></li>
 </ul>
 </li>
-<li><a href="#orgcfb1b01">7.10.7. Auto-setting of major modes</a></li>
-<li><a href="#orgb867865">7.10.8. Key bindings</a></li>
-<li><a href="#org41bd34c">7.10.9. User config override</a></li>
+<li><a href="#orgcfb1b01">7.11.7. Auto-setting of major modes</a></li>
+<li><a href="#orgb867865">7.11.8. Key bindings</a></li>
+<li><a href="#org41bd34c">7.11.9. User config override</a></li>
 </ul>
 </li>
 </ul>
@@ -736,7 +737,7 @@ will need to be adapted for the shell you are using.</dd>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-shell">150a31c
+<pre class="src src-shell">c2e320f
 </pre>
 </div>
 <p>
@@ -805,9 +806,30 @@ Any undefined variable is referenced.
 </div>
 </div>
 </div>
-<div id="outline-container-orgbf9891e" class="outline-3">
-<h3 id="orgbf9891e"><span class="section-number-3">7.3</span> Debug function</h3>
+<div id="outline-container-org3f508fb" class="outline-3">
+<h3 id="org3f508fb"><span class="section-number-3">7.3</span> Cleanup using <code>trap</code></h3>
 <div class="outline-text-3" id="text-7-3">
+<p>
+The below <code>cleanup</code> function is auto-executed via Bash <code>trap</code> when the
+script exits <i>for any reason</i>. Read <a href="http://redsymbol.net/articles/bash-exit-traps/">this post on <i>redsymbol.net</i></a> for
+more information.
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">http://redsymbol.net/articles/bash-exit-traps/</span>
+<span class="org-keyword">function</span> <span class="org-function-name">cleanup</span> {
+    <span class="org-keyword">if</span> [[ <span class="org-negation-char">!</span> -z <span class="org-string">"${tempfile}"</span> ]] &amp;&amp; [[ ${<span class="org-variable-name">debug</span>} -eq 0 ]]
+    <span class="org-keyword">then</span>
+        rm -f <span class="org-string">"${tempfile}"</span>
+    <span class="org-keyword">fi</span>
+}
+<span class="org-keyword">trap</span> cleanup EXIT
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbf9891e" class="outline-3">
+<h3 id="orgbf9891e"><span class="section-number-3">7.4</span> Debug function</h3>
+<div class="outline-text-3" id="text-7-4">
 <p>
 This function redefines itself the first time it is called.  When
 debugging is enabled, it defines itself as a function which outputs to
@@ -850,7 +872,7 @@ If user has passed the <code>-D</code> option, run the script in debug mode.
 </div>
 </div>
 <div id="outline-container-org7206787" class="outline-3">
-<h3 id="input-output-detection"><a id="org7206787"></a><span class="section-number-3">7.4</span> Input/Output Detection</h3>
+<h3 id="input-output-detection"><a id="org7206787"></a><span class="section-number-3">7.5</span> Input/Output Detection</h3>
 <div class="outline-text-3" id="text-input-output-detection">
 <p>
 We need this script to know:
@@ -932,8 +954,8 @@ Below code determines that using <code>[[ -t 0 ]]</code> and <code>[[ -t 1]]</co
 </div>
 </div>
 <div id="outline-container-org3fb0d36" class="outline-3">
-<h3 id="org3fb0d36"><span class="section-number-3">7.5</span> Parse options</h3>
-<div class="outline-text-3" id="text-7-5">
+<h3 id="org3fb0d36"><span class="section-number-3">7.6</span> Parse options</h3>
+<div class="outline-text-3" id="text-7-6">
 <p>
 We need to parse the arguments such that arguments specific to this
 script like <code>-D</code> and <code>--gui</code> get consumed here, and the ones not known
@@ -981,8 +1003,8 @@ basic approach of looping through all the arguments <code>"$@"</code> is used.
 </div>
 </div>
 <div id="outline-container-org5ca2afc" class="outline-3">
-<h3 id="org5ca2afc"><span class="section-number-3">7.6</span> Print Help</h3>
-<div class="outline-text-3" id="text-7-6">
+<h3 id="org5ca2afc"><span class="section-number-3">7.7</span> Print Help</h3>
+<div class="outline-text-3" id="text-7-7">
 <p>
 If user asked for this script&rsquo;s help, just print it and exit with
 success code.
@@ -1000,7 +1022,7 @@ success code.
 </div>
 
 <div id="outline-container-orge4c83ed" class="outline-3">
-<h3 id="emacs-Q-view-mode-function"><a id="orge4c83ed"></a><span class="section-number-3">7.7</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
+<h3 id="emacs-Q-view-mode-function"><a id="orge4c83ed"></a><span class="section-number-3">7.8</span> Emacs with <code>-Q</code> in <code>view-mode</code></h3>
 <div class="outline-text-3" id="text-emacs-Q-view-mode-function">
 <p>
 The <code>emacs_Q_view_mode</code> function is defined to launch emacs with a
@@ -1020,18 +1042,18 @@ the <code>&lt;&lt;emacs-config&gt;&gt;</code> <b>noweb</b> placeholder in the
     <span class="org-comment-delimiter"># </span><span class="org-comment">not to eless.</span>
     debug <span class="org-string">"Args passed to emacs_Q_view_mode : $*"</span>
 
-    <span class="org-keyword">exec</span> emacs -Q <span class="org-string">"$@"</span> <span class="org-sh-escaped-newline">\</span>
-               --eval <span class="org-string">'(progn</span>
-<span class="org-string">                          &lt;&lt;emacs-config&gt;&gt;</span>
-<span class="org-string">                       )'</span> 2&gt;/dev/null &lt;/dev/tty
+    emacs -Q <span class="org-string">"$@"</span> <span class="org-sh-escaped-newline">\</span>
+          --eval <span class="org-string">'(progn</span>
+<span class="org-string">                    &lt;&lt;emacs-config&gt;&gt;</span>
+<span class="org-string">                  )'</span> 2&gt;/dev/null &lt;/dev/tty
 }
 </pre>
 </div>
 </div>
 </div>
 <div id="outline-container-orgc2f9216" class="outline-3">
-<h3 id="orgc2f9216"><span class="section-number-3">7.8</span> Input/Output Scenarios</h3>
-<div class="outline-text-3" id="text-7-8">
+<h3 id="orgc2f9216"><span class="section-number-3">7.9</span> Input/Output Scenarios</h3>
+<div class="outline-text-3" id="text-7-9">
 <p>
 We saw in section <a href="#input-output-detection">Input/Output Detection</a> how we detected if input was
 coming from the <i>pipe</i> or <i>stdin</i> and if output was going to a <i>pipe</i>
@@ -1062,8 +1084,8 @@ or <i>stdout</i>. Now we make use of that information to call the
 </div>
 </div>
 <div id="outline-container-orge839779" class="outline-4">
-<h4 id="orge839779"><span class="section-number-4">7.8.1</span> Output is going to a pipe</h4>
-<div class="outline-text-4" id="text-7-8-1">
+<h4 id="orge839779"><span class="section-number-4">7.9.1</span> Output is going to a pipe</h4>
+<div class="outline-text-4" id="text-7-9-1">
 <p>
 This scenario is not supported at the moment. There
 <a href="https://github.com/kaushalmodi/eless/issues/4">is a plan to support it in future</a> though.
@@ -1081,8 +1103,8 @@ is being piped to something else.
 </div>
 </div>
 <div id="outline-container-orge32e436" class="outline-4">
-<h4 id="orge32e436"><span class="section-number-4">7.8.2</span> Output is going to <i>stdout</i>, Input is coming from a pipe</h4>
-<div class="outline-text-4" id="text-7-8-2">
+<h4 id="orge32e436"><span class="section-number-4">7.9.2</span> Output is going to <i>stdout</i>, Input is coming from a pipe</h4>
+<div class="outline-text-4" id="text-7-9-2">
 <p>
 <code>mktemp</code> requires the <code>-t</code> argument to specify the temporary file name
 template on Mac OS (See <code>eless</code> issue #<a href="https://github.com/kaushalmodi/eless/issues/18">18</a>.)
@@ -1143,8 +1165,8 @@ debug <span class="org-string">"first_line_piped_data = ${first_line_piped_data}
 </div>
 </div>
 <div id="outline-container-org96c5daa" class="outline-5">
-<h5 id="org96c5daa"><span class="section-number-5">7.8.2.1</span> Input is piped from <code>man</code> command</h5>
-<div class="outline-text-5" id="text-7-8-2-1">
+<h5 id="org96c5daa"><span class="section-number-5">7.9.2.1</span> Input is piped from <code>man</code> command</h5>
+<div class="outline-text-5" id="text-7-9-2-1">
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">After setting PAGER variable to eless, try something like `man grep'.</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">That will launch the man page in eless.</span>
@@ -1170,8 +1192,8 @@ was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this iss
 </div>
 </div>
 <div id="outline-container-org0b276f4" class="outline-5">
-<h5 id="org0b276f4"><span class="section-number-5">7.8.2.2</span> Input is piped from a <code>modules</code> help in <i>IPython</i></h5>
-<div class="outline-text-5" id="text-7-8-2-2">
+<h5 id="org0b276f4"><span class="section-number-5">7.9.2.2</span> Input is piped from a <code>modules</code> help in <i>IPython</i></h5>
+<div class="outline-text-5" id="text-7-9-2-2">
 <div class="org-src-container">
 <pre class="src src-shell">debug <span class="org-string">"Python Module = ${python_module_help}"</span>
 
@@ -1196,8 +1218,8 @@ was reported in <a href="https://github.com/kaushalmodi/eless/issues/3">this iss
 </div>
 </div>
 <div id="outline-container-org8a7a7a7" class="outline-5">
-<h5 id="org8a7a7a7"><span class="section-number-5">7.8.2.3</span> Input is piped from <code>info</code> command</h5>
-<div class="outline-text-5" id="text-7-8-2-3">
+<h5 id="org8a7a7a7"><span class="section-number-5">7.9.2.3</span> Input is piped from <code>info</code> command</h5>
+<div class="outline-text-5" id="text-7-9-2-3">
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">Try something like `info emacs | eless'.</span>
 <span class="org-comment-delimiter"># </span><span class="org-comment">That will launch the Info manual in eless.</span>
@@ -1212,8 +1234,8 @@ debug <span class="org-string">"Info Manual = ${info_man}"</span>
 </div>
 </div>
 <div id="outline-container-org6ca215e" class="outline-5">
-<h5 id="org6ca215e"><span class="section-number-5">7.8.2.4</span> Input is piped from something else</h5>
-<div class="outline-text-5" id="text-7-8-2-4">
+<h5 id="org6ca215e"><span class="section-number-5">7.9.2.4</span> Input is piped from something else</h5>
+<div class="outline-text-5" id="text-7-9-2-4">
 <p>
 This scenario could be anything, like:
 </p>
@@ -1242,8 +1264,8 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 <div id="outline-container-org256c6f7" class="outline-4">
-<h4 id="org256c6f7"><span class="section-number-4">7.8.3</span> Output is going to <i>stdout</i>, Input is an argument to the script</h4>
-<div class="outline-text-4" id="text-7-8-3">
+<h4 id="org256c6f7"><span class="section-number-4">7.9.3</span> Output is going to <i>stdout</i>, Input is an argument to the script</h4>
+<div class="outline-text-4" id="text-7-9-3">
 <div class="org-src-container">
 <pre class="src src-shell"><span class="org-variable-name">cmd</span>=<span class="org-string">"emacs_Q_view_mode ${emacs_args[*]}"</span>
 </pre>
@@ -1251,9 +1273,9 @@ stream using <code>emacs_Q_view_mode</code>.
 </div>
 </div>
 </div>
-<div id="outline-container-orgdca011c" class="outline-3">
-<h3 id="orgdca011c"><span class="section-number-3">7.9</span> Eval and Cleanup</h3>
-<div class="outline-text-3" id="text-7-9">
+<div id="outline-container-org9a0e7f6" class="outline-3">
+<h3 id="org9a0e7f6"><span class="section-number-3">7.10</span> Eval</h3>
+<div class="outline-text-3" id="text-7-10">
 <p>
 Finally we <code>eval</code> the constructed <code>${cmd}</code> variable.
 </p>
@@ -1266,7 +1288,7 @@ Finally we <code>eval</code> the constructed <code>${cmd}</code> variable.
 </div>
 </div>
 <div id="outline-container-org2adb4d2" class="outline-3">
-<h3 id="emacs-configuration"><a id="org2adb4d2"></a><span class="section-number-3">7.10</span> Emacs Configuration</h3>
+<h3 id="emacs-configuration"><a id="org2adb4d2"></a><span class="section-number-3">7.11</span> Emacs Configuration</h3>
 <div class="outline-text-3" id="text-emacs-configuration">
 <p>
 Here is a &ldquo;Do The Right Thing&rdquo; config for <code>view-mode</code> that gets
@@ -1274,8 +1296,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </p>
 </div>
 <div id="outline-container-org836df9e" class="outline-4">
-<h4 id="org836df9e"><span class="section-number-4">7.10.1</span> General setup</h4>
-<div class="outline-text-4" id="text-7-10-1">
+<h4 id="org836df9e"><span class="section-number-4">7.11.1</span> General setup</h4>
+<div class="outline-text-4" id="text-7-11-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Keep the default-directory to be the same from where</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">this script was launched from; useful during C-x C-f</span>
@@ -1306,8 +1328,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-orgf3bb98f" class="outline-4">
-<h4 id="orgf3bb98f"><span class="section-number-4">7.10.2</span> Ido setup</h4>
-<div class="outline-text-4" id="text-7-10-2">
+<h4 id="orgf3bb98f"><span class="section-number-4">7.11.2</span> Ido setup</h4>
+<div class="outline-text-4" id="text-7-11-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> ido-save-directory-list-file nil) <span class="org-comment-delimiter">;</span><span class="org-comment">Do not save ido history</span>
 (ido-mode 1)
@@ -1321,8 +1343,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-org5b34868" class="outline-4">
-<h4 id="org5b34868"><span class="section-number-4">7.10.3</span> Isearch setup</h4>
-<div class="outline-text-4" id="text-7-10-3">
+<h4 id="org5b34868"><span class="section-number-4">7.11.3</span> Isearch setup</h4>
+<div class="outline-text-4" id="text-7-11-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> isearch-allow-scroll t) <span class="org-comment-delimiter">;</span><span class="org-comment">Allow scrolling using isearch</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">DEL during isearch should edit the search string, not jump back to the previous result.</span>
@@ -1332,8 +1354,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-org523227b" class="outline-4">
-<h4 id="org523227b"><span class="section-number-4">7.10.4</span> Enable line truncation</h4>
-<div class="outline-text-4" id="text-7-10-4">
+<h4 id="org523227b"><span class="section-number-4">7.11.4</span> Enable line truncation</h4>
+<div class="outline-text-4" id="text-7-11-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Truncate long lines by default</span>
 (<span class="org-keyword">setq</span> truncate-partial-width-windows nil) <span class="org-comment-delimiter">;</span><span class="org-comment">Respect the value of truncate-lines</span>
@@ -1343,8 +1365,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-orgf5ff4bd" class="outline-4">
-<h4 id="orgf5ff4bd"><span class="section-number-4">7.10.5</span> Highlight the current line</h4>
-<div class="outline-text-4" id="text-7-10-5">
+<h4 id="orgf5ff4bd"><span class="section-number-4">7.11.5</span> Highlight the current line</h4>
+<div class="outline-text-4" id="text-7-11-5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(global-hl-line-mode 1)
 </pre>
@@ -1352,12 +1374,12 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-orgcdc136f" class="outline-4">
-<h4 id="orgcdc136f"><span class="section-number-4">7.10.6</span> Custom functions</h4>
-<div class="outline-text-4" id="text-7-10-6">
+<h4 id="orgcdc136f"><span class="section-number-4">7.11.6</span> Custom functions</h4>
+<div class="outline-text-4" id="text-7-11-6">
 </div>
 <div id="outline-container-orgcb2f964" class="outline-5">
-<h5 id="orgcb2f964"><span class="section-number-5">7.10.6.1</span> Keep/delete matching lines</h5>
-<div class="outline-text-5" id="text-7-10-6-1">
+<h5 id="orgcb2f964"><span class="section-number-5">7.11.6.1</span> Keep/delete matching lines</h5>
+<div class="outline-text-5" id="text-7-11-6-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/keep-lines</span> ()
   (<span class="org-keyword">interactive</span>)
@@ -1377,8 +1399,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-org00f5428" class="outline-5">
-<h5 id="org00f5428"><span class="section-number-5">7.10.6.2</span> Frame and font re-sizing</h5>
-<div class="outline-text-5" id="text-7-10-6-2">
+<h5 id="org00f5428"><span class="section-number-5">7.11.6.2</span> Frame and font re-sizing</h5>
+<div class="outline-text-5" id="text-7-11-6-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/frame-width-half</span> (double)
   (<span class="org-keyword">interactive</span> <span class="org-string">"P"</span>)
@@ -1402,8 +1424,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-org6c38b16" class="outline-5">
-<h5 id="org6c38b16"><span class="section-number-5">7.10.6.3</span> Revert buffer in <code>view-mode</code></h5>
-<div class="outline-text-5" id="text-7-10-6-3">
+<h5 id="org6c38b16"><span class="section-number-5">7.11.6.3</span> Revert buffer in <code>view-mode</code></h5>
+<div class="outline-text-5" id="text-7-11-6-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/revert-buffer-retain-view-mode</span> ()
   (<span class="org-keyword">interactive</span>)
@@ -1416,8 +1438,8 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 </div>
 <div id="outline-container-orgf6c7091" class="outline-5">
-<h5 id="orgf6c7091"><span class="section-number-5">7.10.6.4</span> Detect if <code>diff-mode</code> should be enabled</h5>
-<div class="outline-text-5" id="text-7-10-6-4">
+<h5 id="orgf6c7091"><span class="section-number-5">7.11.6.4</span> Detect if <code>diff-mode</code> should be enabled</h5>
+<div class="outline-text-5" id="text-7-11-6-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-diff-mode-maybe</span> ()
   (<span class="org-keyword">let*</span> ((max-line 10)                <span class="org-comment-delimiter">;</span><span class="org-comment">Search first MAX-LINE lines of the buffer</span>
@@ -1461,7 +1483,7 @@ loaded in the emacs instance launched in the <a href="#emacs-Q-view-mode-functio
 </div>
 <ol class="org-ol">
 <li><a id="org30fd0bb"></a>Enable <code>whitespace-mode</code> in <code>diff-mode</code><br />
-<div class="outline-text-6" id="text-7-10-6-4-1">
+<div class="outline-text-6" id="text-7-11-6-4-1">
 <p>
 Enable <code>whitespace-mode</code> to easily detect presence of tabs and
 trailing spaces in diffs.
@@ -1482,8 +1504,8 @@ trailing spaces in diffs.
 </ol>
 </div>
 <div id="outline-container-org32802ab" class="outline-5">
-<h5 id="org32802ab"><span class="section-number-5">7.10.6.5</span> Detect if ANSI codes need to be converted to colors</h5>
-<div class="outline-text-5" id="text-7-10-6-5">
+<h5 id="org32802ab"><span class="section-number-5">7.11.6.5</span> Detect if ANSI codes need to be converted to colors</h5>
+<div class="outline-text-5" id="text-7-11-6-5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/enable-ansi-color-maybe</span> ()
   (<span class="org-keyword">save-excursion</span>
@@ -1506,8 +1528,8 @@ trailing spaces in diffs.
 </div>
 </div>
 <div id="outline-container-org79b2455" class="outline-5">
-<h5 id="org79b2455"><span class="section-number-5">7.10.6.6</span> &ldquo;Do The Right Thing&rdquo; Kill</h5>
-<div class="outline-text-5" id="text-7-10-6-6">
+<h5 id="org79b2455"><span class="section-number-5">7.11.6.6</span> &ldquo;Do The Right Thing&rdquo; Kill</h5>
+<div class="outline-text-5" id="text-7-11-6-6">
 <p>
 Before killing emacs, loop through all the buffers and mark all
 the <code>view-mode</code> buffers as being unmodified (regardless of if they
@@ -1548,8 +1570,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-orgbc438ab" class="outline-5">
-<h5 id="orgbc438ab"><span class="section-number-5">7.10.6.7</span> <code>dired-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-10-6-7">
+<h5 id="orgbc438ab"><span class="section-number-5">7.11.6.7</span> <code>dired-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-11-6-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/dired-mode-customization</span> ()
   <span class="org-comment-delimiter">;; </span><span class="org-comment">dired-find-file is bound to "f" and "RET" by default</span>
@@ -1565,8 +1587,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-orga5147e7" class="outline-5">
-<h5 id="orga5147e7"><span class="section-number-5">7.10.6.8</span> <code>Man-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-10-6-8">
+<h5 id="orga5147e7"><span class="section-number-5">7.11.6.8</span> <code>Man-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-11-6-8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/Man-mode-customization</span> ()
   (define-key Man-mode-map (kbd <span class="org-string">"Q"</span>) (<span class="org-keyword">function</span> quit-window))
@@ -1577,8 +1599,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-org9e4fcb4" class="outline-5">
-<h5 id="org9e4fcb4"><span class="section-number-5">7.10.6.9</span> <code>Info-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-10-6-9">
+<h5 id="org9e4fcb4"><span class="section-number-5">7.11.6.9</span> <code>Info-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-11-6-9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eless/Info-mode-customization</span> ()
   (define-key Info-mode-map (kbd <span class="org-string">"Q"</span>) (<span class="org-keyword">function</span> quit-window))
@@ -1589,8 +1611,8 @@ at the time of quitting.
 </div>
 </div>
 <div id="outline-container-orgd0b7b02" class="outline-5">
-<h5 id="orgd0b7b02"><span class="section-number-5">7.10.6.10</span> <code>tar-mode</code> setup</h5>
-<div class="outline-text-5" id="text-7-10-6-10">
+<h5 id="orgd0b7b02"><span class="section-number-5">7.11.6.10</span> <code>tar-mode</code> setup</h5>
+<div class="outline-text-5" id="text-7-11-6-10">
 <p>
 When <code>eless</code> is passed an archive file as an argument, the <code>tar-mode</code>
 is enabled automatically that will do the job of showing the archive
@@ -1613,8 +1635,8 @@ eless bar.tar.gz
 </div>
 </div>
 <div id="outline-container-orgcfb1b01" class="outline-4">
-<h4 id="orgcfb1b01"><span class="section-number-4">7.10.7</span> Auto-setting of major modes</h4>
-<div class="outline-text-4" id="text-7-10-7">
+<h4 id="orgcfb1b01"><span class="section-number-4">7.11.7</span> Auto-setting of major modes</h4>
+<div class="outline-text-4" id="text-7-11-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">cond</span>
  ((derived-mode-p (<span class="org-keyword">quote</span> dired-mode)) (eless/dired-mode-customization))
@@ -1632,8 +1654,8 @@ eless bar.tar.gz
 </div>
 </div>
 <div id="outline-container-orgb867865" class="outline-4">
-<h4 id="orgb867865"><span class="section-number-4">7.10.8</span> Key bindings</h4>
-<div class="outline-text-4" id="text-7-10-8">
+<h4 id="orgb867865"><span class="section-number-4">7.11.8</span> Key bindings</h4>
+<div class="outline-text-4" id="text-7-11-8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(eval-after-load (<span class="org-keyword">quote</span> view)
   (<span class="org-keyword">quote</span>
@@ -1677,8 +1699,8 @@ eless bar.tar.gz
 </div>
 </div>
 <div id="outline-container-org41bd34c" class="outline-4">
-<h4 id="org41bd34c"><span class="section-number-4">7.10.9</span> User config override</h4>
-<div class="outline-text-4" id="text-7-10-9">
+<h4 id="org41bd34c"><span class="section-number-4">7.11.9</span> User config override</h4>
+<div class="outline-text-4" id="text-7-11-9">
 <p>
 If an <code>elesscfg</code> file is present in the <code>user-emacs-directory</code>
 (default value is <code>~/.emacs.d/</code>), load that. As the user can be using
