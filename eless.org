@@ -101,7 +101,7 @@ As a bonus:
 :END:
 Here are some usage examples:
 #+begin_src shell :noweb yes
-<<usage-examples>>
+<<noweb-usage-examples>>
 #+end_src
 ** Contributors
 :PROPERTIES:

@@ -65,7 +65,6 @@ As a bonus:
 * Try it out
 Here are some usage examples:
 #+BEGIN_SRC shell
-,#+begin_src shell :noweb-ref usage-examples
 eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
 eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless          #
@@ -81,10 +80,6 @@ PAGER=eless git diff        # Show git diff with ANSI coded colors
 eless -h | eless            # See eless help ;-)
 info emacs | eless          # Read emacs Info manual in eless
 eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
-,#+end_src
-- NOTE :: Above examples are tested to work in a *=bash=
-          shell*. Specifically, examples like ~PAGER=eless man grep~
-          will need to be adapted for the shell you are using.
 #+END_SRC
 * Contributors
 - Thanks to [[https://github.com/iqbalansari][Iqbal Ansari]] for adding support to read piped data in
