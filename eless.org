@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 13:41:24 kmodi>
+# Time-stamp: <2018-02-14 13:45:30 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -95,7 +95,7 @@ As a bonus:
 :CUSTOM_ID: requirements
 :END:
 |------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <10>       | <70>                                                                                                                                                                                                                                                                                                                                                                    |
+|            | <70>                                                                                                                                                                                                                                                                                                                                                                    |
 | Software   | Details                                                                                                                                                                                                                                                                                                                                                                 |
 |------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], following the *How to help debug* section in [[https://github.com/kaushalmodi/eless/blob/master/CONTRIBUTING.org][CONTRIBUTING]]. /Both building and running of =eless= tested on emacs 24.4, RHEL 6.6./ |
