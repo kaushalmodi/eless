@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 15:41:13 kmodi>
+# Time-stamp: <2018-02-14 16:00:07 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -119,7 +119,11 @@ As a bonus:
 Here are some usage examples:
 #+begin_src shell :noweb yes
 <<noweb-usage-examples>>
+<<noweb-usage-examples-eless-gui>>
 #+end_src
+- NOTE :: Above examples are tested to work in a *=bash=
+          shell*. Specifically, examples like ~PAGER=eless man grep~
+          will need to be adapted for the shell you are using.
 ** Contributors
 :PROPERTIES:
 :CUSTOM_ID: contributors
@@ -207,8 +211,6 @@ eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless                 #
 echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
 grep 'bar' foo.txt | eless         #
-PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
-PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
 diff foo bar | eless               # Colored diff!
 diff -u foo bar | eless            # Colored diff for unified diff format
 eless .                            # Open dired in the current directory (enhanced 'ls')
@@ -220,6 +222,10 @@ eless foo.tar.xz                   # Read the contents of archives; emacs does t
 PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
 PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
 PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
+PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+#+end_src
+#+begin_src shell :noweb-ref noweb-usage-examples-eless-gui
+PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
           shell*. Specifically, examples like ~PAGER=eless man grep~
@@ -245,7 +251,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-c1d9362
+c447784
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -298,6 +304,7 @@ less, diff, man, (probably ls too).
 ,* Usage Examples
 
     <<noweb-usage-examples>>
+    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\".
 "
 #+end_src
 ** Unofficial Bash Strict Mode

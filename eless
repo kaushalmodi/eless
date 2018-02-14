@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='c1d9362'
+eless_git_hash='c447784'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -78,8 +78,6 @@ less, diff, man, (probably ls too).
     echo 'foo' | eless                 #
     echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
     grep 'bar' foo.txt | eless         #
-    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
-    PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
     diff foo bar | eless               # Colored diff!
     diff -u foo bar | eless            # Colored diff for unified diff format
     eless .                            # Open dired in the current directory (enhanced 'ls')
@@ -91,6 +89,8 @@ less, diff, man, (probably ls too).
     PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
     PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
+    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\".
 "
 
 set -o pipefail
