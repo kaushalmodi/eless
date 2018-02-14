@@ -1,0 +1,5 @@
+[build]
+  command = """
+make html;
+cp docs/eless.html index.html"""
+  publish = ""
