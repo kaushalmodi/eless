@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 16:00:07 kmodi>
+# Time-stamp: <2018-02-14 18:23:06 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -12,10 +12,10 @@
 # #+texinfo_deffn: t
 # #+texinfo_class: info+
 
-#+html_head: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+#+html_head: <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 #+html_head: <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 #+html_head: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/leuven_theme.css" rel="stylesheet">
-#+html_head: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/bootstrap.extra.css" rel="stylesheet">
+#+html_head: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/bootstrap-extra-update-20180214/misc/css/bootstrap.extra.css" rel="stylesheet">
 
 # No list bullets in task/checkbox lists
 #+html_head: <style>ul.task-list, ul li.on, ul li.off {list-style-type: none;}</style>
