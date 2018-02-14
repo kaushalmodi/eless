@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 12:14:56 kmodi>
+# Time-stamp: <2018-02-14 12:20:19 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -118,7 +118,7 @@ Here are some usage examples:
 :CUSTOM_ID: eless-options
 :END:
 # Do "C-c '" in the below block to edit the org table
-#+begin_src org :noweb-ref eless-options :exports results :results output replace
+#+begin_src org :noweb-ref noweb-eless-options :exports results :results output replace
 |--------+--------------------------|
 | Option | Description              |
 |--------+--------------------------|
@@ -133,7 +133,7 @@ Here are some usage examples:
 :EXPORT_FILE_NAME: view-mode-common-bindings
 :CUSTOM_ID: view-mode-common-bindings
 :END:
-#+begin_src org :noweb-ref view-mode-common-bindings :exports results :results output replace
+#+begin_src org :noweb-ref noweb-view-mode-common-bindings :exports results :results output replace
 |--------------+------------------------------------------------------------------------------|
 | Binding      | Description                                                                  |
 |--------------+------------------------------------------------------------------------------|
@@ -153,7 +153,7 @@ Here are some usage examples:
 :EXPORT_FILE_NAME: eless-custom-bindings
 :CUSTOM_ID: eless-custom-bindings
 :END:
-#+begin_src org :noweb-ref custom-bindings :exports results :results output replace
+#+begin_src org :noweb-ref noweb-custom-bindings :exports results :results output replace
 |--------------+------------------------------------------------------------|
 | Binding      | Description                                                |
 |--------------+------------------------------------------------------------|
@@ -182,7 +182,7 @@ Here are some usage examples:
 :EXPORT_FILE_NAME: usage-examples
 :CUSTOM_ID: usage-examples
 :END:
-#+begin_src shell :noweb-ref usage-examples
+#+begin_src shell :noweb-ref noweb-usage-examples
 eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
 eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless          #
@@ -223,7 +223,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-57aae99
+b4a356c
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -260,13 +260,13 @@ Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
 
 ,* Options to this script
-<<eless-options>>
+<<noweb-eless-options>>
 
 ,* Common bindings in 'view-mode'
-<<view-mode-common-bindings>>
+<<noweb-view-mode-common-bindings>>
 
 ,** Custom bindings
-<<custom-bindings>>
+<<noweb-custom-bindings>>
 
 ,** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
 
@@ -275,7 +275,7 @@ less, diff, man, (probably ls too).
 
 ,* Usage Examples
 
-    <<usage-examples>>
+    <<noweb-usage-examples>>
 "
 #+end_src
 ** Unofficial Bash Strict Mode
