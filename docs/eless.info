@@ -216,8 +216,8 @@ Here are some usage examples:
      echo 'foo' | eless                 #
      echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
      grep 'bar' foo.txt | eless         #
-     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-     PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
      diff foo bar | eless               # Colored diff!
      diff -u foo bar | eless            # Colored diff for unified diff format
      eless .                            # Open dired in the current directory (enhanced 'ls')
@@ -254,7 +254,7 @@ File: eless.info,  Node: Eless Options,  Next: view-mode Common Bindings,  Prev:
 Option   Description
 ------------------------------------
 -h       Show this help and quit
-–gui     Run emacs in GUI mode
+–gui     Run eless in GUI mode
 -V       Print version and quit
 -D       Run with debug messages
 
@@ -315,8 +315,8 @@ File: eless.info,  Node: Usage Examples,  Next: Current eless Version,  Prev: Cu
      echo 'foo' | eless                 #
      echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
      grep 'bar' foo.txt | eless         #
-     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-     PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
      diff foo bar | eless               # Colored diff!
      diff -u foo bar | eless            # Colored diff for unified diff format
      eless .                            # Open dired in the current directory (enhanced 'ls')
@@ -341,7 +341,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     388773f
+     c1d9362
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1213,9 +1213,12 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
      (global-set-key (kbd "<f5>") (function eless/revert-buffer-retain-view-mode))
 
      (when (display-graphic-p)
-       (define-key view-mode-map (kbd "+") (function text-scale-adjust))
-       (define-key view-mode-map (kbd "-") (function text-scale-adjust))
-       (define-key view-mode-map (kbd "=") (function text-scale-adjust))
+       (eval-after-load (quote view)
+         (quote
+          (progn
+            (define-key view-mode-map (kbd "+") (function text-scale-adjust))
+            (define-key view-mode-map (kbd "-") (function text-scale-adjust))
+            (define-key view-mode-map (kbd "=") (function text-scale-adjust)))))
        (global-set-key (kbd "C-<right>") (function eless/frame-width-double))
        (global-set-key (kbd "C-<left>") (function eless/frame-width-half))
        (global-set-key (kbd "C-<down>") (function eless/frame-height-double))
@@ -1387,6 +1390,9 @@ File: eless.info,  Node: Example eless config in tcsh,  Up: Miscellaneous
      alias diff  '\diff \!* | eless'
      alias diffg '\diff \!* | eless --gui'
 
+     # (MAN)pages in eless (G)UI mode
+     alias mang '(setenv PAGER "eless --gui"; man \!*)'
+
      alias ev eless
 
 
@@ -1396,62 +1402,62 @@ Node: Top188
 Node: Readme2223
 Node: Requirements5106
 Node: Try it out7295
-Node: Contributors9085
-Node: Eless Options9705
-Node: view-mode Common Bindings10029
-Node: Custom Bindings11013
-Node: Usage Examples12048
-Node: Current eless Version14012
-Node: Code14398
-Node: Unofficial Bash Strict Mode14767
-Node: Initialize variables15452
-Node: Cleanup using trap15850
-Node: Debug function16460
-Node: Input/Output Detection17606
-Node: Parse options19289
-Node: Print Help21008
-Node: Emacs with -Q in view-mode21341
-Node: Input/Output Scenarios22153
-Node: Output is going to a pipe23584
-Node: Output is going to _stdout_ Input is coming from a pipe24130
-Node: Input is piped from man command27473
-Node: Input is piped from a modules help in _IPython_28681
-Node: Input is piped from info command29912
-Node: Input is piped from something else30529
-Node: Output is going to _stdout_ Input is an argument to the script31303
-Node: Eval31675
-Node: Emacs Configuration31913
-Node: General setup32435
-Node: Ido setup33502
-Node: Isearch setup34072
-Node: Enable line truncation34486
-Node: Highlight the current line34837
-Node: Custom functions35073
-Node: Keep/delete matching lines35574
-Node: Frame and font re-sizing36264
-Node: Revert buffer in view-mode37277
-Node: Detect if diff-mode should be enabled37752
-Node: Detect if ANSI codes need to be converted to colors40800
-Node: ``Do The Right Thing'' Kill41959
-Node: dired-mode setup43712
-Node: Man-mode setup44532
-Node: Info-mode setup44975
-Node: tar-mode setup45423
-Node: Auto-setting of major modes46138
-Node: Key bindings46999
-Node: User config override49590
-Node: Contributing50422
-Node: How to help debug50798
-Node: Development51510
-Node: Preparation51739
-Node: Building eless52043
-Node: Sanity check of the tangled eless52271
-Node: Building documentation52560
-Node: Understand the changes52891
-Node: Build everything53218
-Node: Submitting PR53480
-Node: Miscellaneous53731
-Node: Example eless config in tcsh53880
+Node: Contributors9067
+Node: Eless Options9687
+Node: view-mode Common Bindings10011
+Node: Custom Bindings10995
+Node: Usage Examples12030
+Node: Current eless Version13976
+Node: Code14362
+Node: Unofficial Bash Strict Mode14731
+Node: Initialize variables15416
+Node: Cleanup using trap15814
+Node: Debug function16424
+Node: Input/Output Detection17570
+Node: Parse options19253
+Node: Print Help20972
+Node: Emacs with -Q in view-mode21305
+Node: Input/Output Scenarios22117
+Node: Output is going to a pipe23548
+Node: Output is going to _stdout_ Input is coming from a pipe24094
+Node: Input is piped from man command27437
+Node: Input is piped from a modules help in _IPython_28645
+Node: Input is piped from info command29876
+Node: Input is piped from something else30493
+Node: Output is going to _stdout_ Input is an argument to the script31267
+Node: Eval31639
+Node: Emacs Configuration31877
+Node: General setup32399
+Node: Ido setup33466
+Node: Isearch setup34036
+Node: Enable line truncation34450
+Node: Highlight the current line34801
+Node: Custom functions35037
+Node: Keep/delete matching lines35538
+Node: Frame and font re-sizing36228
+Node: Revert buffer in view-mode37241
+Node: Detect if diff-mode should be enabled37716
+Node: Detect if ANSI codes need to be converted to colors40764
+Node: ``Do The Right Thing'' Kill41923
+Node: dired-mode setup43676
+Node: Man-mode setup44496
+Node: Info-mode setup44939
+Node: tar-mode setup45387
+Node: Auto-setting of major modes46102
+Node: Key bindings46963
+Node: User config override49642
+Node: Contributing50474
+Node: How to help debug50850
+Node: Development51562
+Node: Preparation51791
+Node: Building eless52095
+Node: Sanity check of the tangled eless52323
+Node: Building documentation52612
+Node: Understand the changes52943
+Node: Build everything53270
+Node: Submitting PR53532
+Node: Miscellaneous53783
+Node: Example eless config in tcsh53932
 
 End Tag Table
 

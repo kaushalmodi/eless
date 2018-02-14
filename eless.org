@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 15:22:31 kmodi>
+# Time-stamp: <2018-02-14 15:41:13 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -142,7 +142,7 @@ Here are some usage examples:
 | Option | Description              |
 |--------+--------------------------|
 | -h     | Show this help  and quit |
-| --gui  | Run emacs in GUI mode    |
+| --gui  | Run eless in GUI mode    |
 | -V     | Print version and quit   |
 | -D     | Run with debug messages  |
 |--------+--------------------------|
@@ -207,8 +207,8 @@ eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless                 #
 echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
 grep 'bar' foo.txt | eless         #
-PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
 diff foo bar | eless               # Colored diff!
 diff -u foo bar | eless            # Colored diff for unified diff format
 eless .                            # Open dired in the current directory (enhanced 'ls')
@@ -245,7 +245,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-388773f
+c1d9362
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1118,9 +1118,12 @@ eless bar.tar.gz
 (global-set-key (kbd "<f5>") (function eless/revert-buffer-retain-view-mode))
 
 (when (display-graphic-p)
-  (define-key view-mode-map (kbd "+") (function text-scale-adjust))
-  (define-key view-mode-map (kbd "-") (function text-scale-adjust))
-  (define-key view-mode-map (kbd "=") (function text-scale-adjust))
+  (eval-after-load (quote view)
+    (quote
+     (progn
+       (define-key view-mode-map (kbd "+") (function text-scale-adjust))
+       (define-key view-mode-map (kbd "-") (function text-scale-adjust))
+       (define-key view-mode-map (kbd "=") (function text-scale-adjust)))))
   (global-set-key (kbd "C-<right>") (function eless/frame-width-double))
   (global-set-key (kbd "C-<left>") (function eless/frame-width-half))
   (global-set-key (kbd "C-<down>") (function eless/frame-height-double))
@@ -1241,6 +1244,9 @@ alias info  '\info \!* | eless'
 
 alias diff  '\diff \!* | eless'
 alias diffg '\diff \!* | eless --gui'
+
+# (MAN)pages in eless (G)UI mode
+alias mang '(setenv PAGER "eless --gui"; man \!*)'
 
 alias ev eless
 #+end_src

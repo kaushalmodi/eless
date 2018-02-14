@@ -78,8 +78,8 @@ eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless                 #
 echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
 grep 'bar' foo.txt | eless         #
-PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
 diff foo bar | eless               # Colored diff!
 diff -u foo bar | eless            # Colored diff for unified diff format
 eless .                            # Open dired in the current directory (enhanced 'ls')

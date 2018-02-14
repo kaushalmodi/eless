@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='388773f'
+eless_git_hash='c1d9362'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -22,7 +22,7 @@ less, diff, man, (probably ls too).
 | Option | Description              |
 |--------+--------------------------|
 | -h     | Show this help  and quit |
-| --gui  | Run emacs in GUI mode    |
+| --gui  | Run eless in GUI mode    |
 | -V     | Print version and quit   |
 | -D     | Run with debug messages  |
 |--------+--------------------------|
@@ -78,8 +78,8 @@ less, diff, man, (probably ls too).
     echo 'foo' | eless                 #
     echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
     grep 'bar' foo.txt | eless         #
-    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-    PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+    PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
     diff foo bar | eless               # Colored diff!
     diff -u foo bar | eless            # Colored diff for unified diff format
     eless .                            # Open dired in the current directory (enhanced 'ls')
@@ -470,9 +470,12 @@ function emacs_Q_view_mode {
                      (global-set-key (kbd "<f5>") (function eless/revert-buffer-retain-view-mode))
 
                      (when (display-graphic-p)
-                       (define-key view-mode-map (kbd "+") (function text-scale-adjust))
-                       (define-key view-mode-map (kbd "-") (function text-scale-adjust))
-                       (define-key view-mode-map (kbd "=") (function text-scale-adjust))
+                       (eval-after-load (quote view)
+                         (quote
+                          (progn
+                            (define-key view-mode-map (kbd "+") (function text-scale-adjust))
+                            (define-key view-mode-map (kbd "-") (function text-scale-adjust))
+                            (define-key view-mode-map (kbd "=") (function text-scale-adjust)))))
                        (global-set-key (kbd "C-<right>") (function eless/frame-width-double))
                        (global-set-key (kbd "C-<left>") (function eless/frame-width-half))
                        (global-set-key (kbd "C-<down>") (function eless/frame-height-double))
