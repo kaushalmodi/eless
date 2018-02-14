@@ -56,14 +56,14 @@ As a bonus:
 - [X] The [[https://eless.scripter.co][documentation site]] is generated on-the-fly on Netlify using
   that same /one file/.
 * Requirements
-|------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Software   | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= tested on emacs 24.4, RHEL 6.6./ |
-| =bash=     | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                                                                                                                       |
-| GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                                                                                   |
-| =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                                                                                                                   |
-|------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Software   | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= are tested on emacs 24.4, RHEL 6.6./ |
+| =bash=     | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                                                                                                                           |
+| GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                                                                                       |
+| =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                                                                                                                       |
+|------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 - NOTE :: The =eless= script relies on the emacs binary to be named
   =emacs= (note that it is all lower-case). If your
@@ -73,21 +73,24 @@ As a bonus:
 * Try it out
 Here are some usage examples:
 #+BEGIN_SRC shell
-eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
-eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
-echo 'foo' | eless          #
-echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
-grep 'bar' foo.txt | eless  #
-PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-diff foo bar | eless        # Colored diff!
-diff -u foo bar | eless     # Colored diff for unified diff format
-eless .                     # Open dired in the current directory (enhanced 'ls')
-ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
-PAGER=eless git diff        # Show git diff with ANSI coded colors
-eless -h | eless            # See eless help ;-)
-info emacs | eless          # Read emacs Info manual in eless
-eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
+eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
+eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
+echo 'foo' | eless                 #
+echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
+grep 'bar' foo.txt | eless         #
+PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+diff foo bar | eless               # Colored diff!
+diff -u foo bar | eless            # Colored diff for unified diff format
+eless .                            # Open dired in the current directory (enhanced 'ls')
+ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
+PAGER=eless git diff               # Show git diff with ANSI coded colors
+eless -h | eless                   # See eless help ;-)
+info emacs | eless                 # Read emacs Info manual in eless
+eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
+PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
+PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
+PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
 #+END_SRC
 * Contributors
 - Thanks to [[https://github.com/sshaw][Skye Shaw]] for helping improving =eless=

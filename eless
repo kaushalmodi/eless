@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='a375ab6'
+eless_git_hash='388773f'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -73,21 +73,24 @@ less, diff, man, (probably ls too).
 
 * Usage Examples
 
-    eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
-    eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
-    echo 'foo' | eless          #
-    echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
-    grep 'bar' foo.txt | eless  #
-    PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-    PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-    diff foo bar | eless        # Colored diff!
-    diff -u foo bar | eless     # Colored diff for unified diff format
-    eless .                     # Open dired in the current directory (enhanced 'ls')
-    ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
-    PAGER=eless git diff        # Show git diff with ANSI coded colors
-    eless -h | eless            # See eless help ;-)
-    info emacs | eless          # Read emacs Info manual in eless
-    eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
+    eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
+    eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
+    echo 'foo' | eless                 #
+    echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
+    grep 'bar' foo.txt | eless         #
+    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+    PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+    diff foo bar | eless               # Colored diff!
+    diff -u foo bar | eless            # Colored diff for unified diff format
+    eless .                            # Open dired in the current directory (enhanced 'ls')
+    ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
+    PAGER=eless git diff               # Show git diff with ANSI coded colors
+    eless -h | eless                   # See eless help ;-)
+    info emacs | eless                 # Read emacs Info manual in eless
+    eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
+    PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
+    PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
+    PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
 "
 
 set -o pipefail
@@ -518,9 +521,12 @@ else
                        || true)
 
         # The first line of Python package MODULE help is assumed to be
-        #   Help on package MODULE:
+        #   "Help on package MODULE:" OR "Help on module MODULE:" OR "Help on SOMETHING in module MODULE:"
+        # Examples: PAGER=eless python3; help('shlex') ->  "Help on module shlex:"
+        #           PAGER=eless python3; help('iter')  ->  "Help on built-in function iter in module builtins:"
+        #           PAGER=eless python3; help('exit')  ->  "Help on Quitter in module _sitebuiltins object:"
         python_module_help=$(echo "${first_line_piped_data}" \
-                                 | grep -Po '^Help on package \K(.*)(?=:$)' \
+                                 | grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)' \
                                  || true)
 
         # The first line of info manuals is assumed to be

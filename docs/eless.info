@@ -192,8 +192,8 @@ File: eless.info,  Node: Requirements,  Next: Try it out,  Up: Readme
 ================
 
 Software     Details
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-‘emacs’      If *developing* (when running ‘make eless’ or ‘make docs’), the minimum required version is 24.4.  If only *running* the ‘eless’ script, older emacs versions should work fine (sparsely tested).  So if you face a problem, report it (https://github.com/kaushalmodi/eless/issues), by following instructions in the *How to help debug* (https://eless.scripter.co/#how-to-help-debug) section.  _Both building and running of ‘eless’ tested on emacs 24.4, RHEL 6.6._
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+‘emacs’      If *developing* (when running ‘make eless’ or ‘make docs’), the minimum required version is 24.4.  If only *running* the ‘eless’ script, older emacs versions should work fine (sparsely tested).  So if you face a problem, report it (https://github.com/kaushalmodi/eless/issues), by following instructions in the *How to help debug* (https://eless.scripter.co/#how-to-help-debug) section.  _Both building and running of ‘eless’ are tested on emacs 24.4, RHEL 6.6._
 ‘bash’       This is a ‘bash’ script.  So even if you don’t use ‘bash’ shell, you need to have the ‘bash’ binary discoverable through your environment variable ‘PATH’.  _Tested to work in ‘tcsh’ shell on RHEL 6.6._
 GNU ‘grep’   *GNU* ‘grep’ is required for the ‘-P’ flag support (for Perl regex).  _macOS_ users would need to install GNU ‘grep’ using ‘brew install’ (https://apple.stackexchange.com/a/193300).  _Tested to work with GNU ‘grep’ 2.6.3 on RHEL 6.6._
 ‘perl’       Perl is used to replace case-insensitive ‘sed’ based replacements (using ‘/I’) as that feature is available only in GNU ‘sed’.  Perl would be available on more systems compared to GNU ‘coreutils’.  _Tested with Perl v5.16.3 on RHEL 6.6._
@@ -211,21 +211,24 @@ File: eless.info,  Node: Try it out,  Next: Contributors,  Prev: Requirements,  
 ==============
 
 Here are some usage examples:
-     eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
-     eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
-     echo 'foo' | eless          #
-     echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
-     grep 'bar' foo.txt | eless  #
-     PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-     PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-     diff foo bar | eless        # Colored diff!
-     diff -u foo bar | eless     # Colored diff for unified diff format
-     eless .                     # Open dired in the current directory (enhanced 'ls')
-     ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
-     PAGER=eless git diff        # Show git diff with ANSI coded colors
-     eless -h | eless            # See eless help ;-)
-     info emacs | eless          # Read emacs Info manual in eless
-     eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
+     eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
+     eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
+     echo 'foo' | eless                 #
+     echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
+     grep 'bar' foo.txt | eless         #
+     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+     PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+     diff foo bar | eless               # Colored diff!
+     diff -u foo bar | eless            # Colored diff for unified diff format
+     eless .                            # Open dired in the current directory (enhanced 'ls')
+     ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
+     PAGER=eless git diff               # Show git diff with ANSI coded colors
+     eless -h | eless                   # See eless help ;-)
+     info emacs | eless                 # Read emacs Info manual in eless
+     eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
+     PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
+     PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
+     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
 
 
 File: eless.info,  Node: Contributors,  Prev: Try it out,  Up: Readme
@@ -307,21 +310,24 @@ File: eless.info,  Node: Usage Examples,  Next: Current eless Version,  Prev: Cu
 5 Usage Examples
 ****************
 
-     eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
-     eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
-     echo 'foo' | eless          #
-     echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
-     grep 'bar' foo.txt | eless  #
-     PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-     PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-     diff foo bar | eless        # Colored diff!
-     diff -u foo bar | eless     # Colored diff for unified diff format
-     eless .                     # Open dired in the current directory (enhanced 'ls')
-     ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
-     PAGER=eless git diff        # Show git diff with ANSI coded colors
-     eless -h | eless            # See eless help ;-)
-     info emacs | eless          # Read emacs Info manual in eless
-     eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
+     eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
+     eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
+     echo 'foo' | eless                 #
+     echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
+     grep 'bar' foo.txt | eless         #
+     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+     PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+     diff foo bar | eless               # Colored diff!
+     diff -u foo bar | eless            # Colored diff for unified diff format
+     eless .                            # Open dired in the current directory (enhanced 'ls')
+     ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
+     PAGER=eless git diff               # Show git diff with ANSI coded colors
+     eless -h | eless                   # See eless help ;-)
+     info emacs | eless                 # Read emacs Info manual in eless
+     eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
+     PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
+     PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
+     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
 NOTE
      Above examples are tested to work in a *‘bash’ shell*.
      Specifically, examples like ‘PAGER=eless man grep’ will need to be
@@ -335,7 +341,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     869571e
+     388773f
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -670,9 +676,12 @@ regex) support).
                     || true)
 
      # The first line of Python package MODULE help is assumed to be
-     #   Help on package MODULE:
+     #   "Help on package MODULE:" OR "Help on module MODULE:" OR "Help on SOMETHING in module MODULE:"
+     # Examples: PAGER=eless python3; help('shlex') ->  "Help on module shlex:"
+     #           PAGER=eless python3; help('iter')  ->  "Help on built-in function iter in module builtins:"
+     #           PAGER=eless python3; help('exit')  ->  "Help on Quitter in module _sitebuiltins object:"
      python_module_help=$(echo "${first_line_piped_data}" \
-                              | grep -Po '^Help on package \K(.*)(?=:$)' \
+                              | grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)' \
                               || true)
 
      # The first line of info manuals is assumed to be
@@ -1386,63 +1395,63 @@ Tag Table:
 Node: Top188
 Node: Readme2223
 Node: Requirements5106
-Node: Try it out7287
-Node: Contributors8644
-Node: Eless Options9264
-Node: view-mode Common Bindings9588
-Node: Custom Bindings10572
-Node: Usage Examples11607
-Node: Current eless Version13138
-Node: Code13524
-Node: Unofficial Bash Strict Mode13893
-Node: Initialize variables14578
-Node: Cleanup using trap14976
-Node: Debug function15586
-Node: Input/Output Detection16732
-Node: Parse options18415
-Node: Print Help20134
-Node: Emacs with -Q in view-mode20467
-Node: Input/Output Scenarios21279
-Node: Output is going to a pipe22710
-Node: Output is going to _stdout_ Input is coming from a pipe23256
-Node: Input is piped from man command26215
-Node: Input is piped from a modules help in _IPython_27423
-Node: Input is piped from info command28654
-Node: Input is piped from something else29271
-Node: Output is going to _stdout_ Input is an argument to the script30045
-Node: Eval30417
-Node: Emacs Configuration30655
-Node: General setup31177
-Node: Ido setup32244
-Node: Isearch setup32814
-Node: Enable line truncation33228
-Node: Highlight the current line33579
-Node: Custom functions33815
-Node: Keep/delete matching lines34316
-Node: Frame and font re-sizing35006
-Node: Revert buffer in view-mode36019
-Node: Detect if diff-mode should be enabled36494
-Node: Detect if ANSI codes need to be converted to colors39542
-Node: ``Do The Right Thing'' Kill40701
-Node: dired-mode setup42454
-Node: Man-mode setup43274
-Node: Info-mode setup43717
-Node: tar-mode setup44165
-Node: Auto-setting of major modes44880
-Node: Key bindings45741
-Node: User config override48332
-Node: Contributing49164
-Node: How to help debug49540
-Node: Development50252
-Node: Preparation50481
-Node: Building eless50785
-Node: Sanity check of the tangled eless51013
-Node: Building documentation51302
-Node: Understand the changes51633
-Node: Build everything51960
-Node: Submitting PR52222
-Node: Miscellaneous52473
-Node: Example eless config in tcsh52622
+Node: Try it out7295
+Node: Contributors9085
+Node: Eless Options9705
+Node: view-mode Common Bindings10029
+Node: Custom Bindings11013
+Node: Usage Examples12048
+Node: Current eless Version14012
+Node: Code14398
+Node: Unofficial Bash Strict Mode14767
+Node: Initialize variables15452
+Node: Cleanup using trap15850
+Node: Debug function16460
+Node: Input/Output Detection17606
+Node: Parse options19289
+Node: Print Help21008
+Node: Emacs with -Q in view-mode21341
+Node: Input/Output Scenarios22153
+Node: Output is going to a pipe23584
+Node: Output is going to _stdout_ Input is coming from a pipe24130
+Node: Input is piped from man command27473
+Node: Input is piped from a modules help in _IPython_28681
+Node: Input is piped from info command29912
+Node: Input is piped from something else30529
+Node: Output is going to _stdout_ Input is an argument to the script31303
+Node: Eval31675
+Node: Emacs Configuration31913
+Node: General setup32435
+Node: Ido setup33502
+Node: Isearch setup34072
+Node: Enable line truncation34486
+Node: Highlight the current line34837
+Node: Custom functions35073
+Node: Keep/delete matching lines35574
+Node: Frame and font re-sizing36264
+Node: Revert buffer in view-mode37277
+Node: Detect if diff-mode should be enabled37752
+Node: Detect if ANSI codes need to be converted to colors40800
+Node: ``Do The Right Thing'' Kill41959
+Node: dired-mode setup43712
+Node: Man-mode setup44532
+Node: Info-mode setup44975
+Node: tar-mode setup45423
+Node: Auto-setting of major modes46138
+Node: Key bindings46999
+Node: User config override49590
+Node: Contributing50422
+Node: How to help debug50798
+Node: Development51510
+Node: Preparation51739
+Node: Building eless52043
+Node: Sanity check of the tangled eless52271
+Node: Building documentation52560
+Node: Understand the changes52891
+Node: Build everything53218
+Node: Submitting PR53480
+Node: Miscellaneous53731
+Node: Example eless config in tcsh53880
 
 End Tag Table
 

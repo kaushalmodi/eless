@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 13:56:40 kmodi>
+# Time-stamp: <2018-02-14 15:22:31 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -16,6 +16,9 @@
 #+html_head: <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 #+html_head: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/leuven_theme.css" rel="stylesheet">
 #+html_head: <link href="https://cdn.rawgit.com/kaushalmodi/.emacs.d/master/misc/css/bootstrap.extra.css" rel="stylesheet">
+
+# No list bullets in task/checkbox lists
+#+html_head: <style>ul.task-list, ul li.on, ul li.off {list-style-type: none;}</style>
 
 # Make the tangled shell scripts executables
 #+property: header-args:shell :shebang "#!/usr/bin/env bash"
@@ -94,15 +97,15 @@ As a bonus:
 :PROPERTIES:
 :CUSTOM_ID: requirements
 :END:
-|------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|            | <70>                                                                                                                                                                                                                                                                                                                                                                       |
-| Software   | Details                                                                                                                                                                                                                                                                                                                                                                    |
-|------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= tested on emacs 24.4, RHEL 6.6./ |
-| =bash=     | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                    |
-| GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                              |
-| =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                |
-|------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|            | <70>                                                                                                                                                                                                                                                                                                                                                                           |
+| Software   | Details                                                                                                                                                                                                                                                                                                                                                                        |
+|------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= are tested on emacs 24.4, RHEL 6.6./ |
+| =bash=     | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                        |
+| GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                                  |
+| =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                    |
+|------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 - NOTE :: The =eless= script relies on the emacs binary to be named
           =emacs= (note that it is all lower-case). If your
@@ -199,21 +202,24 @@ Here are some usage examples:
 :CUSTOM_ID: usage-examples
 :END:
 #+begin_src shell :noweb-ref noweb-usage-examples
-eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
-eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
-echo 'foo' | eless          #
-echo 'foo' | eless -        # Same as above. The hyphen after eless does not matter; is anyways discarded.
-grep 'bar' foo.txt | eless  #
-PAGER=eless man grep        # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
-PAGER=eless man grep --gui  # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
-diff foo bar | eless        # Colored diff!
-diff -u foo bar | eless     # Colored diff for unified diff format
-eless .                     # Open dired in the current directory (enhanced 'ls')
-ls --color=always | eless   # Auto-detect ANSI color codes and convert those to colors
-PAGER=eless git diff        # Show git diff with ANSI coded colors
-eless -h | eless            # See eless help ;-)
-info emacs | eless          # Read emacs Info manual in eless
-eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
+eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
+eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
+echo 'foo' | eless                 #
+echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
+grep 'bar' foo.txt | eless         #
+PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the environment variable PAGER is set to eless.
+PAGER=eless man grep --gui         # Launches man pages in eless (GUI mode), if the environment variable PAGER is set to eless.
+diff foo bar | eless               # Colored diff!
+diff -u foo bar | eless            # Colored diff for unified diff format
+eless .                            # Open dired in the current directory (enhanced 'ls')
+ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
+PAGER=eless git diff               # Show git diff with ANSI coded colors
+eless -h | eless                   # See eless help ;-)
+info emacs | eless                 # Read emacs Info manual in eless
+eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
+PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
+PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
+PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
           shell*. Specifically, examples like ~PAGER=eless man grep~
@@ -239,7 +245,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-869571e
+388773f
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -620,9 +626,12 @@ man_page=$(echo "${first_line_piped_data}" \
                || true)
 
 # The first line of Python package MODULE help is assumed to be
-#   Help on package MODULE:
+#   "Help on package MODULE:" OR "Help on module MODULE:" OR "Help on SOMETHING in module MODULE:"
+# Examples: PAGER=eless python3; help('shlex') ->  "Help on module shlex:"
+#           PAGER=eless python3; help('iter')  ->  "Help on built-in function iter in module builtins:"
+#           PAGER=eless python3; help('exit')  ->  "Help on Quitter in module _sitebuiltins object:"
 python_module_help=$(echo "${first_line_piped_data}" \
-                         | grep -Po '^Help on package \K(.*)(?=:$)' \
+                         | grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)' \
                          || true)
 
 # The first line of info manuals is assumed to be
