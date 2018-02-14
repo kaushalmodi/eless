@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 12:28:04 kmodi>
+# Time-stamp: <2018-02-14 12:45:37 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -95,6 +95,11 @@ As a bonus:
 | GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                           |
 | =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                             |
 |------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+- NOTE :: The =eless= script relies on the emacs binary to be named
+          =emacs= (note the case). If your distribution ships emacs as
+          =Emacs= or named something else, symlink that binary to
+          =emacs= and ensure that the symlink lives in your =PATH=.
 ** Try it out
 :PROPERTIES:
 :CUSTOM_ID: try-it-out
@@ -223,7 +228,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-3fa65eb
+a375ab6
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1151,9 +1156,11 @@ This guide is for you if you'd like to do any of the below:
 :PROPERTIES:
 :CUSTOM_ID: preparation
 :END:
-This project builds *everything* from the =eless.org= file --- the
-=eless= Bash script /plus/ all the [[https://eless.scripter.co][HTML]], Info documentation, and even
-=README.org= and =CONTRIBUTING.org= for Github.
+#+begin_src shell
+git clone https://github.com/kaushalmodi/eless
+#+end_src
+Also see the [[*Requirements]] section if you'd like to build the =eless=
+script + documentation locally.
 *** Building =eless=
 :PROPERTIES:
 :CUSTOM_ID: building-eless
@@ -1168,6 +1175,9 @@ make eless
 Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are no
 errors.
 *** Building documentation
+:PROPERTIES:
+:CUSTOM_ID: building-documentation
+:END:
 Below will generate/update the Info manual and =README.org= and
 =CONTRIBUTING.org= for Github.
 #+begin_src shell
@@ -1180,6 +1190,15 @@ make doc
 - The randomly generated hyperlinks and section numbers in the Info
   document and HTML will be different.
 - Other than that, you shouldn't see any unexpected changes.
+*** Build everything
+:PROPERTIES:
+:CUSTOM_ID: build-everything
+:END:
+If you'd like to build the script as well the documentation together,
+you can do:
+#+begin_src shell
+make all
+#+end_src
 *** Submitting PR
 :PROPERTIES:
 :CUSTOM_ID: submitting-pr

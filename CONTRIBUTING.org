@@ -16,9 +16,11 @@ This guide is for you if you'd like to do any of the below:
        - =PAGER=​"eless -D" man foo=
 * Development
 ** Preparation
-This project builds *everything* from the =eless.org= file --- the
-=eless= Bash script /plus/ all the [[https://eless.scripter.co][HTML]], Info documentation, and even
-=README.org= and =CONTRIBUTING.org= for Github.
+#+BEGIN_SRC shell
+git clone https://github.com/kaushalmodi/eless
+#+END_SRC
+Also see the [[*Requirements]] section if you'd like to build the =eless=
+script + documentation locally.
 ** Building =eless=
 #+BEGIN_SRC shell
 make eless
@@ -36,6 +38,12 @@ make doc
 - The randomly generated hyperlinks and section numbers in the Info
   document and HTML will be different.
 - Other than that, you shouldn't see any unexpected changes.
+** Build everything
+If you'd like to build the script as well the documentation together,
+you can do:
+#+BEGIN_SRC shell
+make all
+#+END_SRC
 ** Submitting PR
 - You can submit a PR once you have reviewed all the changes in the
   tangled =eless= script and documentation.

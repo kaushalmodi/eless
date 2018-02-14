@@ -62,6 +62,11 @@ As a bonus:
 | GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                                                                                                     |
 | =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                                                                                                                                     |
 |------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+- NOTE :: The =eless= script relies on the emacs binary to be named
+  =emacs= (note the case). If your distribution ships emacs as
+  =Emacs= or named something else, symlink that binary to
+  =emacs= and ensure that the symlink lives in your =PATH=.
 * Try it out
 Here are some usage examples:
 #+BEGIN_SRC shell

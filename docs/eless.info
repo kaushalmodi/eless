@@ -93,6 +93,7 @@ Development
 * Preparation::
 * Building eless::
 * Building documentation::
+* Build everything::
 * Submitting PR::
 
 Building ‘eless’
@@ -194,6 +195,12 @@ Software     Details
 ‘bash’       This is a ‘bash’ script.  So even if you don’t use ‘bash’ shell, you need to have the ‘bash’ binary discoverable through your environment variable ‘PATH’.  _Tested to work in ‘tcsh’ shell on RHEL 6.6._
 GNU ‘grep’   *GNU* ‘grep’ is required for the ‘-P’ flag support (for Perl regex).  _macOS_ users would need to install GNU ‘grep’ using ‘brew install’ (https://apple.stackexchange.com/a/193300).  _Tested to work with GNU ‘grep’ 2.6.3 on RHEL 6.6._
 ‘perl’       Perl is used to replace case-insensitive ‘sed’ based replacements (using ‘/I’) as that feature is available only in GNU ‘sed’.  Perl would be available on more systems compared to GNU ‘coreutils’.  _Tested with Perl v5.16.3 on RHEL 6.6._
+
+NOTE
+     The ‘eless’ script relies on the emacs binary to be named ‘emacs’
+     (note the case).  If your distribution ships emacs as ‘Emacs’ or
+     named something else, symlink that binary to ‘emacs’ and ensure
+     that the symlink lives in your ‘PATH’.
 
 
 File: eless.info,  Node: Try it out,  Next: Contributors,  Prev: Requirements,  Up: Readme
@@ -323,7 +330,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     3fa65eb
+     a375ab6
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1266,6 +1273,7 @@ File: eless.info,  Node: Development,  Prev: How to help debug,  Up: Contributin
 * Preparation::
 * Building eless::
 * Building documentation::
+* Build everything::
 * Submitting PR::
 
 
@@ -1274,9 +1282,9 @@ File: eless.info,  Node: Preparation,  Next: Building eless,  Up: Development
 8.2.1 Preparation
 -----------------
 
-This project builds *everything* from the ‘eless.org’ file — the ‘eless’
-Bash script _plus_ all the HTML (https://eless.scripter.co), Info
-documentation, and even ‘README.org’ and ‘CONTRIBUTING.org’ for Github.
+     git clone https://github.com/kaushalmodi/eless
+   Also see the *note Requirements:: section if you’d like to build the
+‘eless’ script + documentation locally.
 
 
 File: eless.info,  Node: Building eless,  Next: Building documentation,  Prev: Preparation,  Up: Development
@@ -1300,7 +1308,7 @@ Run the tangled ‘eless’ through shellcheck (http://www.shellcheck.net/)
 to ensure that there are no errors.
 
 
-File: eless.info,  Node: Building documentation,  Next: Submitting PR,  Prev: Building eless,  Up: Development
+File: eless.info,  Node: Building documentation,  Next: Build everything,  Prev: Building eless,  Up: Development
 
 8.2.3 Building documentation
 ----------------------------
@@ -1324,9 +1332,19 @@ File: eless.info,  Node: Understand the changes,  Up: Building documentation
    • Other than that, you shouldn’t see any unexpected changes.
 
 
-File: eless.info,  Node: Submitting PR,  Prev: Building documentation,  Up: Development
+File: eless.info,  Node: Build everything,  Next: Submitting PR,  Prev: Building documentation,  Up: Development
 
-8.2.4 Submitting PR
+8.2.4 Build everything
+----------------------
+
+If you’d like to build the script as well the documentation together,
+you can do:
+     make all
+
+
+File: eless.info,  Node: Submitting PR,  Prev: Build everything,  Up: Development
+
+8.2.5 Submitting PR
 -------------------
 
    • You can submit a PR once you have reviewed all the changes in the
@@ -1361,64 +1379,65 @@ File: eless.info,  Node: Example eless config in tcsh,  Up: Miscellaneous
 
 Tag Table:
 Node: Top188
-Node: Readme2202
-Node: Requirements4956
-Node: Try it out6876
-Node: Contributors8233
-Node: Eless Options8692
-Node: view-mode Common Bindings9016
-Node: Custom Bindings10000
-Node: Usage Examples11035
-Node: Current eless Version12566
-Node: Code12952
-Node: Unofficial Bash Strict Mode13321
-Node: Initialize variables14006
-Node: Cleanup using trap14404
-Node: Debug function15014
-Node: Input/Output Detection16160
-Node: Parse options17843
-Node: Print Help19562
-Node: Emacs with -Q in view-mode19895
-Node: Input/Output Scenarios20711
-Node: Output is going to a pipe22142
-Node: Output is going to _stdout_ Input is coming from a pipe22688
-Node: Input is piped from man command25647
-Node: Input is piped from a modules help in _IPython_26855
-Node: Input is piped from info command28086
-Node: Input is piped from something else28703
-Node: Output is going to _stdout_ Input is an argument to the script29477
-Node: Eval29849
-Node: Emacs Configuration30087
-Node: General setup30609
-Node: Ido setup31676
-Node: Isearch setup32246
-Node: Enable line truncation32660
-Node: Highlight the current line33011
-Node: Custom functions33247
-Node: Keep/delete matching lines33748
-Node: Frame and font re-sizing34438
-Node: Revert buffer in view-mode35451
-Node: Detect if diff-mode should be enabled35926
-Node: Detect if ANSI codes need to be converted to colors38974
-Node: ``Do The Right Thing'' Kill40133
-Node: dired-mode setup41886
-Node: Man-mode setup42706
-Node: Info-mode setup43149
-Node: tar-mode setup43597
-Node: Auto-setting of major modes44312
-Node: Key bindings45173
-Node: User config override47764
-Node: Contributing48596
-Node: How to help debug48972
-Node: Development49684
-Node: Preparation49892
-Node: Building eless50240
-Node: Sanity check of the tangled eless50468
-Node: Building documentation50757
-Node: Understand the changes51085
-Node: Submitting PR51412
-Node: Miscellaneous51669
-Node: Example eless config in tcsh51818
+Node: Readme2223
+Node: Requirements4977
+Node: Try it out7177
+Node: Contributors8534
+Node: Eless Options8993
+Node: view-mode Common Bindings9317
+Node: Custom Bindings10301
+Node: Usage Examples11336
+Node: Current eless Version12867
+Node: Code13253
+Node: Unofficial Bash Strict Mode13622
+Node: Initialize variables14307
+Node: Cleanup using trap14705
+Node: Debug function15315
+Node: Input/Output Detection16461
+Node: Parse options18144
+Node: Print Help19863
+Node: Emacs with -Q in view-mode20196
+Node: Input/Output Scenarios21012
+Node: Output is going to a pipe22443
+Node: Output is going to _stdout_ Input is coming from a pipe22989
+Node: Input is piped from man command25948
+Node: Input is piped from a modules help in _IPython_27156
+Node: Input is piped from info command28387
+Node: Input is piped from something else29004
+Node: Output is going to _stdout_ Input is an argument to the script29778
+Node: Eval30150
+Node: Emacs Configuration30388
+Node: General setup30910
+Node: Ido setup31977
+Node: Isearch setup32547
+Node: Enable line truncation32961
+Node: Highlight the current line33312
+Node: Custom functions33548
+Node: Keep/delete matching lines34049
+Node: Frame and font re-sizing34739
+Node: Revert buffer in view-mode35752
+Node: Detect if diff-mode should be enabled36227
+Node: Detect if ANSI codes need to be converted to colors39275
+Node: ``Do The Right Thing'' Kill40434
+Node: dired-mode setup42187
+Node: Man-mode setup43007
+Node: Info-mode setup43450
+Node: tar-mode setup43898
+Node: Auto-setting of major modes44613
+Node: Key bindings45474
+Node: User config override48065
+Node: Contributing48897
+Node: How to help debug49273
+Node: Development49985
+Node: Preparation50214
+Node: Building eless50503
+Node: Sanity check of the tangled eless50731
+Node: Building documentation51020
+Node: Understand the changes51351
+Node: Build everything51678
+Node: Submitting PR51940
+Node: Miscellaneous52191
+Node: Example eless config in tcsh52340
 
 End Tag Table
 
