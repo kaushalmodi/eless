@@ -35,13 +35,14 @@ Code
 
 * Unofficial Bash Strict Mode::
 * Initialize variables::
+* Cleanup using trap::
 * Debug function::
 * Input/Output Detection::
 * Parse options::
 * Print Help::
 * Emacs with -Q in view-mode::
 * Input/Output Scenarios::
-* Eval and Cleanup::
+* Eval::
 * Emacs Configuration::
 
 Input/Output Scenarios
@@ -201,7 +202,6 @@ File: eless.info,  Node: Try it out,  Next: Contributors,  Prev: Requirements,  
 ==============
 
 Here are some usage examples:
-     #+begin_src shell :noweb-ref usage-examples
      eless foo.txt               # Open foo.txt in eless in terminal (-nw) mode by default.
      eless foo.txt --gui         # Open foo.txt in eless in GUI mode.
      echo 'foo' | eless          #
@@ -217,10 +217,6 @@ Here are some usage examples:
      eless -h | eless            # See eless help ;-)
      info emacs | eless          # Read emacs Info manual in eless
      eless foo.tar.xz            # Read the contents of archives; emacs does the unarchiving automatically
-     #+end_src
-     - NOTE :: Above examples are tested to work in a *=bash=
-               shell*. Specifically, examples like ~PAGER=eless man grep~
-               will need to be adapted for the shell you are using.
 
 
 File: eless.info,  Node: Contributors,  Prev: Try it out,  Up: Readme
@@ -327,7 +323,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     57aae99
+     3fa65eb
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -342,13 +338,14 @@ File: eless.info,  Node: Code,  Next: Contributing,  Prev: Current eless Version
 
 * Unofficial Bash Strict Mode::
 * Initialize variables::
+* Cleanup using trap::
 * Debug function::
 * Input/Output Detection::
 * Parse options::
 * Print Help::
 * Emacs with -Q in view-mode::
 * Input/Output Scenarios::
-* Eval and Cleanup::
+* Eval::
 * Emacs Configuration::
 
 
@@ -370,7 +367,7 @@ to make this script more robust and reliable.
           set -u # Error out when unbound variables are found
 
 
-File: eless.info,  Node: Initialize variables,  Next: Debug function,  Prev: Unofficial Bash Strict Mode,  Up: Code
+File: eless.info,  Node: Initialize variables,  Next: Cleanup using trap,  Prev: Unofficial Bash Strict Mode,  Up: Code
 
 7.2 Initialize variables
 ========================
@@ -387,9 +384,27 @@ File: eless.info,  Node: Initialize variables,  Next: Debug function,  Prev: Uno
      output_to_pipe_flag=0
 
 
-File: eless.info,  Node: Debug function,  Next: Input/Output Detection,  Prev: Initialize variables,  Up: Code
+File: eless.info,  Node: Cleanup using trap,  Next: Debug function,  Prev: Initialize variables,  Up: Code
 
-7.3 Debug function
+7.3 Cleanup using ‘trap’
+========================
+
+The below ‘cleanup’ function is auto-executed via Bash ‘trap’ when the
+script exits _for any reason_.  Read this post on _redsymbol.net_
+(http://redsymbol.net/articles/bash-exit-traps/) for more information.
+     # http://redsymbol.net/articles/bash-exit-traps/
+     function cleanup {
+         if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
+         then
+             rm -f "${tempfile}"
+         fi
+     }
+     trap cleanup EXIT
+
+
+File: eless.info,  Node: Debug function,  Next: Input/Output Detection,  Prev: Cleanup using trap,  Up: Code
+
+7.4 Debug function
 ==================
 
 This function redefines itself the first time it is called.  When
@@ -427,7 +442,7 @@ has passed the ‘-D’ option, run the script in debug mode.
 
 File: eless.info,  Node: Input/Output Detection,  Next: Parse options,  Prev: Debug function,  Up: Code
 
-7.4 Input/Output Detection
+7.5 Input/Output Detection
 ==========================
 
 We need this script to know:
@@ -477,7 +492,7 @@ We need this script to know:
 
 File: eless.info,  Node: Parse options,  Next: Print Help,  Prev: Input/Output Detection,  Up: Code
 
-7.5 Parse options
+7.6 Parse options
 =================
 
 We need to parse the arguments such that arguments specific to this
@@ -521,7 +536,7 @@ basic approach of looping through all the arguments ‘"$@"’ is used.
 
 File: eless.info,  Node: Print Help,  Next: Emacs with -Q in view-mode,  Prev: Parse options,  Up: Code
 
-7.6 Print Help
+7.7 Print Help
 ==============
 
 If user asked for this script’s help, just print it and exit with
@@ -536,7 +551,7 @@ success code.
 
 File: eless.info,  Node: Emacs with -Q in view-mode,  Next: Input/Output Scenarios,  Prev: Print Help,  Up: Code
 
-7.7 Emacs with ‘-Q’ in ‘view-mode’
+7.8 Emacs with ‘-Q’ in ‘view-mode’
 ==================================
 
 The ‘emacs_Q_view_mode’ function is defined to launch emacs with a
@@ -552,16 +567,16 @@ Configuration:: section._
          # not to eless.
          debug "Args passed to emacs_Q_view_mode : $*"
 
-         exec emacs -Q "$@" \
-                    --eval '(progn
-                               <<emacs-config>>
-                            )' 2>/dev/null </dev/tty
+         emacs -Q "$@" \
+               --eval '(progn
+                          <<emacs-config>>
+                       )' 2>/dev/null </dev/tty
      }
 
 
-File: eless.info,  Node: Input/Output Scenarios,  Next: Eval and Cleanup,  Prev: Emacs with -Q in view-mode,  Up: Code
+File: eless.info,  Node: Input/Output Scenarios,  Next: Eval,  Prev: Emacs with -Q in view-mode,  Up: Code
 
-7.8 Input/Output Scenarios
+7.9 Input/Output Scenarios
 ==========================
 
 We saw in section *note Input/Output Detection:: how we detected if
@@ -597,7 +612,7 @@ _pipe_ or _stdout_.  Now we make use of that information to call the
 
 File: eless.info,  Node: Output is going to a pipe,  Next: Output is going to _stdout_ Input is coming from a pipe,  Up: Input/Output Scenarios
 
-7.8.1 Output is going to a pipe
+7.9.1 Output is going to a pipe
 -------------------------------
 
 This scenario is not supported at the moment.  There is a plan to
@@ -612,7 +627,7 @@ output is being piped to something else.
 
 File: eless.info,  Node: Output is going to _stdout_ Input is coming from a pipe,  Next: Output is going to _stdout_ Input is an argument to the script,  Prev: Output is going to a pipe,  Up: Input/Output Scenarios
 
-7.8.2 Output is going to _stdout_, Input is coming from a pipe
+7.9.2 Output is going to _stdout_, Input is coming from a pipe
 --------------------------------------------------------------
 
 ‘mktemp’ requires the ‘-t’ argument to specify the temporary file name
@@ -679,7 +694,7 @@ regex) support).
 
 File: eless.info,  Node: Input is piped from man command,  Next: Input is piped from a modules help in _IPython_,  Up: Output is going to _stdout_ Input is coming from a pipe
 
-7.8.2.1 Input is piped from ‘man’ command
+7.9.2.1 Input is piped from ‘man’ command
 .........................................
 
      # After setting PAGER variable to eless, try something like `man grep'.
@@ -704,7 +719,7 @@ was reported in this issue
 
 File: eless.info,  Node: Input is piped from a modules help in _IPython_,  Next: Input is piped from info command,  Prev: Input is piped from man command,  Up: Output is going to _stdout_ Input is coming from a pipe
 
-7.8.2.2 Input is piped from a ‘modules’ help in _IPython_
+7.9.2.2 Input is piped from a ‘modules’ help in _IPython_
 .........................................................
 
      debug "Python Module = ${python_module_help}"
@@ -728,7 +743,7 @@ was reported in this issue
 
 File: eless.info,  Node: Input is piped from info command,  Next: Input is piped from something else,  Prev: Input is piped from a modules help in _IPython_,  Up: Output is going to _stdout_ Input is coming from a pipe
 
-7.8.2.3 Input is piped from ‘info’ command
+7.9.2.3 Input is piped from ‘info’ command
 ..........................................
 
      # Try something like `info emacs | eless'.
@@ -743,7 +758,7 @@ File: eless.info,  Node: Input is piped from info command,  Next: Input is piped
 
 File: eless.info,  Node: Input is piped from something else,  Prev: Input is piped from info command,  Up: Output is going to _stdout_ Input is coming from a pipe
 
-7.8.2.4 Input is piped from something else
+7.9.2.4 Input is piped from something else
 ..........................................
 
 This scenario could be anything, like:
@@ -764,16 +779,16 @@ stream using ‘emacs_Q_view_mode’.
 
 File: eless.info,  Node: Output is going to _stdout_ Input is an argument to the script,  Prev: Output is going to _stdout_ Input is coming from a pipe,  Up: Input/Output Scenarios
 
-7.8.3 Output is going to _stdout_, Input is an argument to the script
+7.9.3 Output is going to _stdout_, Input is an argument to the script
 ---------------------------------------------------------------------
 
      cmd="emacs_Q_view_mode ${emacs_args[*]}"
 
 
-File: eless.info,  Node: Eval and Cleanup,  Next: Emacs Configuration,  Prev: Input/Output Scenarios,  Up: Code
+File: eless.info,  Node: Eval,  Next: Emacs Configuration,  Prev: Input/Output Scenarios,  Up: Code
 
-7.9 Eval and Cleanup
-====================
+7.10 Eval
+=========
 
 Finally we ‘eval’ the constructed ‘${cmd}’ variable.
      debug "Eless Command : $cmd"
@@ -781,9 +796,9 @@ Finally we ‘eval’ the constructed ‘${cmd}’ variable.
      eval "$cmd"
 
 
-File: eless.info,  Node: Emacs Configuration,  Prev: Eval and Cleanup,  Up: Code
+File: eless.info,  Node: Emacs Configuration,  Prev: Eval,  Up: Code
 
-7.10 Emacs Configuration
+7.11 Emacs Configuration
 ========================
 
 Here is a “Do The Right Thing” config for ‘view-mode’ that gets loaded
@@ -805,7 +820,7 @@ function: Emacs with -Q in view-mode.
 
 File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configuration
 
-7.10.1 General setup
+7.11.1 General setup
 --------------------
 
      ;; Keep the default-directory to be the same from where
@@ -836,7 +851,7 @@ File: eless.info,  Node: General setup,  Next: Ido setup,  Up: Emacs Configurati
 
 File: eless.info,  Node: Ido setup,  Next: Isearch setup,  Prev: General setup,  Up: Emacs Configuration
 
-7.10.2 Ido setup
+7.11.2 Ido setup
 ----------------
 
      (setq ido-save-directory-list-file nil) ;Do not save ido history
@@ -850,7 +865,7 @@ File: eless.info,  Node: Ido setup,  Next: Isearch setup,  Prev: General setup, 
 
 File: eless.info,  Node: Isearch setup,  Next: Enable line truncation,  Prev: Ido setup,  Up: Emacs Configuration
 
-7.10.3 Isearch setup
+7.11.3 Isearch setup
 --------------------
 
      (setq isearch-allow-scroll t) ;Allow scrolling using isearch
@@ -860,7 +875,7 @@ File: eless.info,  Node: Isearch setup,  Next: Enable line truncation,  Prev: Id
 
 File: eless.info,  Node: Enable line truncation,  Next: Highlight the current line,  Prev: Isearch setup,  Up: Emacs Configuration
 
-7.10.4 Enable line truncation
+7.11.4 Enable line truncation
 -----------------------------
 
      ;; Truncate long lines by default
@@ -870,7 +885,7 @@ File: eless.info,  Node: Enable line truncation,  Next: Highlight the current li
 
 File: eless.info,  Node: Highlight the current line,  Next: Custom functions,  Prev: Enable line truncation,  Up: Emacs Configuration
 
-7.10.5 Highlight the current line
+7.11.5 Highlight the current line
 ---------------------------------
 
      (global-hl-line-mode 1)
@@ -878,7 +893,7 @@ File: eless.info,  Node: Highlight the current line,  Next: Custom functions,  P
 
 File: eless.info,  Node: Custom functions,  Next: Auto-setting of major modes,  Prev: Highlight the current line,  Up: Emacs Configuration
 
-7.10.6 Custom functions
+7.11.6 Custom functions
 -----------------------
 
 * Menu:
@@ -897,7 +912,7 @@ File: eless.info,  Node: Custom functions,  Next: Auto-setting of major modes,  
 
 File: eless.info,  Node: Keep/delete matching lines,  Next: Frame and font re-sizing,  Up: Custom functions
 
-7.10.6.1 Keep/delete matching lines
+7.11.6.1 Keep/delete matching lines
 ...................................
 
      (defun eless/keep-lines ()
@@ -917,7 +932,7 @@ File: eless.info,  Node: Keep/delete matching lines,  Next: Frame and font re-si
 
 File: eless.info,  Node: Frame and font re-sizing,  Next: Revert buffer in view-mode,  Prev: Keep/delete matching lines,  Up: Custom functions
 
-7.10.6.2 Frame and font re-sizing
+7.11.6.2 Frame and font re-sizing
 .................................
 
      (defun eless/frame-width-half (double)
@@ -941,7 +956,7 @@ File: eless.info,  Node: Frame and font re-sizing,  Next: Revert buffer in view-
 
 File: eless.info,  Node: Revert buffer in view-mode,  Next: Detect if diff-mode should be enabled,  Prev: Frame and font re-sizing,  Up: Custom functions
 
-7.10.6.3 Revert buffer in ‘view-mode’
+7.11.6.3 Revert buffer in ‘view-mode’
 .....................................
 
      (defun eless/revert-buffer-retain-view-mode ()
@@ -954,7 +969,7 @@ File: eless.info,  Node: Revert buffer in view-mode,  Next: Detect if diff-mode 
 
 File: eless.info,  Node: Detect if diff-mode should be enabled,  Next: Detect if ANSI codes need to be converted to colors,  Prev: Revert buffer in view-mode,  Up: Custom functions
 
-7.10.6.4 Detect if ‘diff-mode’ should be enabled
+7.11.6.4 Detect if ‘diff-mode’ should be enabled
 ................................................
 
      (defun eless/enable-diff-mode-maybe ()
@@ -1011,7 +1026,7 @@ File: eless.info,  Node: Detect if diff-mode should be enabled,  Next: Detect if
 
 File: eless.info,  Node: Detect if ANSI codes need to be converted to colors,  Next: ``Do The Right Thing'' Kill,  Prev: Detect if diff-mode should be enabled,  Up: Custom functions
 
-7.10.6.5 Detect if ANSI codes need to be converted to colors
+7.11.6.5 Detect if ANSI codes need to be converted to colors
 ............................................................
 
      (defun eless/enable-ansi-color-maybe ()
@@ -1034,7 +1049,7 @@ File: eless.info,  Node: Detect if ANSI codes need to be converted to colors,  N
 
 File: eless.info,  Node: ``Do The Right Thing'' Kill,  Next: dired-mode setup,  Prev: Detect if ANSI codes need to be converted to colors,  Up: Custom functions
 
-7.10.6.6 “Do The Right Thing” Kill
+7.11.6.6 “Do The Right Thing” Kill
 ..................................
 
 Before killing emacs, loop through all the buffers and mark all the
@@ -1071,7 +1086,7 @@ the time of quitting.
 
 File: eless.info,  Node: dired-mode setup,  Next: Man-mode setup,  Prev: ``Do The Right Thing'' Kill,  Up: Custom functions
 
-7.10.6.7 ‘dired-mode’ setup
+7.11.6.7 ‘dired-mode’ setup
 ...........................
 
      (defun eless/dired-mode-customization ()
@@ -1087,7 +1102,7 @@ File: eless.info,  Node: dired-mode setup,  Next: Man-mode setup,  Prev: ``Do Th
 
 File: eless.info,  Node: Man-mode setup,  Next: Info-mode setup,  Prev: dired-mode setup,  Up: Custom functions
 
-7.10.6.8 ‘Man-mode’ setup
+7.11.6.8 ‘Man-mode’ setup
 .........................
 
      (defun eless/Man-mode-customization ()
@@ -1098,7 +1113,7 @@ File: eless.info,  Node: Man-mode setup,  Next: Info-mode setup,  Prev: dired-mo
 
 File: eless.info,  Node: Info-mode setup,  Next: tar-mode setup,  Prev: Man-mode setup,  Up: Custom functions
 
-7.10.6.9 ‘Info-mode’ setup
+7.11.6.9 ‘Info-mode’ setup
 ..........................
 
      (defun eless/Info-mode-customization ()
@@ -1109,7 +1124,7 @@ File: eless.info,  Node: Info-mode setup,  Next: tar-mode setup,  Prev: Man-mode
 
 File: eless.info,  Node: tar-mode setup,  Prev: Info-mode setup,  Up: Custom functions
 
-7.10.6.10 ‘tar-mode’ setup
+7.11.6.10 ‘tar-mode’ setup
 ..........................
 
 When ‘eless’ is passed an archive file as an argument, the ‘tar-mode’ is
@@ -1126,7 +1141,7 @@ contents, extracting and viewing them.
 
 File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev: Custom functions,  Up: Emacs Configuration
 
-7.10.7 Auto-setting of major modes
+7.11.7 Auto-setting of major modes
 ----------------------------------
 
      (cond
@@ -1144,7 +1159,7 @@ File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev
 
 File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-setting of major modes,  Up: Emacs Configuration
 
-7.10.8 Key bindings
+7.11.8 Key bindings
 -------------------
 
      (eval-after-load (quote view)
@@ -1188,7 +1203,7 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
 
 File: eless.info,  Node: User config override,  Prev: Key bindings,  Up: Emacs Configuration
 
-7.10.9 User config override
+7.11.9 User config override
 ---------------------------
 
 If an ‘elesscfg’ file is present in the ‘user-emacs-directory’ (default
@@ -1346,63 +1361,64 @@ File: eless.info,  Node: Example eless config in tcsh,  Up: Miscellaneous
 
 Tag Table:
 Node: Top188
-Node: Readme2191
-Node: Requirements4945
-Node: Try it out6865
-Node: Contributors8490
-Node: Eless Options8949
-Node: view-mode Common Bindings9273
-Node: Custom Bindings10257
-Node: Usage Examples11292
-Node: Current eless Version12823
-Node: Code13209
-Node: Unofficial Bash Strict Mode13567
-Node: Initialize variables14252
-Node: Debug function14646
-Node: Input/Output Detection15794
-Node: Parse options17477
-Node: Print Help19196
-Node: Emacs with -Q in view-mode19529
-Node: Input/Output Scenarios20365
-Node: Output is going to a pipe21808
-Node: Output is going to _stdout_ Input is coming from a pipe22354
-Node: Input is piped from man command25313
-Node: Input is piped from a modules help in _IPython_26521
-Node: Input is piped from info command27752
-Node: Input is piped from something else28369
-Node: Output is going to _stdout_ Input is an argument to the script29143
-Node: Eval and Cleanup29515
-Node: Emacs Configuration29787
-Node: General setup30321
-Node: Ido setup31388
-Node: Isearch setup31958
-Node: Enable line truncation32372
-Node: Highlight the current line32723
-Node: Custom functions32959
-Node: Keep/delete matching lines33460
-Node: Frame and font re-sizing34150
-Node: Revert buffer in view-mode35163
-Node: Detect if diff-mode should be enabled35638
-Node: Detect if ANSI codes need to be converted to colors38686
-Node: ``Do The Right Thing'' Kill39845
-Node: dired-mode setup41598
-Node: Man-mode setup42418
-Node: Info-mode setup42861
-Node: tar-mode setup43309
-Node: Auto-setting of major modes44024
-Node: Key bindings44885
-Node: User config override47476
-Node: Contributing48308
-Node: How to help debug48684
-Node: Development49396
-Node: Preparation49604
-Node: Building eless49952
-Node: Sanity check of the tangled eless50180
-Node: Building documentation50469
-Node: Understand the changes50797
-Node: Submitting PR51124
-Node: Miscellaneous51381
-Node: Example eless config in tcsh51530
+Node: Readme2202
+Node: Requirements4956
+Node: Try it out6876
+Node: Contributors8233
+Node: Eless Options8692
+Node: view-mode Common Bindings9016
+Node: Custom Bindings10000
+Node: Usage Examples11035
+Node: Current eless Version12566
+Node: Code12952
+Node: Unofficial Bash Strict Mode13321
+Node: Initialize variables14006
+Node: Cleanup using trap14404
+Node: Debug function15014
+Node: Input/Output Detection16160
+Node: Parse options17843
+Node: Print Help19562
+Node: Emacs with -Q in view-mode19895
+Node: Input/Output Scenarios20711
+Node: Output is going to a pipe22142
+Node: Output is going to _stdout_ Input is coming from a pipe22688
+Node: Input is piped from man command25647
+Node: Input is piped from a modules help in _IPython_26855
+Node: Input is piped from info command28086
+Node: Input is piped from something else28703
+Node: Output is going to _stdout_ Input is an argument to the script29477
+Node: Eval29849
+Node: Emacs Configuration30087
+Node: General setup30609
+Node: Ido setup31676
+Node: Isearch setup32246
+Node: Enable line truncation32660
+Node: Highlight the current line33011
+Node: Custom functions33247
+Node: Keep/delete matching lines33748
+Node: Frame and font re-sizing34438
+Node: Revert buffer in view-mode35451
+Node: Detect if diff-mode should be enabled35926
+Node: Detect if ANSI codes need to be converted to colors38974
+Node: ``Do The Right Thing'' Kill40133
+Node: dired-mode setup41886
+Node: Man-mode setup42706
+Node: Info-mode setup43149
+Node: tar-mode setup43597
+Node: Auto-setting of major modes44312
+Node: Key bindings45173
+Node: User config override47764
+Node: Contributing48596
+Node: How to help debug48972
+Node: Development49684
+Node: Preparation49892
+Node: Building eless50240
+Node: Sanity check of the tangled eless50468
+Node: Building documentation50757
+Node: Understand the changes51085
+Node: Submitting PR51412
+Node: Miscellaneous51669
+Node: Example eless config in tcsh51818
 
 End Tag Table
 
