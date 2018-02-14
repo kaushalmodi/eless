@@ -1,4 +1,4 @@
-;; Time-stamp: <2018-02-13 18:39:40 kmodi>
+;; Time-stamp: <2018-02-14 11:40:48 kmodi>
 
 ;; Setup to build eless and its documentation in an "emacs -Q" environment.
 
@@ -301,34 +301,51 @@ all the documents.  If non-nil, its valid values are `html',
       (require 'ox-texinfo)             ;For eless.info export
       (org-publish-project "eless-info" :force))
 
-    ;; Export GitHub documents.
-    ;; cd docs/
-    ;; git clone https://github.com/kaushalmodi/eless.wiki.git
+    ;; Export GitHub documents (README + CONTRIBUTING).
     (when (or (null doctype)
               (equal doctype 'org))
-      (let ((eless-wiki-dir (concat eless-doc-dir "eless.wiki/")))
-        (if (file-exists-p eless-wiki-dir)
-            (let ((subtree-tags-to-export '("readme" "contributing" "wiki"))
-                  ;; If a subtree matches a tag, do not try to export further
-                  ;; subtrees separately that could be under that.
-                  (org-use-tag-inheritance nil)
-                  (org-export-time-stamp-file nil) ;Do not print "Created <timestamp>" in exported files
-                  (org-export-with-toc nil) ;Do not export TOC
-                  (org-export-with-tags nil)) ;Do not print tag names in exported files
-              (dolist (tag subtree-tags-to-export)
-                (let ((exported-file-list (org-map-entries
-                                           (lambda ()
-                                             (org-org-export-to-org nil :subtreep))
-                                           tag)))
-                  (when (string= "wiki" tag) ;Move the wiki files to the correct directory
-                    (dolist (exported-file exported-file-list)
-                      ;; Move the wiki files to the correct
-                      ;; directory.
-                      (rename-file (expand-file-name exported-file eless-git-root)
-                                   (expand-file-name exported-file eless-wiki-dir)
-                                   :ok-if-already-exists))))))
-          (user-error (concat "eless.wiki dir does not exist. You need to `cd docs/' "
-                              "and `git clone https://github.com/kaushalmodi/eless.wiki.git'")))))))
+      (let ((subtree-tags-to-export '("readme" "contributing"))
+            ;; If a subtree matches a tag, do not try to export
+            ;; further subtrees separately that could be under that.
+            (org-use-tag-inheritance nil)
+            (org-export-time-stamp-file nil) ;Do not print "Created <timestamp>" in exported files
+            (org-export-with-toc nil) ;Do not export TOC
+            (org-export-with-tags nil)) ;Do not print tag names in exported files
+        (dolist (tag subtree-tags-to-export)
+          (let ((exported-file-list (org-map-entries
+                                     (lambda ()
+                                       (org-org-export-to-org nil :subtreep))
+                                     tag)))))))
+
+    ;; ;; Export GitHub documents (Wiki + README + CONTRIBUTING).
+    ;; ;; cd docs/
+    ;; ;; git clone https://github.com/kaushalmodi/eless.wiki.git
+    ;; (when (or (null doctype)
+    ;;           (equal doctype 'org))
+    ;;   (let ((eless-wiki-dir (concat eless-doc-dir "eless.wiki/")))
+    ;;     (if (file-exists-p eless-wiki-dir)
+    ;;         (let ((subtree-tags-to-export '("readme" "contributing" "wiki"))
+    ;;               ;; If a subtree matches a tag, do not try to export further
+    ;;               ;; subtrees separately that could be under that.
+    ;;               (org-use-tag-inheritance nil)
+    ;;               (org-export-time-stamp-file nil) ;Do not print "Created <timestamp>" in exported files
+    ;;               (org-export-with-toc nil) ;Do not export TOC
+    ;;               (org-export-with-tags nil)) ;Do not print tag names in exported files
+    ;;           (dolist (tag subtree-tags-to-export)
+    ;;             (let ((exported-file-list (org-map-entries
+    ;;                                        (lambda ()
+    ;;                                          (org-org-export-to-org nil :subtreep))
+    ;;                                        tag)))
+    ;;               (when (string= "wiki" tag) ;Move the wiki files to the correct directory
+    ;;                 (dolist (exported-file exported-file-list)
+    ;;                   ;; Move the wiki files to the correct
+    ;;                   ;; directory.
+    ;;                   (rename-file (expand-file-name exported-file eless-git-root)
+    ;;                                (expand-file-name exported-file eless-wiki-dir)
+    ;;                                :ok-if-already-exists))))))
+    ;;       (user-error (concat "eless.wiki dir does not exist. You need to `cd docs/' "
+    ;;                           "and `git clone https://github.com/kaushalmodi/eless.wiki.git'")))))
+    ))
 
 (defun eless-build-html-docs ()
   (eless-build-docs 'html))

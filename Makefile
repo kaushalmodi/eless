@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-13 22:03:45 kmodi>
+# Time-stamp: <2018-02-14 11:37:10 kmodi>
 
 # Makefile to export org documents to md for Hugo from the command line
 # Run just "make" to see usage examples.
@@ -36,7 +36,7 @@ help:
 	@echo "Help for Eless building"
 	@echo "====================================================="
 	@echo " make eless <-- Build eless bash script"
-	@echo " make doc   <-- Build eless documentation"
+	@echo " make doc   <-- Build eless documentation (Info + Github)"
 	@echo " make all   <-- Build eless script + documentation"
 	@echo " make help  <-- Show this help"
 
@@ -70,7 +70,7 @@ info:
 ghub:
 	@$(MAKE_) emacs-batch FUNC=eless-build-org-docs
 
-doc docs: html info ghub
+doc docs: info ghub
 
 all: vcheck eless doc
 

@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 11:19:36 kmodi>
+# Time-stamp: <2018-02-14 11:46:57 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -211,7 +211,7 @@ https://github.com/kaushalmodi/eless
 # To update manually , put the point in the below source block
 # and hit "C-c C-c" to update the git-hash source block -
 # https://emacs.stackexchange.com/a/13352/115
-#+begin_src shell :exports results :results output code :results_switches ":noweb-ref git-hash"
+#+begin_src shell :eval no-export :exports results :results output code :results_switches ":noweb-ref git-hash"
 git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
