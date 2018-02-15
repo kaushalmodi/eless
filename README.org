@@ -64,11 +64,9 @@ As a bonus:
 | =perl=   | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                                                                                             |
 |----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
-- NOTE :: The =eless= script relies on the emacs binary to be named
-  =emacs= (note that it is all lower-case). If your
-  distribution ships emacs as =Emacs= or named something else,
-  symlink that binary to =emacs= and ensure that the symlink
-  lives in your =PATH=.
+- NOTE :: If the environment variable =EMACS= is set, =eless= uses that
+  as the emacs binary, else it defaults to using =emacs= as
+  emacs binary.
 * Try it out
 Here are some usage examples:
 #+BEGIN_SRC shell

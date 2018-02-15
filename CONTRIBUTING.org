@@ -26,8 +26,9 @@ script + documentation locally.
 make eless
 #+END_SRC
 *** Sanity check of the tangled =eless=
-Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are no
-errors.
+1. Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are
+   no errors.
+2. Ensure that =make test= passes. Add/update tests as needed.
 ** Building documentation
 Below will generate/update the Info manual and =README.org= and
 =CONTRIBUTING.org= for Github.
@@ -47,3 +48,4 @@ make all
 ** Submitting PR
 - You can submit a PR once you have reviewed all the changes in the
   tangled =eless= script and documentation.
+- =make test= has to pass before a PR is merged.

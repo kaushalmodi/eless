@@ -198,10 +198,9 @@ Software   Details
 ‘perl’     Perl is used to replace ‘grep -Po’ and case-insensitive ‘sed’ based replacements (using ‘/I’) as those features are available only in GNU versions of ‘grep’ and ‘sed’ (which are not present by default on _macOS_ systems).  _Tested with Perl v5.16.3 on RHEL 6.6._
 
 NOTE
-     The ‘eless’ script relies on the emacs binary to be named ‘emacs’
-     (note that it is all lower-case).  If your distribution ships emacs
-     as ‘Emacs’ or named something else, symlink that binary to ‘emacs’
-     and ensure that the symlink lives in your ‘PATH’.
+     If the environment variable ‘EMACS’ is set, ‘eless’ uses that as
+     the emacs binary, else it defaults to using ‘emacs’ as emacs
+     binary.
 
 
 File: eless.info,  Node: Try it out,  Next: Contributors,  Prev: Requirements,  Up: Readme
@@ -344,7 +343,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     67ca5f1
+     fb9584e
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -403,6 +402,10 @@ File: eless.info,  Node: Initialize variables,  Next: Cleanup using trap,  Prev:
 
      input_from_pipe_flag=0
      output_to_pipe_flag=0
+
+     # Use the emacs binary if set by the environment variable EMACS, else set that
+     # variable to emacs.
+     EMACS="${EMACS:-emacs}"
 
 
 File: eless.info,  Node: Cleanup using trap,  Next: Debug function,  Prev: Initialize variables,  Up: Code
@@ -589,10 +592,10 @@ Configuration::._
          # not to eless.
          debug "Args passed to emacs_Q_view_mode : $*"
 
-         emacs -Q "$@" \
-               --eval '(progn
-                          <<emacs-config>>
-                       )' 2>/dev/null </dev/tty
+         ${EMACS} -Q "$@" \
+                  --eval '(progn
+                             <<emacs-config>>
+                          )' 2>/dev/null </dev/tty
      }
 
 
@@ -1347,8 +1350,9 @@ File: eless.info,  Node: Sanity check of the tangled eless,  Up: Building eless
 8.2.2.1 Sanity check of the tangled ‘eless’
 ...........................................
 
-Run the tangled ‘eless’ through shellcheck (http://www.shellcheck.net/)
-to ensure that there are no errors.
+  1. Run the tangled ‘eless’ through shellcheck
+     (http://www.shellcheck.net/) to ensure that there are no errors.
+  2. Ensure that ‘make test’ passes.  Add/update tests as needed.
 
 
 File: eless.info,  Node: Building documentation,  Next: Build everything,  Prev: Building eless,  Up: Development
@@ -1392,6 +1396,7 @@ File: eless.info,  Node: Submitting PR,  Prev: Build everything,  Up: Developmen
 
    • You can submit a PR once you have reviewed all the changes in the
      tangled ‘eless’ script and documentation.
+   • ‘make test’ has to pass before a PR is merged.
 
 
 File: eless.info,  Node: Miscellaneous,  Prev: Contributing,  Up: Top
@@ -1427,63 +1432,63 @@ Tag Table:
 Node: Top188
 Node: Readme2223
 Node: Requirements5126
-Node: Try it out7062
-Node: Contributors9021
-Node: Eless Options9641
-Node: view-mode Common Bindings9965
-Node: Custom Bindings10949
-Node: Usage Examples11984
-Node: Current eless Version13930
-Node: Code14316
-Node: Unofficial Bash Strict Mode14685
-Node: Initialize variables15370
-Node: Cleanup using trap15768
-Node: Debug function16463
-Node: Input/Output Detection17609
-Node: Parse options19292
-Node: Print Help21011
-Node: Emacs with -Q in view-mode21344
-Node: Input/Output Scenarios22156
-Node: Output is going to a pipe23587
-Node: Output is going to _stdout_ Input is coming from a pipe24133
-Node: Input is piped from man command28420
-Node: Input is piped from a modules help in _IPython_29694
-Node: Input is piped from info command30925
-Node: Input is piped from something else31542
-Node: Output is going to _stdout_ Input is an argument to the script32316
-Node: Eval32688
-Node: Emacs Configuration32926
-Node: General setup33448
-Node: Ido setup34515
-Node: Isearch setup35085
-Node: Enable line truncation35499
-Node: Highlight the current line35850
-Node: Custom functions36086
-Node: Keep/delete matching lines36587
-Node: Frame and font re-sizing37277
-Node: Revert buffer in view-mode38290
-Node: Detect if diff-mode should be enabled38765
-Node: Detect if ANSI codes need to be converted to colors41810
-Node: ``Do The Right Thing'' Kill42969
-Node: dired-mode setup44722
-Node: Man-mode setup45542
-Node: Info-mode setup45985
-Node: tar-mode setup46433
-Node: Auto-setting of major modes47148
-Node: Key bindings48009
-Node: User config override50688
-Node: Contributing51951
-Node: How to help debug52327
-Node: Development53039
-Node: Preparation53268
-Node: Building eless53572
-Node: Sanity check of the tangled eless53800
-Node: Building documentation54089
-Node: Understand the changes54420
-Node: Build everything54747
-Node: Submitting PR55009
-Node: Miscellaneous55260
-Node: Example eless config in tcsh55409
+Node: Try it out6932
+Node: Contributors8891
+Node: Eless Options9511
+Node: view-mode Common Bindings9835
+Node: Custom Bindings10819
+Node: Usage Examples11854
+Node: Current eless Version13800
+Node: Code14186
+Node: Unofficial Bash Strict Mode14555
+Node: Initialize variables15240
+Node: Cleanup using trap15778
+Node: Debug function16473
+Node: Input/Output Detection17619
+Node: Parse options19302
+Node: Print Help21021
+Node: Emacs with -Q in view-mode21354
+Node: Input/Output Scenarios22178
+Node: Output is going to a pipe23609
+Node: Output is going to _stdout_ Input is coming from a pipe24155
+Node: Input is piped from man command28442
+Node: Input is piped from a modules help in _IPython_29716
+Node: Input is piped from info command30947
+Node: Input is piped from something else31564
+Node: Output is going to _stdout_ Input is an argument to the script32338
+Node: Eval32710
+Node: Emacs Configuration32948
+Node: General setup33470
+Node: Ido setup34537
+Node: Isearch setup35107
+Node: Enable line truncation35521
+Node: Highlight the current line35872
+Node: Custom functions36108
+Node: Keep/delete matching lines36609
+Node: Frame and font re-sizing37299
+Node: Revert buffer in view-mode38312
+Node: Detect if diff-mode should be enabled38787
+Node: Detect if ANSI codes need to be converted to colors41832
+Node: ``Do The Right Thing'' Kill42991
+Node: dired-mode setup44744
+Node: Man-mode setup45564
+Node: Info-mode setup46007
+Node: tar-mode setup46455
+Node: Auto-setting of major modes47170
+Node: Key bindings48031
+Node: User config override50710
+Node: Contributing51973
+Node: How to help debug52349
+Node: Development53061
+Node: Preparation53290
+Node: Building eless53594
+Node: Sanity check of the tangled eless53822
+Node: Building documentation54191
+Node: Understand the changes54522
+Node: Build everything54849
+Node: Submitting PR55111
+Node: Miscellaneous55420
+Node: Example eless config in tcsh55569
 
 End Tag Table
 
