@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 11:37:10 kmodi>
+# Time-stamp: <2018-02-15 22:27:27 kmodi>
 
 # Makefile to export org documents to md for Hugo from the command line
 # Run just "make" to see usage examples.
@@ -28,7 +28,7 @@ FUNC=
 
 .PHONY: default help emacs-batch \
 	eless html info ghub doc docs all vcheck \
-	ctemp clean
+	test ctemp clean
 
 default: eless
 
@@ -87,6 +87,9 @@ endif
 	(message \"[Version check] %s\" (org-version nil :full))\
 	)" \
 	--kill
+
+test:
+	@./test/run_tests.sh
 
 ctemp:
 	@find $(shell pwd)/docs -name "*.*~" -delete

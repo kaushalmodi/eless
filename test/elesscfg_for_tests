@@ -1,0 +1,36 @@
+;; -*- emacs-lisp -*-
+
+(defvar eless-disable-snap (getenv "ELESS_DISABLE_SNAP")
+  "When non-nil, do not call `eless-take-snap' and quit.")
+
+(defun eless-take-snap ()
+  "Create an eless buffer snap named NAME."
+  (let* ((major-name (symbol-name major-mode))
+         (buf-name (buffer-name))
+         (contents (if (getenv "ELESS_TEST_SNAP_NO_CONTENT")
+                       ""
+                     (buffer-substring-no-properties
+                      (point-min) (point-max))))
+         (snap-dir (let ((dir (getenv "ELESS_TEST_SNAP_DIR")))
+                     (mkdir dir :parents)
+                     dir))
+         (snap-file (expand-file-name
+                     (format "%s" (getenv "ELESS_TEST"))
+                     snap-dir)))
+    (with-temp-buffer
+      (insert major-name "\n" buf-name "\n" contents)
+      ;; Remove eless version info from contents to prevent
+      ;; unnecessary diff fails - for eless -h | eless test.
+      (goto-char (point-min))
+      (delete-matching-lines "^Eless Version.*")
+      (delete-matching-lines "^https://github.com/kaushalmodi/eless/.*")
+      (write-file snap-file))))
+
+(unless eless-disable-snap
+  (eless-take-snap)
+  (sleep-for 1)                      ;Some delay required for man page to render
+  (save-buffers-kill-emacs))
+
+;; Local Variables:
+;; fill-column: 70
+;; End:

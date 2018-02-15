@@ -1,0 +1,6 @@
+diff-mode
+*Diff*
+1c1
+< abc def
+---
+> abc eef

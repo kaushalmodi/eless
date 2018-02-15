@@ -1,0 +1,80 @@
+fundamental-mode
+*Stdin*
+
+Script to run emacs in view-mode with some sane defaults in attempt to replace
+less, diff, man, (probably ls too).
+
+* Options to this script
+|--------+--------------------------|
+| Option | Description              |
+|--------+--------------------------|
+| -h     | Show this help  and quit |
+| --gui  | Run eless in GUI mode    |
+| -V     | Print version and quit   |
+| -D     | Run with debug messages  |
+|--------+--------------------------|
+
+* Common bindings in 'view-mode'
+|--------------+------------------------------------------------------------------------------|
+| Binding      | Description                                                                  |
+|--------------+------------------------------------------------------------------------------|
+| SPC          | Scroll forward 'page size' lines. With prefix scroll forward prefix lines.   |
+| DEL or S-SPC | Scroll backward 'page size' lines. With prefix scroll backward prefix lines. |
+|              | (If your terminal does not support this, use xterm instead or using C-h.)    |
+| RET          | Scroll forward one line. With prefix scroll forward prefix line(s).          |
+| y            | Scroll backward one line. With prefix scroll backward prefix line(s).        |
+| s            | Do forward incremental search.                                               |
+| r            | Do reverse incremental search.                                               |
+| e            | Quit the 'view-mode' and use that emacs session as usual to modify           |
+|              | the opened file if needed.                                                   |
+|--------------+------------------------------------------------------------------------------|
+
+** Custom bindings
+|--------------+------------------------------------------------------------|
+| Binding      | Description                                                |
+|--------------+------------------------------------------------------------|
+| ! or K       | Delete lines matching regexp                               |
+| & or k       | Keep lines matching regexp                                 |
+| 0            | Delete this window                                         |
+| 1            | Keep only this window                                      |
+| A            | Auto-revert Tail Mode (like tail -f on current buffer)     |
+| D            | Dired                                                      |
+| N            | Next error (next line in *occur*)                          |
+| P            | Previous error (previous line in *occur*)                  |
+| a            | Auto-revert Mode                                           |
+| g or F5      | Revert buffer (probably after keep/delete lines)           |
+| n            | Next line                                                  |
+| o            | Occur                                                      |
+| p            | Previous line                                              |
+| q            | Quit emacs if at most one buffer is open, else kill buffer |
+| t            | Toggle line truncation                                     |
+| = or + or -  | Adjust font size (in GUI mode)                             |
+| C-down/up    | Inc/Dec frame height (in GUI mode)                         |
+| C-right/left | Inc/Dec frame width (in GUI mode)                          |
+|--------------+------------------------------------------------------------|
+
+** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
+
+* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
+  'man grep' will then show the grep man page in eless.
+
+* Usage Examples
+
+    eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
+    eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
+    echo 'foo' | eless                 #
+    echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
+    grep 'bar' foo.txt | eless         #
+    diff foo bar | eless               # Colored diff!
+    diff -u foo bar | eless            # Colored diff for unified diff format
+    eless .                            # Open dired in the current directory (enhanced 'ls')
+    ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
+    PAGER=eless git diff               # Show git diff with ANSI coded colors
+    eless -h | eless                   # See eless help ;-)
+    info emacs | eless                 # Read emacs Info manual in eless
+    eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
+    PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
+    PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
+    PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
+    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+    PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".

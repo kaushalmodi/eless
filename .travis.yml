@@ -30,7 +30,8 @@ script:
   #   So this combination executes the command using the container, but inside
   # the current working directory.
   - docker run -v $(pwd):/repo_root -w /repo_root koalaman/shellcheck eless
-  - make --no-print-directory html EMACS=${EMACS}
+  - make test
+  - make html EMACS=${EMACS}
 matrix:
   fast_finish: true
 branches:
