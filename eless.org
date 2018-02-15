@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-15 10:25:24 kmodi>
+# Time-stamp: <2018-02-15 11:50:16 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -98,15 +98,14 @@ As a bonus:
 :PROPERTIES:
 :CUSTOM_ID: requirements
 :END:
-|------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|            | <70>                                                                                                                                                                                                                                                                                                                                                                           |
-| Software   | Details                                                                                                                                                                                                                                                                                                                                                                        |
-|------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =emacs=    | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= are tested on emacs 24.4, RHEL 6.6./ |
-| =bash=     | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                        |
-| GNU =grep= | *GNU* =grep= is required for the =-P= flag support (for Perl regex). /macOS/ users would need to install GNU =grep= [[https://apple.stackexchange.com/a/193300][using ~brew install~]]. /Tested to work with GNU =grep= 2.6.3 on RHEL 6.6./                                                                                                                                                                                  |
-| =perl=     | Perl is used to replace case-insensitive =sed= based replacements (using =/I=) as that feature is available only in GNU =sed=. Perl would be available on more systems compared to GNU =coreutils=. /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                                                    |
-|------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|          | <70>                                                                                                                                                                                                                                                                                                                                                                           |
+| Software | Details                                                                                                                                                                                                                                                                                                                                                                        |
+|----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =emacs=  | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= are tested on emacs 24.4, RHEL 6.6./ |
+| =bash=   | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                        |
+| =perl=   | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                          |
+|----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 - NOTE :: The =eless= script relies on the emacs binary to be named
           =emacs= (note that it is all lower-case). If your
@@ -252,7 +251,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-9b83a26
+726e710
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -608,10 +607,6 @@ exit 1
 :END:
 =mktemp= requires the =-t= argument to specify the temporary file name
 template on Mac OS (See {{{issue(18)}}}.)
-
-*Note to Mac OS users*: Using the *GNU =grep=* version of =grep= is a
- requirement for =eless= to work on your systems (for the =-P= (Perl
- regex) support).
 #+begin_src shell :noweb no-export :noweb-ref output-stdout--input-pipe :tangle no
 tempfile="$(mktemp -t emacs-stdin-"$USER".XXXXXXX)" # https://github.com/koalaman/shellcheck/wiki/SC2086
 debug "Temp File : $tempfile"
@@ -621,17 +616,21 @@ echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wi
 first_line_piped_data=$(head -n 1 "${tempfile}")
 debug "first_line_piped_data = ${first_line_piped_data}"
 
+# It is not mandatory for the below perl regex to always match. So OR it with
+# "true" so that "set -e" does not kill the script at this point.
+
 # The first line of man pages is assumed to be
 #   FOO(1)  optional something something FOO(1)
-# It is not mandatory for the below grep to always pass. So OR it with
-# "true" so that "set -e" does not kill the script at this point.
 # For some odd reason, the "BASH_BUILTINS" man page is named just
 # "builtins"; below deals with that corner case.
 # .. faced this problem when trying to do "man read | eless".
 man_page=$(echo "${first_line_piped_data}" \
-               | grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)' \
+               | perl -ne '/^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print "$1"' \
                | perl -pe 's/bash_builtins/builtins/i' \
                || true)
+# Using perl expression above instead of below grep (which requires
+# GNU grep -- not available by default on macOS):
+#   grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)'
 
 # The first line of Python package MODULE help is assumed to be
 #   "Help on package MODULE:" OR "Help on module MODULE:" OR "Help on SOMETHING in module MODULE:"
@@ -639,16 +638,21 @@ man_page=$(echo "${first_line_piped_data}" \
 #           PAGER=eless python3; help('iter')  ->  "Help on built-in function iter in module builtins:"
 #           PAGER=eless python3; help('exit')  ->  "Help on Quitter in module _sitebuiltins object:"
 python_module_help=$(echo "${first_line_piped_data}" \
-                         | grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)' \
+                         | perl -ne '/^Help on (.+ in )*(module|package) (.*)(?=:$)/ and print "$3"' \
                          || true)
+# Using perl expression above instead of below grep (which requires
+# GNU grep -- not available by default on macOS):
+#   grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)'
 
 # The first line of info manuals is assumed to be
 #   /path/to/some.info or /path/to/some.info.gz
-# It is not mandatory for the below grep to always pass, so OR it with
-# "true" so that "set -e" does not kill the script at this point.
+# Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
 info_man=$(echo "${first_line_piped_data}" \
-               | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' \
+               | perl -ne '/^(.*\/)*([^\/]+)(?=\.info(\-[0-9]+)*(\.gz)*$)/ and print "$2"' \
                || true)
+# Using perl expression above instead of below grep (which requires
+# GNU grep -- not available by default on macOS):
+#   grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'
 
 if [[ ! -z ${man_page} ]]
 then
@@ -668,8 +672,9 @@ fi
 :CUSTOM_ID: input-is-piped-from-man-command
 :END:
 #+begin_src shell :noweb-ref man-page :tangle no
-# After setting PAGER variable to eless, try something like `man grep'.
-# That will launch the man page in eless.
+# After setting PAGER variable globally to eless (example, using export on bash,
+# setenv on (t)csh, try something like `man grep'.  That will launch the man
+# page in eless.
 debug "Man Page = ${man_page}"
 
 cmd="emacs_Q_view_mode \

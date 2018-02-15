@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='9b83a26'
+eless_git_hash='726e710'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -518,17 +518,21 @@ else
         first_line_piped_data=$(head -n 1 "${tempfile}")
         debug "first_line_piped_data = ${first_line_piped_data}"
 
+        # It is not mandatory for the below perl regex to always match. So OR it with
+        # "true" so that "set -e" does not kill the script at this point.
+
         # The first line of man pages is assumed to be
         #   FOO(1)  optional something something FOO(1)
-        # It is not mandatory for the below grep to always pass. So OR it with
-        # "true" so that "set -e" does not kill the script at this point.
         # For some odd reason, the "BASH_BUILTINS" man page is named just
         # "builtins"; below deals with that corner case.
         # .. faced this problem when trying to do "man read | eless".
         man_page=$(echo "${first_line_piped_data}" \
-                       | grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)' \
+                       | perl -ne '/^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print "$1"' \
                        | perl -pe 's/bash_builtins/builtins/i' \
                        || true)
+        # Using perl expression above instead of below grep (which requires
+        # GNU grep -- not available by default on macOS):
+        #   grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)'
 
         # The first line of Python package MODULE help is assumed to be
         #   "Help on package MODULE:" OR "Help on module MODULE:" OR "Help on SOMETHING in module MODULE:"
@@ -536,21 +540,27 @@ else
         #           PAGER=eless python3; help('iter')  ->  "Help on built-in function iter in module builtins:"
         #           PAGER=eless python3; help('exit')  ->  "Help on Quitter in module _sitebuiltins object:"
         python_module_help=$(echo "${first_line_piped_data}" \
-                                 | grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)' \
+                                 | perl -ne '/^Help on (.+ in )*(module|package) (.*)(?=:$)/ and print "$3"' \
                                  || true)
+        # Using perl expression above instead of below grep (which requires
+        # GNU grep -- not available by default on macOS):
+        #   grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)'
 
         # The first line of info manuals is assumed to be
         #   /path/to/some.info or /path/to/some.info.gz
-        # It is not mandatory for the below grep to always pass, so OR it with
-        # "true" so that "set -e" does not kill the script at this point.
+        # Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
         info_man=$(echo "${first_line_piped_data}" \
-                       | grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)' \
+                       | perl -ne '/^(.*\/)*([^\/]+)(?=\.info(\-[0-9]+)*(\.gz)*$)/ and print "$2"' \
                        || true)
+        # Using perl expression above instead of below grep (which requires
+        # GNU grep -- not available by default on macOS):
+        #   grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'
 
         if [[ ! -z ${man_page} ]]
         then
-            # After setting PAGER variable to eless, try something like `man grep'.
-            # That will launch the man page in eless.
+            # After setting PAGER variable globally to eless (example, using export on bash,
+            # setenv on (t)csh, try something like `man grep'.  That will launch the man
+            # page in eless.
             debug "Man Page = ${man_page}"
 
             cmd="emacs_Q_view_mode \
