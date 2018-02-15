@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-15 10:13:47 kmodi>
+# Time-stamp: <2018-02-15 10:25:24 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -29,7 +29,7 @@
 # http://lists.gnu.org/r/emacs-orgmode/2017-04/msg00181.html
 # You need to have set `org-export-allow-bind-keywords' to t for below
 # to work.
-#+bind: org-html-inline-image-rules (("https" . "svg\\?branch="))
+#+bind: org-html-inline-image-rules (("file" . "\\.\\(jpeg\\|jpg\\|png\\|gif\\|svg\\)\\'") ("http" . "\\.\\(jpeg\\|jpg\\|png\\|gif\\|svg\\)\\'") ("https" . "\\.\\(jpeg\\|jpg\\|png\\|gif\\|svg\\)\\'") ("https" . "svg\\?branch="))
 
 * Readme                                                             :readme:
 :PROPERTIES:
@@ -42,7 +42,7 @@
 # #+end_export
 -----
 
-*Documentation*: https://eless.scripter.co
+*Documentation*: [[https://eless.scripter.co][*eless.scripter.co*]]
 
 -----
 
@@ -72,6 +72,7 @@ It was created out of a need to have something /like/ =less= (in the sense of
 
 I call it =eless= and here's a little taste of what it looks like:
 
+#+attr_html: :width 1000px
 [[https://raw.githubusercontent.com/kaushalmodi/eless/master/docs/images/eless-examples.png][https://raw.githubusercontent.com/kaushalmodi/eless/master/docs/images/eless-examples.png]]
 
 /Shown above, starting from top left image and proceeding clock-wise../
