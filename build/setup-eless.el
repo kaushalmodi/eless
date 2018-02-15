@@ -1,4 +1,4 @@
-;; Time-stamp: <2018-02-14 15:18:21 kmodi>
+;; Time-stamp: <2018-02-15 10:52:06 kmodi>
 
 ;; Setup to build eless and its documentation in an "emacs -Q" environment.
 
@@ -133,6 +133,10 @@ to be installed.")
           (add-to-list 'eless-missing-packages p :append)))
 
       (when eless-missing-packages
+        (when (equal system-type 'darwin)
+          ;; macOS workaround for https://github.com/kaushalmodi/eless/issues/24.
+          (setq network-security-level 'low))
+
         (message "Emacs is now refreshing its package database...")
         (package-refresh-contents)
         ;; Install the missing packages
