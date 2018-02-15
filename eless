@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='726e710'
+eless_git_hash='6d833e4'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -115,7 +115,8 @@ output_to_pipe_flag=0
 function cleanup {
     if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
     then
-        rm -f "${tempfile}"
+        # Remove /tmp/foo.XXXXXX, /tmp/foo.XXXXXX.noblank
+        rm -f "${tempfile}" "${tempfile}.noblank"
     fi
 }
 trap cleanup EXIT
@@ -514,8 +515,17 @@ else
         debug "Temp File : $tempfile"
         echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
 
-        # Parse the first line of the piped data to check if it's a man page
-        first_line_piped_data=$(head -n 1 "${tempfile}")
+        # Remove blank lines from $tempfile. Some or all of BSD man pages
+        # would have a blank line at the top -- https://github.com/kaushalmodi/eless/issues/27#issuecomment-365992910.
+        # GNU ls man page begins with:
+        #   l1: LS(1)                            User Commands                           LS(1)
+        # BSD ls man page begins with:
+        #   l1:
+        #   l2: LS(1)                     BSD General Commands Manual                    LS(1)
+        perl -ne 'print unless /^\s*$/' "${tempfile}" > "${tempfile}.noblank"
+
+        # Now parse only the first line of that ${tempfile}.noblank file.
+        first_line_piped_data=$(head -n 1 "${tempfile}.noblank")
         debug "first_line_piped_data = ${first_line_piped_data}"
 
         # It is not mandatory for the below perl regex to always match. So OR it with

@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     726e710
+     6d833e4
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -417,7 +417,8 @@ script exits _for any reason_.  Read this post on _redsymbol.net_
      function cleanup {
          if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
          then
-             rm -f "${tempfile}"
+             # Remove /tmp/foo.XXXXXX, /tmp/foo.XXXXXX.noblank
+             rm -f "${tempfile}" "${tempfile}.noblank"
          fi
      }
      trap cleanup EXIT
@@ -658,8 +659,17 @@ template on Mac OS (See ‘eless’ issue #18
      debug "Temp File : $tempfile"
      echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
 
-     # Parse the first line of the piped data to check if it's a man page
-     first_line_piped_data=$(head -n 1 "${tempfile}")
+     # Remove blank lines from $tempfile. Some or all of BSD man pages
+     # would have a blank line at the top -- https://github.com/kaushalmodi/eless/issues/27#issuecomment-365992910.
+     # GNU ls man page begins with:
+     #   l1: LS(1)                            User Commands                           LS(1)
+     # BSD ls man page begins with:
+     #   l1:
+     #   l2: LS(1)                     BSD General Commands Manual                    LS(1)
+     perl -ne 'print unless /^\s*$/' "${tempfile}" > "${tempfile}.noblank"
+
+     # Now parse only the first line of that ${tempfile}.noblank file.
+     first_line_piped_data=$(head -n 1 "${tempfile}.noblank")
      debug "first_line_piped_data = ${first_line_piped_data}"
 
      # It is not mandatory for the below perl regex to always match. So OR it with
@@ -1428,52 +1438,52 @@ Node: Code14316
 Node: Unofficial Bash Strict Mode14685
 Node: Initialize variables15370
 Node: Cleanup using trap15768
-Node: Debug function16378
-Node: Input/Output Detection17524
-Node: Parse options19207
-Node: Print Help20926
-Node: Emacs with -Q in view-mode21259
-Node: Input/Output Scenarios22071
-Node: Output is going to a pipe23502
-Node: Output is going to _stdout_ Input is coming from a pipe24048
-Node: Input is piped from man command27794
-Node: Input is piped from a modules help in _IPython_29068
-Node: Input is piped from info command30299
-Node: Input is piped from something else30916
-Node: Output is going to _stdout_ Input is an argument to the script31690
-Node: Eval32062
-Node: Emacs Configuration32300
-Node: General setup32822
-Node: Ido setup33889
-Node: Isearch setup34459
-Node: Enable line truncation34873
-Node: Highlight the current line35224
-Node: Custom functions35460
-Node: Keep/delete matching lines35961
-Node: Frame and font re-sizing36651
-Node: Revert buffer in view-mode37664
-Node: Detect if diff-mode should be enabled38139
-Node: Detect if ANSI codes need to be converted to colors41187
-Node: ``Do The Right Thing'' Kill42346
-Node: dired-mode setup44099
-Node: Man-mode setup44919
-Node: Info-mode setup45362
-Node: tar-mode setup45810
-Node: Auto-setting of major modes46525
-Node: Key bindings47386
-Node: User config override50065
-Node: Contributing51328
-Node: How to help debug51704
-Node: Development52416
-Node: Preparation52645
-Node: Building eless52949
-Node: Sanity check of the tangled eless53177
-Node: Building documentation53466
-Node: Understand the changes53797
-Node: Build everything54124
-Node: Submitting PR54386
-Node: Miscellaneous54637
-Node: Example eless config in tcsh54786
+Node: Debug function16463
+Node: Input/Output Detection17609
+Node: Parse options19292
+Node: Print Help21011
+Node: Emacs with -Q in view-mode21344
+Node: Input/Output Scenarios22156
+Node: Output is going to a pipe23587
+Node: Output is going to _stdout_ Input is coming from a pipe24133
+Node: Input is piped from man command28416
+Node: Input is piped from a modules help in _IPython_29690
+Node: Input is piped from info command30921
+Node: Input is piped from something else31538
+Node: Output is going to _stdout_ Input is an argument to the script32312
+Node: Eval32684
+Node: Emacs Configuration32922
+Node: General setup33444
+Node: Ido setup34511
+Node: Isearch setup35081
+Node: Enable line truncation35495
+Node: Highlight the current line35846
+Node: Custom functions36082
+Node: Keep/delete matching lines36583
+Node: Frame and font re-sizing37273
+Node: Revert buffer in view-mode38286
+Node: Detect if diff-mode should be enabled38761
+Node: Detect if ANSI codes need to be converted to colors41809
+Node: ``Do The Right Thing'' Kill42968
+Node: dired-mode setup44721
+Node: Man-mode setup45541
+Node: Info-mode setup45984
+Node: tar-mode setup46432
+Node: Auto-setting of major modes47147
+Node: Key bindings48008
+Node: User config override50687
+Node: Contributing51950
+Node: How to help debug52326
+Node: Development53038
+Node: Preparation53267
+Node: Building eless53571
+Node: Sanity check of the tangled eless53799
+Node: Building documentation54088
+Node: Understand the changes54419
+Node: Build everything54746
+Node: Submitting PR55008
+Node: Miscellaneous55259
+Node: Example eless config in tcsh55408
 
 End Tag Table
 
