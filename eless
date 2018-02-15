@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='c447784'
+eless_git_hash='9b83a26'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -481,12 +481,19 @@ function emacs_Q_view_mode {
                        (global-set-key (kbd "C-<down>") (function eless/frame-height-double))
                        (global-set-key (kbd "C-<up>") (function eless/frame-height-half)))
 
-                     (unless (load (locate-user-emacs-file "elesscfg") :noerror)
-                       (load-theme (quote tango-dark) :no-confirm)
-                       ;; The tango-dark theme is good except for the bright yellow hl-line face
-                       (custom-theme-set-faces
-                        (quote user)
-                        (quote (hl-line ((t (:background "color-238")))))))
+                     (let* ((cfg-file "elesscfg")
+                            (cfg-path (if (fboundp (quote locate-user-emacs-file))
+                                          (locate-user-emacs-file cfg-file)
+                                        ;; For emacs older than 23.1.
+                                        (let ((home (file-name-as-directory (getenv "HOME"))))
+                                          (or (expand-file-name cfg-file (concat home ".emacs.d"))
+                                              (expand-file-name cfg-file home))))))
+                       (unless (load cfg-path :noerror)
+                         (load-theme (quote tango-dark) :no-confirm)
+                         ;; The tango-dark theme is good except for the bright yellow hl-line face
+                         (custom-theme-set-faces
+                          (quote user)
+                          (quote (hl-line ((t (:background "color-238"))))))))
                   )' 2>/dev/null </dev/tty
 }
 

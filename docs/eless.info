@@ -345,7 +345,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     c447784
+     9b83a26
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1241,12 +1241,19 @@ is not loaded if that file is present.
 
    User can further choose to re-define any of the above functions or
 key-bindings in this file.
-     (unless (load (locate-user-emacs-file "elesscfg") :noerror)
-       (load-theme (quote tango-dark) :no-confirm)
-       ;; The tango-dark theme is good except for the bright yellow hl-line face
-       (custom-theme-set-faces
-        (quote user)
-        (quote (hl-line ((t (:background "color-238")))))))
+     (let* ((cfg-file "elesscfg")
+            (cfg-path (if (fboundp (quote locate-user-emacs-file))
+                          (locate-user-emacs-file cfg-file)
+                        ;; For emacs older than 23.1.
+                        (let ((home (file-name-as-directory (getenv "HOME"))))
+                          (or (expand-file-name cfg-file (concat home ".emacs.d"))
+                              (expand-file-name cfg-file home))))))
+       (unless (load cfg-path :noerror)
+         (load-theme (quote tango-dark) :no-confirm)
+         ;; The tango-dark theme is good except for the bright yellow hl-line face
+         (custom-theme-set-faces
+          (quote user)
+          (quote (hl-line ((t (:background "color-238"))))))))
 
 
 File: eless.info,  Node: Contributing,  Next: Miscellaneous,  Prev: Code,  Up: Top
@@ -1450,18 +1457,18 @@ Node: tar-mode setup45574
 Node: Auto-setting of major modes46289
 Node: Key bindings47150
 Node: User config override49829
-Node: Contributing50661
-Node: How to help debug51037
-Node: Development51749
-Node: Preparation51978
-Node: Building eless52282
-Node: Sanity check of the tangled eless52510
-Node: Building documentation52799
-Node: Understand the changes53130
-Node: Build everything53457
-Node: Submitting PR53719
-Node: Miscellaneous53970
-Node: Example eless config in tcsh54119
+Node: Contributing51092
+Node: How to help debug51468
+Node: Development52180
+Node: Preparation52409
+Node: Building eless52713
+Node: Sanity check of the tangled eless52941
+Node: Building documentation53230
+Node: Understand the changes53561
+Node: Build everything53888
+Node: Submitting PR54150
+Node: Miscellaneous54401
+Node: Example eless config in tcsh54550
 
 End Tag Table
 

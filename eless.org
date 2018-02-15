@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-14 18:23:06 kmodi>
+# Time-stamp: <2018-02-15 10:13:47 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -251,7 +251,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-c447784
+9b83a26
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1148,12 +1148,19 @@ that file to set their favorite theme (or not set one), the
 User can further choose to re-define any of the above functions or
 key-bindings in this file.
 #+begin_src emacs-lisp
-(unless (load (locate-user-emacs-file "elesscfg") :noerror)
-  (load-theme (quote tango-dark) :no-confirm)
-  ;; The tango-dark theme is good except for the bright yellow hl-line face
-  (custom-theme-set-faces
-   (quote user)
-   (quote (hl-line ((t (:background "color-238")))))))
+(let* ((cfg-file "elesscfg")
+       (cfg-path (if (fboundp (quote locate-user-emacs-file))
+                     (locate-user-emacs-file cfg-file)
+                   ;; For emacs older than 23.1.
+                   (let ((home (file-name-as-directory (getenv "HOME"))))
+                     (or (expand-file-name cfg-file (concat home ".emacs.d"))
+                         (expand-file-name cfg-file home))))))
+  (unless (load cfg-path :noerror)
+    (load-theme (quote tango-dark) :no-confirm)
+    ;; The tango-dark theme is good except for the bright yellow hl-line face
+    (custom-theme-set-faces
+     (quote user)
+     (quote (hl-line ((t (:background "color-238"))))))))
 #+end_src
 * Contributing                                                 :contributing:
 :PROPERTIES:
