@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='c8fb1f7'
+eless_git_hash='8a3ec9a'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -155,6 +155,7 @@ do
     if [[ "${var}" == '-D' ]]
     then
         eless_print_version
+        export ELESS_DEBUG=1
         debug=1
     fi
 done
@@ -239,6 +240,9 @@ function emacs_Q_view_mode {
 
     ${EMACS} -Q "$@" \
              --eval '(progn
+                        (when (getenv "ELESS_DEBUG")
+                          (setq debug-on-error t))
+
                         ;; Keep the default-directory to be the same from where
                         ;; this script was launched from; useful during C-x C-f
                         (setq default-directory "'"$(pwd)"'/")

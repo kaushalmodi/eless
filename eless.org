@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-15 23:01:49 kmodi>
+# Time-stamp: <2018-02-15 23:29:18 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -244,7 +244,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-c8fb1f7
+8a3ec9a
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -409,6 +409,7 @@ do
     if [[ "${var}" == '-D' ]]
     then
         eless_print_version
+        export ELESS_DEBUG=1
         debug=1
     fi
 done
@@ -790,6 +791,14 @@ eval "$cmd"
 # source blocks
 Here is a "Do The Right Thing" config for =view-mode= that gets
 loaded in the emacs instance launched in the [[#emacs-q-view-mode][=emacs_Q_view_mode= function]].
+*** Enable debug on error (in debug mode [=-D=])
+:PROPERTIES:
+:CUSTOM_ID: debug-on-error
+:END:
+#+begin_src emacs-lisp
+(when (getenv "ELESS_DEBUG")
+  (setq debug-on-error t))
+#+end_src
 *** General setup
 :PROPERTIES:
 :CUSTOM_ID: general-setup
