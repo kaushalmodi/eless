@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='d9f560f'
+eless_git_hash='54927e0'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -449,7 +449,13 @@ function emacs_Q_view_mode {
                               (unless (and (string-match "\\`\\s-*\\*" buf-name)
                                            (not (string= buf-name "*Stdin*")))
                                 (push buf eless-bufs))))
-                          (setq eless-bufs (nreverse eless-bufs))
+                          ;; Interestingly emacs 24.x and probably older versions too had a bug where
+                          ;; the order of the files given to emacs on command-line got reversed. So we
+                          ;; need to add a workaround for that, for older emacsen.
+                          (when (version< "24.5.99" emacs-version)
+                            ;; Prevent doing this nreverse to correct the order for emacs versions
+                            ;; 24.5 and older.
+                            (setq eless-bufs (nreverse eless-bufs)))
                           (setq eless-first-buffer (car eless-bufs))
 
                           (dolist (buf eless-bufs)

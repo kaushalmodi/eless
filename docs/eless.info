@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     d9f560f
+     54927e0
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1223,7 +1223,13 @@ File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev
            (unless (and (string-match "\\`\\s-*\\*" buf-name)
                         (not (string= buf-name "*Stdin*")))
              (push buf eless-bufs))))
-       (setq eless-bufs (nreverse eless-bufs))
+       ;; Interestingly emacs 24.x and probably older versions too had a bug where
+       ;; the order of the files given to emacs on command-line got reversed. So we
+       ;; need to add a workaround for that, for older emacsen.
+       (when (version< "24.5.99" emacs-version)
+         ;; Prevent doing this nreverse to correct the order for emacs versions
+         ;; 24.5 and older.
+         (setq eless-bufs (nreverse eless-bufs)))
        (setq eless-first-buffer (car eless-bufs))
 
        (dolist (buf eless-bufs)
@@ -1531,20 +1537,20 @@ Node: Man-mode setup45806
 Node: Info-mode setup46249
 Node: tar-mode setup46697
 Node: Auto-setting of major modes47412
-Node: Key bindings50000
-Node: User config override52825
-Node: Contributing54090
-Node: How to help debug54466
-Node: Development55178
-Node: Preparation55407
-Node: Building eless55711
-Node: Sanity check of the tangled eless55939
-Node: Building documentation56308
-Node: Understand the changes56639
-Node: Build everything56966
-Node: Submitting PR57228
-Node: Miscellaneous57537
-Node: Example eless config in tcsh57686
+Node: Key bindings50390
+Node: User config override53215
+Node: Contributing54480
+Node: How to help debug54856
+Node: Development55568
+Node: Preparation55797
+Node: Building eless56101
+Node: Sanity check of the tangled eless56329
+Node: Building documentation56698
+Node: Understand the changes57029
+Node: Build everything57356
+Node: Submitting PR57618
+Node: Miscellaneous57927
+Node: Example eless config in tcsh58076
 
 End Tag Table
 

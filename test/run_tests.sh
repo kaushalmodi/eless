@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Time-stamp: <2018-02-16 14:42:53 kmodi>
+# Time-stamp: <2018-02-16 15:01:02 kmodi>
 
 EMACS="${EMACS:-emacs}"
-echo "Emacs version:"
-${EMACS} --version
+emacs_version="$(emacs --version | perl -ne '/GNU Emacs ([0-9]+\.[0-9]+)/ and print $1')"
+echo "Emacs version: ${emacs_version}"
 
 test_run_dir="/tmp/eless-test-run-dir"
 mkdir -p "${test_run_dir}"

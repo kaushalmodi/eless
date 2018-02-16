@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-16 14:33:53 kmodi>
+# Time-stamp: <2018-02-16 15:14:27 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -266,7 +266,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-d9f560f
+54927e0
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1145,7 +1145,13 @@ eless bar.tar.gz
       (unless (and (string-match "\\`\\s-*\\*" buf-name)
                    (not (string= buf-name "*Stdin*")))
         (push buf eless-bufs))))
-  (setq eless-bufs (nreverse eless-bufs))
+  ;; Interestingly emacs 24.x and probably older versions too had a bug where
+  ;; the order of the files given to emacs on command-line got reversed. So we
+  ;; need to add a workaround for that, for older emacsen.
+  (when (version< "24.5.99" emacs-version)
+    ;; Prevent doing this nreverse to correct the order for emacs versions
+    ;; 24.5 and older.
+    (setq eless-bufs (nreverse eless-bufs)))
   (setq eless-first-buffer (car eless-bufs))
 
   (dolist (buf eless-bufs)
