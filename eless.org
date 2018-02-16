@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-15 23:29:18 kmodi>
+# Time-stamp: <2018-02-15 23:37:32 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -93,14 +93,14 @@ I call it =eless= and here's a little taste of what it looks like:
 :PROPERTIES:
 :CUSTOM_ID: requirements
 :END:
-|----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|          | <70>                                                                                                                                                                                                                                                                                                                                                                           |
-| Software | Details                                                                                                                                                                                                                                                                                                                                                                        |
-|----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =emacs=  | If *developing* (when running =make eless= or =make docs=), the minimum required version is 24.4. If only *running* the =eless= script, older emacs versions should work fine (sparsely tested). So if you face a problem, [[https://github.com/kaushalmodi/eless/issues][report it]], by following instructions in the [[https://eless.scripter.co/#how-to-help-debug][*How to help debug*]] section. /Both building and running of =eless= are tested on emacs 24.4, RHEL 6.6./ |
-| =bash=   | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                                                                                                                                        |
-| =perl=   | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./                                                                                                          |
-|----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|          | <70>                                                                                                                                                                                                                                                                  |
+| Software | Details                                                                                                                                                                                                                                                               |
+|----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =emacs=  | If only *running* the =eless= script, the mininum required emacs version is 22.1 (manually tested). If *developing* (running =make all html test=), the minimum required version is *24.4* (24.4 onwards versions are auto-tested on Travis).                         |
+| =bash=   | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                               |
+| =perl=   | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./ |
+|----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 - NOTE :: If the environment variable =EMACS= is set, =eless= uses that
           as the emacs binary, else it defaults to using =emacs= as
@@ -122,7 +122,8 @@ Here are some usage examples:
 :CUSTOM_ID: contributors
 :END:
 - Thanks to {{{user(sshaw,Skye Shaw)}}} for helping improving =eless=
-  so that it can run on /macOS/, and suggesting Bash =trap=.
+  so that it can run on /macOS/ and emacs 22.1, and suggesting Bash
+  =trap=.
 - Thanks to {{{user(iqbalansari,Iqbal Ansari)}}} for adding support to
   read piped data in =emacs -Q -nw=.
 - Thanks to {{{user(alphapapa,Adam Porter)}}} for adding a =bash=
@@ -244,7 +245,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-8a3ec9a
+cc55024
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=

@@ -192,10 +192,11 @@ File: eless.info,  Node: Requirements,  Next: Try it out,  Up: Readme
 ================
 
 Software   Details
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-‘emacs’    If *developing* (when running ‘make eless’ or ‘make docs’), the minimum required version is 24.4.  If only *running* the ‘eless’ script, older emacs versions should work fine (sparsely tested).  So if you face a problem, report it (https://github.com/kaushalmodi/eless/issues), by following instructions in the *How to help debug* (https://eless.scripter.co/#how-to-help-debug) section.  _Both building and running of ‘eless’ are tested on emacs 24.4, RHEL 6.6._
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+‘emacs’    If only *running* the ‘eless’ script, the mininum required emacs version is 22.1 (manually tested).  If *developing* (running ‘make all html test’), the minimum required version is *24.4* (24.4 onwards versions are auto-tested on Travis).
 ‘bash’     This is a ‘bash’ script.  So even if you don’t use ‘bash’ shell, you need to have the ‘bash’ binary discoverable through your environment variable ‘PATH’.  _Tested to work in ‘tcsh’ shell on RHEL 6.6._
-‘perl’     Perl is used to replace ‘grep -Po’ and case-insensitive ‘sed’ based replacements (using ‘/I’) as those features are available only in GNU versions of ‘grep’ and ‘sed’ (which are not present by default on _macOS_ systems).  _Tested with Perl v5.16.3 on RHEL 6.6._
+‘perl’     Perl is used to replace ‘grep -Po’ and case-insensitive ‘sed’ based replacements (using ‘/I’) as those features are available only in GNU versions of ‘grep’ and ‘sed’ (which are not present by default on _macOS_ systems).  _Tested with Perl v5.16.3 on RHEL
+           6.6._
 
 NOTE
      If the environment variable ‘EMACS’ is set, ‘eless’ uses that as
@@ -239,8 +240,8 @@ File: eless.info,  Node: Contributors,  Prev: Try it out,  Up: Readme
 ================
 
    • Thanks to Skye Shaw (https://github.com/sshaw) for helping
-     improving ‘eless’ so that it can run on _macOS_, and suggesting
-     Bash ‘trap’.
+     improving ‘eless’ so that it can run on _macOS_ and emacs 22.1, and
+     suggesting Bash ‘trap’.
    • Thanks to Iqbal Ansari (https://github.com/iqbalansari) for adding
      support to read piped data in ‘emacs -Q -nw’.
    • Thanks to Adam Porter (https://github.com/alphapapa) for adding a
@@ -343,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     8a3ec9a
+     cc55024
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1443,64 +1444,64 @@ Tag Table:
 Node: Top188
 Node: Readme2272
 Node: Requirements5174
-Node: Try it out6980
-Node: Contributors8939
-Node: Eless Options9559
-Node: view-mode Common Bindings9883
-Node: Custom Bindings10867
-Node: Usage Examples11902
-Node: Current eless Version13848
-Node: Code14234
-Node: Unofficial Bash Strict Mode14603
-Node: Initialize variables15288
-Node: Cleanup using trap15826
-Node: Debug function16521
-Node: Input/Output Detection17701
-Node: Parse options19384
-Node: Print Help21103
-Node: Emacs with -Q in view-mode21436
-Node: Input/Output Scenarios22260
-Node: Output is going to a pipe23691
-Node: Output is going to _stdout_ Input is coming from a pipe24237
-Node: Input is piped from man command28524
-Node: Input is piped from a modules help in _IPython_29798
-Node: Input is piped from info command31029
-Node: Input is piped from something else31646
-Node: Output is going to _stdout_ Input is an argument to the script32420
-Node: Eval32792
-Node: Emacs Configuration33030
-Node: Enable debug on error (in debug mode [=-D=])33601
-Node: General setup33894
-Node: Ido setup35014
-Node: Isearch setup35584
-Node: Enable line truncation35998
-Node: Highlight the current line36349
-Node: Custom functions36585
-Node: Keep/delete matching lines37086
-Node: Frame and font re-sizing37776
-Node: Revert buffer in view-mode38789
-Node: Detect if diff-mode should be enabled39264
-Node: Detect if ANSI codes need to be converted to colors42309
-Node: ``Do The Right Thing'' Kill43468
-Node: dired-mode setup45221
-Node: Man-mode setup46041
-Node: Info-mode setup46484
-Node: tar-mode setup46932
-Node: Auto-setting of major modes47647
-Node: Key bindings48508
-Node: User config override51187
-Node: Contributing52452
-Node: How to help debug52828
-Node: Development53540
-Node: Preparation53769
-Node: Building eless54073
-Node: Sanity check of the tangled eless54301
-Node: Building documentation54670
-Node: Understand the changes55001
-Node: Build everything55328
-Node: Submitting PR55590
-Node: Miscellaneous55899
-Node: Example eless config in tcsh56048
+Node: Try it out6555
+Node: Contributors8514
+Node: Eless Options9149
+Node: view-mode Common Bindings9473
+Node: Custom Bindings10457
+Node: Usage Examples11492
+Node: Current eless Version13438
+Node: Code13824
+Node: Unofficial Bash Strict Mode14193
+Node: Initialize variables14878
+Node: Cleanup using trap15416
+Node: Debug function16111
+Node: Input/Output Detection17291
+Node: Parse options18974
+Node: Print Help20693
+Node: Emacs with -Q in view-mode21026
+Node: Input/Output Scenarios21850
+Node: Output is going to a pipe23281
+Node: Output is going to _stdout_ Input is coming from a pipe23827
+Node: Input is piped from man command28114
+Node: Input is piped from a modules help in _IPython_29388
+Node: Input is piped from info command30619
+Node: Input is piped from something else31236
+Node: Output is going to _stdout_ Input is an argument to the script32010
+Node: Eval32382
+Node: Emacs Configuration32620
+Node: Enable debug on error (in debug mode [=-D=])33191
+Node: General setup33484
+Node: Ido setup34604
+Node: Isearch setup35174
+Node: Enable line truncation35588
+Node: Highlight the current line35939
+Node: Custom functions36175
+Node: Keep/delete matching lines36676
+Node: Frame and font re-sizing37366
+Node: Revert buffer in view-mode38379
+Node: Detect if diff-mode should be enabled38854
+Node: Detect if ANSI codes need to be converted to colors41899
+Node: ``Do The Right Thing'' Kill43058
+Node: dired-mode setup44811
+Node: Man-mode setup45631
+Node: Info-mode setup46074
+Node: tar-mode setup46522
+Node: Auto-setting of major modes47237
+Node: Key bindings48098
+Node: User config override50777
+Node: Contributing52042
+Node: How to help debug52418
+Node: Development53130
+Node: Preparation53359
+Node: Building eless53663
+Node: Sanity check of the tangled eless53891
+Node: Building documentation54260
+Node: Understand the changes54591
+Node: Build everything54918
+Node: Submitting PR55180
+Node: Miscellaneous55489
+Node: Example eless config in tcsh55638
 
 End Tag Table
 
