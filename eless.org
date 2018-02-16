@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-16 01:02:01 kmodi>
+# Time-stamp: <2018-02-16 01:14:12 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -30,6 +30,25 @@
 # You need to have set `org-export-allow-bind-keywords' to t for below
 # to work.
 #+bind: org-html-inline-image-rules (("file" . "\\.\\(jpeg\\|jpg\\|png\\|gif\\|svg\\)\\'") ("http" . "\\.\\(jpeg\\|jpg\\|png\\|gif\\|svg\\)\\'") ("https" . "\\.\\(jpeg\\|jpg\\|png\\|gif\\|svg\\)\\'") ("https" . "svg\\?branch="))
+
+# Github ribbon
+#+begin_export html
+<style>
+ .github img {
+     position: absolute;
+     top: 0;
+     left: 0;
+     border: 0;
+ }
+ @media screen and (max-width: 875px) {
+     .github {
+         display: none;
+     }
+</style>
+<a href="https://github.com/kaushalmodi/eless" class="github">
+    <img src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"/>
+</a>
+#+end_export
 
 * Readme                                                             :readme:
 :PROPERTIES:
