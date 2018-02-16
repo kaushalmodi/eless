@@ -1,10 +1,6 @@
 #+TITLE: Eless - A Better Less
 #+AUTHOR: Kaushal Modi
-*ShellCheck Status*: [[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]]
-
------
-
-*Documentation*: [[https://eless.scripter.co][*eless.scripter.co*]]
+[[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]] | [[https://eless.scripter.co][*Documentation*]]
 
 -----
 
@@ -46,7 +42,7 @@ I call it =eless= and here's a little taste of what it looks like:
 - =diff= of =eless.org= with an older saved version and piping the
   result to =eless=
 
-As a bonus:
+*Meta Features*
 
 - [X] This script passes [[http://www.shellcheck.net][ShellCheck]], and
 - [X] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
@@ -55,6 +51,7 @@ As a bonus:
   README).
 - [X] The [[https://eless.scripter.co][documentation site]] is generated on-the-fly on Netlify using
   that same /one file/.
+- [X] This bash script has tests too!
 * Requirements
 |----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Software | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
