@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-16 00:25:45 kmodi>
+# Time-stamp: <2018-02-16 01:02:01 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -40,7 +40,8 @@
 
 -----
 
-[[https://github.com/kaushalmodi/eless][*eless*]] is a combination of Bash script and a minimal emacs =view-mode= config.
+[[https://github.com/kaushalmodi/eless][*eless*]] is a combination of Bash script and a minimal emacs
+=view-mode= config.
 
 This script is designed to:
 
@@ -49,8 +50,8 @@ This script is designed to:
   - /You can still [[https://eless.scripter.co/#user-config-override][customize]] the =eless= config if you like./
 - Not require an emacs server to be already running
 
-It was created out of a need to have something /like/ =less= (in the sense of
-/launch quickly, do, and quit/, but /better/ in these ways:
+It was created out of a need to have something /like/ =less= (in the
+sense of /launch quickly, do, and quit/), but /better/ in these ways:
 
 - Syntax highlighting
 - Org-mode file rendering
@@ -58,7 +59,8 @@ It was created out of a need to have something /like/ =less= (in the sense of
 - A better Info viewer
 - Dired, especially =wdired= (batch edit symbolic links, for
   example?)
-- Colored diffs, =git diff=, =git log=, =ls=, etc. (auto ANSI detection)
+- Colored diffs, =git diff=, =git log=, =ls=, etc. (auto ANSI
+  detection)
 - Filter log files to only show (or not show) lines matching a regexp
 - Auto-revert log files when I want (like =tail -f=)
 - Quickly change frame and font sizes
