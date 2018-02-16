@@ -78,3 +78,4 @@ less, diff, man, (probably ls too).
     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
+

@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     cc55024
+     49a8967
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -397,8 +397,7 @@ File: eless.info,  Node: Initialize variables,  Next: Cleanup using trap,  Prev:
      debug=0
      no_window_arg="-nw"
      emacs_args=("${no_window_arg}") # Run emacs with -nw by default
-     piped_data=''
-     tempfile=''
+     piped_data_file=''
      cmd=''
 
      input_from_pipe_flag=0
@@ -419,10 +418,10 @@ script exits _for any reason_.  Read this post on _redsymbol.net_
 (http://redsymbol.net/articles/bash-exit-traps/) for more information.
      # http://redsymbol.net/articles/bash-exit-traps/
      function cleanup {
-         if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
+         if [[ ! -z "${piped_data_file}" ]] && [[ ${debug} -eq 0 ]]
          then
              # Remove /tmp/foo.XXXXXX, /tmp/foo.XXXXXX.noblank
-             rm -f "${tempfile}" "${tempfile}.noblank"
+             rm -f "${piped_data_file}" "${piped_data_file}.noblank"
          fi
      }
      trap cleanup EXIT
@@ -497,7 +496,10 @@ We need this script to know:
      else # Script is getting input from pipe or file - non-interactive
          # echo bar | eless foo
          # echo bar | eless foo | cat -
-         piped_data="$(cat)"
+         piped_data_file="$(mktemp -t emacs-stdin-"$USER".XXXXXXX)" # https://github.com/koalaman/shellcheck/wiki/SC2086
+         debug "Piped data file : $piped_data_file"
+         # https://github.com/kaushalmodi/eless/issues/21#issuecomment-366141999
+         cat > "${piped_data_file}"
          debug "--> Input from pipe/file"
          input_from_pipe_flag=1
      fi
@@ -660,21 +662,19 @@ File: eless.info,  Node: Output is going to _stdout_ Input is coming from a pipe
 ‘mktemp’ requires the ‘-t’ argument to specify the temporary file name
 template on Mac OS (See ‘eless’ issue #18
 (https://github.com/kaushalmodi/eless/issues/18).)
-     tempfile="$(mktemp -t emacs-stdin-"$USER".XXXXXXX)" # https://github.com/koalaman/shellcheck/wiki/SC2086
-     debug "Temp File : $tempfile"
-     echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
-
-     # Remove blank lines from $tempfile. Some or all of BSD man pages
-     # would have a blank line at the top -- https://github.com/kaushalmodi/eless/issues/27#issuecomment-365992910.
+     debug "Pipe Contents (up to 10 lines) : $(head -n 10 "${piped_data_file}")"
+     # Remove blank lines from $piped_data_file. Some or all of BSD man
+     # pages would have a blank line at the top.
+     # -- https://github.com/kaushalmodi/eless/issues/27#issuecomment-365992910.
      # GNU ls man page begins with:
      #   l1: LS(1)                            User Commands                           LS(1)
      # BSD ls man page begins with:
      #   l1:
      #   l2: LS(1)                     BSD General Commands Manual                    LS(1)
-     perl -ne 'print unless /^\s*$/' "${tempfile}" > "${tempfile}.noblank"
+     perl -ne 'print unless /^\s*$/' "${piped_data_file}" > "${piped_data_file}.noblank"
 
-     # Now parse only the first line of that ${tempfile}.noblank file.
-     first_line_piped_data=$(head -n 1 "${tempfile}.noblank")
+     # Now parse only the first line of that ${piped_data_file}.noblank file.
+     first_line_piped_data=$(head -n 1 "${piped_data_file}.noblank")
      debug "first_line_piped_data = ${first_line_piped_data}"
 
      # It is not mandatory for the below perl regex to always match. So OR it with
@@ -772,7 +772,7 @@ File: eless.info,  Node: Input is piped from a modules help in _IPython_,  Next:
      cmd="emacs_Q_view_mode \
                   ${emacs_args[*]} \
                   --eval '(progn
-                            (man \"${tempfile}\")
+                            (man \"${piped_data_file}\")
                             ;; Below workaround is only for emacs 24.5.x and older releases
                             ;; where the man page takes some time to load.
                             ;; 1-second delay before killing the *scratch* window
@@ -811,11 +811,11 @@ This scenario could be anything, like:
      grep 'foo' bar | eless
      ls --color=always | eless
 
-   In that case, just open the ‘${tempfile}’ saved from the ‘STDIN’
-stream using ‘emacs_Q_view_mode’.
+   In that case, just open the ‘${piped_data_file}’ saved from the
+‘STDIN’ stream using ‘emacs_Q_view_mode’.
      debug "No man page or info manual detected"
 
-     cmd="emacs_Q_view_mode ${tempfile} \
+     cmd="emacs_Q_view_mode ${piped_data_file} \
                   ${emacs_args[*]} \
                   --eval '(progn
                             (set-visited-file-name nil)
@@ -1454,54 +1454,54 @@ Node: Current eless Version13438
 Node: Code13824
 Node: Unofficial Bash Strict Mode14193
 Node: Initialize variables14878
-Node: Cleanup using trap15416
-Node: Debug function16111
-Node: Input/Output Detection17291
-Node: Parse options18974
-Node: Print Help20693
-Node: Emacs with -Q in view-mode21026
-Node: Input/Output Scenarios21850
-Node: Output is going to a pipe23281
-Node: Output is going to _stdout_ Input is coming from a pipe23827
-Node: Input is piped from man command28114
-Node: Input is piped from a modules help in _IPython_29388
-Node: Input is piped from info command30619
-Node: Input is piped from something else31236
-Node: Output is going to _stdout_ Input is an argument to the script32010
-Node: Eval32382
-Node: Emacs Configuration32620
-Node: Enable debug on error (in debug mode [=-D=])33191
-Node: General setup33484
-Node: Ido setup34604
-Node: Isearch setup35174
-Node: Enable line truncation35588
-Node: Highlight the current line35939
-Node: Custom functions36175
-Node: Keep/delete matching lines36676
-Node: Frame and font re-sizing37366
-Node: Revert buffer in view-mode38379
-Node: Detect if diff-mode should be enabled38854
-Node: Detect if ANSI codes need to be converted to colors41899
-Node: ``Do The Right Thing'' Kill43058
-Node: dired-mode setup44811
-Node: Man-mode setup45631
-Node: Info-mode setup46074
-Node: tar-mode setup46522
-Node: Auto-setting of major modes47237
-Node: Key bindings48098
-Node: User config override50777
-Node: Contributing52042
-Node: How to help debug52418
-Node: Development53130
-Node: Preparation53359
-Node: Building eless53663
-Node: Sanity check of the tangled eless53891
-Node: Building documentation54260
-Node: Understand the changes54591
-Node: Build everything54918
-Node: Submitting PR55180
-Node: Miscellaneous55489
-Node: Example eless config in tcsh55638
+Node: Cleanup using trap15404
+Node: Debug function16120
+Node: Input/Output Detection17300
+Node: Parse options19244
+Node: Print Help20963
+Node: Emacs with -Q in view-mode21296
+Node: Input/Output Scenarios22120
+Node: Output is going to a pipe23551
+Node: Output is going to _stdout_ Input is coming from a pipe24097
+Node: Input is piped from man command28267
+Node: Input is piped from a modules help in _IPython_29541
+Node: Input is piped from info command30779
+Node: Input is piped from something else31396
+Node: Output is going to _stdout_ Input is an argument to the script32184
+Node: Eval32556
+Node: Emacs Configuration32794
+Node: Enable debug on error (in debug mode [=-D=])33365
+Node: General setup33658
+Node: Ido setup34778
+Node: Isearch setup35348
+Node: Enable line truncation35762
+Node: Highlight the current line36113
+Node: Custom functions36349
+Node: Keep/delete matching lines36850
+Node: Frame and font re-sizing37540
+Node: Revert buffer in view-mode38553
+Node: Detect if diff-mode should be enabled39028
+Node: Detect if ANSI codes need to be converted to colors42073
+Node: ``Do The Right Thing'' Kill43232
+Node: dired-mode setup44985
+Node: Man-mode setup45805
+Node: Info-mode setup46248
+Node: tar-mode setup46696
+Node: Auto-setting of major modes47411
+Node: Key bindings48272
+Node: User config override50951
+Node: Contributing52216
+Node: How to help debug52592
+Node: Development53304
+Node: Preparation53533
+Node: Building eless53837
+Node: Sanity check of the tangled eless54065
+Node: Building documentation54434
+Node: Understand the changes54765
+Node: Build everything55092
+Node: Submitting PR55354
+Node: Miscellaneous55663
+Node: Example eless config in tcsh55812
 
 End Tag Table
 

@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-15 23:37:32 kmodi>
+# Time-stamp: <2018-02-16 00:25:45 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -245,7 +245,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-cc55024
+49a8967
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -335,8 +335,7 @@ help=0
 debug=0
 no_window_arg="-nw"
 emacs_args=("${no_window_arg}") # Run emacs with -nw by default
-piped_data=''
-tempfile=''
+piped_data_file=''
 cmd=''
 
 input_from_pipe_flag=0
@@ -356,10 +355,10 @@ more information.
 #+begin_src shell
 # http://redsymbol.net/articles/bash-exit-traps/
 function cleanup {
-    if [[ ! -z "${tempfile}" ]] && [[ ${debug} -eq 0 ]]
+    if [[ ! -z "${piped_data_file}" ]] && [[ ${debug} -eq 0 ]]
     then
         # Remove /tmp/foo.XXXXXX, /tmp/foo.XXXXXX.noblank
-        rm -f "${tempfile}" "${tempfile}.noblank"
+        rm -f "${piped_data_file}" "${piped_data_file}.noblank"
     fi
 }
 trap cleanup EXIT
@@ -452,7 +451,10 @@ then
 else # Script is getting input from pipe or file - non-interactive
     # echo bar | eless foo
     # echo bar | eless foo | cat -
-    piped_data="$(cat)"
+    piped_data_file="$(mktemp -t emacs-stdin-"$USER".XXXXXXX)" # https://github.com/koalaman/shellcheck/wiki/SC2086
+    debug "Piped data file : $piped_data_file"
+    # https://github.com/kaushalmodi/eless/issues/21#issuecomment-366141999
+    cat > "${piped_data_file}"
     debug "--> Input from pipe/file"
     input_from_pipe_flag=1
 fi
@@ -532,7 +534,6 @@ fi
 #+begin_src shell :exports none
 debug "Raw Args                       : $*" # https://github.com/koalaman/shellcheck/wiki/SC2145
 debug "Emacs Args                     : ${emacs_args[*]}"
-debug "Pipe Contents (up to 10 lines) : $(echo "${piped_data}" | head -n 10)"
 #+end_src
 ** Emacs with =-Q= in =view-mode=
 :PROPERTIES:
@@ -608,21 +609,19 @@ exit 1
 =mktemp= requires the =-t= argument to specify the temporary file name
 template on Mac OS (See {{{issue(18)}}}.)
 #+begin_src shell :noweb no-export :noweb-ref output-stdout--input-pipe :tangle no
-tempfile="$(mktemp -t emacs-stdin-"$USER".XXXXXXX)" # https://github.com/koalaman/shellcheck/wiki/SC2086
-debug "Temp File : $tempfile"
-echo "${piped_data}" > "${tempfile}" # https://github.com/koalaman/shellcheck/wiki/SC2086
-
-# Remove blank lines from $tempfile. Some or all of BSD man pages
-# would have a blank line at the top -- https://github.com/kaushalmodi/eless/issues/27#issuecomment-365992910.
+debug "Pipe Contents (up to 10 lines) : $(head -n 10 "${piped_data_file}")"
+# Remove blank lines from $piped_data_file. Some or all of BSD man
+# pages would have a blank line at the top.
+# -- https://github.com/kaushalmodi/eless/issues/27#issuecomment-365992910.
 # GNU ls man page begins with:
 #   l1: LS(1)                            User Commands                           LS(1)
 # BSD ls man page begins with:
 #   l1:
 #   l2: LS(1)                     BSD General Commands Manual                    LS(1)
-perl -ne 'print unless /^\s*$/' "${tempfile}" > "${tempfile}.noblank"
+perl -ne 'print unless /^\s*$/' "${piped_data_file}" > "${piped_data_file}.noblank"
 
-# Now parse only the first line of that ${tempfile}.noblank file.
-first_line_piped_data=$(head -n 1 "${tempfile}.noblank")
+# Now parse only the first line of that ${piped_data_file}.noblank file.
+first_line_piped_data=$(head -n 1 "${piped_data_file}.noblank")
 debug "first_line_piped_data = ${first_line_piped_data}"
 
 # It is not mandatory for the below perl regex to always match. So OR it with
@@ -710,7 +709,7 @@ debug "Python Module = ${python_module_help}"
 cmd="emacs_Q_view_mode \
              ${emacs_args[*]} \
              --eval '(progn
-                       (man \"${tempfile}\")
+                       (man \"${piped_data_file}\")
                        ;; Below workaround is only for emacs 24.5.x and older releases
                        ;; where the man page takes some time to load.
                        ;; 1-second delay before killing the *scratch* window
@@ -747,12 +746,12 @@ grep 'foo' bar | eless
 ls --color=always | eless
 #+end_src
 
-In that case, just open the =${tempfile}= saved from the =STDIN=
+In that case, just open the =${piped_data_file}= saved from the =STDIN=
 stream using =emacs_Q_view_mode=.
 #+begin_src shell :noweb-ref neither-man-nor-info :tangle no
 debug "No man page or info manual detected"
 
-cmd="emacs_Q_view_mode ${tempfile} \
+cmd="emacs_Q_view_mode ${piped_data_file} \
              ${emacs_args[*]} \
              --eval '(progn
                        (set-visited-file-name nil)
