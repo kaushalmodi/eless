@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-16 11:48:29 kmodi>
+# Time-stamp: <2018-02-16 14:33:53 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -266,7 +266,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-19199f9
+d9f560f
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1131,8 +1131,8 @@ eless bar.tar.gz
   gets stored to the =eless-first-buffer= variable.
 - Then loop through all the =eless-bufs= bufs i.e. the "user-buffers",
   and set the major mode for each appropriately.
-- At the end of it all, switch to the =eless-first-buffer=, and
-  maximize the window so that only that buffer is shown.
+- At the end of it all, switch to the =eless-first-buffer= (if
+  non-nil), and maximize the window so that only that buffer is shown.
 #+begin_src emacs-lisp
 (defvar eless-first-buffer nil
   "Buffer for the first of the list of files specified at command-line.")
@@ -1168,9 +1168,11 @@ eless bar.tar.gz
         (eless/enable-ansi-color-maybe)
         (view-mode 1))))))
 
-(add-to-list (quote emacs-startup-hook)
-             (lambda () (delete-other-windows)
-               (switch-to-buffer eless-first-buffer)))
+(when eless-first-buffer
+  (add-to-list (quote emacs-startup-hook)
+               (lambda ()
+                 (delete-other-windows)
+                 (switch-to-buffer eless-first-buffer))))
 #+end_src
 *** Key bindings
 :PROPERTIES:

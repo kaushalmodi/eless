@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     19199f9
+     d9f560f
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1209,8 +1209,9 @@ File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev
      example) gets stored to the ‘eless-first-buffer’ variable.
    • Then loop through all the ‘eless-bufs’ bufs i.e.  the
      “user-buffers”, and set the major mode for each appropriately.
-   • At the end of it all, switch to the ‘eless-first-buffer’, and
-     maximize the window so that only that buffer is shown.
+   • At the end of it all, switch to the ‘eless-first-buffer’ (if
+     non-nil), and maximize the window so that only that buffer is
+     shown.
      (defvar eless-first-buffer nil
        "Buffer for the first of the list of files specified at command-line.")
 
@@ -1245,9 +1246,11 @@ File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev
              (eless/enable-ansi-color-maybe)
              (view-mode 1))))))
 
-     (add-to-list (quote emacs-startup-hook)
-                  (lambda () (delete-other-windows)
-                    (switch-to-buffer eless-first-buffer)))
+     (when eless-first-buffer
+       (add-to-list (quote emacs-startup-hook)
+                    (lambda ()
+                      (delete-other-windows)
+                      (switch-to-buffer eless-first-buffer))))
 
 
 File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-setting of major modes,  Up: Emacs Configuration
@@ -1528,20 +1531,20 @@ Node: Man-mode setup45806
 Node: Info-mode setup46249
 Node: tar-mode setup46697
 Node: Auto-setting of major modes47412
-Node: Key bindings49923
-Node: User config override52748
-Node: Contributing54013
-Node: How to help debug54389
-Node: Development55101
-Node: Preparation55330
-Node: Building eless55634
-Node: Sanity check of the tangled eless55862
-Node: Building documentation56231
-Node: Understand the changes56562
-Node: Build everything56889
-Node: Submitting PR57151
-Node: Miscellaneous57460
-Node: Example eless config in tcsh57609
+Node: Key bindings50000
+Node: User config override52825
+Node: Contributing54090
+Node: How to help debug54466
+Node: Development55178
+Node: Preparation55407
+Node: Building eless55711
+Node: Sanity check of the tangled eless55939
+Node: Building documentation56308
+Node: Understand the changes56639
+Node: Build everything56966
+Node: Submitting PR57228
+Node: Miscellaneous57537
+Node: Example eless config in tcsh57686
 
 End Tag Table
 

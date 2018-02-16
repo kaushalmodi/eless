@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='19199f9'
+eless_git_hash='d9f560f'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -472,9 +472,11 @@ function emacs_Q_view_mode {
                                 (eless/enable-ansi-color-maybe)
                                 (view-mode 1))))))
 
-                        (add-to-list (quote emacs-startup-hook)
-                                     (lambda () (delete-other-windows)
-                                       (switch-to-buffer eless-first-buffer)))
+                        (when eless-first-buffer
+                          (add-to-list (quote emacs-startup-hook)
+                                       (lambda ()
+                                         (delete-other-windows)
+                                         (switch-to-buffer eless-first-buffer))))
 
                         (eval-after-load (quote view)
                           (quote
