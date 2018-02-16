@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     6d833e4
+     92beb14
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -681,7 +681,7 @@ template on Mac OS (See ‘eless’ issue #18
      # "builtins"; below deals with that corner case.
      # .. faced this problem when trying to do "man read | eless".
      man_page=$(echo "${first_line_piped_data}" \
-                    | perl -ne '/^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print "$1"' \
+                    | perl -ne '/^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print $1' \
                     | perl -pe 's/bash_builtins/builtins/i' \
                     || true)
      # Using perl expression above instead of below grep (which requires
@@ -694,7 +694,7 @@ template on Mac OS (See ‘eless’ issue #18
      #           PAGER=eless python3; help('iter')  ->  "Help on built-in function iter in module builtins:"
      #           PAGER=eless python3; help('exit')  ->  "Help on Quitter in module _sitebuiltins object:"
      python_module_help=$(echo "${first_line_piped_data}" \
-                              | perl -ne '/^Help on (.+ in )*(module|package) (.*)(?=:$)/ and print "$3"' \
+                              | perl -ne '/^Help on (?:.+ in )*(?:module|package) (.*)(?=:$)/ and print $1' \
                               || true)
      # Using perl expression above instead of below grep (which requires
      # GNU grep -- not available by default on macOS):
@@ -704,7 +704,7 @@ template on Mac OS (See ‘eless’ issue #18
      #   /path/to/some.info or /path/to/some.info.gz
      # Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
      info_man=$(echo "${first_line_piped_data}" \
-                    | perl -ne '/^(.*\/)*([^\/]+)(?=\.info(\-[0-9]+)*(\.gz)*$)/ and print "$2"' \
+                    | perl -ne '/^(?:.*\/)*([^\/]+)(?=\.info(?:\-[0-9]+)*(?:\.gz)*$)/ and print $1' \
                     || true)
      # Using perl expression above instead of below grep (which requires
      # GNU grep -- not available by default on macOS):
@@ -1446,44 +1446,44 @@ Node: Emacs with -Q in view-mode21344
 Node: Input/Output Scenarios22156
 Node: Output is going to a pipe23587
 Node: Output is going to _stdout_ Input is coming from a pipe24133
-Node: Input is piped from man command28416
-Node: Input is piped from a modules help in _IPython_29690
-Node: Input is piped from info command30921
-Node: Input is piped from something else31538
-Node: Output is going to _stdout_ Input is an argument to the script32312
-Node: Eval32684
-Node: Emacs Configuration32922
-Node: General setup33444
-Node: Ido setup34511
-Node: Isearch setup35081
-Node: Enable line truncation35495
-Node: Highlight the current line35846
-Node: Custom functions36082
-Node: Keep/delete matching lines36583
-Node: Frame and font re-sizing37273
-Node: Revert buffer in view-mode38286
-Node: Detect if diff-mode should be enabled38761
-Node: Detect if ANSI codes need to be converted to colors41809
-Node: ``Do The Right Thing'' Kill42968
-Node: dired-mode setup44721
-Node: Man-mode setup45541
-Node: Info-mode setup45984
-Node: tar-mode setup46432
-Node: Auto-setting of major modes47147
-Node: Key bindings48008
-Node: User config override50687
-Node: Contributing51950
-Node: How to help debug52326
-Node: Development53038
-Node: Preparation53267
-Node: Building eless53571
-Node: Sanity check of the tangled eless53799
-Node: Building documentation54088
-Node: Understand the changes54419
-Node: Build everything54746
-Node: Submitting PR55008
-Node: Miscellaneous55259
-Node: Example eless config in tcsh55408
+Node: Input is piped from man command28420
+Node: Input is piped from a modules help in _IPython_29694
+Node: Input is piped from info command30925
+Node: Input is piped from something else31542
+Node: Output is going to _stdout_ Input is an argument to the script32316
+Node: Eval32688
+Node: Emacs Configuration32926
+Node: General setup33448
+Node: Ido setup34515
+Node: Isearch setup35085
+Node: Enable line truncation35499
+Node: Highlight the current line35850
+Node: Custom functions36086
+Node: Keep/delete matching lines36587
+Node: Frame and font re-sizing37277
+Node: Revert buffer in view-mode38290
+Node: Detect if diff-mode should be enabled38765
+Node: Detect if ANSI codes need to be converted to colors41813
+Node: ``Do The Right Thing'' Kill42972
+Node: dired-mode setup44725
+Node: Man-mode setup45545
+Node: Info-mode setup45988
+Node: tar-mode setup46436
+Node: Auto-setting of major modes47151
+Node: Key bindings48012
+Node: User config override50691
+Node: Contributing51954
+Node: How to help debug52330
+Node: Development53042
+Node: Preparation53271
+Node: Building eless53575
+Node: Sanity check of the tangled eless53803
+Node: Building documentation54092
+Node: Understand the changes54423
+Node: Build everything54750
+Node: Submitting PR55012
+Node: Miscellaneous55263
+Node: Example eless config in tcsh55412
 
 End Tag Table
 

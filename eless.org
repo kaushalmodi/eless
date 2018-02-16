@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-15 12:28:14 kmodi>
+# Time-stamp: <2018-02-15 22:01:32 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -251,7 +251,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-6d833e4
+92beb14
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -635,7 +635,7 @@ debug "first_line_piped_data = ${first_line_piped_data}"
 # "builtins"; below deals with that corner case.
 # .. faced this problem when trying to do "man read | eless".
 man_page=$(echo "${first_line_piped_data}" \
-               | perl -ne '/^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print "$1"' \
+               | perl -ne '/^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print $1' \
                | perl -pe 's/bash_builtins/builtins/i' \
                || true)
 # Using perl expression above instead of below grep (which requires
@@ -648,7 +648,7 @@ man_page=$(echo "${first_line_piped_data}" \
 #           PAGER=eless python3; help('iter')  ->  "Help on built-in function iter in module builtins:"
 #           PAGER=eless python3; help('exit')  ->  "Help on Quitter in module _sitebuiltins object:"
 python_module_help=$(echo "${first_line_piped_data}" \
-                         | perl -ne '/^Help on (.+ in )*(module|package) (.*)(?=:$)/ and print "$3"' \
+                         | perl -ne '/^Help on (?:.+ in )*(?:module|package) (.*)(?=:$)/ and print $1' \
                          || true)
 # Using perl expression above instead of below grep (which requires
 # GNU grep -- not available by default on macOS):
@@ -658,7 +658,7 @@ python_module_help=$(echo "${first_line_piped_data}" \
 #   /path/to/some.info or /path/to/some.info.gz
 # Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
 info_man=$(echo "${first_line_piped_data}" \
-               | perl -ne '/^(.*\/)*([^\/]+)(?=\.info(\-[0-9]+)*(\.gz)*$)/ and print "$2"' \
+               | perl -ne '/^(?:.*\/)*([^\/]+)(?=\.info(?:\-[0-9]+)*(?:\.gz)*$)/ and print $1' \
                || true)
 # Using perl expression above instead of below grep (which requires
 # GNU grep -- not available by default on macOS):
