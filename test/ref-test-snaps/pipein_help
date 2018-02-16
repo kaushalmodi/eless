@@ -1,5 +1,4 @@
 fundamental-mode
-*Stdin*
 
 Script to run emacs in view-mode with some sane defaults in attempt to replace
 less, diff, man, (probably ls too).
