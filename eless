@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Version: v0.5
+# Version: master
 
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -7,11 +7,11 @@
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
 #
-# This file is tangled from https://github.com/kaushalmodi/eless/blob/v0.5/eless.org
+# This file is tangled from https://github.com/kaushalmodi/eless/blob/master/eless.org
 #   Do NOT edit this manually.
 
-eless_version='v0.5'
-eless_git_hash='e028bf4'
+eless_version='master'
+eless_git_hash='32d37a9'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -438,17 +438,43 @@ function emacs_Q_view_mode {
                           (define-key tar-mode-map (kbd "q") (function eless/kill-emacs-or-buffer)))
                         (add-hook (quote tar-mode-hook) (function eless/tar-mode-customization))
 
-                        (cond
-                         ((derived-mode-p (quote dired-mode)) (eless/dired-mode-customization))
-                         ((derived-mode-p (quote Man-mode)) (eless/Man-mode-customization))
-                         ((derived-mode-p (quote Info-mode)) (eless/Info-mode-customization))
-                         ((derived-mode-p (quote tar-mode)) (eless/tar-mode-customization))
-                         (t     ;Enable view-mode if none of the above major-modes are active
-                          ;; Auto-enable diff-mode. For example, when doing "diff foo bar | eless"
-                          (eless/enable-diff-mode-maybe)
-                          ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
-                          (eless/enable-ansi-color-maybe)
-                          (view-mode 1)))
+                        (defvar eless-first-buffer nil
+                          "Buffer for the first of the list of files specified at command-line.")
+
+                        (let ((bufs (buffer-list))
+                              eless-bufs)
+                          (dolist (buf bufs)
+                            (let ((buf-name (buffer-name buf)))
+                              ;; Do not add "non-user" buffers to eless-bufs.
+                              (unless (and (string-match "\\`\\s-*\\*" buf-name)
+                                           (not (string= buf-name "*Stdin*")))
+                                (push buf eless-bufs))))
+                          (setq eless-bufs (nreverse eless-bufs))
+                          (setq eless-first-buffer (car eless-bufs))
+
+                          (dolist (buf eless-bufs)
+                            (with-current-buffer buf
+                              (cond
+                               ((derived-mode-p (quote dired-mode))
+                                (eless/dired-mode-customization))
+                               ((derived-mode-p (quote Man-mode))
+                                (eless/Man-mode-customization))
+                               ((derived-mode-p (quote Info-mode))
+                                (eless/Info-mode-customization))
+                               ((derived-mode-p (quote tar-mode))
+                                (eless/tar-mode-customization))
+                               (t ;Enable view-mode if none of the above major-modes are active
+                                ;; Auto-enable diff-mode. For example, when doing
+                                ;; "diff foo bar | eless".
+                                (eless/enable-diff-mode-maybe)
+                                ;; Auto-convert ANSI codes to colors. For example, when doing
+                                ;; "ls --color=always | eless".
+                                (eless/enable-ansi-color-maybe)
+                                (view-mode 1))))))
+
+                        (add-to-list (quote emacs-startup-hook)
+                                     (lambda () (delete-other-windows)
+                                       (switch-to-buffer eless-first-buffer)))
 
                         (eval-after-load (quote view)
                           (quote

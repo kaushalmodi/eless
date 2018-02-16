@@ -342,9 +342,9 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 6 Current ‘eless’ Version
 *************************
 
-     v0.5
+     master
 
-     e028bf4
+     32d37a9
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1199,17 +1199,55 @@ File: eless.info,  Node: Auto-setting of major modes,  Next: Key bindings,  Prev
 7.11.8 Auto-setting of major modes
 ----------------------------------
 
-     (cond
-      ((derived-mode-p (quote dired-mode)) (eless/dired-mode-customization))
-      ((derived-mode-p (quote Man-mode)) (eless/Man-mode-customization))
-      ((derived-mode-p (quote Info-mode)) (eless/Info-mode-customization))
-      ((derived-mode-p (quote tar-mode)) (eless/tar-mode-customization))
-      (t     ;Enable view-mode if none of the above major-modes are active
-       ;; Auto-enable diff-mode. For example, when doing "diff foo bar | eless"
-       (eless/enable-diff-mode-maybe)
-       ;; Auto-convert ANSI codes to colors. For example, when doing "ls --color=always | eless"
-       (eless/enable-ansi-color-maybe)
-       (view-mode 1)))
+   • Loop through all the buffers and store only the “user-buffers”
+     (i.e.  buffers that are not ‘*Messages*’, ‘*Scratch*’, ..)  to the
+     let-bound ‘eless-bufs’ list.
+   • If user specified multiple files to be opened from the command
+     line:
+            eless file1 file2 file3
+     ensure that the buffer for the first file (‘file1’ in above
+     example) gets stored to the ‘eless-first-buffer’ variable.
+   • Then loop through all the ‘eless-bufs’ bufs i.e.  the
+     “user-buffers”, and set the major mode for each appropriately.
+   • At the end of it all, switch to the ‘eless-first-buffer’, and
+     maximize the window so that only that buffer is shown.
+     (defvar eless-first-buffer nil
+       "Buffer for the first of the list of files specified at command-line.")
+
+     (let ((bufs (buffer-list))
+           eless-bufs)
+       (dolist (buf bufs)
+         (let ((buf-name (buffer-name buf)))
+           ;; Do not add "non-user" buffers to eless-bufs.
+           (unless (and (string-match "\\`\\s-*\\*" buf-name)
+                        (not (string= buf-name "*Stdin*")))
+             (push buf eless-bufs))))
+       (setq eless-bufs (nreverse eless-bufs))
+       (setq eless-first-buffer (car eless-bufs))
+
+       (dolist (buf eless-bufs)
+         (with-current-buffer buf
+           (cond
+            ((derived-mode-p (quote dired-mode))
+             (eless/dired-mode-customization))
+            ((derived-mode-p (quote Man-mode))
+             (eless/Man-mode-customization))
+            ((derived-mode-p (quote Info-mode))
+             (eless/Info-mode-customization))
+            ((derived-mode-p (quote tar-mode))
+             (eless/tar-mode-customization))
+            (t ;Enable view-mode if none of the above major-modes are active
+             ;; Auto-enable diff-mode. For example, when doing
+             ;; "diff foo bar | eless".
+             (eless/enable-diff-mode-maybe)
+             ;; Auto-convert ANSI codes to colors. For example, when doing
+             ;; "ls --color=always | eless".
+             (eless/enable-ansi-color-maybe)
+             (view-mode 1))))))
+
+     (add-to-list (quote emacs-startup-hook)
+                  (lambda () (delete-other-windows)
+                    (switch-to-buffer eless-first-buffer)))
 
 
 File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-setting of major modes,  Up: Emacs Configuration
@@ -1451,57 +1489,57 @@ Node: view-mode Common Bindings9474
 Node: Custom Bindings10458
 Node: Usage Examples11493
 Node: Current eless Version13439
-Node: Code13823
-Node: Unofficial Bash Strict Mode14192
-Node: Initialize variables14877
-Node: Cleanup using trap15403
-Node: Debug function16119
-Node: Input/Output Detection17299
-Node: Parse options19243
-Node: Print Help20962
-Node: Emacs with -Q in view-mode21295
-Node: Input/Output Scenarios22119
-Node: Output is going to a pipe23550
-Node: Output is going to _stdout_ Input is coming from a pipe24096
-Node: Input is piped from man command28266
-Node: Input is piped from a modules help in _IPython_29540
-Node: Input is piped from info command30778
-Node: Input is piped from something else31395
-Node: Output is going to _stdout_ Input is an argument to the script32183
-Node: Eval32555
-Node: Emacs Configuration32793
-Node: Enable debug on error (in debug mode [=-D=])33364
-Node: General setup33657
-Node: Ido setup34777
-Node: Isearch setup35347
-Node: Enable line truncation35761
-Node: Highlight the current line36112
-Node: Custom functions36348
-Node: Keep/delete matching lines36849
-Node: Frame and font re-sizing37539
-Node: Revert buffer in view-mode38552
-Node: Detect if diff-mode should be enabled39027
-Node: Detect if ANSI codes need to be converted to colors42072
-Node: ``Do The Right Thing'' Kill43231
-Node: dired-mode setup44984
-Node: Man-mode setup45804
-Node: Info-mode setup46247
-Node: tar-mode setup46695
-Node: Auto-setting of major modes47410
-Node: Key bindings48271
-Node: User config override50950
-Node: Contributing52215
-Node: How to help debug52591
-Node: Development53303
-Node: Preparation53532
-Node: Building eless53836
-Node: Sanity check of the tangled eless54064
-Node: Building documentation54433
-Node: Understand the changes54764
-Node: Build everything55091
-Node: Submitting PR55353
-Node: Miscellaneous55662
-Node: Example eless config in tcsh55811
+Node: Code13825
+Node: Unofficial Bash Strict Mode14194
+Node: Initialize variables14879
+Node: Cleanup using trap15405
+Node: Debug function16121
+Node: Input/Output Detection17301
+Node: Parse options19245
+Node: Print Help20964
+Node: Emacs with -Q in view-mode21297
+Node: Input/Output Scenarios22121
+Node: Output is going to a pipe23552
+Node: Output is going to _stdout_ Input is coming from a pipe24098
+Node: Input is piped from man command28268
+Node: Input is piped from a modules help in _IPython_29542
+Node: Input is piped from info command30780
+Node: Input is piped from something else31397
+Node: Output is going to _stdout_ Input is an argument to the script32185
+Node: Eval32557
+Node: Emacs Configuration32795
+Node: Enable debug on error (in debug mode [=-D=])33366
+Node: General setup33659
+Node: Ido setup34779
+Node: Isearch setup35349
+Node: Enable line truncation35763
+Node: Highlight the current line36114
+Node: Custom functions36350
+Node: Keep/delete matching lines36851
+Node: Frame and font re-sizing37541
+Node: Revert buffer in view-mode38554
+Node: Detect if diff-mode should be enabled39029
+Node: Detect if ANSI codes need to be converted to colors42074
+Node: ``Do The Right Thing'' Kill43233
+Node: dired-mode setup44986
+Node: Man-mode setup45806
+Node: Info-mode setup46249
+Node: tar-mode setup46697
+Node: Auto-setting of major modes47412
+Node: Key bindings49923
+Node: User config override52602
+Node: Contributing53867
+Node: How to help debug54243
+Node: Development54955
+Node: Preparation55184
+Node: Building eless55488
+Node: Sanity check of the tangled eless55716
+Node: Building documentation56085
+Node: Understand the changes56416
+Node: Build everything56743
+Node: Submitting PR57005
+Node: Miscellaneous57314
+Node: Example eless config in tcsh57463
 
 End Tag Table
 
