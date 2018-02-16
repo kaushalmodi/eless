@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-15 22:01:32 kmodi>
+# Time-stamp: <2018-02-15 22:06:58 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -251,7 +251,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-92beb14
+371f951
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -944,7 +944,7 @@ loaded in the emacs instance launched in the [[#emacs-q-view-mode][=emacs_Q_view
         ;; Check if the diff format is neither context nor unified
         (unless diff-mode-enable
           (goto-char (point-min))
-          (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
+          (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\([adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
             (forward-line 1)
             (let ((diff-type (match-string-no-properties 1)))
               (cond

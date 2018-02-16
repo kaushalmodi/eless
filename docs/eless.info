@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     92beb14
+     371f951
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1032,7 +1032,7 @@ File: eless.info,  Node: Detect if diff-mode should be enabled,  Next: Detect if
              ;; Check if the diff format is neither context nor unified
              (unless diff-mode-enable
                (goto-char (point-min))
-               (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
+               (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\([adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
                  (forward-line 1)
                  (let ((diff-type (match-string-no-properties 1)))
                    (cond
@@ -1463,27 +1463,27 @@ Node: Keep/delete matching lines36587
 Node: Frame and font re-sizing37277
 Node: Revert buffer in view-mode38290
 Node: Detect if diff-mode should be enabled38765
-Node: Detect if ANSI codes need to be converted to colors41813
-Node: ``Do The Right Thing'' Kill42972
-Node: dired-mode setup44725
-Node: Man-mode setup45545
-Node: Info-mode setup45988
-Node: tar-mode setup46436
-Node: Auto-setting of major modes47151
-Node: Key bindings48012
-Node: User config override50691
-Node: Contributing51954
-Node: How to help debug52330
-Node: Development53042
-Node: Preparation53271
-Node: Building eless53575
-Node: Sanity check of the tangled eless53803
-Node: Building documentation54092
-Node: Understand the changes54423
-Node: Build everything54750
-Node: Submitting PR55012
-Node: Miscellaneous55263
-Node: Example eless config in tcsh55412
+Node: Detect if ANSI codes need to be converted to colors41810
+Node: ``Do The Right Thing'' Kill42969
+Node: dired-mode setup44722
+Node: Man-mode setup45542
+Node: Info-mode setup45985
+Node: tar-mode setup46433
+Node: Auto-setting of major modes47148
+Node: Key bindings48009
+Node: User config override50688
+Node: Contributing51951
+Node: How to help debug52327
+Node: Development53039
+Node: Preparation53268
+Node: Building eless53572
+Node: Sanity check of the tangled eless53800
+Node: Building documentation54089
+Node: Understand the changes54420
+Node: Build everything54747
+Node: Submitting PR55009
+Node: Miscellaneous55260
+Node: Example eless config in tcsh55409
 
 End Tag Table
 

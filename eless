@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='92beb14'
+eless_git_hash='371f951'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -337,7 +337,7 @@ function emacs_Q_view_mode {
                              ;; Check if the diff format is neither context nor unified
                              (unless diff-mode-enable
                                (goto-char (point-min))
-                               (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\(?1:[adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
+                               (when (re-search-forward "^\\(?:[0-9]+,\\)?[0-9]+\\([adc]\\)\\(?:[0-9]+,\\)?[0-9]+$" bound :noerror)
                                  (forward-line 1)
                                  (let ((diff-type (match-string-no-properties 1)))
                                    (cond
