@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      master
 
-     32d37a9
+     19199f9
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1260,6 +1260,8 @@ File: eless.info,  Node: Key bindings,  Next: User config override,  Prev: Auto-
         (progn
           (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
           (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+          (define-key view-mode-map (kbd ":p") (function previous-buffer))
+          (define-key view-mode-map (kbd ":n") (function next-buffer))
           (define-key view-mode-map (kbd "0") (function delete-window))
           (define-key view-mode-map (kbd "1") (function delete-other-windows))
           (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
@@ -1527,19 +1529,19 @@ Node: Info-mode setup46249
 Node: tar-mode setup46697
 Node: Auto-setting of major modes47412
 Node: Key bindings49923
-Node: User config override52602
-Node: Contributing53867
-Node: How to help debug54243
-Node: Development54955
-Node: Preparation55184
-Node: Building eless55488
-Node: Sanity check of the tangled eless55716
-Node: Building documentation56085
-Node: Understand the changes56416
-Node: Build everything56743
-Node: Submitting PR57005
-Node: Miscellaneous57314
-Node: Example eless config in tcsh57463
+Node: User config override52748
+Node: Contributing54013
+Node: How to help debug54389
+Node: Development55101
+Node: Preparation55330
+Node: Building eless55634
+Node: Sanity check of the tangled eless55862
+Node: Building documentation56231
+Node: Understand the changes56562
+Node: Build everything56889
+Node: Submitting PR57151
+Node: Miscellaneous57460
+Node: Example eless config in tcsh57609
 
 End Tag Table
 

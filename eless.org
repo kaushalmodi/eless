@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-16 11:39:07 kmodi>
+# Time-stamp: <2018-02-16 11:48:29 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -266,7 +266,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-32d37a9
+19199f9
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1182,6 +1182,8 @@ eless bar.tar.gz
    (progn
      (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
      (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+     (define-key view-mode-map (kbd ":p") (function previous-buffer))
+     (define-key view-mode-map (kbd ":n") (function next-buffer))
      (define-key view-mode-map (kbd "0") (function delete-window))
      (define-key view-mode-map (kbd "1") (function delete-other-windows))
      (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))

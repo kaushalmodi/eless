@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='master'
-eless_git_hash='32d37a9'
+eless_git_hash='19199f9'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -481,6 +481,8 @@ function emacs_Q_view_mode {
                            (progn
                              (define-key view-mode-map (kbd "!") (function eless/delete-matching-lines))
                              (define-key view-mode-map (kbd "&") (function eless/keep-lines))
+                             (define-key view-mode-map (kbd ":p") (function previous-buffer))
+                             (define-key view-mode-map (kbd ":n") (function next-buffer))
                              (define-key view-mode-map (kbd "0") (function delete-window))
                              (define-key view-mode-map (kbd "1") (function delete-other-windows))
                              (define-key view-mode-map (kbd "A") (function auto-revert-tail-mode))
