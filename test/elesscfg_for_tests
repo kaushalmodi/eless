@@ -26,10 +26,13 @@
       (delete-matching-lines "^https://github.com/kaushalmodi/eless/.*")
       (write-file snap-file))))
 
-(unless eless-disable-snap
+(defun eless-take-snap-and-quit ()
   (eless-take-snap)
-  (sleep-for 1)                      ;Some delay required for man page to render
+  (sleep-for 1)            ;Some delay required for man page to render
   (save-buffers-kill-emacs))
+
+(unless eless-disable-snap
+  (add-to-list 'emacs-startup-hook #'eless-take-snap-and-quit :append))
 
 ;; Local Variables:
 ;; fill-column: 70
