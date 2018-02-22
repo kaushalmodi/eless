@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='v0.5'
-eless_git_hash='7a73a06'
+eless_git_hash='09917c6'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -503,7 +503,8 @@ function emacs_Q_view_mode {
                             ;; The tango-dark theme is good except for the bright yellow hl-line face
                             (custom-theme-set-faces
                              (quote user)
-                             (quote (hl-line ((t (:background "color-238"))))))))
+                             (quote (hl-line ((t (:background "color-238")))))
+                             (quote (Man-overstrike ((t (:foreground "#f3dc55" :weight normal)))))))) ;gold yellow
                      )' 2>/dev/null </dev/tty
 }
 

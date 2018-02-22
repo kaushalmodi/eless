@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-22 10:17:50 kmodi>
+# Time-stamp: <2018-02-22 12:20:02 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -266,7 +266,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-7a73a06
+09917c6
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1221,7 +1221,8 @@ key-bindings in this file.
     ;; The tango-dark theme is good except for the bright yellow hl-line face
     (custom-theme-set-faces
      (quote user)
-     (quote (hl-line ((t (:background "color-238"))))))))
+     (quote (hl-line ((t (:background "color-238")))))
+     (quote (Man-overstrike ((t (:foreground "#f3dc55" :weight normal)))))))) ;gold yellow
 #+end_src
 * Contributing                                                 :contributing:
 :PROPERTIES:

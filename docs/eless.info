@@ -344,7 +344,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     7a73a06
+     09917c6
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1301,7 +1301,8 @@ key-bindings in this file.
          ;; The tango-dark theme is good except for the bright yellow hl-line face
          (custom-theme-set-faces
           (quote user)
-          (quote (hl-line ((t (:background "color-238"))))))))
+          (quote (hl-line ((t (:background "color-238")))))
+          (quote (Man-overstrike ((t (:foreground "#f3dc55" :weight normal)))))))) ;gold yellow
 
 
 File: eless.info,  Node: Contributing,  Next: Miscellaneous,  Prev: Code,  Up: Top
@@ -1508,18 +1509,18 @@ Node: tar-mode setup47553
 Node: Auto-setting of major modes48268
 Node: Key bindings49129
 Node: User config override51808
-Node: Contributing53073
-Node: How to help debug53449
-Node: Development54161
-Node: Preparation54390
-Node: Building eless54694
-Node: Sanity check of the tangled eless54922
-Node: Building documentation55291
-Node: Understand the changes55622
-Node: Build everything55949
-Node: Submitting PR56211
-Node: Miscellaneous56520
-Node: Example eless config in tcsh56669
+Node: Contributing53166
+Node: How to help debug53542
+Node: Development54254
+Node: Preparation54483
+Node: Building eless54787
+Node: Sanity check of the tangled eless55015
+Node: Building documentation55384
+Node: Understand the changes55715
+Node: Build everything56042
+Node: Submitting PR56304
+Node: Miscellaneous56613
+Node: Example eless config in tcsh56762
 
 End Tag Table
 
