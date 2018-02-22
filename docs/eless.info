@@ -352,7 +352,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     9448563
+     7e5b425
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1483,9 +1483,9 @@ File: eless.info,  Node: Example eless config in bash,  Next: Example eless conf
 
      # Note for macOS users using man:
      #   "PAGER=eless man ls", for example, would not work on macOS
-     # because of the way how man handles the stream on man pages on those
-     # systems. But with the below alias, "eman ls" will work. (Ref:
-     # https://github.com/kaushalmodi/eless/issues/27)
+     # because of the way how man handles the stream of man pages on those
+     # systems. But with the below alias, "eman ls" will work instead.
+     # (Ref: https://github.com/kaushalmodi/eless/issues/27)
      alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
 
 
@@ -1498,9 +1498,9 @@ File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless confi
 
      # Note for macOS users using man:
      #   "PAGER=eless man ls", for example, would not work on macOS
-     # because of the way how man handles the stream on man pages on those
-     # systems. But with the below alias, "eman ls" will work. (Ref:
-     # https://github.com/kaushalmodi/eless/issues/27)
+     # because of the way how man handles the stream of man pages on those
+     # systems. But with the below alias, "eman ls" will work instead.
+     # (Ref: https://github.com/kaushalmodi/eless/issues/27)
      alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
 
 
@@ -1568,7 +1568,7 @@ Node: Submitting PR57273
 Node: Miscellaneous57582
 Node: Example eless config in tcsh57796
 Node: Example eless config in bash58566
-Node: Example eless config in zsh59201
+Node: Example eless config in zsh59209
 
 End Tag Table
 

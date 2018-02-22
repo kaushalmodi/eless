@@ -55,8 +55,10 @@ less, diff, man, (probably ls too).
 
 ** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
 
-* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
-  'man grep' will then show the grep man page in eless.
+* For GNU/Linux systems, set the environment variable PAGER to 'eless' to use it
+   for viewing man pages. 'man grep' will then show the grep man page in eless.
+   For macOS systems, 'PAGER=less man grep | eless --gui' will work instead
+   i.e. do not set PAGER to eless just for this 'man' use case.
 
 * Usage Examples
 
@@ -76,6 +78,7 @@ less, diff, man, (probably ls too).
     PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
     PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
-    PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
-
+    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+    PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+    PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
+    PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to "eless --gui" (works on macOS).

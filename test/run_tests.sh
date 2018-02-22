@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2018-02-22 10:22:15 kmodi>
+# Time-stamp: <2018-02-22 13:40:59 kmodi>
 
 EMACS="${EMACS:-emacs}"
 echo "Emacs version:"
@@ -33,7 +33,7 @@ mkdir -p "${test_temp_dir}"
 # http://redsymbol.net/articles/bash-exit-traps/
 function cleanup {
     rm -rf "${test_run_dir}"
-    rm -rf "${ELESS_TEST_SNAP_DIR}"
+    # rm -rf "${ELESS_TEST_SNAP_DIR}"
 }
 trap cleanup EXIT
 
