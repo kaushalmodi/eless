@@ -1,6 +1,6 @@
-# Time-stamp: <2018-02-15 22:46:06 kmodi>
+# Time-stamp: <2018-02-22 15:04:27 kmodi>
 
-# Makefile to export org documents to md for Hugo from the command line
+# Makefile to tangle eless.org and export documentation as well.
 # Run just "make" to see usage examples.
 
 MAKE_ := $(MAKE) --no-print-directory
@@ -95,11 +95,8 @@ ctemp:
 	@find $(shell pwd)/docs -name "*.*~" -delete
 
 clean: ctemp
-	@find ./docs/content -name "*.md" -delete
-	@rm -rf $(ELESS_TEST_SITE_DIR)/public $(ELESS_TEST_SITE_DIR)/content-golden
 	@rm -rf $(ELESS_ELPA)
-	@rm -rf ./docs/public
-	@rm -rf /tmp/hugo/bin
+	@rm -f ./docs/*.html ./docs/*.texi
 
 # Set a make variable during rule execution
 # https://stackoverflow.com/a/1909390/1219634

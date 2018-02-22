@@ -11,7 +11,7 @@ env:
   - EMACS_VERSION=25.1
   - EMACS_VERSION=24.5
   - EMACS_VERSION=24.4
-#  - EMACS_VERSION=master # master branch
+  - EMACS_VERSION=master # master branch
 services:
   - docker
 before_install:

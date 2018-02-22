@@ -1,4 +1,4 @@
-;; Time-stamp: <2018-02-15 10:52:06 kmodi>
+;; Time-stamp: <2018-02-22 14:51:40 kmodi>
 
 ;; Setup to build eless and its documentation in an "emacs -Q" environment.
 
@@ -42,9 +42,10 @@ or newer.")
 
 (defvar eless-elpa (let ((dir (getenv "ELESS_ELPA")))
                      (unless dir
-                       (setq dir (concat (file-name-as-directory
-                                          (concat temporary-file-directory (getenv "USER")))
-                                         "eless-dev/")))
+                       (setq dir
+                             (let* ((dir-1 (file-name-as-directory (expand-file-name user-login-name temporary-file-directory)))
+                                    (dir-2 (file-name-as-directory (expand-file-name "eless-dev" dir-1))))
+                               dir-2)))
                      (setq dir (file-name-as-directory dir))
                      (make-directory dir :parents)
                      dir))
