@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-16 01:22:28 kmodi>
+# Time-stamp: <2018-02-22 09:57:37 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -654,7 +654,7 @@ debug "first_line_piped_data = ${first_line_piped_data}"
 # "builtins"; below deals with that corner case.
 # .. faced this problem when trying to do "man read | eless".
 man_page=$(echo "${first_line_piped_data}" \
-               | perl -ne '/^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print $1' \
+               | perl -ne '/^([A-Za-z0-9-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print $1' \
                | perl -pe 's/bash_builtins/builtins/i' \
                || true)
 # Using perl expression above instead of below grep (which requires
