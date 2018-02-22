@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='v0.5'
-eless_git_hash='09917c6'
+eless_git_hash='9448563'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -68,8 +68,10 @@ less, diff, man, (probably ls too).
 
 ** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
 
-* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
-  'man grep' will then show the grep man page in eless.
+* For GNU/Linux systems, set the environment variable PAGER to 'eless' to use it
+   for viewing man pages. 'man grep' will then show the grep man page in eless.
+   For macOS systems, 'PAGER=less man grep | eless --gui' will work instead
+   i.e. do not set PAGER to eless just for this 'man' use case.
 
 * Usage Examples
 
@@ -89,8 +91,10 @@ less, diff, man, (probably ls too).
     PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
     PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
-    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\".
+    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+    PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\" (does not work on macOS).
+    PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to \"eless --gui\" (works on macOS).
 "
 
 set -o pipefail
@@ -560,10 +564,10 @@ else
         then
             # The first line of Perl man pages is assumed to be
             #   Foo::Bar(1zoo) something something Foo::Bar(1zoo)
-            # Example: PAGER=eless man Net::FTP
+            # Example: PAGER=eless man Net::FTP  or  PAGER=less man Net::FTP | eless
             #   If the man page name is completely in upper-case, convert it
             # to lower-case.
-            # Example: PAGER=eless man error::pass1
+            # Example: PAGER=eless man error::pass1  or  PAGER=less man error::pass1 | eless
             man_page=$(echo "${first_line_piped_data}" \
                            | perl -ne '/^([A-Za-z0-9-_]+::[A-Za-z0-9-_]+)(\([a-z0-9]+\))(?=\s+.*?\1\2$)/ and print $1' \
                            | perl -pe 's/^[A-Z0-9-_]+::[A-Z0-9-_]+$/\L$_/' \

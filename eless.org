@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-22 12:20:02 kmodi>
+# Time-stamp: <2018-02-22 13:33:09 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -137,7 +137,8 @@ Here are some usage examples:
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
           shell*. Specifically, examples like ~PAGER=eless man grep~
-          will need to be adapted for the shell you are using.
+          might need to be adapted for the shell you are using,
+          [[#example-eless-config-in-bash][and also the OS]].
 ** Contributors
 :PROPERTIES:
 :CUSTOM_ID: contributors
@@ -237,14 +238,17 @@ eless foo.tar.xz                   # Read the contents of archives; emacs does t
 PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
 PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
 PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
+PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
 #+end_src
 #+begin_src shell :noweb-ref noweb-usage-examples-eless-gui
-PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
+PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
+PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
           shell*. Specifically, examples like ~PAGER=eless man grep~
-          will need to be adapted for the shell you are using.
+          might need to be adapted for the shell you are using, [[#example-eless-config-in-bash][and
+          also the OS]].
 * Current =eless= Version
 :PROPERTIES:
 :CUSTOM_ID: current-version
@@ -266,7 +270,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-09917c6
+9448563
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -313,13 +317,16 @@ less, diff, man, (probably ls too).
 
 ,** Do 'C-h b' and search for 'view-mode' to see more bindings in this mode.
 
-,* Set the environment variable PAGER to 'eless' to use it for viewing man pages.
-  'man grep' will then show the grep man page in eless.
+,* For GNU/Linux systems, set the environment variable PAGER to 'eless' to use it
+   for viewing man pages. 'man grep' will then show the grep man page in eless.
+   For macOS systems, 'PAGER=less man grep | eless --gui' will work instead
+   i.e. do not set PAGER to eless just for this 'man' use case.
 
 ,* Usage Examples
 
     <<noweb-usage-examples>>
-    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\".
+    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\" (does not work on macOS).
+    PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to \"eless --gui\" (works on macOS).
 "
 #+end_src
 ** Unofficial Bash Strict Mode
@@ -669,10 +676,10 @@ if [[ -z ${man_page} ]]
 then
     # The first line of Perl man pages is assumed to be
     #   Foo::Bar(1zoo) something something Foo::Bar(1zoo)
-    # Example: PAGER=eless man Net::FTP
+    # Example: PAGER=eless man Net::FTP  or  PAGER=less man Net::FTP | eless
     #   If the man page name is completely in upper-case, convert it
     # to lower-case.
-    # Example: PAGER=eless man error::pass1
+    # Example: PAGER=eless man error::pass1  or  PAGER=less man error::pass1 | eless
     man_page=$(echo "${first_line_piped_data}" \
                    | perl -ne '/^([A-Za-z0-9-_]+::[A-Za-z0-9-_]+)(\([a-z0-9]+\))(?=\s+.*?\1\2$)/ and print $1' \
                    | perl -pe 's/^[A-Z0-9-_]+::[A-Z0-9-_]+$/\L$_/' \
@@ -1246,7 +1253,7 @@ This guide is for you if you'd like to do any of the below:
        - =eless foo -D=
        - =info org | eless -D=
      - If you are providing debug info for something like =man foo=, do
-       - =PAGER=​"eless -D" man foo=
+       - ~PAGER="eless -D" man foo~ or ~man foo | eless -D~.
 ** Development
 :PROPERTIES:
 :CUSTOM_ID: development
@@ -1316,17 +1323,53 @@ make all
 :CUSTOM_ID: example-eless-config-in-tcsh
 :END:
 #+begin_src shell
-setenv PAGER eless # Show man pages using eless
+setenv PAGER eless # Show man pages using eless (on non-macOS systems)
 
 alias info  '\info \!* | eless'
 
 alias diff  '\diff \!* | eless'
 alias diffg '\diff \!* | eless --gui'
 
-# (MAN)pages in eless (G)UI mode
+# (MAN)pages in eless (G)UI mode. Note that will not work on macOS
+# systems.
 alias mang '(setenv PAGER "eless --gui"; man \!*)'
 
+# For macOS systems, set PAGER to less and instead pipe the man output
+# to eless.
+alias eman '(setenv PAGER less; man \!* | eless)'
+alias emang '(setenv PAGER less; man \!* | eless --gui)'
+
 alias ev eless
+#+end_src
+** Example =eless= config in =bash=
+:PROPERTIES:
+:EXPORT_FILE_NAME: example-eless-config-in-bash
+:CUSTOM_ID: example-eless-config-in-bash
+:END:
+#+begin_src shell
+export PAGER=eless
+
+# Note for macOS users using man:
+#   "PAGER=eless man ls", for example, would not work on macOS
+# because of the way how man handles the stream on man pages on those
+# systems. But with the below alias, "eman ls" will work. (Ref:
+# https://github.com/kaushalmodi/eless/issues/27)
+alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
+#+end_src
+** Example =eless= config in =zsh=
+:PROPERTIES:
+:EXPORT_FILE_NAME: example-eless-config-in-zsh
+:CUSTOM_ID: example-eless-config-in-zsh
+:END:
+#+begin_src shell
+export PAGER=eless
+
+# Note for macOS users using man:
+#   "PAGER=eless man ls", for example, would not work on macOS
+# because of the way how man handles the stream on man pages on those
+# systems. But with the below alias, "eman ls" will work. (Ref:
+# https://github.com/kaushalmodi/eless/issues/27)
+alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
 #+end_src
 * COMMENT Local Variables                                           :ARCHIVE:
 # Local Variables:

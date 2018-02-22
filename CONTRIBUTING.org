@@ -13,7 +13,7 @@ This guide is for you if you'd like to do any of the below:
        - =eless foo -D=
        - =info org | eless -D=
      - If you are providing debug info for something like =man foo=, do
-       - =PAGER=​"eless -D" man foo=
+       - ~PAGER="eless -D" man foo~ or ~man foo | eless -D~.
 * Development
 ** Preparation
 #+BEGIN_SRC shell

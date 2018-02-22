@@ -108,6 +108,8 @@ Building documentation
 Miscellaneous
 
 * Example eless config in tcsh::
+* Example eless config in bash::
+* Example eless config in zsh::
 
 
 
@@ -226,12 +228,15 @@ Here are some usage examples:
      PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
      PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
      PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
-     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
+     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+     PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
+     PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 NOTE
      Above examples are tested to work in a *‘bash’ shell*.
-     Specifically, examples like ‘PAGER=eless man grep’ will need to be
-     adapted for the shell you are using.
+     Specifically, examples like ‘PAGER=eless man grep’ might need to be
+     adapted for the shell you are using, *note and also the OS: Example
+     eless config in bash.
 
 
 File: eless.info,  Node: Contributors,  Prev: Try it out,  Up: Readme
@@ -329,12 +334,15 @@ File: eless.info,  Node: Usage Examples,  Next: Current eless Version,  Prev: Cu
      PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
      PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
      PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless.
-     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui".
+     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+     PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
+     PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 NOTE
      Above examples are tested to work in a *‘bash’ shell*.
-     Specifically, examples like ‘PAGER=eless man grep’ will need to be
-     adapted for the shell you are using.
+     Specifically, examples like ‘PAGER=eless man grep’ might need to be
+     adapted for the shell you are using, *note and also the OS: Example
+     eless config in bash.
 
 
 File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Examples,  Up: Top
@@ -344,7 +352,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     09917c6
+     9448563
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -701,10 +709,10 @@ template on Mac OS (See ‘eless’ issue #18
      then
          # The first line of Perl man pages is assumed to be
          #   Foo::Bar(1zoo) something something Foo::Bar(1zoo)
-         # Example: PAGER=eless man Net::FTP
+         # Example: PAGER=eless man Net::FTP  or  PAGER=less man Net::FTP | eless
          #   If the man page name is completely in upper-case, convert it
          # to lower-case.
-         # Example: PAGER=eless man error::pass1
+         # Example: PAGER=eless man error::pass1  or  PAGER=less man error::pass1 | eless
          man_page=$(echo "${first_line_piped_data}" \
                         | perl -ne '/^([A-Za-z0-9-_]+::[A-Za-z0-9-_]+)(\([a-z0-9]+\))(?=\s+.*?\1\2$)/ and print $1' \
                         | perl -pe 's/^[A-Z0-9-_]+::[A-Z0-9-_]+$/\L$_/' \
@@ -1337,7 +1345,7 @@ File: eless.info,  Node: How to help debug,  Next: Development,  Up: Contributin
                   • ‘info org | eless -D’
              • If you are providing debug info for something like ‘man
                foo’, do
-                  • ‘PAGER=​"eless -D" man foo’
+                  • ‘PAGER="eless -D" man foo’ or ‘man foo | eless -D’.
 
 
 File: eless.info,  Node: Development,  Prev: How to help debug,  Up: Contributing
@@ -1438,89 +1446,129 @@ File: eless.info,  Node: Miscellaneous,  Prev: Contributing,  Up: Top
 * Menu:
 
 * Example eless config in tcsh::
+* Example eless config in bash::
+* Example eless config in zsh::
 
 
-File: eless.info,  Node: Example eless config in tcsh,  Up: Miscellaneous
+File: eless.info,  Node: Example eless config in tcsh,  Next: Example eless config in bash,  Up: Miscellaneous
 
 9.1 Example ‘eless’ config in ‘tcsh’
 ====================================
 
-     setenv PAGER eless # Show man pages using eless
+     setenv PAGER eless # Show man pages using eless (on non-macOS systems)
 
      alias info  '\info \!* | eless'
 
      alias diff  '\diff \!* | eless'
      alias diffg '\diff \!* | eless --gui'
 
-     # (MAN)pages in eless (G)UI mode
+     # (MAN)pages in eless (G)UI mode. Note that will not work on macOS
+     # systems.
      alias mang '(setenv PAGER "eless --gui"; man \!*)'
 
+     # For macOS systems, set PAGER to less and instead pipe the man output
+     # to eless.
+     alias eman '(setenv PAGER less; man \!* | eless)'
+     alias emang '(setenv PAGER less; man \!* | eless --gui)'
+
      alias ev eless
+
+
+File: eless.info,  Node: Example eless config in bash,  Next: Example eless config in zsh,  Prev: Example eless config in tcsh,  Up: Miscellaneous
+
+9.2 Example ‘eless’ config in ‘bash’
+====================================
+
+     export PAGER=eless
+
+     # Note for macOS users using man:
+     #   "PAGER=eless man ls", for example, would not work on macOS
+     # because of the way how man handles the stream on man pages on those
+     # systems. But with the below alias, "eman ls" will work. (Ref:
+     # https://github.com/kaushalmodi/eless/issues/27)
+     alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
+
+
+File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless config in bash,  Up: Miscellaneous
+
+9.3 Example ‘eless’ config in ‘zsh’
+===================================
+
+     export PAGER=eless
+
+     # Note for macOS users using man:
+     #   "PAGER=eless man ls", for example, would not work on macOS
+     # because of the way how man handles the stream on man pages on those
+     # systems. But with the below alias, "eman ls" will work. (Ref:
+     # https://github.com/kaushalmodi/eless/issues/27)
+     alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
 
 
 
 Tag Table:
 Node: Top188
-Node: Readme2272
-Node: Requirements5175
-Node: Try it out6556
-Node: Contributors8515
-Node: Eless Options9150
-Node: view-mode Common Bindings9474
-Node: Custom Bindings10458
-Node: Usage Examples11493
-Node: Current eless Version13439
-Node: Code13823
-Node: Unofficial Bash Strict Mode14192
-Node: Initialize variables14877
-Node: Cleanup using trap15403
-Node: Debug function16119
-Node: Input/Output Detection17299
-Node: Parse options19243
-Node: Print Help20962
-Node: Emacs with -Q in view-mode21295
-Node: Input/Output Scenarios22119
-Node: Output is going to a pipe23550
-Node: Output is going to _stdout_ Input is coming from a pipe24096
-Node: Input is piped from man command29135
-Node: Input is piped from a modules help in _IPython_30398
-Node: Input is piped from info command31636
-Node: Input is piped from something else32253
-Node: Output is going to _stdout_ Input is an argument to the script33041
-Node: Eval33413
-Node: Emacs Configuration33651
-Node: Enable debug on error (in debug mode [=-D=])34222
-Node: General setup34515
-Node: Ido setup35635
-Node: Isearch setup36205
-Node: Enable line truncation36619
-Node: Highlight the current line36970
-Node: Custom functions37206
-Node: Keep/delete matching lines37707
-Node: Frame and font re-sizing38397
-Node: Revert buffer in view-mode39410
-Node: Detect if diff-mode should be enabled39885
-Node: Detect if ANSI codes need to be converted to colors42930
-Node: ``Do The Right Thing'' Kill44089
-Node: dired-mode setup45842
-Node: Man-mode setup46662
-Node: Info-mode setup47105
-Node: tar-mode setup47553
-Node: Auto-setting of major modes48268
-Node: Key bindings49129
-Node: User config override51808
-Node: Contributing53166
-Node: How to help debug53542
-Node: Development54254
-Node: Preparation54483
-Node: Building eless54787
-Node: Sanity check of the tangled eless55015
-Node: Building documentation55384
-Node: Understand the changes55715
-Node: Build everything56042
-Node: Submitting PR56304
-Node: Miscellaneous56613
-Node: Example eless config in tcsh56762
+Node: Readme2337
+Node: Requirements5240
+Node: Try it out6621
+Node: Contributors8980
+Node: Eless Options9615
+Node: view-mode Common Bindings9939
+Node: Custom Bindings10923
+Node: Usage Examples11958
+Node: Current eless Version14304
+Node: Code14688
+Node: Unofficial Bash Strict Mode15057
+Node: Initialize variables15742
+Node: Cleanup using trap16268
+Node: Debug function16984
+Node: Input/Output Detection18164
+Node: Parse options20108
+Node: Print Help21827
+Node: Emacs with -Q in view-mode22160
+Node: Input/Output Scenarios22984
+Node: Output is going to a pipe24415
+Node: Output is going to _stdout_ Input is coming from a pipe24961
+Node: Input is piped from man command30078
+Node: Input is piped from a modules help in _IPython_31341
+Node: Input is piped from info command32579
+Node: Input is piped from something else33196
+Node: Output is going to _stdout_ Input is an argument to the script33984
+Node: Eval34356
+Node: Emacs Configuration34594
+Node: Enable debug on error (in debug mode [=-D=])35165
+Node: General setup35458
+Node: Ido setup36578
+Node: Isearch setup37148
+Node: Enable line truncation37562
+Node: Highlight the current line37913
+Node: Custom functions38149
+Node: Keep/delete matching lines38650
+Node: Frame and font re-sizing39340
+Node: Revert buffer in view-mode40353
+Node: Detect if diff-mode should be enabled40828
+Node: Detect if ANSI codes need to be converted to colors43873
+Node: ``Do The Right Thing'' Kill45032
+Node: dired-mode setup46785
+Node: Man-mode setup47605
+Node: Info-mode setup48048
+Node: tar-mode setup48496
+Node: Auto-setting of major modes49211
+Node: Key bindings50072
+Node: User config override52751
+Node: Contributing54109
+Node: How to help debug54485
+Node: Development55223
+Node: Preparation55452
+Node: Building eless55756
+Node: Sanity check of the tangled eless55984
+Node: Building documentation56353
+Node: Understand the changes56684
+Node: Build everything57011
+Node: Submitting PR57273
+Node: Miscellaneous57582
+Node: Example eless config in tcsh57796
+Node: Example eless config in bash58566
+Node: Example eless config in zsh59201
 
 End Tag Table
 
