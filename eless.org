@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-22 09:57:37 kmodi>
+# Time-stamp: <2018-02-22 10:17:50 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -266,7 +266,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-e028bf4
+7a73a06
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -653,13 +653,31 @@ debug "first_line_piped_data = ${first_line_piped_data}"
 # For some odd reason, the "BASH_BUILTINS" man page is named just
 # "builtins"; below deals with that corner case.
 # .. faced this problem when trying to do "man read | eless".
+#   If the man page name is completely in upper-case, convert it
+# to lower-case.
 man_page=$(echo "${first_line_piped_data}" \
                | perl -ne '/^([A-Za-z0-9-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print $1' \
                | perl -pe 's/bash_builtins/builtins/i' \
+               | perl -pe 's/^[A-Z0-9-_()]+$/\L$_/' \
                || true)
 # Using perl expression above instead of below grep (which requires
 # GNU grep -- not available by default on macOS):
 #   grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)'
+
+# If it's not a regular man page, check if it's a Perl man page.
+if [[ -z ${man_page} ]]
+then
+    # The first line of Perl man pages is assumed to be
+    #   Foo::Bar(1zoo) something something Foo::Bar(1zoo)
+    # Example: PAGER=eless man Net::FTP
+    #   If the man page name is completely in upper-case, convert it
+    # to lower-case.
+    # Example: PAGER=eless man error::pass1
+    man_page=$(echo "${first_line_piped_data}" \
+                   | perl -ne '/^([A-Za-z0-9-_]+::[A-Za-z0-9-_]+)(\([a-z0-9]+\))(?=\s+.*?\1\2$)/ and print $1' \
+                   | perl -pe 's/^[A-Z0-9-_]+::[A-Z0-9-_]+$/\L$_/' \
+                   || true)
+fi
 
 # The first line of Python package MODULE help is assumed to be
 #   "Help on package MODULE:" OR "Help on module MODULE:" OR "Help on SOMETHING in module MODULE:"
@@ -709,7 +727,7 @@ debug "Man Page = ${man_page}"
 cmd="emacs_Q_view_mode \
              ${emacs_args[*]} \
              --eval '(progn
-                       (man (downcase \"${man_page}\"))
+                       (man \"${man_page}\")
                        ;; Below workaround is only for emacs 24.5.x and older releases
                        ;; where the man page takes some time to load.
                        ;; 1-second delay before killing the *scratch* window

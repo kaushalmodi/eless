@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2018-02-15 22:45:26 kmodi>
+# Time-stamp: <2018-02-22 10:22:15 kmodi>
 
 EMACS="${EMACS:-emacs}"
 echo "Emacs version:"
@@ -21,6 +21,11 @@ cd "${test_run_dir}" || exit
 
 export ELESS_TEST_SNAP_DIR="/tmp/eless-test-snaps/"
 export ELESS="${eless_repo_root}/eless"
+
+# Whether or not ${ELESS_TEST_SNAP_DIR} exists, first create it and
+# then delete it to remove old files if any.
+mkdir -p "${ELESS_TEST_SNAP_DIR}"
+rm -rf "${ELESS_TEST_SNAP_DIR}"
 
 test_temp_dir="${test_run_dir}"/x
 mkdir -p "${test_temp_dir}"
