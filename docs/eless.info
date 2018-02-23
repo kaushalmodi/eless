@@ -28,8 +28,17 @@ eless – A Better less
 Readme
 
 * Requirements::
+* Installation::
 * Try it out::
 * Contributors::
+
+Installation
+
+* Clone this rep::
+* Get the eless executable::
+* Get eless documentation::
+* What you end up with::
+* Note::
 
 Code
 
@@ -184,11 +193,12 @@ clock-wise.._
 * Menu:
 
 * Requirements::
+* Installation::
 * Try it out::
 * Contributors::
 
 
-File: eless.info,  Node: Requirements,  Next: Try it out,  Up: Readme
+File: eless.info,  Node: Requirements,  Next: Installation,  Up: Readme
 
 1.1 Requirements
 ================
@@ -206,9 +216,92 @@ NOTE
      binary.
 
 
-File: eless.info,  Node: Try it out,  Next: Contributors,  Prev: Requirements,  Up: Readme
+File: eless.info,  Node: Installation,  Next: Try it out,  Prev: Requirements,  Up: Readme
 
-1.2 Try it out
+1.2 Installation
+================
+
+I do not have an installation script for this project, but you can
+install it quickly with few manual steps.
+
+* Menu:
+
+* Clone this rep::
+* Get the eless executable::
+* Get eless documentation::
+* What you end up with::
+* Note::
+
+
+File: eless.info,  Node: Clone this rep,  Next: Get the eless executable,  Up: Installation
+
+1.2.1 Clone this rep
+--------------------
+
+For the following instructions, let’s assume that you clone this repo to
+‘~/downloads/eless’.
+     git clone https://github.com/kaushalmodi/eless ~/downloads/eless
+
+
+File: eless.info,  Node: Get the eless executable,  Next: Get eless documentation,  Prev: Clone this rep,  Up: Installation
+
+1.2.2 Get the ‘eless’ executable
+--------------------------------
+
+Assuming that you have ‘~/.local/bin/’ directory added to your
+environment variable ‘PATH’:
+     cp -f ~/downloads/eless/eless ~/.local/bin/.
+     # Just making sure that the script has executable permissions.
+     chmod +x ~/.local/bin/eless
+
+
+File: eless.info,  Node: Get eless documentation,  Next: What you end up with,  Prev: Get the eless executable,  Up: Installation
+
+1.2.3 Get ‘eless’ documentation
+-------------------------------
+
+And finally, let’s say have a ‘~/.local/share/’ directory.  Then copy
+the documentation to an ‘eless/’ sub-directory in that.
+     mkdir -p ~/.local/share/eless/info
+     # Org source - One source for script + documentation
+     cp -f ~/downloads/eless/eless.org       ~/.local/share/eless/eless.org
+     cp -f ~/downloads/eless/docs/eless.info ~/.local/share/eless/info/eless.info
+     cp -f ~/downloads/eless/docs/dir        ~/.local/share/eless/info/dir
+   Make sure that you add ‘~/.local/share/eless/info’ to your
+environment variable ‘INFOPATH’.
+
+
+File: eless.info,  Node: What you end up with,  Next: Note,  Prev: Get eless documentation,  Up: Installation
+
+1.2.4 What you end up with
+--------------------------
+
+In the end, the file structure for the newly copied files should look
+like this:
+     ~/.local
+         ├── bin/
+         │    └── eless
+         └── share/
+              └── eless/
+                   ├── eless.org
+                   └── info/
+                        ├── eless.info
+                        └── dir
+
+
+File: eless.info,  Node: Note,  Prev: What you end up with,  Up: Installation
+
+1.2.5 Note
+----------
+
+If you plan to keep the cloned ‘eless’ repo updated to the latest master
+all the time (which I recommend), then you may even create symlinks to
+those instead of copying them in the above steps.
+
+
+File: eless.info,  Node: Try it out,  Next: Contributors,  Prev: Installation,  Up: Readme
+
+1.3 Try it out
 ==============
 
 Here are some usage examples:
@@ -241,7 +334,7 @@ NOTE
 
 File: eless.info,  Node: Contributors,  Prev: Try it out,  Up: Readme
 
-1.3 Contributors
+1.4 Contributors
 ================
 
    • Thanks to Skye Shaw (https://github.com/sshaw) for helping
@@ -352,7 +445,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     7e5b425
+     29fba01
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1507,68 +1600,74 @@ File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless confi
 
 Tag Table:
 Node: Top188
-Node: Readme2337
-Node: Requirements5240
-Node: Try it out6621
-Node: Contributors8980
-Node: Eless Options9615
-Node: view-mode Common Bindings9939
-Node: Custom Bindings10923
-Node: Usage Examples11958
-Node: Current eless Version14304
-Node: Code14688
-Node: Unofficial Bash Strict Mode15057
-Node: Initialize variables15742
-Node: Cleanup using trap16268
-Node: Debug function16984
-Node: Input/Output Detection18164
-Node: Parse options20108
-Node: Print Help21827
-Node: Emacs with -Q in view-mode22160
-Node: Input/Output Scenarios22984
-Node: Output is going to a pipe24415
-Node: Output is going to _stdout_ Input is coming from a pipe24961
-Node: Input is piped from man command30078
-Node: Input is piped from a modules help in _IPython_31341
-Node: Input is piped from info command32579
-Node: Input is piped from something else33196
-Node: Output is going to _stdout_ Input is an argument to the script33984
-Node: Eval34356
-Node: Emacs Configuration34594
-Node: Enable debug on error (in debug mode [=-D=])35165
-Node: General setup35458
-Node: Ido setup36578
-Node: Isearch setup37148
-Node: Enable line truncation37562
-Node: Highlight the current line37913
-Node: Custom functions38149
-Node: Keep/delete matching lines38650
-Node: Frame and font re-sizing39340
-Node: Revert buffer in view-mode40353
-Node: Detect if diff-mode should be enabled40828
-Node: Detect if ANSI codes need to be converted to colors43873
-Node: ``Do The Right Thing'' Kill45032
-Node: dired-mode setup46785
-Node: Man-mode setup47605
-Node: Info-mode setup48048
-Node: tar-mode setup48496
-Node: Auto-setting of major modes49211
-Node: Key bindings50072
-Node: User config override52751
-Node: Contributing54109
-Node: How to help debug54485
-Node: Development55223
-Node: Preparation55452
-Node: Building eless55756
-Node: Sanity check of the tangled eless55984
-Node: Building documentation56353
-Node: Understand the changes56684
-Node: Build everything57011
-Node: Submitting PR57273
-Node: Miscellaneous57582
-Node: Example eless config in tcsh57796
-Node: Example eless config in bash58566
-Node: Example eless config in zsh59209
+Node: Readme2479
+Node: Requirements5399
+Node: Installation6782
+Node: Clone this rep7141
+Node: Get the eless executable7450
+Node: Get eless documentation7900
+Node: What you end up with8673
+Node: Note9207
+Node: Try it out9510
+Node: Contributors11869
+Node: Eless Options12504
+Node: view-mode Common Bindings12828
+Node: Custom Bindings13812
+Node: Usage Examples14847
+Node: Current eless Version17193
+Node: Code17577
+Node: Unofficial Bash Strict Mode17946
+Node: Initialize variables18631
+Node: Cleanup using trap19157
+Node: Debug function19873
+Node: Input/Output Detection21053
+Node: Parse options22997
+Node: Print Help24716
+Node: Emacs with -Q in view-mode25049
+Node: Input/Output Scenarios25873
+Node: Output is going to a pipe27304
+Node: Output is going to _stdout_ Input is coming from a pipe27850
+Node: Input is piped from man command32967
+Node: Input is piped from a modules help in _IPython_34230
+Node: Input is piped from info command35468
+Node: Input is piped from something else36085
+Node: Output is going to _stdout_ Input is an argument to the script36873
+Node: Eval37245
+Node: Emacs Configuration37483
+Node: Enable debug on error (in debug mode [=-D=])38054
+Node: General setup38347
+Node: Ido setup39467
+Node: Isearch setup40037
+Node: Enable line truncation40451
+Node: Highlight the current line40802
+Node: Custom functions41038
+Node: Keep/delete matching lines41539
+Node: Frame and font re-sizing42229
+Node: Revert buffer in view-mode43242
+Node: Detect if diff-mode should be enabled43717
+Node: Detect if ANSI codes need to be converted to colors46762
+Node: ``Do The Right Thing'' Kill47921
+Node: dired-mode setup49674
+Node: Man-mode setup50494
+Node: Info-mode setup50937
+Node: tar-mode setup51385
+Node: Auto-setting of major modes52100
+Node: Key bindings52961
+Node: User config override55640
+Node: Contributing56998
+Node: How to help debug57374
+Node: Development58112
+Node: Preparation58341
+Node: Building eless58645
+Node: Sanity check of the tangled eless58873
+Node: Building documentation59242
+Node: Understand the changes59573
+Node: Build everything59900
+Node: Submitting PR60162
+Node: Miscellaneous60471
+Node: Example eless config in tcsh60685
+Node: Example eless config in bash61455
+Node: Example eless config in zsh62098
 
 End Tag Table
 

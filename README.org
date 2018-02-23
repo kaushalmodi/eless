@@ -66,6 +66,53 @@ I call it =eless= and here's a little taste of what it looks like:
 - NOTE :: If the environment variable =EMACS= is set, =eless= uses that
   as the emacs binary, else it defaults to using =emacs= as
   emacs binary.
+* Installation
+I do not have an installation script for this project, but you can
+install it quickly with few manual steps.
+** Clone this rep
+For the following instructions, let's assume that you clone this repo
+to =~/downloads/eless=.
+#+BEGIN_SRC shell
+git clone https://github.com/kaushalmodi/eless ~/downloads/eless
+#+END_SRC
+** Get the =eless= executable
+Assuming that you have =~/.local/bin/= directory added to your
+environment variable =PATH=:
+#+BEGIN_SRC shell
+cp -f ~/downloads/eless/eless ~/.local/bin/.
+# Just making sure that the script has executable permissions.
+chmod +x ~/.local/bin/eless
+#+END_SRC
+** Get =eless= documentation
+And finally, let's say have a =~/.local/share/= directory. Then copy
+the documentation to an =eless/= sub-directory in that.
+#+BEGIN_SRC shell
+mkdir -p ~/.local/share/eless/info
+# Org source - One source for script + documentation
+cp -f ~/downloads/eless/eless.org       ~/.local/share/eless/eless.org
+cp -f ~/downloads/eless/docs/eless.info ~/.local/share/eless/info/eless.info
+cp -f ~/downloads/eless/docs/dir        ~/.local/share/eless/info/dir
+#+END_SRC
+Make sure that you add =~/.local/share/eless/info= to your environment
+variable =INFOPATH=.
+** What you end up with
+In the end, the file structure for the newly copied files should look
+like this:
+#+BEGIN_EXAMPLE
+~/.local
+    ├── bin/
+    │    └── eless
+    └── share/
+         └── eless/
+              ├── eless.org
+              └── info/
+                   ├── eless.info
+                   └── dir
+#+END_EXAMPLE
+** Note
+If you plan to keep the cloned =eless= repo updated to the latest
+master all the time (which I recommend), then you may even create
+symlinks to those instead of copying them in the above steps.
 * Try it out
 Here are some usage examples:
 #+BEGIN_SRC shell

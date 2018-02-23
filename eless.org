@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-22 13:38:46 kmodi>
+# Time-stamp: <2018-02-23 13:08:23 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -126,6 +126,68 @@ I call it =eless= and here's a little taste of what it looks like:
 - NOTE :: If the environment variable =EMACS= is set, =eless= uses that
           as the emacs binary, else it defaults to using =emacs= as
           emacs binary.
+** Installation
+:PROPERTIES:
+:CUSTOM_ID: installation
+:END:
+I do not have an installation script for this project, but you can
+install it quickly with few manual steps.
+*** Clone this rep
+:PROPERTIES:
+:CUSTOM_ID: clone-this-rep
+:END:
+For the following instructions, let's assume that you clone this repo
+to =~/downloads/eless=.
+#+begin_src shell
+git clone https://github.com/kaushalmodi/eless ~/downloads/eless
+#+end_src
+*** Get the =eless= executable
+:PROPERTIES:
+:CUSTOM_ID: get-the-eless-executable
+:END:
+Assuming that you have =~/.local/bin/= directory added to your
+environment variable =PATH=:
+#+begin_src shell
+cp -f ~/downloads/eless/eless ~/.local/bin/.
+# Just making sure that the script has executable permissions.
+chmod +x ~/.local/bin/eless
+#+end_src
+*** Get =eless= documentation
+:PROPERTIES:
+:CUSTOM_ID: get-eless-documentation
+:END:
+And finally, let's say have a =~/.local/share/= directory. Then copy
+the documentation to an =eless/= sub-directory in that.
+#+begin_src shell
+mkdir -p ~/.local/share/eless/info
+# Org source - One source for script + documentation
+cp -f ~/downloads/eless/eless.org       ~/.local/share/eless/eless.org
+cp -f ~/downloads/eless/docs/eless.info ~/.local/share/eless/info/eless.info
+cp -f ~/downloads/eless/docs/dir        ~/.local/share/eless/info/dir
+#+end_src
+Make sure that you add =~/.local/share/eless/info= to your environment
+variable =INFOPATH=.
+*** Installation Directory Structure
+:PROPERTIES:
+:CUSTOM_ID: installation-directory-structure
+:END:
+In the end, the file structure for the newly copied files should look
+like this:
+#+begin_example
+~/.local
+    ├── bin/
+    │    └── eless
+    └── share/
+         └── eless/
+              ├── eless.org
+              └── info/
+                   ├── eless.info
+                   └── dir
+#+end_example
+*** Note
+If you plan to keep the cloned =eless= repo updated to the latest
+master all the time (which I recommend), then you may even create
+symlinks to those instead of copying them in the above steps.
 ** Try it out
 :PROPERTIES:
 :CUSTOM_ID: try-it-out
@@ -270,7 +332,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-7e5b425
+29fba01
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
