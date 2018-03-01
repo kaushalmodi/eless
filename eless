@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='v0.5'
-eless_git_hash='7e5b425'
+eless_git_hash='2fbf2a7'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -70,31 +70,31 @@ less, diff, man, (probably ls too).
 
 * For GNU/Linux systems, set the environment variable PAGER to 'eless' to use it
    for viewing man pages. 'man grep' will then show the grep man page in eless.
-   For macOS systems, 'PAGER=less man grep | eless --gui' will work instead
-   i.e. do not set PAGER to eless just for this 'man' use case.
+
+  For macOS systems, 'PAGER=less man -P \"eless --gui\" grep' will work instead.
 
 * Usage Examples
 
-    eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
-    eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
-    echo 'foo' | eless                 #
-    echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
-    grep 'bar' foo.txt | eless         #
-    diff foo bar | eless               # Colored diff!
-    diff -u foo bar | eless            # Colored diff for unified diff format
-    eless .                            # Open dired in the current directory (enhanced 'ls')
-    ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
-    PAGER=eless git diff               # Show git diff with ANSI coded colors
-    eless -h | eless                   # See eless help ;-)
-    info emacs | eless                 # Read emacs Info manual in eless
-    eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
-    PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
-    PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
-    PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-    PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
-    PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
-    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\" (does not work on macOS).
-    PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to \"eless --gui\" (works on macOS).
+    eless foo.txt                         # Open foo.txt in eless in terminal (-nw) mode by default.
+    eless foo.txt --gui                   # Open foo.txt in eless in GUI mode.
+    echo 'foo' | eless                    #
+    echo 'foo' | eless -                  # Same as above. The hyphen after eless does not matter; is anyways discarded.
+    grep 'bar' foo.txt | eless            #
+    diff foo bar | eless                  # Colored diff!
+    diff -u foo bar | eless               # Colored diff for unified diff format
+    eless .                               # Open dired in the current directory (enhanced 'ls')
+    ls --color=always | eless             # Auto-detect ANSI color codes and convert those to colors
+    PAGER=eless git diff                  # Show git diff with ANSI coded colors
+    eless -h | eless                      # See eless help ;-)
+    info emacs | eless                    # Read emacs Info manual in eless
+    eless foo.tar.xz                      # Read the contents of archives; emacs does the unarchiving automatically
+    PAGER=eless python3; help('def')      # Read (I)Python keyword help pages (example: help for 'def' keyword)
+    PAGER=eless python3; help('shlex')    # Read (I)Python module help pages (example: help for 'shlex' module)
+    PAGER=eless python3; help('TYPES')    # Read (I)Python topic help pages (example: help for 'TYPES' topic)
+    PAGER=eless man grep                  # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+    PAGER=less man -P eless grep          # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+    PAGER=\"eless --gui\" man grep          # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\" (does not work on macOS).
+    PAGER=less man -P \"eless --gui\" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to \"eless --gui\" (works on macOS).
 "
 
 set -o pipefail

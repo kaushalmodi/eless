@@ -1,4 +1,4 @@
-# Time-stamp: <2018-02-23 13:08:23 kmodi>
+# Time-stamp: <2018-03-01 18:35:57 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -284,33 +284,33 @@ Here are some usage examples:
 :CUSTOM_ID: usage-examples
 :END:
 #+begin_src shell :noweb-ref noweb-usage-examples
-eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
-eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
-echo 'foo' | eless                 #
-echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
-grep 'bar' foo.txt | eless         #
-diff foo bar | eless               # Colored diff!
-diff -u foo bar | eless            # Colored diff for unified diff format
-eless .                            # Open dired in the current directory (enhanced 'ls')
-ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
-PAGER=eless git diff               # Show git diff with ANSI coded colors
-eless -h | eless                   # See eless help ;-)
-info emacs | eless                 # Read emacs Info manual in eless
-eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
-PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
-PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
-PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
-PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+eless foo.txt                         # Open foo.txt in eless in terminal (-nw) mode by default.
+eless foo.txt --gui                   # Open foo.txt in eless in GUI mode.
+echo 'foo' | eless                    #
+echo 'foo' | eless -                  # Same as above. The hyphen after eless does not matter; is anyways discarded.
+grep 'bar' foo.txt | eless            #
+diff foo bar | eless                  # Colored diff!
+diff -u foo bar | eless               # Colored diff for unified diff format
+eless .                               # Open dired in the current directory (enhanced 'ls')
+ls --color=always | eless             # Auto-detect ANSI color codes and convert those to colors
+PAGER=eless git diff                  # Show git diff with ANSI coded colors
+eless -h | eless                      # See eless help ;-)
+info emacs | eless                    # Read emacs Info manual in eless
+eless foo.tar.xz                      # Read the contents of archives; emacs does the unarchiving automatically
+PAGER=eless python3; help('def')      # Read (I)Python keyword help pages (example: help for 'def' keyword)
+PAGER=eless python3; help('shlex')    # Read (I)Python module help pages (example: help for 'shlex' module)
+PAGER=eless python3; help('TYPES')    # Read (I)Python topic help pages (example: help for 'TYPES' topic)
+PAGER=eless man grep                  # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+PAGER=less man -P eless grep          # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
 #+end_src
 #+begin_src shell :noweb-ref noweb-usage-examples-eless-gui
-PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
-PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
+PAGER="eless --gui" man grep          # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
+PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
           shell*. Specifically, examples like ~PAGER=eless man grep~
-          might need to be adapted for the shell you are using, [[#example-eless-config-in-bash][and
-          also the OS]].
+          might need to be adapted for the shell you are using, [[#example-eless-config-in-bash][or the
+          OS]].
 * Current =eless= Version
 :PROPERTIES:
 :CUSTOM_ID: current-version
@@ -332,7 +332,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+BEGIN_SRC shell :noweb-ref git-hash
-29fba01
+2fbf2a7
 #+END_SRC
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -381,14 +381,14 @@ less, diff, man, (probably ls too).
 
 ,* For GNU/Linux systems, set the environment variable PAGER to 'eless' to use it
    for viewing man pages. 'man grep' will then show the grep man page in eless.
-   For macOS systems, 'PAGER=less man grep | eless --gui' will work instead
-   i.e. do not set PAGER to eless just for this 'man' use case.
+
+  For macOS systems, 'PAGER=less man -P \"eless --gui\" grep' will work instead.
 
 ,* Usage Examples
 
     <<noweb-usage-examples>>
-    PAGER=\"eless --gui\" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\" (does not work on macOS).
-    PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to \"eless --gui\" (works on macOS).
+    PAGER=\"eless --gui\" man grep          # Launches man pages in eless (GUI mode), if the env var PAGER is set to \"eless --gui\" (does not work on macOS).
+    PAGER=less man -P \"eless --gui\" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to \"eless --gui\" (works on macOS).
 "
 #+end_src
 ** Unofficial Bash Strict Mode
@@ -1396,10 +1396,10 @@ alias diffg '\diff \!* | eless --gui'
 # systems.
 alias mang '(setenv PAGER "eless --gui"; man \!*)'
 
-# For macOS systems, set PAGER to less and instead pipe the man output
-# to eless.
-alias eman '(setenv PAGER less; man \!* | eless)'
-alias emang '(setenv PAGER less; man \!* | eless --gui)'
+# For macOS systems, set PAGER to less and instead use the -P switch to set the
+# man pager to eless.
+alias eman '(setenv PAGER less; man -P eless \!*)'
+alias emang '(setenv PAGER less; man -P "eless --gui" \!*)'
 
 alias ev eless
 #+end_src
@@ -1412,11 +1412,11 @@ alias ev eless
 export PAGER=eless
 
 # Note for macOS users using man:
-#   "PAGER=eless man ls", for example, would not work on macOS
-# because of the way how man handles the stream of man pages on those
+#   "PAGER=eless man ls", for example, would not work because
+# of the way how man handles the stream of man pages on those
 # systems. But with the below alias, "eman ls" will work instead.
 # (Ref: https://github.com/kaushalmodi/eless/issues/27)
-alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
+alias eman='PAGER=less man -P eless'
 #+end_src
 ** Example =eless= config in =zsh=
 :PROPERTIES:
@@ -1427,11 +1427,11 @@ alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
 export PAGER=eless
 
 # Note for macOS users using man:
-#   "PAGER=eless man ls", for example, would not work on macOS
-# because of the way how man handles the stream of man pages on those
+#   "PAGER=eless man ls", for example, would not work because
+# of the way how man handles the stream of man pages on those
 # systems. But with the below alias, "eman ls" will work instead.
 # (Ref: https://github.com/kaushalmodi/eless/issues/27)
-alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
+alias eman='PAGER=less man -P eless'
 #+end_src
 * COMMENT Local Variables                                           :ARCHIVE:
 # Local Variables:

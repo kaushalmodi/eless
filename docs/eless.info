@@ -37,7 +37,7 @@ Installation
 * Clone this rep::
 * Get the eless executable::
 * Get eless documentation::
-* What you end up with::
+* Installation Directory Structure::
 * Note::
 
 Code
@@ -229,7 +229,7 @@ install it quickly with few manual steps.
 * Clone this rep::
 * Get the eless executable::
 * Get eless documentation::
-* What you end up with::
+* Installation Directory Structure::
 * Note::
 
 
@@ -255,7 +255,7 @@ environment variable ‘PATH’:
      chmod +x ~/.local/bin/eless
 
 
-File: eless.info,  Node: Get eless documentation,  Next: What you end up with,  Prev: Get the eless executable,  Up: Installation
+File: eless.info,  Node: Get eless documentation,  Next: Installation Directory Structure,  Prev: Get the eless executable,  Up: Installation
 
 1.2.3 Get ‘eless’ documentation
 -------------------------------
@@ -271,10 +271,10 @@ the documentation to an ‘eless/’ sub-directory in that.
 environment variable ‘INFOPATH’.
 
 
-File: eless.info,  Node: What you end up with,  Next: Note,  Prev: Get eless documentation,  Up: Installation
+File: eless.info,  Node: Installation Directory Structure,  Next: Note,  Prev: Get eless documentation,  Up: Installation
 
-1.2.4 What you end up with
---------------------------
+1.2.4 Installation Directory Structure
+--------------------------------------
 
 In the end, the file structure for the newly copied files should look
 like this:
@@ -289,7 +289,7 @@ like this:
                         └── dir
 
 
-File: eless.info,  Node: Note,  Prev: What you end up with,  Up: Installation
+File: eless.info,  Node: Note,  Prev: Installation Directory Structure,  Up: Installation
 
 1.2.5 Note
 ----------
@@ -305,26 +305,26 @@ File: eless.info,  Node: Try it out,  Next: Contributors,  Prev: Installation,  
 ==============
 
 Here are some usage examples:
-     eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
-     eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
-     echo 'foo' | eless                 #
-     echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
-     grep 'bar' foo.txt | eless         #
-     diff foo bar | eless               # Colored diff!
-     diff -u foo bar | eless            # Colored diff for unified diff format
-     eless .                            # Open dired in the current directory (enhanced 'ls')
-     ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
-     PAGER=eless git diff               # Show git diff with ANSI coded colors
-     eless -h | eless                   # See eless help ;-)
-     info emacs | eless                 # Read emacs Info manual in eless
-     eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
-     PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
-     PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
-     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
-     PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
-     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
-     PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
+     eless foo.txt                         # Open foo.txt in eless in terminal (-nw) mode by default.
+     eless foo.txt --gui                   # Open foo.txt in eless in GUI mode.
+     echo 'foo' | eless                    #
+     echo 'foo' | eless -                  # Same as above. The hyphen after eless does not matter; is anyways discarded.
+     grep 'bar' foo.txt | eless            #
+     diff foo bar | eless                  # Colored diff!
+     diff -u foo bar | eless               # Colored diff for unified diff format
+     eless .                               # Open dired in the current directory (enhanced 'ls')
+     ls --color=always | eless             # Auto-detect ANSI color codes and convert those to colors
+     PAGER=eless git diff                  # Show git diff with ANSI coded colors
+     eless -h | eless                      # See eless help ;-)
+     info emacs | eless                    # Read emacs Info manual in eless
+     eless foo.tar.xz                      # Read the contents of archives; emacs does the unarchiving automatically
+     PAGER=eless python3; help('def')      # Read (I)Python keyword help pages (example: help for 'def' keyword)
+     PAGER=eless python3; help('shlex')    # Read (I)Python module help pages (example: help for 'shlex' module)
+     PAGER=eless python3; help('TYPES')    # Read (I)Python topic help pages (example: help for 'TYPES' topic)
+     PAGER=eless man grep                  # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+     PAGER=less man -P eless grep          # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+     PAGER="eless --gui" man grep          # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
+     PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 NOTE
      Above examples are tested to work in a *‘bash’ shell*.
      Specifically, examples like ‘PAGER=eless man grep’ might need to be
@@ -411,31 +411,31 @@ File: eless.info,  Node: Usage Examples,  Next: Current eless Version,  Prev: Cu
 5 Usage Examples
 ****************
 
-     eless foo.txt                      # Open foo.txt in eless in terminal (-nw) mode by default.
-     eless foo.txt --gui                # Open foo.txt in eless in GUI mode.
-     echo 'foo' | eless                 #
-     echo 'foo' | eless -               # Same as above. The hyphen after eless does not matter; is anyways discarded.
-     grep 'bar' foo.txt | eless         #
-     diff foo bar | eless               # Colored diff!
-     diff -u foo bar | eless            # Colored diff for unified diff format
-     eless .                            # Open dired in the current directory (enhanced 'ls')
-     ls --color=always | eless          # Auto-detect ANSI color codes and convert those to colors
-     PAGER=eless git diff               # Show git diff with ANSI coded colors
-     eless -h | eless                   # See eless help ;-)
-     info emacs | eless                 # Read emacs Info manual in eless
-     eless foo.tar.xz                   # Read the contents of archives; emacs does the unarchiving automatically
-     PAGER=eless python3; help('def')   # Read (I)Python keyword help pages (example: help for 'def' keyword)
-     PAGER=eless python3; help('shlex') # Read (I)Python module help pages (example: help for 'shlex' module)
-     PAGER=eless python3; help('TYPES') # Read (I)Python topic help pages (example: help for 'TYPES' topic)
-     PAGER=eless man grep               # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
-     PAGER=less man grep | eless        # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
-     PAGER="eless --gui" man grep       # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
-     PAGER=less man grep | eless --gui  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
+     eless foo.txt                         # Open foo.txt in eless in terminal (-nw) mode by default.
+     eless foo.txt --gui                   # Open foo.txt in eless in GUI mode.
+     echo 'foo' | eless                    #
+     echo 'foo' | eless -                  # Same as above. The hyphen after eless does not matter; is anyways discarded.
+     grep 'bar' foo.txt | eless            #
+     diff foo bar | eless                  # Colored diff!
+     diff -u foo bar | eless               # Colored diff for unified diff format
+     eless .                               # Open dired in the current directory (enhanced 'ls')
+     ls --color=always | eless             # Auto-detect ANSI color codes and convert those to colors
+     PAGER=eless git diff                  # Show git diff with ANSI coded colors
+     eless -h | eless                      # See eless help ;-)
+     info emacs | eless                    # Read emacs Info manual in eless
+     eless foo.tar.xz                      # Read the contents of archives; emacs does the unarchiving automatically
+     PAGER=eless python3; help('def')      # Read (I)Python keyword help pages (example: help for 'def' keyword)
+     PAGER=eless python3; help('shlex')    # Read (I)Python module help pages (example: help for 'shlex' module)
+     PAGER=eless python3; help('TYPES')    # Read (I)Python topic help pages (example: help for 'TYPES' topic)
+     PAGER=eless man grep                  # Launches man pages in eless (terminal mode), if the env var PAGER is set to eless (does not work on macOS).
+     PAGER=less man -P eless grep          # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
+     PAGER="eless --gui" man grep          # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
+     PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 NOTE
      Above examples are tested to work in a *‘bash’ shell*.
      Specifically, examples like ‘PAGER=eless man grep’ might need to be
-     adapted for the shell you are using, *note and also the OS: Example
-     eless config in bash.
+     adapted for the shell you are using, *note or the OS: Example eless
+     config in bash.
 
 
 File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Examples,  Up: Top
@@ -445,7 +445,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     29fba01
+     2fbf2a7
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1559,10 +1559,10 @@ File: eless.info,  Node: Example eless config in tcsh,  Next: Example eless conf
      # systems.
      alias mang '(setenv PAGER "eless --gui"; man \!*)'
 
-     # For macOS systems, set PAGER to less and instead pipe the man output
-     # to eless.
-     alias eman '(setenv PAGER less; man \!* | eless)'
-     alias emang '(setenv PAGER less; man \!* | eless --gui)'
+     # For macOS systems, set PAGER to less and instead use the -P switch to set the
+     # man pager to eless.
+     alias eman '(setenv PAGER less; man -P eless \!*)'
+     alias emang '(setenv PAGER less; man -P "eless --gui" \!*)'
 
      alias ev eless
 
@@ -1575,11 +1575,11 @@ File: eless.info,  Node: Example eless config in bash,  Next: Example eless conf
      export PAGER=eless
 
      # Note for macOS users using man:
-     #   "PAGER=eless man ls", for example, would not work on macOS
-     # because of the way how man handles the stream of man pages on those
+     #   "PAGER=eless man ls", for example, would not work because
+     # of the way how man handles the stream of man pages on those
      # systems. But with the below alias, "eman ls" will work instead.
      # (Ref: https://github.com/kaushalmodi/eless/issues/27)
-     alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
+     alias eman='PAGER=less man -P eless'
 
 
 File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless config in bash,  Up: Miscellaneous
@@ -1590,84 +1590,84 @@ File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless confi
      export PAGER=eless
 
      # Note for macOS users using man:
-     #   "PAGER=eless man ls", for example, would not work on macOS
-     # because of the way how man handles the stream of man pages on those
+     #   "PAGER=eless man ls", for example, would not work because
+     # of the way how man handles the stream of man pages on those
      # systems. But with the below alias, "eman ls" will work instead.
      # (Ref: https://github.com/kaushalmodi/eless/issues/27)
-     alias eman='elessman() { PAGER=less man $1 | eless; }; elessman'
+     alias eman='PAGER=less man -P eless'
 
 
 
 Tag Table:
 Node: Top188
-Node: Readme2479
-Node: Requirements5399
-Node: Installation6782
-Node: Clone this rep7141
-Node: Get the eless executable7450
-Node: Get eless documentation7900
-Node: What you end up with8673
-Node: Note9207
-Node: Try it out9510
-Node: Contributors11869
-Node: Eless Options12504
-Node: view-mode Common Bindings12828
-Node: Custom Bindings13812
-Node: Usage Examples14847
-Node: Current eless Version17193
-Node: Code17577
-Node: Unofficial Bash Strict Mode17946
-Node: Initialize variables18631
-Node: Cleanup using trap19157
-Node: Debug function19873
-Node: Input/Output Detection21053
-Node: Parse options22997
-Node: Print Help24716
-Node: Emacs with -Q in view-mode25049
-Node: Input/Output Scenarios25873
-Node: Output is going to a pipe27304
-Node: Output is going to _stdout_ Input is coming from a pipe27850
-Node: Input is piped from man command32967
-Node: Input is piped from a modules help in _IPython_34230
-Node: Input is piped from info command35468
-Node: Input is piped from something else36085
-Node: Output is going to _stdout_ Input is an argument to the script36873
-Node: Eval37245
-Node: Emacs Configuration37483
-Node: Enable debug on error (in debug mode [=-D=])38054
-Node: General setup38347
-Node: Ido setup39467
-Node: Isearch setup40037
-Node: Enable line truncation40451
-Node: Highlight the current line40802
-Node: Custom functions41038
-Node: Keep/delete matching lines41539
-Node: Frame and font re-sizing42229
-Node: Revert buffer in view-mode43242
-Node: Detect if diff-mode should be enabled43717
-Node: Detect if ANSI codes need to be converted to colors46762
-Node: ``Do The Right Thing'' Kill47921
-Node: dired-mode setup49674
-Node: Man-mode setup50494
-Node: Info-mode setup50937
-Node: tar-mode setup51385
-Node: Auto-setting of major modes52100
-Node: Key bindings52961
-Node: User config override55640
-Node: Contributing56998
-Node: How to help debug57374
-Node: Development58112
-Node: Preparation58341
-Node: Building eless58645
-Node: Sanity check of the tangled eless58873
-Node: Building documentation59242
-Node: Understand the changes59573
-Node: Build everything59900
-Node: Submitting PR60162
-Node: Miscellaneous60471
-Node: Example eless config in tcsh60685
-Node: Example eless config in bash61455
-Node: Example eless config in zsh62098
+Node: Readme2491
+Node: Requirements5411
+Node: Installation6794
+Node: Clone this rep7165
+Node: Get the eless executable7474
+Node: Get eless documentation7924
+Node: Installation Directory Structure8709
+Node: Note9279
+Node: Try it out9594
+Node: Contributors12013
+Node: Eless Options12648
+Node: view-mode Common Bindings12972
+Node: Custom Bindings13956
+Node: Usage Examples14991
+Node: Current eless Version17391
+Node: Code17775
+Node: Unofficial Bash Strict Mode18144
+Node: Initialize variables18829
+Node: Cleanup using trap19355
+Node: Debug function20071
+Node: Input/Output Detection21251
+Node: Parse options23195
+Node: Print Help24914
+Node: Emacs with -Q in view-mode25247
+Node: Input/Output Scenarios26071
+Node: Output is going to a pipe27502
+Node: Output is going to _stdout_ Input is coming from a pipe28048
+Node: Input is piped from man command33165
+Node: Input is piped from a modules help in _IPython_34428
+Node: Input is piped from info command35666
+Node: Input is piped from something else36283
+Node: Output is going to _stdout_ Input is an argument to the script37071
+Node: Eval37443
+Node: Emacs Configuration37681
+Node: Enable debug on error (in debug mode [=-D=])38252
+Node: General setup38545
+Node: Ido setup39665
+Node: Isearch setup40235
+Node: Enable line truncation40649
+Node: Highlight the current line41000
+Node: Custom functions41236
+Node: Keep/delete matching lines41737
+Node: Frame and font re-sizing42427
+Node: Revert buffer in view-mode43440
+Node: Detect if diff-mode should be enabled43915
+Node: Detect if ANSI codes need to be converted to colors46960
+Node: ``Do The Right Thing'' Kill48119
+Node: dired-mode setup49872
+Node: Man-mode setup50692
+Node: Info-mode setup51135
+Node: tar-mode setup51583
+Node: Auto-setting of major modes52298
+Node: Key bindings53159
+Node: User config override55838
+Node: Contributing57196
+Node: How to help debug57572
+Node: Development58310
+Node: Preparation58539
+Node: Building eless58843
+Node: Sanity check of the tangled eless59071
+Node: Building documentation59440
+Node: Understand the changes59771
+Node: Build everything60098
+Node: Submitting PR60360
+Node: Miscellaneous60669
+Node: Example eless config in tcsh60883
+Node: Example eless config in bash61676
+Node: Example eless config in zsh62282
 
 End Tag Table
 
