@@ -445,7 +445,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     2fbf2a7
+     6115f73
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -789,8 +789,9 @@ template on Mac OS (See ‘eless’ issue #18
      #   If the man page name is completely in upper-case, convert it
      # to lower-case.
      man_page=$(echo "${first_line_piped_data}" \
-                    | perl -ne '/^([A-Za-z0-9-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print $1' \
+                    | perl -ne '/^([A-Za-z0-9-_]+\([a-z0-9]+\))(?=\s+.*?\1$)/ and print $1' \
                     | perl -pe 's/bash_builtins/builtins/i' \
+                    | perl -pe 's/xsel\(1x\)/xsel/i' \
                     | perl -pe 's/^[A-Z0-9-_()]+$/\L$_/' \
                     || true)
      # Using perl expression above instead of below grep (which requires
@@ -1627,47 +1628,47 @@ Node: Emacs with -Q in view-mode25247
 Node: Input/Output Scenarios26071
 Node: Output is going to a pipe27502
 Node: Output is going to _stdout_ Input is coming from a pipe28048
-Node: Input is piped from man command33165
-Node: Input is piped from a modules help in _IPython_34428
-Node: Input is piped from info command35666
-Node: Input is piped from something else36283
-Node: Output is going to _stdout_ Input is an argument to the script37071
-Node: Eval37443
-Node: Emacs Configuration37681
-Node: Enable debug on error (in debug mode [=-D=])38252
-Node: General setup38545
-Node: Ido setup39665
-Node: Isearch setup40235
-Node: Enable line truncation40649
-Node: Highlight the current line41000
-Node: Custom functions41236
-Node: Keep/delete matching lines41737
-Node: Frame and font re-sizing42427
-Node: Revert buffer in view-mode43440
-Node: Detect if diff-mode should be enabled43915
-Node: Detect if ANSI codes need to be converted to colors46960
-Node: ``Do The Right Thing'' Kill48119
-Node: dired-mode setup49872
-Node: Man-mode setup50692
-Node: Info-mode setup51135
-Node: tar-mode setup51583
-Node: Auto-setting of major modes52298
-Node: Key bindings53159
-Node: User config override55838
-Node: Contributing57196
-Node: How to help debug57572
-Node: Development58310
-Node: Preparation58539
-Node: Building eless58843
-Node: Sanity check of the tangled eless59071
-Node: Building documentation59440
-Node: Understand the changes59771
-Node: Build everything60098
-Node: Submitting PR60360
-Node: Miscellaneous60669
-Node: Example eless config in tcsh60883
-Node: Example eless config in bash61676
-Node: Example eless config in zsh62282
+Node: Input is piped from man command33223
+Node: Input is piped from a modules help in _IPython_34486
+Node: Input is piped from info command35724
+Node: Input is piped from something else36341
+Node: Output is going to _stdout_ Input is an argument to the script37129
+Node: Eval37501
+Node: Emacs Configuration37739
+Node: Enable debug on error (in debug mode [=-D=])38310
+Node: General setup38603
+Node: Ido setup39723
+Node: Isearch setup40293
+Node: Enable line truncation40707
+Node: Highlight the current line41058
+Node: Custom functions41294
+Node: Keep/delete matching lines41795
+Node: Frame and font re-sizing42485
+Node: Revert buffer in view-mode43498
+Node: Detect if diff-mode should be enabled43973
+Node: Detect if ANSI codes need to be converted to colors47018
+Node: ``Do The Right Thing'' Kill48177
+Node: dired-mode setup49930
+Node: Man-mode setup50750
+Node: Info-mode setup51193
+Node: tar-mode setup51641
+Node: Auto-setting of major modes52356
+Node: Key bindings53217
+Node: User config override55896
+Node: Contributing57254
+Node: How to help debug57630
+Node: Development58368
+Node: Preparation58597
+Node: Building eless58901
+Node: Sanity check of the tangled eless59129
+Node: Building documentation59498
+Node: Understand the changes59829
+Node: Build everything60156
+Node: Submitting PR60418
+Node: Miscellaneous60727
+Node: Example eless config in tcsh60941
+Node: Example eless config in bash61734
+Node: Example eless config in zsh62340
 
 End Tag Table
 

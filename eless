@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='v0.5'
-eless_git_hash='2fbf2a7'
+eless_git_hash='6115f73'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -551,8 +551,9 @@ else
         #   If the man page name is completely in upper-case, convert it
         # to lower-case.
         man_page=$(echo "${first_line_piped_data}" \
-                       | perl -ne '/^([A-Za-z0-9-_]+\([0-9]+\))(?=\s+.*?\1$)/ and print $1' \
+                       | perl -ne '/^([A-Za-z0-9-_]+\([a-z0-9]+\))(?=\s+.*?\1$)/ and print $1' \
                        | perl -pe 's/bash_builtins/builtins/i' \
+                       | perl -pe 's/xsel\(1x\)/xsel/i' \
                        | perl -pe 's/^[A-Z0-9-_()]+$/\L$_/' \
                        || true)
         # Using perl expression above instead of below grep (which requires
