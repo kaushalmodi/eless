@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='v0.5'
-eless_git_hash='6115f73'
+eless_git_hash='0065c3b'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -162,6 +162,11 @@ do
         debug=1
     fi
 done
+
+debug "[emacs version] $(emacs --version | head -1)"
+debug "[ perl version] $(perl --version | head -2 | tail -1)"
+debug "[ bash version] $(/usr/bin/env bash --version | head -1)"
+debug "[ info version] $(info --version | head -1)"
 
 # https://gist.github.com/davejamesmiller/1966557
 if [[ -t 0 ]] # Script is called normally - Terminal input (keyboard) - interactive
@@ -587,7 +592,7 @@ else
         # GNU grep -- not available by default on macOS):
         #   grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)'
 
-        # The first line of info manuals is assumed to be
+        # The first line of Info manuals is assumed to be
         #   /path/to/some.info or /path/to/some.info.gz
         # Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
         info_man=$(echo "${first_line_piped_data}" \
@@ -596,6 +601,23 @@ else
         # Using perl expression above instead of below grep (which requires
         # GNU grep -- not available by default on macOS):
         #   grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'
+
+        # If an Info manual is not detected by the above regex, try the below regex
+        # that works with info 6.5.  Apparently the string in the first line of
+        # info-returned buffer changed in info 6.5.
+        if [[ -z ${info_man} ]]
+        then
+            # The first line of Info manuals can also be the below:
+            #   - Begin with "File:", and
+            #   - Contain "Node:"
+            # Example: "File: emacs,  Node: Top,  Next: Distrib,  Prev: (dir),  Up: (dir)"
+            info_man=$(echo "${first_line_piped_data}" \
+                           | perl -ne '/^File: ([^.,]+)(\.info.*)*.*,  Node.*/ and print $1' \
+                           || true)
+        fi
+
+        debug "man_page = ${man_page}"
+        debug "info_man = ${info_man}"
 
         if [[ ! -z ${man_page} ]]
         then

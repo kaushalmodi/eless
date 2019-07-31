@@ -1,4 +1,4 @@
-# Time-stamp: <2018-04-23 15:31:35 kmodi>
+# Time-stamp: <2019-07-31 11:04:45 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -331,9 +331,9 @@ https://github.com/kaushalmodi/eless
 git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
-#+BEGIN_SRC shell :noweb-ref git-hash
-6115f73
-#+END_SRC
+#+begin_src shell :noweb-ref git-hash
+0065c3b
+#+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
 version, it would always refer to the one-earlier commit.
@@ -503,6 +503,13 @@ do
         debug=1
     fi
 done
+#+end_src
+** Print dependency versions during debug
+#+begin_src shell
+debug "[emacs version] $(emacs --version | head -1)"
+debug "[ perl version] $(perl --version | head -2 | tail -1)"
+debug "[ bash version] $(/usr/bin/env bash --version | head -1)"
+debug "[ info version] $(info --version | head -1)"
 #+end_src
 ** Input/Output Detection
 :PROPERTIES:
@@ -761,7 +768,7 @@ python_module_help=$(echo "${first_line_piped_data}" \
 # GNU grep -- not available by default on macOS):
 #   grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)'
 
-# The first line of info manuals is assumed to be
+# The first line of Info manuals is assumed to be
 #   /path/to/some.info or /path/to/some.info.gz
 # Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
 info_man=$(echo "${first_line_piped_data}" \
@@ -770,6 +777,23 @@ info_man=$(echo "${first_line_piped_data}" \
 # Using perl expression above instead of below grep (which requires
 # GNU grep -- not available by default on macOS):
 #   grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'
+
+# If an Info manual is not detected by the above regex, try the below regex
+# that works with info 6.5.  Apparently the string in the first line of
+# info-returned buffer changed in info 6.5.
+if [[ -z ${info_man} ]]
+then
+    # The first line of Info manuals can also be the below:
+    #   - Begin with "File:", and
+    #   - Contain "Node:"
+    # Example: "File: emacs,  Node: Top,  Next: Distrib,  Prev: (dir),  Up: (dir)"
+    info_man=$(echo "${first_line_piped_data}" \
+                   | perl -ne '/^File: ([^.,]+)(\.info.*)*.*,  Node.*/ and print $1' \
+                   || true)
+fi
+
+debug "man_page = ${man_page}"
+debug "info_man = ${info_man}"
 
 if [[ ! -z ${man_page} ]]
 then

@@ -16,15 +16,15 @@ This guide is for you if you'd like to do any of the below:
        - ~PAGER="eless -D" man foo~ or ~man foo | eless -D~.
 * Development
 ** Preparation
-#+BEGIN_SRC shell
+#+begin_src shell
 git clone https://github.com/kaushalmodi/eless
-#+END_SRC
+#+end_src
 Also see the [[*Requirements][*Requirements*]] section if you'd like to build the =eless=
 script + documentation locally.
 ** Building =eless=
-#+BEGIN_SRC shell
+#+begin_src shell
 make eless
-#+END_SRC
+#+end_src
 *** Sanity check of the tangled =eless=
 1. Run the tangled =eless= through [[http://www.shellcheck.net/][shellcheck]] to ensure that there are
    no errors.
@@ -32,9 +32,9 @@ make eless
 ** Building documentation
 Below will generate/update the Info manual and =README.org= and
 =CONTRIBUTING.org= for Github.
-#+BEGIN_SRC shell
+#+begin_src shell
 make doc
-#+END_SRC
+#+end_src
 *** Understand the changes
 - The randomly generated hyperlinks and section numbers in the Info
   document and HTML will be different.
@@ -42,9 +42,9 @@ make doc
 ** Build everything
 If you'd like to build the script as well the documentation together,
 you can do:
-#+BEGIN_SRC shell
+#+begin_src shell
 make all
-#+END_SRC
+#+end_src
 ** Submitting PR
 - You can submit a PR once you have reviewed all the changes in the
   tangled =eless= script and documentation.

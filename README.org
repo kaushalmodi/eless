@@ -64,41 +64,41 @@ I call it =eless= and here's a little taste of what it looks like:
 |----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 - NOTE :: If the environment variable =EMACS= is set, =eless= uses that
-  as the emacs binary, else it defaults to using =emacs= as
-  emacs binary.
+     as the emacs binary, else it defaults to using =emacs= as
+     emacs binary.
 * Installation
 I do not have an installation script for this project, but you can
 install it quickly with few manual steps.
 ** Clone this rep
 For the following instructions, let's assume that you clone this repo
 to =~/downloads/eless=.
-#+BEGIN_SRC shell
+#+begin_src shell
 git clone https://github.com/kaushalmodi/eless ~/downloads/eless
-#+END_SRC
+#+end_src
 ** Get the =eless= executable
 Assuming that you have =~/.local/bin/= directory added to your
 environment variable =PATH=:
-#+BEGIN_SRC shell
+#+begin_src shell
 cp -f ~/downloads/eless/eless ~/.local/bin/.
 # Just making sure that the script has executable permissions.
 chmod +x ~/.local/bin/eless
-#+END_SRC
+#+end_src
 ** Get =eless= documentation
 And finally, let's say have a =~/.local/share/= directory. Then copy
 the documentation to an =eless/= sub-directory in that.
-#+BEGIN_SRC shell
+#+begin_src shell
 mkdir -p ~/.local/share/eless/info
 # Org source - One source for script + documentation
 cp -f ~/downloads/eless/eless.org       ~/.local/share/eless/eless.org
 cp -f ~/downloads/eless/docs/eless.info ~/.local/share/eless/info/eless.info
 cp -f ~/downloads/eless/docs/dir        ~/.local/share/eless/info/dir
-#+END_SRC
+#+end_src
 Make sure that you add =~/.local/share/eless/info= to your environment
 variable =INFOPATH=.
 ** Installation Directory Structure
 In the end, the file structure for the newly copied files should look
 like this:
-#+BEGIN_EXAMPLE
+#+begin_example
 ~/.local
     ├── bin/
     │    └── eless
@@ -108,14 +108,14 @@ like this:
               └── info/
                    ├── eless.info
                    └── dir
-#+END_EXAMPLE
+#+end_example
 ** Note
 If you plan to keep the cloned =eless= repo updated to the latest
 master all the time (which I recommend), then you may even create
 symlinks to those instead of copying them in the above steps.
 * Try it out
 Here are some usage examples:
-#+BEGIN_SRC shell
+#+begin_src shell
 eless foo.txt                         # Open foo.txt in eless in terminal (-nw) mode by default.
 eless foo.txt --gui                   # Open foo.txt in eless in GUI mode.
 echo 'foo' | eless                    #
@@ -136,11 +136,11 @@ PAGER=eless man grep                  # Launches man pages in eless (terminal mo
 PAGER=less man -P eless grep          # Launches man pages in eless (terminal mode), if the env var PAGER is *not* set to eless (works on macOS).
 PAGER="eless --gui" man grep          # Launches man pages in eless (GUI mode), if the env var PAGER is set to "eless --gui" (does not work on macOS).
 PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
-#+END_SRC
+#+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
-  shell*. Specifically, examples like ~PAGER=eless man grep~
-  might need to be adapted for the shell you are using,
-  [[#example-eless-config-in-bash][and also the OS]].
+     shell*. Specifically, examples like ~PAGER=eless man grep~
+     might need to be adapted for the shell you are using,
+     [[#example-eless-config-in-bash][and also the OS]].
 * Contributors
 - Thanks to [[https://github.com/sshaw][Skye Shaw]] for helping improving =eless=
   so that it can run on /macOS/ and emacs 22.1, and suggesting Bash
