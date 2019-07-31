@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 11:51:53 kmodi>
+# Time-stamp: <2019-07-31 11:53:35 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -1461,10 +1461,3 @@ alias eman='PAGER=less man -P eless'
 
 * Footnotes
 [fn:1] ~http://redsymbol.net/articles/unofficial-bash-strict-mode/~
-
-* COMMENT Local Variables                                           :ARCHIVE:
-
-# Local Variables:
-# fill-column: 70
-# eval: (auto-fill-mode 1)
-# End:
