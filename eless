@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Version: v0.5
+# Version: v0.6
 
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -7,11 +7,11 @@
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
 #
-# This file is tangled from https://github.com/kaushalmodi/eless/blob/v0.5/eless.org
+# This file is tangled from https://github.com/kaushalmodi/eless/blob/v0.6/eless.org
 #   Do NOT edit this manually.
 
-eless_version='v0.5'
-eless_git_hash='74f5cc8'
+eless_version='v0.6'
+eless_git_hash='ac508e2'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace

@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 15:54:01 kmodi>
+# Time-stamp: <2019-07-31 15:57:19 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -321,7 +321,7 @@ PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), 
 :END:
 # Using noweb is a nifty way to do sort of search/replace in all code blocks.
 #+begin_src text :noweb-ref version
-v0.5
+v0.6
 #+end_src
 #+begin_src text :exports none :noweb-ref git-repo
 https://github.com/kaushalmodi/eless
@@ -336,7 +336,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-hash
-74f5cc8
+ac508e2
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
