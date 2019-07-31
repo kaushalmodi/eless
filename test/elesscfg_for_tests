@@ -22,7 +22,7 @@
       ;; Remove eless version info from contents to prevent
       ;; unnecessary diff fails - for eless -h | eless test.
       (goto-char (point-min))
-      (delete-matching-lines "^Eless Version.*")
+      (delete-matching-lines "^Eless version.*")
       (delete-matching-lines "^https://github.com/kaushalmodi/eless/.*")
       (write-file snap-file))))
 
