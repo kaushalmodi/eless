@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2019-07-31 12:20:44 kmodi>
+# Time-stamp: <2019-07-31 12:17:21 kmodi>
 
 EMACS="${EMACS:-emacs}"
 echo "Emacs version:"
@@ -62,12 +62,8 @@ grep 'def' "${file1}" | ELESS_TEST="pipein_grep" "${ELESS}"
 
 ELESS_DISABLE_SNAP=1 "${ELESS}" -h | ELESS_TEST="pipein_help" "${ELESS}"
 
-# The below test works locally on RHEL 6.8, but fails on Travis for some reason.
-# Remove this test until I understand the root cause.
-# https://travis-ci.org/kaushalmodi/eless/jobs/566054797#L565
-# https://github.com/kaushalmodi/eless/issues/35
-# info grep | ELESS_TEST="pipein_info" ELESS_TEST_SNAP_NO_CONTENT=1 "${ELESS}"
-#
+info grep | ELESS_TEST="pipein_info" ELESS_TEST_SNAP_NO_CONTENT=1 "${ELESS}"
+
 
 ELESS_TEST="man" ELESS_TEST_SNAP_NO_CONTENT=1 PAGER="${eless_repo_root}/eless" man ls
 
