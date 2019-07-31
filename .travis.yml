@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic # needed for texinfo 6.5. xenial comes with texinfo 6.1 which fails the info .. | eless test
 language: generic
 
 env:

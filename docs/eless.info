@@ -213,10 +213,15 @@ Software   Details
 ‘perl’     Perl is used to replace ‘grep -Po’ and case-insensitive ‘sed’ based replacements (using ‘/I’) as those features are available only in GNU versions of ‘grep’ and ‘sed’ (which are not present by default on _macOS_ systems).  _Tested with Perl v5.16.3 on RHEL
            6.6._
 
-NOTE
+NOTE 1
      If the environment variable ‘EMACS’ is set, ‘eless’ uses that as
      the emacs binary, else it defaults to using ‘emacs’ as emacs
      binary.
+NOTE 2
+     ‘eless’ is known to not work with _info (texinfo) 6.1_ (see ‘eless’
+     issue #35 (https://github.com/kaushalmodi/eless/issues/35)).  If
+     you want to use ‘eless’ to view Info manuals, ensure that it is at
+     least version *6.5*.
 
 
 File: eless.info,  Node: Installation,  Next: Try it out,  Prev: Requirements,  Up: Readme
@@ -448,7 +453,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     e4c385a
+     033d83d
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1639,74 +1644,74 @@ Node: Top188
 Node: Readme2534
 Ref: Readme-Footnote-15426
 Node: Requirements5499
-Node: Installation6882
-Node: Clone this rep7253
-Node: Get the eless executable7562
-Node: Get eless documentation8012
-Node: Installation Directory Structure8797
-Node: Note9367
-Node: Try it out9682
-Node: Contributors12101
-Node: Eless Options12736
-Node: view-mode Common Bindings13060
-Node: Custom Bindings14044
-Node: Usage Examples15079
-Node: Current eless Version17479
-Node: Code17863
-Node: Unofficial Bash Strict Mode18275
-Ref: Unofficial Bash Strict Mode-Footnote-118938
-Node: Initialize variables19011
-Node: Cleanup using trap19537
-Node: Debug function20226
-Node: Print dependency versions during debug21423
-Node: Input/Output Detection21895
-Node: Parse options23864
-Node: Print Help25584
-Node: Emacs with -Q in view-mode25917
-Node: Input/Output Scenarios26741
-Node: Output is going to a pipe28174
-Node: Output is going to _stdout_ Input is coming from a pipe28722
-Node: Input is piped from man command34693
-Node: Input is piped from a modules help in _IPython_35958
-Node: Input is piped from info command37198
-Node: Input is piped from something else37817
-Node: Output is going to _stdout_ Input is an argument to the script38607
-Node: Eval38981
-Node: Emacs Configuration39219
-Node: Enable debug on error (in debug mode [=-D=])39790
-Node: General setup40083
-Node: Ido setup41203
-Node: Isearch setup41773
-Node: Enable line truncation42187
-Node: Highlight the current line42538
-Node: Custom functions42774
-Node: Keep/delete matching lines43275
-Node: Frame and font re-sizing43965
-Node: Revert buffer in view-mode44978
-Node: Detect if diff-mode should be enabled45453
-Node: Detect if ANSI codes need to be converted to colors48498
-Node: ``Do The Right Thing'' Kill49657
-Node: dired-mode setup51410
-Node: Man-mode setup52230
-Node: Info-mode setup52673
-Node: tar-mode setup53121
-Node: Auto-setting of major modes53836
-Node: Key bindings54697
-Node: User config override57376
-Node: Contributing58734
-Node: How to help debug59110
-Node: Development59848
-Node: Preparation60077
-Node: Building eless60381
-Node: Sanity check of the tangled eless60609
-Node: Building documentation60979
-Node: Understand the changes61310
-Node: Build everything61637
-Node: Submitting PR61899
-Node: Miscellaneous62208
-Node: Example eless config in tcsh62422
-Node: Example eless config in bash63215
-Node: Example eless config in zsh63821
+Node: Installation7144
+Node: Clone this rep7515
+Node: Get the eless executable7824
+Node: Get eless documentation8274
+Node: Installation Directory Structure9059
+Node: Note9629
+Node: Try it out9944
+Node: Contributors12363
+Node: Eless Options12998
+Node: view-mode Common Bindings13322
+Node: Custom Bindings14306
+Node: Usage Examples15341
+Node: Current eless Version17741
+Node: Code18125
+Node: Unofficial Bash Strict Mode18537
+Ref: Unofficial Bash Strict Mode-Footnote-119200
+Node: Initialize variables19273
+Node: Cleanup using trap19799
+Node: Debug function20488
+Node: Print dependency versions during debug21685
+Node: Input/Output Detection22157
+Node: Parse options24126
+Node: Print Help25846
+Node: Emacs with -Q in view-mode26179
+Node: Input/Output Scenarios27003
+Node: Output is going to a pipe28436
+Node: Output is going to _stdout_ Input is coming from a pipe28984
+Node: Input is piped from man command34955
+Node: Input is piped from a modules help in _IPython_36220
+Node: Input is piped from info command37460
+Node: Input is piped from something else38079
+Node: Output is going to _stdout_ Input is an argument to the script38869
+Node: Eval39243
+Node: Emacs Configuration39481
+Node: Enable debug on error (in debug mode [=-D=])40052
+Node: General setup40345
+Node: Ido setup41465
+Node: Isearch setup42035
+Node: Enable line truncation42449
+Node: Highlight the current line42800
+Node: Custom functions43036
+Node: Keep/delete matching lines43537
+Node: Frame and font re-sizing44227
+Node: Revert buffer in view-mode45240
+Node: Detect if diff-mode should be enabled45715
+Node: Detect if ANSI codes need to be converted to colors48760
+Node: ``Do The Right Thing'' Kill49919
+Node: dired-mode setup51672
+Node: Man-mode setup52492
+Node: Info-mode setup52935
+Node: tar-mode setup53383
+Node: Auto-setting of major modes54098
+Node: Key bindings54959
+Node: User config override57638
+Node: Contributing58996
+Node: How to help debug59372
+Node: Development60110
+Node: Preparation60339
+Node: Building eless60643
+Node: Sanity check of the tangled eless60871
+Node: Building documentation61241
+Node: Understand the changes61572
+Node: Build everything61899
+Node: Submitting PR62161
+Node: Miscellaneous62470
+Node: Example eless config in tcsh62684
+Node: Example eless config in bash63477
+Node: Example eless config in zsh64083
 
 End Tag Table
 

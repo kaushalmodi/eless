@@ -65,9 +65,12 @@ I call it =eless= and here's a little taste of what it looks like:
 | =perl=   | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./ |
 |----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
-- NOTE :: If the environment variable =EMACS= is set, =eless= uses that
-     as the emacs binary, else it defaults to using =emacs= as
-     emacs binary.
+- NOTE 1 :: If the environment variable =EMACS= is set, =eless= uses
+     that as the emacs binary, else it defaults to using =emacs= as emacs
+     binary.
+- NOTE 2 :: ~eless~ is known to not work with /info (texinfo) 6.1/ (see
+     =eless= issue #[[https://github.com/kaushalmodi/eless/issues/35][35]]). If you want to use ~eless~ to view Info manuals,
+     ensure that it is at least version *6.5*.
 * Installation
 I do not have an installation script for this project, but you can
 install it quickly with few manual steps.
