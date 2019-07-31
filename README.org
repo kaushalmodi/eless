@@ -102,7 +102,7 @@ documentation in a directory structure like this:
      ~PATH~ environment variable and ~<PREFIX>/share/eless/info/~ to
      ~INFOPATH~.
 *** Uninstallation
-Assuming that you used ~PREFIX=~/.local~ in the [[#run-make][Run ~make~]] step above,
+Assuming that you used ~PREFIX=~/.local~ in the [[#installation-make][Run =make=]] step above,
 uninstall it using the same ~PREFIX~:
 #+begin_src shell
 cd ~/downloads/eless

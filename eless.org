@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 16:11:43 kmodi>
+# Time-stamp: <2019-07-31 16:19:29 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -148,7 +148,7 @@ git clone https://github.com/kaushalmodi/eless ~/downloads/eless
 #+end_src
 **** Run ~make~
 :PROPERTIES:
-:CUSTOM_ID: run-make
+:CUSTOM_ID: installation-make
 :END:
 #+begin_src shell
 cd ~/downloads/eless
@@ -178,7 +178,7 @@ documentation in a directory structure like this:
 :PROPERTIES:
 :CUSTOM_ID: manual-uninstallation
 :END:
-Assuming that you used ~PREFIX=~/.local~ in the [[#run-make][Run ~make~]] step above,
+Assuming that you used ~PREFIX=~/.local~ in the [[#installation-make][Run =make=]] step above,
 uninstall it using the same ~PREFIX~:
 #+begin_src shell
 cd ~/downloads/eless
@@ -333,7 +333,7 @@ git describe --tags HEAD
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-describe-string
-v0.6
+v0.6-1-g82bf8de
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
