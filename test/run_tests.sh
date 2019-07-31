@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2019-07-31 12:17:21 kmodi>
+# Time-stamp: <2019-07-31 15:18:56 kmodi>
 
 EMACS="${EMACS:-emacs}"
 echo "Emacs version:"
@@ -50,25 +50,33 @@ echo "abc def" > "${file1}"
 file2="${test_temp_dir}"/file2
 echo "abc eef" > "${file2}"
 
-ELESS_TEST="file" "${ELESS}" "${file1}"
+echo "[1] file test .."
+eval "ELESS_TEST=file ${ELESS} -D ${file1}"
 
-echo 'foo' | ELESS_TEST="pipein" "${ELESS}"
+echo "[2] pipein test .."
+eval "echo 'foo' | ELESS_TEST=pipein ${ELESS} -D"
 
-echo 'foo' | ELESS_TEST="pipein_dash" "${ELESS}" -
+echo "[3] pipein_dash test .."
+eval "echo 'foo' | ELESS_TEST=pipein_dash ${ELESS} -D -"
 
-diff "${file1}" "${file2}" | ELESS_TEST="pipein_diff" "${ELESS}"
+echo "[4] pipein_diff test .."
+eval "diff ${file1} ${file2} | ELESS_TEST=pipein_diff ${ELESS} -D"
 
-grep 'def' "${file1}" | ELESS_TEST="pipein_grep" "${ELESS}"
+echo "[5] pipein_grep test .."
+eval "grep 'def' ${file1} | ELESS_TEST=pipein_grep ${ELESS} -D"
 
-ELESS_DISABLE_SNAP=1 "${ELESS}" -h | ELESS_TEST="pipein_help" "${ELESS}"
+echo "[6] pipein_help test .."
+eval "ELESS_DISABLE_SNAP=1 ${ELESS} -h | ELESS_TEST=pipein_help ${ELESS} -D"
 
-info grep | ELESS_TEST="pipein_info" ELESS_TEST_SNAP_NO_CONTENT=1 "${ELESS}"
+echo "[7] pipein_info test .."
+eval "info grep | ELESS_TEST=pipein_info ELESS_TEST_SNAP_NO_CONTENT=1 ${ELESS} -D"
 
+echo "[8] man test .."
+eval "ELESS_TEST=man ELESS_TEST_SNAP_NO_CONTENT=1 PAGER=\"${ELESS} -D\" man ls"
 
-ELESS_TEST="man" ELESS_TEST_SNAP_NO_CONTENT=1 PAGER="${eless_repo_root}/eless" man ls
-
+echo "[9] dired test .."
 cd "${test_temp_dir}" || exit
-ELESS_TEST="dired" ELESS_TEST_SNAP_NO_CONTENT=1 "${ELESS}" .
+eval "ELESS_TEST=dired ELESS_TEST_SNAP_NO_CONTENT=1 ${ELESS} -D ."
 
 # diff -u "${file1}" "${file2}" | ELESS_TEST="pipein_diffu" "${ELESS}"
 
