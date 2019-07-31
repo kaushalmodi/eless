@@ -2,6 +2,8 @@
 
 # Makefile to tangle eless.org and export documentation as well.
 # Run just "make" to see usage examples.
+PREFIX = /usr/local
+DOCPREFIX = /usr/share
 
 MAKE_ := $(MAKE) --no-print-directory
 
@@ -103,3 +105,17 @@ clean: ctemp
 
 # Check if an executable exists
 # https://stackoverflow.com/a/34756868/1219634
+
+install: eless
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp -f eless $(DESTDIR)$(PREFIX)/bin
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/eless
+	mkdir -p $(DESTDIR)$(DOCPREFIX)/eless/info
+	cp -f eless.org $(DESTDIR)$(DOCPREFIX)/eless/
+	cp -f ./docs/eless.info $(DESTDIR)$(DOCPREFIX)/info/
+	cp -f ./docs/dir $(DESTDIR)$(DOCPREFIX)/info/
+
+uninstall:
+	rm -f $(DESTDIR)$(PREFIX)/bin/eless
+	rm -f -r $(DESTDIR)$(DOCPREFIX)/eless
+.PHONY: test clean install uninstall
