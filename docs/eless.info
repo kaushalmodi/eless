@@ -448,7 +448,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     6409ceb
+     e4c385a
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -781,7 +781,7 @@ File: eless.info,  Node: Output is going to _stdout_ Input is coming from a pipe
 ‘mktemp’ requires the ‘-t’ argument to specify the temporary file name
 template on Mac OS (See ‘eless’ issue #18
 (https://github.com/kaushalmodi/eless/issues/18).)
-     debug "Pipe Contents (up to 10 lines) : $(head -n 10 "${piped_data_file}")"
+     debug "Pipe Contents (up to 10 lines) : \`$(head -n 10 "${piped_data_file}")'"
      # Remove blank lines from $piped_data_file. Some or all of BSD man
      # pages would have a blank line at the top.
      # -- https://github.com/kaushalmodi/eless/issues/27#issuecomment-365992910.
@@ -794,7 +794,7 @@ template on Mac OS (See ‘eless’ issue #18
 
      # Now parse only the first line of that ${piped_data_file}.noblank file.
      first_line_piped_data=$(head -n 1 "${piped_data_file}.noblank")
-     debug "first_line_piped_data = ${first_line_piped_data}"
+     debug "first_line_piped_data = \`${first_line_piped_data}'"
 
      # It is not mandatory for the below perl regex to always match. So OR it with
      # "true" so that "set -e" does not kill the script at this point.
@@ -815,6 +815,7 @@ template on Mac OS (See ‘eless’ issue #18
      # Using perl expression above instead of below grep (which requires
      # GNU grep -- not available by default on macOS):
      #   grep -Po '^([A-Za-z-_]+\([0-9]+\))(?=\s+.*?\1$)'
+     debug "man_page 1 = \`${man_page}'"
 
      # If it's not a regular man page, check if it's a Perl man page.
      if [[ -z ${man_page} ]]
@@ -829,6 +830,7 @@ template on Mac OS (See ‘eless’ issue #18
                         | perl -ne '/^([A-Za-z0-9-_]+::[A-Za-z0-9-_]+)(\([a-z0-9]+\))(?=\s+.*?\1\2$)/ and print $1' \
                         | perl -pe 's/^[A-Z0-9-_]+::[A-Z0-9-_]+$/\L$_/' \
                         || true)
+         debug "man_page 2 = \`${man_page}'"
      fi
 
      # The first line of Python package MODULE help is assumed to be
@@ -842,33 +844,31 @@ template on Mac OS (See ‘eless’ issue #18
      # Using perl expression above instead of below grep (which requires
      # GNU grep -- not available by default on macOS):
      #   grep -Po '^Help on (.+ in )*(module|package) \K(.*)(?=:$)'
+     debug "python_module_help = \`${python_module_help}'"
 
-     # The first line of Info manuals is assumed to be
-     #   /path/to/some.info or /path/to/some.info.gz
-     # Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
+     # The first line of Info manuals will usually be the below:
+     #   - Begin with "File:", and
+     #   - Contain "Node:"
+     # Example: "File: emacs,  Node: Top,  Next: Distrib,  Prev: (dir),  Up: (dir)" -> "emacs"
      info_man=$(echo "${first_line_piped_data}" \
-                    | perl -ne '/^(?:.*\/)*([^\/]+)(?=\.info(?:\-[0-9]+)*(?:\.gz)*$)/ and print $1' \
+                    | perl -ne '/^File: ([^.,]+)(\.info.*)*.*,  Node.*/ and print $1' \
                     || true)
-     # Using perl expression above instead of below grep (which requires
-     # GNU grep -- not available by default on macOS):
-     #   grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'
+     debug "info_man 1 = \`${info_man}'"
 
-     # If an Info manual is not detected by the above regex, try the below regex
-     # that works with info 6.5.  Apparently the string in the first line of
-     # info-returned buffer changed in info 6.5.
+     # If an Info manual is not detected by the above regex, try the below regex.
      if [[ -z ${info_man} ]]
      then
-         # The first line of Info manuals can also be the below:
-         #   - Begin with "File:", and
-         #   - Contain "Node:"
-         # Example: "File: emacs,  Node: Top,  Next: Distrib,  Prev: (dir),  Up: (dir)"
+         # The first line of Info manuals could be something like:
+         #   /path/to/some.info or /path/to/some.info.gz
+         # Example: "/home/kmodi/usr_local/apps/6/emacs/26/share/info/emacs.info.gz" -> "emacs"
          info_man=$(echo "${first_line_piped_data}" \
-                        | perl -ne '/^File: ([^.,]+)(\.info.*)*.*,  Node.*/ and print $1' \
+                        | perl -ne '/^(?:.*\/)*([^\/]+)(?=\.info(?:\-[0-9]+)*(?:\.gz)*$)/ and print $1' \
                         || true)
+         # Using perl expression above instead of below grep (which requires
+         # GNU grep -- not available by default on macOS):
+         #   grep -Po '^(.*/)*\K[^/]+(?=\.info(\-[0-9]+)*(\.gz)*$)'
+         debug "info_man 2 = \`${info_man}'"
      fi
-
-     debug "man_page = ${man_page}"
-     debug "info_man = ${info_man}"
 
      if [[ -n ${man_page} ]]
      then
@@ -1666,47 +1666,47 @@ Node: Emacs with -Q in view-mode25917
 Node: Input/Output Scenarios26741
 Node: Output is going to a pipe28174
 Node: Output is going to _stdout_ Input is coming from a pipe28722
-Node: Input is piped from man command34623
-Node: Input is piped from a modules help in _IPython_35888
-Node: Input is piped from info command37128
-Node: Input is piped from something else37747
-Node: Output is going to _stdout_ Input is an argument to the script38537
-Node: Eval38911
-Node: Emacs Configuration39149
-Node: Enable debug on error (in debug mode [=-D=])39720
-Node: General setup40013
-Node: Ido setup41133
-Node: Isearch setup41703
-Node: Enable line truncation42117
-Node: Highlight the current line42468
-Node: Custom functions42704
-Node: Keep/delete matching lines43205
-Node: Frame and font re-sizing43895
-Node: Revert buffer in view-mode44908
-Node: Detect if diff-mode should be enabled45383
-Node: Detect if ANSI codes need to be converted to colors48428
-Node: ``Do The Right Thing'' Kill49587
-Node: dired-mode setup51340
-Node: Man-mode setup52160
-Node: Info-mode setup52603
-Node: tar-mode setup53051
-Node: Auto-setting of major modes53766
-Node: Key bindings54627
-Node: User config override57306
-Node: Contributing58664
-Node: How to help debug59040
-Node: Development59778
-Node: Preparation60007
-Node: Building eless60311
-Node: Sanity check of the tangled eless60539
-Node: Building documentation60909
-Node: Understand the changes61240
-Node: Build everything61567
-Node: Submitting PR61829
-Node: Miscellaneous62138
-Node: Example eless config in tcsh62352
-Node: Example eless config in bash63145
-Node: Example eless config in zsh63751
+Node: Input is piped from man command34693
+Node: Input is piped from a modules help in _IPython_35958
+Node: Input is piped from info command37198
+Node: Input is piped from something else37817
+Node: Output is going to _stdout_ Input is an argument to the script38607
+Node: Eval38981
+Node: Emacs Configuration39219
+Node: Enable debug on error (in debug mode [=-D=])39790
+Node: General setup40083
+Node: Ido setup41203
+Node: Isearch setup41773
+Node: Enable line truncation42187
+Node: Highlight the current line42538
+Node: Custom functions42774
+Node: Keep/delete matching lines43275
+Node: Frame and font re-sizing43965
+Node: Revert buffer in view-mode44978
+Node: Detect if diff-mode should be enabled45453
+Node: Detect if ANSI codes need to be converted to colors48498
+Node: ``Do The Right Thing'' Kill49657
+Node: dired-mode setup51410
+Node: Man-mode setup52230
+Node: Info-mode setup52673
+Node: tar-mode setup53121
+Node: Auto-setting of major modes53836
+Node: Key bindings54697
+Node: User config override57376
+Node: Contributing58734
+Node: How to help debug59110
+Node: Development59848
+Node: Preparation60077
+Node: Building eless60381
+Node: Sanity check of the tangled eless60609
+Node: Building documentation60979
+Node: Understand the changes61310
+Node: Build everything61637
+Node: Submitting PR61899
+Node: Miscellaneous62208
+Node: Example eless config in tcsh62422
+Node: Example eless config in bash63215
+Node: Example eless config in zsh63821
 
 End Tag Table
 
