@@ -46,14 +46,16 @@ I call it =eless= and here's a little taste of what it looks like:
 
 *Meta Features*
 
-- [X] This script passes [[http://www.shellcheck.net][ShellCheck]], and
-- [X] Unofficial Bash [[http://redsymbol.net/articles/unofficial-bash-strict-mode][strict mode]] is enabled.
+- [X] This script passes [[https://www.shellcheck.net][ShellCheck]], and
+- [X] Unofficial Bash /strict mode/[fn:1] is enabled.
 - [X] Always-in-sync documentation as the =eless= script and
   documentation are generated using Org Babel from [[https://github.com/kaushalmodi/eless/blob/master/eless.org][one file]] (even this
   README).
 - [X] The [[https://eless.scripter.co][documentation site]] is generated on-the-fly on Netlify using
   that same /one file/.
 - [X] This bash script has tests too!
+
+[fn:1] ~http://redsymbol.net/articles/unofficial-bash-strict-mode/~
 * Requirements
 |----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Software | Details                                                                                                                                                                                                                                                               |

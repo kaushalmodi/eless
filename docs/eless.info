@@ -179,10 +179,8 @@ clock-wise.._
 
    *Meta Features*
 
-   • This script passes ShellCheck (http://www.shellcheck.net), and
-   • Unofficial Bash strict mode
-     (http://redsymbol.net/articles/unofficial-bash-strict-mode) is
-     enabled.
+   • This script passes ShellCheck (https://www.shellcheck.net), and
+   • Unofficial Bash _strict mode_(1) is enabled.
    • Always-in-sync documentation as the ‘eless’ script and
      documentation are generated using Org Babel from one file
      (https://github.com/kaushalmodi/eless/blob/master/eless.org) (even
@@ -197,6 +195,10 @@ clock-wise.._
 * Installation::
 * Try it out::
 * Contributors::
+
+   ---------- Footnotes ----------
+
+   (1) ‘http://redsymbol.net/articles/unofficial-bash-strict-mode/’
 
 
 File: eless.info,  Node: Requirements,  Next: Installation,  Up: Readme
@@ -446,7 +448,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 
      v0.5
 
-     0065c3b
+     e719b55
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -478,9 +480,8 @@ File: eless.info,  Node: Unofficial Bash Strict Mode,  Next: Initialize variable
 7.1 Unofficial Bash Strict Mode
 ===============================
 
-The _Unofficial Bash Strict Mode_
-(http://redsymbol.net/articles/unofficial-bash-strict-mode/) is enabled
-to make this script more robust and reliable.
+The _Unofficial bash strict mode_(1) is enabled to make this script more
+robust and reliable.
 
    The script will error out immediately when,
   1. Any command in a pipeline in this code fails.
@@ -489,6 +490,10 @@ to make this script more robust and reliable.
           set -e # Error out and exit the script when any line in this script returns an error
   3. Any undefined variable is referenced.
           set -u # Error out when unbound variables are found
+
+   ---------- Footnotes ----------
+
+   (1) ‘http://redsymbol.net/articles/unofficial-bash-strict-mode/’
 
 
 File: eless.info,  Node: Initialize variables,  Next: Cleanup using trap,  Prev: Unofficial Bash Strict Mode,  Up: Code
@@ -517,8 +522,8 @@ File: eless.info,  Node: Cleanup using trap,  Next: Debug function,  Prev: Initi
 ========================
 
 The below ‘cleanup’ function is auto-executed via Bash ‘trap’ when the
-script exits _for any reason_.  Read this post on _redsymbol.net_
-(http://redsymbol.net/articles/bash-exit-traps/) for more information.
+script exits _for any reason_.  Read
+‘http://redsymbol.net/articles/bash-exit-traps/’ for more information.
      # http://redsymbol.net/articles/bash-exit-traps/
      function cleanup {
          if [[ ! -z "${piped_data_file}" ]] && [[ ${debug} -eq 0 ]]
@@ -554,7 +559,7 @@ subsequent calls do not output.
          fi
      }
    Above is a ‘bash’ _collapsing function_.  See here
-(http://wiki.bash-hackers.org/howto/collapsing_functions) and here
+(https://wiki.bash-hackers.org/howto/collapsing_functions) and here
 (https://github.com/kaushalmodi/eless/issues/13) for more info.  If user
 has passed the ‘-D’ option, run the script in debug mode.
 
@@ -618,7 +623,7 @@ We need this script to know:
          input_from_pipe_flag=1
      fi
 
-     # http://stackoverflow.com/a/911213/1219634
+     # https://stackoverflow.com/a/911213/1219634
      if [[ -t 1 ]] # Output is going to the terminal
      then
          # eless foo
@@ -668,7 +673,7 @@ basic approach of looping through all the arguments ‘"$@"’ is used.
          elif [[ "${var}" == '--gui' ]]
          then
              # Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "--gui" option
-             # http://stackoverflow.com/a/16861932/1219634
+             # https://stackoverflow.com/a/16861932/1219634
              emacs_args=("${emacs_args[@]/${no_window_arg}}")
          else
              # Collect all other arguments passed to eless and forward them to emacs.
@@ -1514,7 +1519,7 @@ File: eless.info,  Node: Sanity check of the tangled eless,  Up: Building eless
 ...........................................
 
   1. Run the tangled ‘eless’ through shellcheck
-     (http://www.shellcheck.net/) to ensure that there are no errors.
+     (https://www.shellcheck.net/) to ensure that there are no errors.
   2. Ensure that ‘make test’ passes.  Add/update tests as needed.
 
 
@@ -1632,74 +1637,76 @@ File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless confi
 Tag Table:
 Node: Top188
 Node: Readme2534
-Node: Requirements5454
-Node: Installation6837
-Node: Clone this rep7208
-Node: Get the eless executable7517
-Node: Get eless documentation7967
-Node: Installation Directory Structure8752
-Node: Note9322
-Node: Try it out9637
-Node: Contributors12056
-Node: Eless Options12691
-Node: view-mode Common Bindings13015
-Node: Custom Bindings13999
-Node: Usage Examples15034
-Node: Current eless Version17434
-Node: Code17818
-Node: Unofficial Bash Strict Mode18230
-Node: Initialize variables18915
-Node: Cleanup using trap19441
-Node: Debug function20157
-Node: Print dependency versions during debug21353
-Node: Input/Output Detection21825
-Node: Parse options23793
-Node: Print Help25512
-Node: Emacs with -Q in view-mode25845
-Node: Input/Output Scenarios26669
-Node: Output is going to a pipe28102
-Node: Output is going to _stdout_ Input is coming from a pipe28650
-Node: Input is piped from man command34557
-Node: Input is piped from a modules help in _IPython_35822
-Node: Input is piped from info command37062
-Node: Input is piped from something else37681
-Node: Output is going to _stdout_ Input is an argument to the script38471
-Node: Eval38845
-Node: Emacs Configuration39083
-Node: Enable debug on error (in debug mode [=-D=])39654
-Node: General setup39947
-Node: Ido setup41067
-Node: Isearch setup41637
-Node: Enable line truncation42051
-Node: Highlight the current line42402
-Node: Custom functions42638
-Node: Keep/delete matching lines43139
-Node: Frame and font re-sizing43829
-Node: Revert buffer in view-mode44842
-Node: Detect if diff-mode should be enabled45317
-Node: Detect if ANSI codes need to be converted to colors48362
-Node: ``Do The Right Thing'' Kill49521
-Node: dired-mode setup51274
-Node: Man-mode setup52094
-Node: Info-mode setup52537
-Node: tar-mode setup52985
-Node: Auto-setting of major modes53700
-Node: Key bindings54561
-Node: User config override57240
-Node: Contributing58598
-Node: How to help debug58974
-Node: Development59712
-Node: Preparation59941
-Node: Building eless60245
-Node: Sanity check of the tangled eless60473
-Node: Building documentation60842
-Node: Understand the changes61173
-Node: Build everything61500
-Node: Submitting PR61762
-Node: Miscellaneous62071
-Node: Example eless config in tcsh62285
-Node: Example eless config in bash63078
-Node: Example eless config in zsh63684
+Ref: Readme-Footnote-15426
+Node: Requirements5499
+Node: Installation6882
+Node: Clone this rep7253
+Node: Get the eless executable7562
+Node: Get eless documentation8012
+Node: Installation Directory Structure8797
+Node: Note9367
+Node: Try it out9682
+Node: Contributors12101
+Node: Eless Options12736
+Node: view-mode Common Bindings13060
+Node: Custom Bindings14044
+Node: Usage Examples15079
+Node: Current eless Version17479
+Node: Code17863
+Node: Unofficial Bash Strict Mode18275
+Ref: Unofficial Bash Strict Mode-Footnote-118938
+Node: Initialize variables19011
+Node: Cleanup using trap19537
+Node: Debug function20228
+Node: Print dependency versions during debug21425
+Node: Input/Output Detection21897
+Node: Parse options23866
+Node: Print Help25586
+Node: Emacs with -Q in view-mode25919
+Node: Input/Output Scenarios26743
+Node: Output is going to a pipe28176
+Node: Output is going to _stdout_ Input is coming from a pipe28724
+Node: Input is piped from man command34631
+Node: Input is piped from a modules help in _IPython_35896
+Node: Input is piped from info command37136
+Node: Input is piped from something else37755
+Node: Output is going to _stdout_ Input is an argument to the script38545
+Node: Eval38919
+Node: Emacs Configuration39157
+Node: Enable debug on error (in debug mode [=-D=])39728
+Node: General setup40021
+Node: Ido setup41141
+Node: Isearch setup41711
+Node: Enable line truncation42125
+Node: Highlight the current line42476
+Node: Custom functions42712
+Node: Keep/delete matching lines43213
+Node: Frame and font re-sizing43903
+Node: Revert buffer in view-mode44916
+Node: Detect if diff-mode should be enabled45391
+Node: Detect if ANSI codes need to be converted to colors48436
+Node: ``Do The Right Thing'' Kill49595
+Node: dired-mode setup51348
+Node: Man-mode setup52168
+Node: Info-mode setup52611
+Node: tar-mode setup53059
+Node: Auto-setting of major modes53774
+Node: Key bindings54635
+Node: User config override57314
+Node: Contributing58672
+Node: How to help debug59048
+Node: Development59786
+Node: Preparation60015
+Node: Building eless60319
+Node: Sanity check of the tangled eless60547
+Node: Building documentation60917
+Node: Understand the changes61248
+Node: Build everything61575
+Node: Submitting PR61837
+Node: Miscellaneous62146
+Node: Example eless config in tcsh62360
+Node: Example eless config in bash63153
+Node: Example eless config in zsh63759
 
 End Tag Table
 

@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='v0.5'
-eless_git_hash='0065c3b'
+eless_git_hash='e719b55'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -186,7 +186,7 @@ else # Script is getting input from pipe or file - non-interactive
     input_from_pipe_flag=1
 fi
 
-# http://stackoverflow.com/a/911213/1219634
+# https://stackoverflow.com/a/911213/1219634
 if [[ -t 1 ]] # Output is going to the terminal
 then
     # eless foo
@@ -224,7 +224,7 @@ do
     elif [[ "${var}" == '--gui' ]]
     then
         # Delete the ${no_window_arg} from ${emacs_args[@]} array if user passed "--gui" option
-        # http://stackoverflow.com/a/16861932/1219634
+        # https://stackoverflow.com/a/16861932/1219634
         emacs_args=("${emacs_args[@]/${no_window_arg}}")
     else
         # Collect all other arguments passed to eless and forward them to emacs.
@@ -684,7 +684,7 @@ debug "Eless Command : $cmd"
 eval "$cmd"
 
 # References:
-#  http://superuser.com/a/843744/209371
-#  http://stackoverflow.com/a/15330784/1219634 - /dev/stdin (Kept just for
+#  https://superuser.com/a/843744/209371
+#  https://stackoverflow.com/a/15330784/1219634 - /dev/stdin (Kept just for
 #    reference, not using this in this script any more.)
 #  https://github.com/dj08/utils-generic/blob/master/eless
