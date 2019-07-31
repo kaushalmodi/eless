@@ -1,4 +1,4 @@
-;; Time-stamp: <2018-02-22 14:51:40 kmodi>
+;; Time-stamp: <2019-07-31 16:00:36 kmodi>
 
 ;; Setup to build eless and its documentation in an "emacs -Q" environment.
 
@@ -390,13 +390,13 @@ all the documents.  If non-nil, its valid values are `html',
             (widen)
             (save-excursion
               (goto-char (point-min))
-              (re-search-forward "^git rev-parse HEAD")
+              (re-search-forward "^git describe --tags HEAD")
               (org-babel-execute-src-block))))))
     (defun eless-org-confirm-babel-evaluate-fn (lang body)
-      "Mark org source blocks and `git rev-parse' command as safe."
+      "Mark org source blocks and `git describe' command as safe."
       (let ((unsafe t))
         (when (or (string= lang "org")
-                  (string= body "git rev-parse HEAD | head -c 7"))
+                  (string= body "git describe --tags HEAD"))
           (setq unsafe nil))
         unsafe))
     (setq org-confirm-babel-evaluate #'eless-org-confirm-babel-evaluate-fn))

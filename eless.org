@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 15:57:19 kmodi>
+# Time-stamp: <2019-07-31 16:11:43 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -320,23 +320,20 @@ PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), 
 :CUSTOM_ID: current-version
 :END:
 # Using noweb is a nifty way to do sort of search/replace in all code blocks.
-#+begin_src text :noweb-ref version
-v0.6
-#+end_src
 #+begin_src text :exports none :noweb-ref git-repo
 https://github.com/kaushalmodi/eless
 #+end_src
 
 # Get the current commit hash
 # To update manually , put the point in the below source block
-# and hit "C-c C-c" to update the git-hash source block -
+# and hit "C-c C-c" to update the git-describe-string source block -
 # https://emacs.stackexchange.com/a/13352/115
-#+begin_src shell :eval no-export :exports results :results output code :results_switches ":noweb-ref git-hash"
-git rev-parse HEAD | head -c 7
+#+begin_src shell :eval no-export :exports results :results output code :results_switches ":noweb-ref git-describe-string"
+git describe --tags HEAD
 #+end_src
 #+results:
-#+begin_src shell :noweb-ref git-hash
-ac508e2
+#+begin_src shell :noweb-ref git-describe-string
+v0.6
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -350,7 +347,7 @@ version, it would always refer to the one-earlier commit.
 ** Script Header                                                   :noexport:
 #+begin_src shell :noweb yes :exports none
 
-# Version: <<version>>
+# Version: <<git-describe-string>>
 
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -358,13 +355,12 @@ version, it would always refer to the one-earlier commit.
 # Also checks have been done with www.shellcheck.net to have a level of
 # confidence that this script will be free of loopholes.. or is it? :)
 #
-# This file is tangled from <<git-repo>>/blob/<<version>>/eless.org
+# This file is tangled from <<git-repo>>/blob/master/eless.org
 #   Do NOT edit this manually.
 #+end_src
 
 #+begin_src shell :noweb yes :exports none
-eless_version='<<version>>'
-eless_git_hash='<<git-hash>>'
+eless_version='<<git-describe-string>>'
 #+end_src
 ** Help String                                                     :noexport:
 #+begin_src shell :noweb yes :exports none
@@ -484,14 +480,7 @@ function debug {
 Above is a =bash= /collapsing function/. See [[https://wiki.bash-hackers.org/howto/collapsing_functions][here]] and [[https://github.com/kaushalmodi/eless/issues/13][here]] for more info.
 #+begin_src shell :exports none :noweb yes
 function eless_print_version {
-    if [[ "${eless_version}" == "master" ]]
-    then
-        echo "Eless Version ${eless_git_hash} (commit hash of current master~1)"
-        echo "<<git-repo>>/tree/${eless_version}"
-    else
-        echo "Eless Version ${eless_version}"
-        echo "<<git-repo>>/tree/${eless_version}"
-    fi
+    echo "Eless version ${eless_version}"
 }
 #+end_src
 
