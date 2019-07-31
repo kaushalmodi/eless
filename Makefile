@@ -1,11 +1,11 @@
-# Time-stamp: <2019-07-31 15:23:29 kmodi>
+# Time-stamp: <2019-07-31 15:37:14 kmodi>
 
 # Makefile to tangle eless.org and export documentation as well.
 # Run just "make" to see usage examples.
-PREFIX = /usr/local
-DOCPREFIX = /usr/share
 
 MAKE_ := $(MAKE) --no-print-directory
+
+PREFIX = /usr/local
 
 EMACS ?= emacs
 EMACS_exists := $(shell command -v $(EMACS) 2> /dev/null)
@@ -28,19 +28,22 @@ ORG_FILE=$(shell pwd)/eless.org
 # Function to be run in emacs --batch
 FUNC=
 
-.PHONY: default help emacs-batch \
+.PHONY: default help emacs_batch \
 	eless html info ghub doc docs all vcheck \
-	test ctemp clean
+	test ctemp clean \
+	install uninstall
 
 default: eless
 
 help:
 	@echo "Help for Eless building"
-	@echo "====================================================="
-	@echo " make eless <-- Build eless bash script"
-	@echo " make doc   <-- Build eless documentation (Info + Github)"
-	@echo " make all   <-- Build eless script + documentation"
-	@echo " make help  <-- Show this help"
+	@echo "==========================================================================="
+	@echo " make eless                    <- Build eless bash script"
+	@echo " make doc                      <- Build eless documentation (Info + Github)"
+	@echo " make all                      <- Build eless script + documentation"
+	@echo " make install [PREFIX=<dir>]   <- Build and install eless and docs"
+	@echo " make uninstall [PREFIX=<dir>] <- Uninstall eless and docs"
+	@echo " make help                     <- Show this help"
 
 # Note: The Org file from $(ORG_FILE) is loaded *after* the --eval
 # section gets evaluated i.e. --eval '(progn ..)' $(ORG_FILE) If the
@@ -49,7 +52,7 @@ help:
 # version that ships with Emacs and then run the stuff in --eval that
 # loads the new Org version.. and thus we'll end up with mixed Org in
 # the load-path.
-emacs-batch:
+emacs_batch:
 	@echo ""
 	@echo "$(ORG_FILE) ::"
 	@$(EMACS) --batch --eval "(progn\
@@ -61,16 +64,16 @@ emacs-batch:
 	--kill
 
 eless:
-	@$(MAKE_) emacs-batch FUNC=eless-build-script
+	@$(MAKE_) emacs_batch FUNC=eless-build-script
 
 html:
-	@$(MAKE_) emacs-batch FUNC=eless-build-html-docs
+	@$(MAKE_) emacs_batch FUNC=eless-build-html-docs
 
 info:
-	@$(MAKE_) emacs-batch FUNC=eless-build-info-docs
+	@$(MAKE_) emacs_batch FUNC=eless-build-info-docs
 
 ghub:
-	@$(MAKE_) emacs-batch FUNC=eless-build-org-docs
+	@$(MAKE_) emacs_batch FUNC=eless-build-org-docs
 
 doc docs: info ghub
 
@@ -100,20 +103,18 @@ clean: ctemp
 	@rm -rf $(ELESS_ELPA)
 	@rm -f ./docs/*.html ./docs/*.texi
 
-install: eless
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f eless $(DESTDIR)$(PREFIX)/bin
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/eless
-	mkdir -p $(DESTDIR)$(DOCPREFIX)/eless/info
-	cp -f eless.org $(DESTDIR)$(DOCPREFIX)/eless/
-	cp -f ./docs/eless.info $(DESTDIR)$(DOCPREFIX)/info/
-	cp -f ./docs/dir $(DESTDIR)$(DOCPREFIX)/info/
+install: eless info
+	mkdir -p $(PREFIX)/bin/
+	cp -f eless $(PREFIX)/bin/.
+	chmod 755 $(PREFIX)/bin/eless
+	mkdir -p $(PREFIX)/share/eless/info/
+	cp -f eless.org $(PREFIX)/share/eless/.
+	cp -f ./docs/eless.info $(PREFIX)/share/eless/info/.
+	cp -f ./docs/dir $(PREFIX)/share/eless/info/.
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/bin/eless
-	rm -f -r $(DESTDIR)$(DOCPREFIX)/eless
-
-.PHONY: test clean install uninstall
+	rm -f $(PREFIX)/bin/eless
+	rm -rf $(PREFIX)/share/eless/
 
 # Set a make variable during rule execution
 # https://stackoverflow.com/a/1909390/1219634
