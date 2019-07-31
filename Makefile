@@ -1,7 +1,9 @@
-# Time-stamp: <2018-02-22 15:04:27 kmodi>
+# Time-stamp: <2019-07-31 15:23:29 kmodi>
 
 # Makefile to tangle eless.org and export documentation as well.
 # Run just "make" to see usage examples.
+PREFIX = /usr/local
+DOCPREFIX = /usr/share
 
 MAKE_ := $(MAKE) --no-print-directory
 
@@ -97,6 +99,21 @@ ctemp:
 clean: ctemp
 	@rm -rf $(ELESS_ELPA)
 	@rm -f ./docs/*.html ./docs/*.texi
+
+install: eless
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp -f eless $(DESTDIR)$(PREFIX)/bin
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/eless
+	mkdir -p $(DESTDIR)$(DOCPREFIX)/eless/info
+	cp -f eless.org $(DESTDIR)$(DOCPREFIX)/eless/
+	cp -f ./docs/eless.info $(DESTDIR)$(DOCPREFIX)/info/
+	cp -f ./docs/dir $(DESTDIR)$(DOCPREFIX)/info/
+
+uninstall:
+	rm -f $(DESTDIR)$(PREFIX)/bin/eless
+	rm -f -r $(DESTDIR)$(DOCPREFIX)/eless
+
+.PHONY: test clean install uninstall
 
 # Set a make variable during rule execution
 # https://stackoverflow.com/a/1909390/1219634
