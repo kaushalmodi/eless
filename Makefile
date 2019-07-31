@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 15:37:14 kmodi>
+# Time-stamp: <2019-07-31 16:55:20 kmodi>
 
 # Makefile to tangle eless.org and export documentation as well.
 # Run just "make" to see usage examples.
@@ -103,7 +103,7 @@ clean: ctemp
 	@rm -rf $(ELESS_ELPA)
 	@rm -f ./docs/*.html ./docs/*.texi
 
-install: eless info
+install: all
 	mkdir -p $(PREFIX)/bin/
 	cp -f eless $(PREFIX)/bin/.
 	chmod 755 $(PREFIX)/bin/eless
