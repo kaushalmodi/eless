@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 11:53:35 kmodi>
+# Time-stamp: <2019-07-31 12:08:48 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -332,7 +332,7 @@ git rev-parse HEAD | head -c 7
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-hash
-e719b55
+6409ceb
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -445,7 +445,7 @@ script exits /for any reason/. Read
 #+begin_src shell
 # http://redsymbol.net/articles/bash-exit-traps/
 function cleanup {
-    if [[ ! -z "${piped_data_file}" ]] && [[ ${debug} -eq 0 ]]
+    if [[ -n "${piped_data_file}" ]] && [[ ${debug} -eq 0 ]]
     then
         # Remove /tmp/foo.XXXXXX, /tmp/foo.XXXXXX.noblank
         rm -f "${piped_data_file}" "${piped_data_file}.noblank"
@@ -795,13 +795,13 @@ fi
 debug "man_page = ${man_page}"
 debug "info_man = ${info_man}"
 
-if [[ ! -z ${man_page} ]]
+if [[ -n ${man_page} ]]
 then
     <<man-page>>
-elif [[ ! -z ${python_module_help} ]]
+elif [[ -n ${python_module_help} ]]
 then
     <<python-module-help>>
-elif [[ ! -z ${info_man} ]]
+elif [[ -n ${info_man} ]]
 then
     <<info-manual>>
 else # No man page or info manual detected

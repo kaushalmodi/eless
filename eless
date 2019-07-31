@@ -11,7 +11,7 @@
 #   Do NOT edit this manually.
 
 eless_version='v0.5'
-eless_git_hash='e719b55'
+eless_git_hash='6409ceb'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -120,7 +120,7 @@ EMACS="${EMACS:-emacs}"
 
 # http://redsymbol.net/articles/bash-exit-traps/
 function cleanup {
-    if [[ ! -z "${piped_data_file}" ]] && [[ ${debug} -eq 0 ]]
+    if [[ -n "${piped_data_file}" ]] && [[ ${debug} -eq 0 ]]
     then
         # Remove /tmp/foo.XXXXXX, /tmp/foo.XXXXXX.noblank
         rm -f "${piped_data_file}" "${piped_data_file}.noblank"
@@ -619,7 +619,7 @@ else
         debug "man_page = ${man_page}"
         debug "info_man = ${info_man}"
 
-        if [[ ! -z ${man_page} ]]
+        if [[ -n ${man_page} ]]
         then
             # After setting PAGER variable globally to eless (example, using export on bash,
             # setenv on (t)csh, try something like `man grep'.  That will launch the man
@@ -637,7 +637,7 @@ else
                                    (when (version<= emacs-version \"24.5.99\")
                                       (sit-for 1))
                                    (delete-window))'"
-        elif [[ ! -z ${python_module_help} ]]
+        elif [[ -n ${python_module_help} ]]
         then
             debug "Python Module = ${python_module_help}"
 
@@ -653,7 +653,7 @@ else
                                       (sit-for 1))
                                    (delete-window)
                                    (rename-buffer \"${python_module_help}\"))'"
-        elif [[ ! -z ${info_man} ]]
+        elif [[ -n ${info_man} ]]
         then
             # Try something like `info emacs | eless'.
             # That will launch the Info manual in eless.
