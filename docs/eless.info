@@ -98,6 +98,11 @@ Custom functions
 * Info-mode setup::
 * tar-mode setup::
 
+User config override
+
+* Using user's custom-file::
+* Customizing the look of eless::
+
 Contributing
 
 * How to help debug::
@@ -457,7 +462,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 6 Current ‘eless’ Version
 *************************
 
-     v0.6-1-g82bf8de
+     v0.6-4-g40b8906
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -1450,6 +1455,43 @@ key-bindings in this file.
           (quote (hl-line ((t (:background "color-238")))))
           (quote (Man-overstrike ((t (:foreground "#f3dc55" :weight normal)))))))) ;gold yellow
 
+* Menu:
+
+* Using user's custom-file::
+* Customizing the look of eless::
+
+
+File: eless.info,  Node: Using user's custom-file,  Next: Customizing the look of eless,  Up: User config override
+
+7.12.10.1 Using user’s ‘custom-file’
+....................................
+
+If a user would like to load their ‘custom-file’ when starting ‘eless’,
+assuming that the ‘custom-file’ exists separately at
+‘~/.emacs.d/custom-file.el’, they can create a ‘~/.emacs.d/elesscfg’
+with the following content:
+     ;; This is -*- emacs-lisp -*- !
+     ;; Assuming that you have your custom file named ~/.emacs.d/custom-file.el ..
+     (setq custom-file (expand-file-name "custom-file.el" user-emacs-directory))
+     (load custom-file :noerror :nomessage)
+Note
+     As ‘~/.emacs.d/elesscfg’ would be present, ‘eless’ will always load
+     it and the default theme and face customization will not apply.
+
+
+File: eless.info,  Node: Customizing the look of eless,  Prev: Using user's custom-file,  Up: User config override
+
+7.12.10.2 Customizing the look of ‘eless’
+.........................................
+
+If a user would like to define their own faces (essentially override the
+default ‘tango-dark’ theme and face customizations), they can create a
+‘~/.emacs.d/elesscfg’ with the following content — let’s say that they
+want the ‘hl-line’ face to have a light grey background:
+     (custom-theme-set-faces
+      'user
+      '(hl-line ((t (:background "LightGrey")))))
+
 
 File: eless.info,  Node: Contributing,  Next: Miscellaneous,  Prev: Code,  Up: Top
 
@@ -1645,78 +1687,80 @@ File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless confi
 
 Tag Table:
 Node: Top188
-Node: Readme2565
-Ref: Readme-Footnote-15457
-Node: Requirements5530
-Node: Installation7175
-Node: Manual installation7357
-Node: Clone this rep7598
-Node: Run make7902
-Node: Installation Directory Structure8133
-Node: Uninstallation8916
-Node: Homebrew users9274
-Node: Try it out9497
-Node: Contributors11916
-Node: Eless Options12551
-Node: view-mode Common Bindings12875
-Node: Custom Bindings13859
-Node: Usage Examples14894
-Node: Current eless Version17294
-Node: Code17675
-Node: Unofficial Bash Strict Mode18087
-Ref: Unofficial Bash Strict Mode-Footnote-118750
-Node: Initialize variables18823
-Node: Cleanup using trap19349
-Node: Debug function20038
-Node: Print dependency versions during debug21235
-Node: Input/Output Detection21707
-Node: Parse options23676
-Node: Print Help25396
-Node: Emacs with -Q in view-mode25729
-Node: Input/Output Scenarios26553
-Node: Output is going to a pipe27986
-Node: Output is going to _stdout_ Input is coming from a pipe28534
-Node: Input is piped from man command34505
-Node: Input is piped from a modules help in _IPython_35770
-Node: Input is piped from info command37010
-Node: Input is piped from something else37629
-Node: Output is going to _stdout_ Input is an argument to the script38419
-Node: Eval38793
-Node: Emacs Configuration39031
-Node: Enable debug on error (in debug mode [=-D=])39602
-Node: General setup39895
-Node: Ido setup41015
-Node: Isearch setup41585
-Node: Enable line truncation41999
-Node: Highlight the current line42350
-Node: Custom functions42586
-Node: Keep/delete matching lines43087
-Node: Frame and font re-sizing43777
-Node: Revert buffer in view-mode44790
-Node: Detect if diff-mode should be enabled45265
-Node: Detect if ANSI codes need to be converted to colors48310
-Node: ``Do The Right Thing'' Kill49469
-Node: dired-mode setup51222
-Node: Man-mode setup52042
-Node: Info-mode setup52485
-Node: tar-mode setup52933
-Node: Auto-setting of major modes53648
-Node: Key bindings54509
-Node: User config override57188
-Node: Contributing58546
-Node: How to help debug58922
-Node: Development59660
-Node: Preparation59889
-Node: Building eless60193
-Node: Sanity check of the tangled eless60421
-Node: Building documentation60791
-Node: Understand the changes61122
-Node: Build everything61449
-Node: Submitting PR61711
-Node: Miscellaneous62020
-Node: Example eless config in tcsh62234
-Node: Example eless config in bash63027
-Node: Example eless config in zsh63633
+Node: Readme2651
+Ref: Readme-Footnote-15543
+Node: Requirements5616
+Node: Installation7261
+Node: Manual installation7443
+Node: Clone this rep7684
+Node: Run make7988
+Node: Installation Directory Structure8219
+Node: Uninstallation9002
+Node: Homebrew users9360
+Node: Try it out9583
+Node: Contributors12002
+Node: Eless Options12637
+Node: view-mode Common Bindings12961
+Node: Custom Bindings13945
+Node: Usage Examples14980
+Node: Current eless Version17380
+Node: Code17761
+Node: Unofficial Bash Strict Mode18173
+Ref: Unofficial Bash Strict Mode-Footnote-118836
+Node: Initialize variables18909
+Node: Cleanup using trap19435
+Node: Debug function20124
+Node: Print dependency versions during debug21321
+Node: Input/Output Detection21793
+Node: Parse options23762
+Node: Print Help25482
+Node: Emacs with -Q in view-mode25815
+Node: Input/Output Scenarios26639
+Node: Output is going to a pipe28072
+Node: Output is going to _stdout_ Input is coming from a pipe28620
+Node: Input is piped from man command34591
+Node: Input is piped from a modules help in _IPython_35856
+Node: Input is piped from info command37096
+Node: Input is piped from something else37715
+Node: Output is going to _stdout_ Input is an argument to the script38505
+Node: Eval38879
+Node: Emacs Configuration39117
+Node: Enable debug on error (in debug mode [=-D=])39688
+Node: General setup39981
+Node: Ido setup41101
+Node: Isearch setup41671
+Node: Enable line truncation42085
+Node: Highlight the current line42436
+Node: Custom functions42672
+Node: Keep/delete matching lines43173
+Node: Frame and font re-sizing43863
+Node: Revert buffer in view-mode44876
+Node: Detect if diff-mode should be enabled45351
+Node: Detect if ANSI codes need to be converted to colors48396
+Node: ``Do The Right Thing'' Kill49555
+Node: dired-mode setup51308
+Node: Man-mode setup52128
+Node: Info-mode setup52571
+Node: tar-mode setup53019
+Node: Auto-setting of major modes53734
+Node: Key bindings54595
+Node: User config override57274
+Node: Using user's custom-file58705
+Node: Customizing the look of eless59547
+Node: Contributing60134
+Node: How to help debug60510
+Node: Development61248
+Node: Preparation61477
+Node: Building eless61781
+Node: Sanity check of the tangled eless62009
+Node: Building documentation62379
+Node: Understand the changes62710
+Node: Build everything63037
+Node: Submitting PR63299
+Node: Miscellaneous63608
+Node: Example eless config in tcsh63822
+Node: Example eless config in bash64615
+Node: Example eless config in zsh65221
 
 End Tag Table
 

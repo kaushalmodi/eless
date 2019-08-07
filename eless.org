@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 16:19:29 kmodi>
+# Time-stamp: <2019-08-07 08:46:26 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -202,9 +202,8 @@ Here are some usage examples:
 <<noweb-usage-examples-eless-gui>>
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
-          shell*. Specifically, examples like ~PAGER=eless man grep~
-          might need to be adapted for the shell you are using,
-          [[#example-eless-config-in-bash][and also the OS]].
+  shell*. Specifically, examples like ~PAGER=eless man grep~ might
+  need to be adapted for the shell you are using, [[#example-eless-config-in-bash][and also the OS]].
 ** Contributors
 :PROPERTIES:
 :CUSTOM_ID: contributors
@@ -312,9 +311,8 @@ PAGER="eless --gui" man grep          # Launches man pages in eless (GUI mode), 
 PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
-          shell*. Specifically, examples like ~PAGER=eless man grep~
-          might need to be adapted for the shell you are using, [[#example-eless-config-in-bash][or the
-          OS]].
+  shell*. Specifically, examples like ~PAGER=eless man grep~ might
+  need to be adapted for the shell you are using, [[#example-eless-config-in-bash][or the OS]].
 * Current =eless= Version
 :PROPERTIES:
 :CUSTOM_ID: current-version
@@ -333,7 +331,7 @@ git describe --tags HEAD
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-describe-string
-v0.6-1-g82bf8de
+v0.6-4-g40b8906
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -400,17 +398,17 @@ more robust and reliable.
 
 The script will error out immediately when,
 1. Any command in a pipeline in this code fails.
- #+begin_src shell
-set -o pipefail
-#+end_src
+   #+begin_src shell
+   set -o pipefail
+   #+end_src
 2. Any line in this script returns an error
- #+begin_src shell :padline no
-set -e # Error out and exit the script when any line in this script returns an error
-#+end_src
+   #+begin_src shell :padline no
+   set -e # Error out and exit the script when any line in this script returns an error
+   #+end_src
 3. Any undefined variable is referenced.
- #+begin_src shell :padline no
-set -u # Error out when unbound variables are found
-#+end_src
+   #+begin_src shell :padline no
+   set -u # Error out when unbound variables are found
+   #+end_src
 
 #+begin_src shell :exports none
 # IFS=$'\n\t' # Separate fields in a sequence only at newlines and tab characters
@@ -1310,6 +1308,36 @@ key-bindings in this file.
      (quote user)
      (quote (hl-line ((t (:background "color-238")))))
      (quote (Man-overstrike ((t (:foreground "#f3dc55" :weight normal)))))))) ;gold yellow
+#+end_src
+**** Using user's ~custom-file~
+:PROPERTIES:
+:HEADER-ARGS: :tangle no
+:END:
+If a user would like to load their ~custom-file~ when starting
+~eless~, assuming that the ~custom-file~ exists separately at
+=~/.emacs.d/custom-file.el=, they can create a =~/.emacs.d/elesscfg=
+with the following content:
+#+begin_src emacs-lisp
+;; This is -*- emacs-lisp -*- !
+;; Assuming that you have your custom file named ~/.emacs.d/custom-file.el ..
+(setq custom-file (expand-file-name "custom-file.el" user-emacs-directory))
+(load custom-file :noerror :nomessage)
+#+end_src
+- Note :: As =~/.emacs.d/elesscfg= would be present, ~eless~ will
+  always load it and the default theme and face customization will not
+  apply.
+**** Customizing the look of ~eless~
+:PROPERTIES:
+:HEADER-ARGS: :tangle no
+:END:
+If a user would like to define their own faces (essentially override
+the default ~tango-dark~ theme and face customizations), they can
+create a =~/.emacs.d/elesscfg= with the following content --- let's say
+that they want the ~hl-line~ face to have a light grey background:
+#+begin_src emacs-lisp
+(custom-theme-set-faces
+ 'user
+ '(hl-line ((t (:background "LightGrey")))))
 #+end_src
 * Contributing                                                 :contributing:
 :PROPERTIES:
