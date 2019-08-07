@@ -138,9 +138,8 @@ PAGER="eless --gui" man grep          # Launches man pages in eless (GUI mode), 
 PAGER=less man -P "eless --gui" grep  # Launches man pages in eless (GUI mode), if the env var PAGER is *not* set to eless (works on macOS).
 #+end_src
 - NOTE :: Above examples are tested to work in a *=bash=
-     shell*. Specifically, examples like ~PAGER=eless man grep~
-     might need to be adapted for the shell you are using,
-     [[#example-eless-config-in-bash][and also the OS]].
+     shell*. Specifically, examples like ~PAGER=eless man grep~ might
+     need to be adapted for the shell you are using, [[#example-eless-config-in-bash][and also the OS]].
 * Contributors
 - Thanks to [[https://github.com/sshaw][Skye Shaw]] for helping improving =eless=
   so that it can run on /macOS/ and emacs 22.1, and suggesting Bash

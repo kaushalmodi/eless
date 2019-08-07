@@ -1,4 +1,4 @@
-# Time-stamp: <2019-08-07 08:46:26 kmodi>
+# Time-stamp: <2019-08-07 08:50:11 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -331,7 +331,7 @@ git describe --tags HEAD
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-describe-string
-v0.6-4-g40b8906
+v0.6-5-gff52abe
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -1312,6 +1312,7 @@ key-bindings in this file.
 **** Using user's ~custom-file~
 :PROPERTIES:
 :HEADER-ARGS: :tangle no
+:CUSTOM_ID: elesscfg-example--using-custom-file
 :END:
 If a user would like to load their ~custom-file~ when starting
 ~eless~, assuming that the ~custom-file~ exists separately at
@@ -1329,6 +1330,7 @@ with the following content:
 **** Customizing the look of ~eless~
 :PROPERTIES:
 :HEADER-ARGS: :tangle no
+:CUSTOM_ID: elesscfg-example--customizing-the-look-of-eless
 :END:
 If a user would like to define their own faces (essentially override
 the default ~tango-dark~ theme and face customizations), they can
