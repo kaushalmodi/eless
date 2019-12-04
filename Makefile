@@ -1,4 +1,4 @@
-# Time-stamp: <2019-07-31 16:55:20 kmodi>
+# Time-stamp: <2019-12-04 11:53:33 kmodi>
 
 # Makefile to tangle eless.org and export documentation as well.
 # Run just "make" to see usage examples.
@@ -12,6 +12,9 @@ EMACS_exists := $(shell command -v $(EMACS) 2> /dev/null)
 ifeq ("$(EMACS_exists)","")
 	EMACS := /tmp/emacs/bin/emacs
 endif
+
+MAKEINFO ?= makeinfo
+MAKEINFO_exists := $(shell command -v $(MAKEINFO) 2> /dev/null)
 
 # EMACS_BIN_SOURCE and EMACS_BIN_VERSION are used later in the vcheck rule
 # only if EMACS_exists has evaluated to "".
@@ -70,6 +73,9 @@ html:
 	@$(MAKE_) emacs_batch FUNC=eless-build-html-docs
 
 info:
+ifeq ("$(MAKEINFO_exists)","")
+	$(error $(MAKEINFO) binary was not found; texinfo is needed to build the eless Info manual)
+endif
 	@$(MAKE_) emacs_batch FUNC=eless-build-info-docs
 
 ghub:

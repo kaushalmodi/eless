@@ -1,4 +1,4 @@
-# Time-stamp: <2019-08-07 08:50:11 kmodi>
+# Time-stamp: <2019-12-04 11:42:47 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -114,14 +114,15 @@ I call it =eless= and here's a little taste of what it looks like:
 :PROPERTIES:
 :CUSTOM_ID: requirements
 :END:
-|----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|          | <70>                                                                                                                                                                                                                                                                  |
-| Software | Details                                                                                                                                                                                                                                                               |
-|----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =emacs=  | If only *running* the =eless= script, the mininum required emacs version is 22.1 (manually tested). If *developing* (running =make all html test=), the minimum required version is *24.4* (24.4 onwards versions are auto-tested on Travis).                         |
-| =bash=   | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                               |
-| =perl=   | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./ |
-|----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|           | <70>                                                                                                                                                                                                                                                                  |
+| Software  | Details                                                                                                                                                                                                                                                               |
+|-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =emacs=   | If only *running* the =eless= script, the mininum required emacs version is 22.1 (manually tested). If *developing* (running =make all html test=), the minimum required version is *24.4* (24.4 onwards versions are auto-tested on Travis).                         |
+| =bash=    | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                               |
+| =perl=    | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./ |
+| =texinfo= | Required to generate the eless Info manual (when doing =make install=)                                                                                                                                                                                                |
+|-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 - NOTE 1 :: If the environment variable =EMACS= is set, =eless= uses
   that as the emacs binary, else it defaults to using =emacs= as emacs
@@ -331,7 +332,7 @@ git describe --tags HEAD
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-describe-string
-v0.6-5-gff52abe
+v0.6-7-gf2bdb03
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
