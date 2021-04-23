@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Version: v0.6-7-gf2bdb03
+# Version: v0.6-7-g579dadb
 
 # This script uses the unofficial strict mode as explained in
 # http://redsymbol.net/articles/unofficial-bash-strict-mode
@@ -10,7 +10,7 @@
 # This file is tangled from https://github.com/kaushalmodi/eless/blob/master/eless.org
 #   Do NOT edit this manually.
 
-eless_version='v0.6-7-gf2bdb03'
+eless_version='v0.6-7-g579dadb'
 
 h="
 Script to run emacs in view-mode with some sane defaults in attempt to replace
@@ -220,7 +220,8 @@ do
         emacs_args=("${emacs_args[@]/${no_window_arg}}")
     else
         # Collect all other arguments passed to eless and forward them to emacs.
-        emacs_args=("${emacs_args[@]}" "${var}")
+        # Wrap the user-passed args in double quotes to take care of escaped spaces, etc.
+        emacs_args=("${emacs_args[@]}" "\"${var}\"")
     fi
 done
 

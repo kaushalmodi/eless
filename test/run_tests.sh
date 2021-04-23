@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Time-stamp: <2019-07-31 15:18:56 kmodi>
+# Time-stamp: <2021-04-23 17:34:24 kmodi>
 
 EMACS="${EMACS:-emacs}"
 echo "Emacs version:"
@@ -50,6 +50,10 @@ echo "abc def" > "${file1}"
 file2="${test_temp_dir}"/file2
 echo "abc eef" > "${file2}"
 
+filename_with_spaces="${test_temp_dir}/filename with spaces.txt"
+filename_with_spaces_escaped="${test_temp_dir}/filename\\ with\\ spaces.txt"
+echo "hello" > "${filename_with_spaces}"
+
 echo "[1] file test .."
 eval "ELESS_TEST=file ${ELESS} -D ${file1}"
 
@@ -77,6 +81,9 @@ eval "ELESS_TEST=man ELESS_TEST_SNAP_NO_CONTENT=1 PAGER=\"${ELESS} -D\" man ls"
 echo "[9] dired test .."
 cd "${test_temp_dir}" || exit
 eval "ELESS_TEST=dired ELESS_TEST_SNAP_NO_CONTENT=1 ${ELESS} -D ."
+
+echo "[10] filename with spaces .."
+eval "ELESS_TEST=filename_with_spaces ${ELESS} -D ${filename_with_spaces_escaped}"
 
 # diff -u "${file1}" "${file2}" | ELESS_TEST="pipein_diffu" "${ELESS}"
 

@@ -1,4 +1,4 @@
-# Time-stamp: <2019-12-04 11:42:47 kmodi>
+# Time-stamp: <2021-04-23 17:18:21 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -332,7 +332,7 @@ git describe --tags HEAD
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-describe-string
-v0.6-7-gf2bdb03
+v0.6-7-g579dadb
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -601,7 +601,8 @@ do
         emacs_args=("${emacs_args[@]/${no_window_arg}}")
     else
         # Collect all other arguments passed to eless and forward them to emacs.
-        emacs_args=("${emacs_args[@]}" "${var}")
+        # Wrap the user-passed args in double quotes to take care of escaped spaces, etc.
+        emacs_args=("${emacs_args[@]}" "\"${var}\"")
     fi
 done
 #+end_src
