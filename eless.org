@@ -1,4 +1,4 @@
-# Time-stamp: <2022-02-15 21:45:00 kmodi>
+# Time-stamp: <2022-02-15 23:04:38 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -55,7 +55,12 @@
 :EXPORT_FILE_NAME: README
 :EXPORT_TITLE: Eless - A Better Less
 :END:
-[[https://github.com/kaushalmodi/eless/actions][https://github.com/kaushalmodi/eless/actions/workflows/test.yml/badge.svg]] | [[https://eless.scripter.co][*Documentation*]]
+# Below attr_html wraps the img tag in a figure tag and prevents it
+# from rendering as wide as the viewport.
+#+attr_html: :width 100%
+[[https://github.com/kaushalmodi/eless/actions][https://github.com/kaushalmodi/eless/actions/workflows/test.yml/badge.svg]]
+
+[[https://eless.scripter.co][*Documentation*]]
 
 -----
 

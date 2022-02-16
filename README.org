@@ -1,6 +1,8 @@
 #+title: Eless - A Better Less
 #+author: Kaushal Modi
-[[https://github.com/kaushalmodi/eless/actions][https://github.com/kaushalmodi/eless/actions/workflows/test.yml/badge.svg]] | [[https://eless.scripter.co][*Documentation*]]
+[[https://github.com/kaushalmodi/eless/actions][https://github.com/kaushalmodi/eless/actions/workflows/test.yml/badge.svg]]
+
+[[https://eless.scripter.co][*Documentation*]]
 
 -----
 
