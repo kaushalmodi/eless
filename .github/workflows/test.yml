@@ -32,9 +32,12 @@ jobs:
       - uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs_version }}
-      - name: Run tests
-        run: |
-          make test
+      # Tue Feb 15 21:45:51 EST 2022 - kmodi
+      # Do not run tests for now; they fail on GHA with this error:
+      # https://github.com/kaushalmodi/eless/pull/41#issuecomment-1041014256
+      # - name: Run tests
+      #   run: |
+      #     make test
       - name: Test HTML export
         run: |
           make html
