@@ -38,6 +38,8 @@ jobs:
       # - name: Run tests
       #   run: |
       #     make test
+      - name: Run Shellcheck
+        uses: ludeeus/action-shellcheck@master
       - name: Test HTML export
         run: |
           make html
