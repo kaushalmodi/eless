@@ -1,4 +1,4 @@
-;; Time-stamp: <2019-07-31 16:00:36 kmodi>
+;; Time-stamp: <2022-02-15 21:31:04 kmodi>
 
 ;; Setup to build eless and its documentation in an "emacs -Q" environment.
 
@@ -6,7 +6,6 @@
 ;;
 ;;  Some sane settings
 ;;  Defvars
-;;  Org and packages management
 ;;  Miscellaneous helper functions
 ;;    Info `dir' file generation
 ;;    Org HTML postamble
@@ -18,6 +17,8 @@
 ;;; Some sane settings
 (setq-default require-final-newline t)
 (setq-default indent-tabs-mode nil)
+(setq-default make-backup-files nil)
+
 ;; Don't save trailing white space in the generated bash script and
 ;; documentation.
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
@@ -40,6 +41,77 @@ minimum requirement for `eless'.  So set the environment
 variable ELESS_DEFAULT_ORG to a value like 1 if using emacs 26
 or newer.")
 
+(defvar eless-default-share-directory nil
+  "Share directory for this Emacs installation.")
+
+(defvar eless-default-lisp-directory nil
+  "Directory containing lisp files for the Emacs installation.
+
+This value must match the path to the lisp/ directory of the
+Emacs installation.  If Emacs is installed using
+--prefix=\"${PREFIX_DIR}\" this value would typically be
+\"${PREFIX_DIR}/share/emacs/<VERSION>/lisp/\".")
+
+;; Remove Org that ships with Emacs from the `load-path' if installing
+;; it from Elpa.
+(when eless-install-org-from-elpa
+  (let* ((bin-dir (when (and invocation-directory
+                             (file-exists-p invocation-directory))
+                    (file-truename invocation-directory)))
+         (prefix-dir (when bin-dir        ;Because bin-dir = prefix-dir + "bin/"
+                       (file-name-directory (directory-file-name bin-dir))))
+         (share-dir (when prefix-dir
+                      (let ((share-dir-1 (file-name-as-directory (expand-file-name "share" prefix-dir))))
+                        (when (file-exists-p share-dir-1)
+                          (setq eless-default-share-directory share-dir-1))
+                        share-dir-1)))
+         (version-dir (when share-dir
+                        (let* ((emacs-dir (file-name-as-directory (expand-file-name "emacs" share-dir)))
+                               ;; Possibility where the lisp dir is something like
+                               ;; ../emacs/26.0.50/lisp/.  If `emacs-version' is
+                               ;; x.y.z.w, remove the ".w" portion.
+                               ;; http://git.savannah.gnu.org/cgit/emacs.git/commit/?id=22b2207471807bda86534b4faf1a29b3a6447536
+                               (version (replace-regexp-in-string "\\([0-9]+\\.[0-9]+\\.[0-9]+\\).*" "\\1" emacs-version))
+                               (version-dir-1 (file-name-as-directory (expand-file-name version emacs-dir))))
+                          (if (file-exists-p version-dir-1)
+                              version-dir-1
+                            ;; Possibility where the lisp dir is something like
+                            ;; ../emacs/25.2/lisp/.  If `emacs-version' is x.y.z,
+                            ;; remove the ".z" portion.
+                            (setq version (replace-regexp-in-string "\\([0-9]+\\.[0-9]+\\).*" "\\1" emacs-version))
+                            (setq version-dir-1 (file-name-as-directory (expand-file-name version emacs-dir)))
+                            (when (file-exists-p version-dir-1)
+                              version-dir-1))))))
+    (when version-dir
+      (let ((lisp-dir-1 (file-name-as-directory (expand-file-name "lisp" version-dir))))
+        (when (file-exists-p lisp-dir-1)
+          (setq eless-default-lisp-directory lisp-dir-1)))))
+  (when eless-test-setup-verbose
+    (message "eless-default-share-directory: %s" eless-default-share-directory)
+    (message "eless-default-lisp-directory: %s" eless-default-lisp-directory))
+
+  (with-eval-after-load 'package
+    ;; Remove Org that ships with Emacs from the `load-path'.
+    (let ((default-org-path (expand-file-name "org" eless-default-lisp-directory)))
+      (setq load-path (delete default-org-path load-path)))
+
+    ;; Remove Org installed in `site-lisp' directory from the `load-path'.
+    (let ((site-lisp-org-path (expand-file-name "emacs/site-lisp/org" eless-default-share-directory)))
+      (setq load-path (delete site-lisp-org-path load-path)))
+
+    ;; Remove Org from `package--builtin-versions'.
+    (setq package--builtin-versions (delete (assoc 'org package--builtin-versions) package--builtin-versions))
+    ;; Remove Org from `package--builtins'.
+    (require 'finder-inf nil t)         ;Populate `package--builtins'
+    (setq package--builtins (delete (assoc 'org package--builtins) package--builtins))
+
+    (when eless-test-setup-verbose
+      (message "org detected as installed initially? %S" (package-installed-p 'org))
+      (message "load-path: %s" load-path)
+      ;; (message "`load-path' Shadows:")
+      ;; (message (list-load-path-shadows :stringp))
+      )))
+
 (defvar eless-elpa (let ((dir (getenv "ELESS_ELPA")))
                      (unless dir
                        (setq dir
@@ -54,15 +126,10 @@ or newer.")
 
 (defvar eless-packages '(htmlize rainbow-delimiters))
 (when eless-install-org-from-elpa
-  ;; `org' will always be detected as installed, so use
-  ;; `org-plus-contrib'.
-  ;; Fri Sep 22 18:24:19 EDT 2017 - kmodi
-  ;; Install the packages in the specified order. We do not want
-  ;; `toc-org' to be installed first. If that happens, `org' will be
-  ;; required before the newer version of Org gets installed and we
-  ;; will end up with mixed Org version.  So put `org-plus-contrib' at
-  ;; the beginning of `eless-packages'.
-  (add-to-list 'eless-packages 'org-plus-contrib))
+  ;; Tue Feb 15 21:15:07 EST 2022 - kmodi
+  ;; Put `org' at the beginning of `eless-packages' so that it
+  ;; gets installed before any other package can `require' it.
+  (add-to-list 'eless-packages 'org))
 
 (defvar eless-git-root (progn
                          (require 'vc-git)
@@ -70,31 +137,6 @@ or newer.")
   "Absolute path of the git root of the current project.")
 (when eless-test-setup-verbose
   (message "eless-git-root: %S" eless-git-root))
-
-;;; Org and packages management
-;; Below will prevent installation of `org' package as a dependency
-;; when installing `eless' from Melpa.
-(defun eless-package-dependency-check-ignore (orig-ret)
-  "Remove the `black listed packages' from ORIG-RET.
-
-Packages listed in the let-bound `pkg-black-list' will not be auto-installed
-even if they are found as dependencies."
-  (let ((pkg-black-list '(org))
-        new-ret
-        pkg-name)
-    (dolist (pkg-struct orig-ret)
-      (setq pkg-name (package-desc-name pkg-struct))
-      (if (member pkg-name pkg-black-list)
-          (message (concat "Package `%s' will not be installed. "
-                           "See `eless-package-dependency-check-ignore'.")
-                   pkg-name)
-        ;; (message "Package to be installed: %s" pkg-name)
-        (push pkg-struct new-ret)))
-    (setq new-ret (reverse new-ret))
-    ;; (message "after  %S" new-ret)
-    new-ret))
-(advice-add 'package-compute-transaction :filter-return #'eless-package-dependency-check-ignore)
-;; (advice-remove 'package-compute-transaction #'eless-package-dependency-check-ignore)
 
 (if (and (stringp eless-elpa)
          (file-exists-p eless-elpa))
@@ -111,11 +153,6 @@ even if they are found as dependencies."
                           (not (gnutls-available-p))))
              (url (concat (if no-ssl "http" "https") "://melpa.org/packages/")))
         (add-to-list 'package-archives (cons "melpa" url))) ;For `htmlize', `rainbow-delimiters'
-
-      ;; Even if we don't need to install Org from Elpa, we need to
-      ;; add Org Elpa in `package-archives' to prevent the "Package
-      ;; ‘org-9.0’ is unavailable" error.
-      (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/")) ;For latest stable `org'
 
       ;; Load emacs packages and activate them.
       ;; Don't delete this line.
@@ -146,61 +183,6 @@ to be installed.")
           (package-install p))
         (setq eless-missing-packages '())))
   (error "The environment variable ELESS_ELPA needs to be set"))
-
-;; Remove Org that ships with Emacs from the `load-path' if installing
-;; it from Elpa.
-(when eless-install-org-from-elpa
-  (let* ((bin-dir (when (and invocation-directory
-                             (file-exists-p invocation-directory))
-                    (file-truename invocation-directory)))
-         (prefix-dir (when bin-dir
-                       (replace-regexp-in-string "bin/\\'" "" bin-dir)))
-         (share-dir (when prefix-dir
-                      (concat prefix-dir "share/")))
-         (lisp-dir-1 (when share-dir ;Possibility where the lisp dir is something like ../emacs/26.0.50/lisp/
-                       (concat share-dir "emacs/"
-                               ;; If `emacs-version' is x.y.z.w, remove the ".w" portion
-                               ;; Though, this is not needed and also will do nothing in emacs 26+
-                               ;; http://git.savannah.gnu.org/cgit/emacs.git/commit/?id=22b2207471807bda86534b4faf1a29b3a6447536
-                               (replace-regexp-in-string "\\([0-9]+\\.[0-9]+\\.[0-9]+\\).*" "\\1" emacs-version)
-                               "/lisp/")))
-         (lisp-dir-2 (when share-dir ;Possibility where the lisp dir is something like ../emacs/25.2/lisp/
-                       (concat share-dir "emacs/"
-                               (replace-regexp-in-string "\\([0-9]+\\.[0-9]+\\).*" "\\1" emacs-version)
-                               "/lisp/"))))
-    (when eless-test-setup-verbose
-      (message "emacs bin-dir: %s" bin-dir)
-      (message "emacs prefix-dir: %s" prefix-dir)
-      (message "emacs share-dir: %s" share-dir)
-      (message "emacs lisp-dir-1: %s" lisp-dir-1)
-      (message "emacs lisp-dir-2: %s" lisp-dir-2))
-    (defvar eless-default-lisp-directory (cond
-                                          ((file-exists-p lisp-dir-1)
-                                           lisp-dir-1)
-                                          ((file-exists-p lisp-dir-2)
-                                           lisp-dir-2)
-                                          (t
-                                           nil))
-      "Directory containing lisp files for the Emacs installation.
-
-This value must match the path to the lisp/ directory of the
-Emacs installation.  If Emacs is installed using
---prefix=\"${PREFIX_DIR}\" this value would typically be
-\"${PREFIX_DIR}/share/emacs/<VERSION>/lisp/\"."))
-  (when eless-test-setup-verbose
-    (message "eless-default-lisp-directory: %S" eless-default-lisp-directory))
-
-  (with-eval-after-load 'package
-    ;; Remove Org that ships with Emacs from the `load-path'.
-    (when (stringp eless-default-lisp-directory)
-      (dolist (path load-path)
-        (when (string-match-p (expand-file-name "org" eless-default-lisp-directory) path)
-          (setq load-path (delete path load-path))))))
-
-  ;; (message "`load-path': %S" load-path)
-  ;; (message "`load-path' Shadows:")
-  ;; (message (list-load-path-shadows :stringp))
-  )
 
 ;;; Miscellaneous helper functions
 
