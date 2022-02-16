@@ -1,4 +1,4 @@
-# Time-stamp: <2021-04-23 17:18:21 kmodi>
+# Time-stamp: <2022-02-15 21:04:40 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -332,7 +332,7 @@ git describe --tags HEAD
 #+end_src
 #+results:
 #+begin_src shell :noweb-ref git-describe-string
-v0.7
+v0.7-1-gbb0a9ee
 #+end_src
 This commit hash was retrieved before (obviously) the commit was made
 where you see this. So if you see a commit hash when checking =eless=
@@ -683,11 +683,8 @@ fi
 :PROPERTIES:
 :CUSTOM_ID: output-is-going-to-a-pipe
 :END:
-This scenario is not supported at the moment. There
-[[https://github.com/kaushalmodi/eless/issues/4][is a plan to support it in future]] though.
-
-For now, the =eless= script will exit with an error code if the output
-is being piped to something else.
+This scenario is not supported. The =eless= script will exit with an
+error code if the output is being piped to something else.
 #+begin_src shell :noweb-ref output-pipe :tangle no
 echo "This script is not supposed to send output to a pipe"
 exit 1

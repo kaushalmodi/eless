@@ -37,6 +37,13 @@ Installation
 * Manual installation::
 * Homebrew users::
 
+Manual installation
+
+* Clone this rep::
+* Run make::
+* Installation Directory Structure::
+* Uninstallation::
+
 Code
 
 * Unofficial Bash Strict Mode::
@@ -58,6 +65,13 @@ Input/Output Scenarios
 * Output is going to _stdout_, Input is coming from a pipe: Output is going to _stdout_ Input is coming from a pipe.
 * Output is going to _stdout_, Input is an argument to the script: Output is going to _stdout_ Input is an argument to the script.
 
+Output is going to _stdout_, Input is coming from a pipe
+
+* Input is piped from man command::
+* Input is piped from a modules help in _IPython_::
+* Input is piped from info command::
+* Input is piped from something else::
+
 Emacs Configuration
 
 * Enable debug on error (in debug mode [=-D=])::
@@ -71,6 +85,24 @@ Emacs Configuration
 * Key bindings::
 * User config override::
 
+Custom functions
+
+* Keep/delete matching lines::
+* Frame and font re-sizing::
+* Revert buffer in view-mode::
+* Detect if diff-mode should be enabled::
+* Detect if ANSI codes need to be converted to colors::
+* ``Do The Right Thing'' Kill::
+* dired-mode setup::
+* Man-mode setup::
+* Info-mode setup::
+* tar-mode setup::
+
+User config override
+
+* Using user's custom-file::
+* Customizing the look of eless::
+
 Contributing
 
 * How to help debug::
@@ -83,6 +115,14 @@ Development
 * Building documentation::
 * Build everything::
 * Submitting PR::
+
+Building ‘eless’
+
+* Sanity check of the tangled eless::
+
+Building documentation
+
+* Understand the changes::
 
 Miscellaneous
 
@@ -423,7 +463,7 @@ File: eless.info,  Node: Current eless Version,  Next: Code,  Prev: Usage Exampl
 6 Current ‘eless’ Version
 *************************
 
-     v0.7
+     v0.7-1-gbb0a9ee
    This commit hash was retrieved before (obviously) the commit was made
 where you see this.  So if you see a commit hash when checking ‘eless’
 version, it would always refer to the one-earlier commit.
@@ -739,12 +779,8 @@ File: eless.info,  Node: Output is going to a pipe,  Next: Output is going to _s
 7.10.1 Output is going to a pipe
 --------------------------------
 
-This scenario is not supported at the moment.  There is a plan to
-support it in future (https://github.com/kaushalmodi/eless/issues/4)
-though.
-
-   For now, the ‘eless’ script will exit with an error code if the
-output is being piped to something else.
+This scenario is not supported.  The ‘eless’ script will exit with an
+error code if the output is being piped to something else.
      echo "This script is not supposed to send output to a pipe"
      exit 1
 
@@ -1649,81 +1685,81 @@ File: eless.info,  Node: Example eless config in zsh,  Prev: Example eless confi
 
 Tag Table:
 Node: Top188
-Node: Readme1800
-Ref: Readme-Footnote-14692
-Node: Requirements4765
-Node: Installation6507
-Node: Manual installation6689
-Node: Clone this rep6930
-Node: Run make7234
-Node: Installation Directory Structure7465
-Node: Uninstallation8248
-Node: Homebrew users8606
-Node: Try it out8829
-Node: Contributors11248
-Node: Eless Options11883
-Node: view-mode Common Bindings12207
-Node: Custom Bindings13191
-Node: Usage Examples14226
-Node: Current eless Version16626
-Node: Code16996
-Node: Unofficial Bash Strict Mode17408
-Ref: Unofficial Bash Strict Mode-Footnote-118080
-Node: Initialize variables18153
-Node: Cleanup using trap18679
-Node: Debug function19368
-Node: Print dependency versions during debug20565
-Node: Input/Output Detection21037
-Node: Parse options23006
-Node: Print Help24825
-Node: Emacs with -Q in view-mode25158
-Node: Input/Output Scenarios25982
-Node: Output is going to a pipe27415
-Node: Output is going to _stdout_ Input is coming from a pipe27963
-Node: Input is piped from man command33934
-Node: Input is piped from a modules help in _IPython_35199
-Node: Input is piped from info command36439
-Node: Input is piped from something else37058
-Node: Output is going to _stdout_ Input is an argument to the script37848
-Node: Eval38222
-Node: Emacs Configuration38460
-Node: Enable debug on error (in debug mode [=-D=])39031
-Node: General setup39324
-Node: Ido setup40444
-Node: Isearch setup41014
-Node: Enable line truncation41428
-Node: Highlight the current line41779
-Node: Custom functions42015
-Node: Keep/delete matching lines42516
-Node: Frame and font re-sizing43206
-Node: Revert buffer in view-mode44219
-Node: Detect if diff-mode should be enabled44694
-Ref: Enable whitespace-mode in diff-mode46976
-Node: Detect if ANSI codes need to be converted to colors47739
-Node: ``Do The Right Thing'' Kill48898
-Node: dired-mode setup50651
-Node: Man-mode setup51471
-Node: Info-mode setup51914
-Node: tar-mode setup52362
-Node: Auto-setting of major modes53077
-Node: Key bindings53938
-Node: User config override56617
-Node: Using user's custom-file58048
-Node: Customizing the look of eless58890
-Node: Contributing59477
-Node: How to help debug59853
-Node: Development60591
-Node: Preparation60820
-Node: Building eless61124
-Node: Sanity check of the tangled eless61352
-Node: Building documentation61722
-Node: Understand the changes62053
-Node: Build everything62380
-Node: Submitting PR62642
-Node: Miscellaneous62951
-Node: Example eless config in tcsh63165
-Node: Example eless config in bash63958
-Node: Example eless config in zsh64564
+Node: Readme2651
+Ref: Readme-Footnote-15543
+Node: Requirements5616
+Node: Installation7358
+Node: Manual installation7540
+Node: Clone this rep7781
+Node: Run make8085
+Node: Installation Directory Structure8316
+Node: Uninstallation9099
+Node: Homebrew users9457
+Node: Try it out9680
+Node: Contributors12099
+Node: Eless Options12734
+Node: view-mode Common Bindings13058
+Node: Custom Bindings14042
+Node: Usage Examples15077
+Node: Current eless Version17477
+Node: Code17858
+Node: Unofficial Bash Strict Mode18270
+Ref: Unofficial Bash Strict Mode-Footnote-118942
+Node: Initialize variables19015
+Node: Cleanup using trap19541
+Node: Debug function20230
+Node: Print dependency versions during debug21427
+Node: Input/Output Detection21899
+Node: Parse options23868
+Node: Print Help25687
+Node: Emacs with -Q in view-mode26020
+Node: Input/Output Scenarios26844
+Node: Output is going to a pipe28277
+Node: Output is going to _stdout_ Input is coming from a pipe28702
+Node: Input is piped from man command34673
+Node: Input is piped from a modules help in _IPython_35938
+Node: Input is piped from info command37178
+Node: Input is piped from something else37797
+Node: Output is going to _stdout_ Input is an argument to the script38587
+Node: Eval38961
+Node: Emacs Configuration39199
+Node: Enable debug on error (in debug mode [=-D=])39770
+Node: General setup40063
+Node: Ido setup41183
+Node: Isearch setup41753
+Node: Enable line truncation42167
+Node: Highlight the current line42518
+Node: Custom functions42754
+Node: Keep/delete matching lines43255
+Node: Frame and font re-sizing43945
+Node: Revert buffer in view-mode44958
+Node: Detect if diff-mode should be enabled45433
+Ref: Enable whitespace-mode in diff-mode47715
+Node: Detect if ANSI codes need to be converted to colors48478
+Node: ``Do The Right Thing'' Kill49637
+Node: dired-mode setup51390
+Node: Man-mode setup52210
+Node: Info-mode setup52653
+Node: tar-mode setup53101
+Node: Auto-setting of major modes53816
+Node: Key bindings54677
+Node: User config override57356
+Node: Using user's custom-file58787
+Node: Customizing the look of eless59629
+Node: Contributing60216
+Node: How to help debug60592
+Node: Development61330
+Node: Preparation61559
+Node: Building eless61863
+Node: Sanity check of the tangled eless62091
+Node: Building documentation62461
+Node: Understand the changes62792
+Node: Build everything63119
+Node: Submitting PR63381
+Node: Miscellaneous63690
+Node: Example eless config in tcsh63904
+Node: Example eless config in bash64697
+Node: Example eless config in zsh65303
 
 End Tag Table
 

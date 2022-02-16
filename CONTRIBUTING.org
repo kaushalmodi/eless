@@ -1,5 +1,5 @@
-#+TITLE: Contributing Guide
-#+AUTHOR: Kaushal Modi
+#+title: Contributing Guide
+#+author: Kaushal Modi
 This guide is for you if you'd like to do any of the below:
 - Open an issue (plus provide debug information).
 - Simply clone this repo and build =eless= locally.

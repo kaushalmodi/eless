@@ -1,5 +1,5 @@
-#+TITLE: Eless - A Better Less
-#+AUTHOR: Kaushal Modi
+#+title: Eless - A Better Less
+#+author: Kaushal Modi
 [[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]] | [[https://eless.scripter.co][*Documentation*]]
 
 -----
