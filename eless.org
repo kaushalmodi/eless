@@ -1,4 +1,4 @@
-# Time-stamp: <2022-02-15 21:04:40 kmodi>
+# Time-stamp: <2022-02-15 21:45:00 kmodi>
 #+title: eless -- A Better less
 #+author: Kaushal Modi
 
@@ -55,7 +55,7 @@
 :EXPORT_FILE_NAME: README
 :EXPORT_TITLE: Eless - A Better Less
 :END:
-[[https://travis-ci.org/kaushalmodi/eless][https://travis-ci.org/kaushalmodi/eless.svg?branch=master]] | [[https://eless.scripter.co][*Documentation*]]
+[[https://github.com/kaushalmodi/eless/actions][https://github.com/kaushalmodi/eless/actions/workflows/test.yml/badge.svg]] | [[https://eless.scripter.co][*Documentation*]]
 
 -----
 
@@ -118,7 +118,7 @@ I call it =eless= and here's a little taste of what it looks like:
 |           | <70>                                                                                                                                                                                                                                                                  |
 | Software  | Details                                                                                                                                                                                                                                                               |
 |-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| =emacs=   | If only *running* the =eless= script, the mininum required emacs version is 22.1 (manually tested). If *developing* (running =make all html test=), the minimum required version is *24.4* (24.4 onwards versions are auto-tested on Travis).                         |
+| =emacs=   | If only *running* the =eless= script, the mininum required emacs version is 22.1 (manually tested). If *developing* (running =make all html test=), the minimum required version is *25.3*.                                                                           |
 | =bash=    | This is a =bash= script. So even if you don't use =bash= shell, you need to have the =bash= binary discoverable through your environment variable =PATH=. /Tested to work in =tcsh= shell on RHEL 6.6./                                                               |
 | =perl=    | Perl is used to replace =grep -Po= and case-insensitive =sed= based replacements (using =/I=) as those features are available only in GNU versions of =grep= and =sed= (which are not present by default on /macOS/ systems). /Tested with Perl v5.16.3 on RHEL 6.6./ |
 | =texinfo= | Required to generate the eless Info manual (when doing =make install=)                                                                                                                                                                                                |

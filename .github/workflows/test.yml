@@ -1,0 +1,45 @@
+name: RunTests
+
+on:
+  pull_request:
+    types:
+      - '*'
+  push:
+    branches:
+      - main
+      - master
+  schedule:
+    # Every week: https://crontab.guru/#0_0_*_*_0
+    - cron: '0 0 * * 0'
+
+jobs:
+  run_tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - 'ubuntu-latest'
+        emacs_version:
+          - 'snapshot'
+          - '27.2'
+          - '26.3'
+          - '25.3'
+    # runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    # continue-on-error: ${{ matrix.emacs_version == 'snapshot' }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+      # Tue Feb 15 21:45:51 EST 2022 - kmodi
+      # Do not run tests for now; they fail on GHA with this error:
+      # https://github.com/kaushalmodi/eless/pull/41#issuecomment-1041014256
+      # - name: Run tests
+      #   run: |
+      #     make test
+      - name: Run Shellcheck
+        uses: ludeeus/action-shellcheck@master
+      - name: Test HTML export
+        run: |
+          make html

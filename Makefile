@@ -1,4 +1,4 @@
-# Time-stamp: <2019-12-04 11:53:33 kmodi>
+# Time-stamp: <2022-02-15 21:41:24 kmodi>
 
 # Makefile to tangle eless.org and export documentation as well.
 # Run just "make" to see usage examples.
@@ -7,22 +7,15 @@ MAKE_ := $(MAKE) --no-print-directory
 
 PREFIX = /usr/local
 
+TMPDIR ?= /tmp
+
 EMACS ?= emacs
 EMACS_exists := $(shell command -v $(EMACS) 2> /dev/null)
-ifeq ("$(EMACS_exists)","")
-	EMACS := /tmp/emacs/bin/emacs
-endif
 
 MAKEINFO ?= makeinfo
 MAKEINFO_exists := $(shell command -v $(MAKEINFO) 2> /dev/null)
 
-# EMACS_BIN_SOURCE and EMACS_BIN_VERSION are used later in the vcheck rule
-# only if EMACS_exists has evaluated to "".
-EMACS_BIN_SOURCE ?= https://github.com/npostavs/emacs-travis/releases/download/bins
-EMACS_BIN_VERSION ?= 26
-
 # Directory where the required elisp packages are auto-installed
-TMPDIR ?= /tmp
 ELESS_ELPA=$(TMPDIR)/$(USER)/eless-dev/
 
 ELESS_ELISP_DIR="$(shell pwd)/build/"
@@ -87,8 +80,7 @@ all: vcheck eless doc
 
 vcheck:
 ifeq ("$(EMACS_exists)","")
-	@curl -fsSkL --retry 9 --retry-delay 9 -O $(EMACS_BIN_SOURCE)/emacs-bin-$(EMACS_BIN_VERSION).tar.gz
-	@tar xf emacs-bin-$(EMACS_BIN_VERSION).tar.gz -C /
+	$(error $(EMACS) binary was not found)
 endif
 	@echo "Emacs binary used: $(EMACS)"
 	@$(EMACS) --batch --eval "(progn\
@@ -100,7 +92,7 @@ endif
 	--kill
 
 test:
-	@EMACS=$(EMACS) ./test/run_tests.sh
+	@EMACS=$(EMACS) TMPDIR=$(TMPDIR) ./test/run_tests.sh
 
 ctemp:
 	@find $(shell pwd)/docs -name "*.*~" -delete

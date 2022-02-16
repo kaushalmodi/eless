@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Time-stamp: <2021-04-23 17:34:24 kmodi>
+# Time-stamp: <2022-02-15 17:35:51 kmodi>
+
+set -eu # http://redsymbol.net/articles/unofficial-bash-strict-mode
+IFS=$'\n\t'
+
+TMPDIR="${TMPDIR:-/tmp}"
 
 EMACS="${EMACS:-emacs}"
 echo "Emacs version:"
@@ -9,7 +14,7 @@ info --version
 echo "Grep version:"
 grep --version
 
-test_run_dir="/tmp/eless-test-run-dir"
+test_run_dir="${TMPDIR}/eless-test-run-dir"
 mkdir -p "${test_run_dir}"
 
 eless_repo_root="$(git rev-parse --show-toplevel)"
@@ -23,7 +28,7 @@ cp "${eless_test_dir}"/elesscfg_for_tests "${HOME}"/.emacs.d/elesscfg
 
 cd "${test_run_dir}" || exit
 
-export ELESS_TEST_SNAP_DIR="/tmp/eless-test-snaps/"
+export ELESS_TEST_SNAP_DIR="${TMPDIR}/eless-test-snaps/"
 export ELESS="${eless_repo_root}/eless"
 
 # Whether or not ${ELESS_TEST_SNAP_DIR} exists, first create it and
